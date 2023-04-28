@@ -2,15 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-.sidebar::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
     background-color: rgba(200, 200, 200, .3);
 }
 
-.sidebar::-webkit-scrollbar {
+*::-webkit-scrollbar {
     width: 6px;
     background-color: #fff;
 }
 
-.sidebar::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, .3);
+}
+
+.sidebar{
+    height: calc(100% - 104px);
 }

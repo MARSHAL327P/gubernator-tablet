@@ -1,5 +1,4 @@
 import { Map, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
-import Header from "../components/Sidebar/components/Header";
 import Sidebar from "../components/Sidebar/components/Sidebar";
 import useWindowSize from "../hooks/useWindowSize";
 import Button, { WHITE } from "../components/RedefinedTags/components/Button";
@@ -16,6 +15,7 @@ const HomePage = observer(() => {
         controls: [],
     }
 
+
     return (
         <YMaps>
             <Map
@@ -27,7 +27,6 @@ const HomePage = observer(() => {
                 {/*<RouteButton options={{ float: "right" }} />*/}
             </Map>
 
-            <Header/>
             <Button
                 classes={"absolute top-7 right-5"}
                 type={WHITE}
@@ -35,9 +34,11 @@ const HomePage = observer(() => {
                 icon={Human}
                 numNotify={2}
             />
-            <div className="absolute top-0 left-0 flex drop-shadow-xl h-full">
-                { FilterStore.isOpen && <Filter classes={"transition bg-white"}/> }
-                <Sidebar classes={"bg-white"}/>
+            <div
+                className={"absolute top-0 left-0 flex drop-shadow-xl h-full transition"}
+            >
+                <Filter/>
+                <Sidebar/>
             </div>
 
         </YMaps>

@@ -9,6 +9,12 @@ import Button from "../../RedefinedTags/components/Button";
 import { observer } from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
 import BeachCardStore from "../store/beachCardStore";
+import dayjs from "dayjs";
+import 'dayjs/locale/ru';
+import 'dayjs/plugin/updateLocale';
+import { capitalizeFirstLetter } from "../../../Utils";
+
+let relativeTime = require('dayjs/plugin/relativeTime')
 
 const BeachCard = observer((
     {
@@ -28,10 +34,13 @@ const BeachCard = observer((
         paddings: "px-7 pb-2 pt-4"
     }
 
+    dayjs.extend(relativeTime)
+    updateTime = capitalizeFirstLetter(dayjs(updateTime).locale("ru").fromNow())
+
     return (
         <div className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}>
             <div className={classes.paddings}>
-                <div className="text-gray-400 text-[12px]">{updateTime} мин. назад</div>
+                <div className="text-gray-400 text-[12px]">{updateTime}</div>
                 <div className="flex justify-between items-center">
                     <span className={"font-bold text-[24px]"}>{name}</span>
                     {BeachCardStore.beachProblems[beachProblems]}

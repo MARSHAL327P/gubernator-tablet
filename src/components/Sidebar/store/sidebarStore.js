@@ -9,10 +9,9 @@ class SidebarStore {
         return [
             {
                 id: 1,
-                updateTime: 12,
+                updateTime: "2023-04-26T13:57:00",
                 name: "Любимовка",
                 rating: 4.7,
-                isOpen: true,
                 bathingComfort: "GOOD",
                 waterTemp: 14.7,
                 airTemp: 21.3,
@@ -21,10 +20,9 @@ class SidebarStore {
             },
             {
                 id: 2,
-                updateTime: 12,
+                updateTime: "2023-04-27T21:54:00",
                 name: "Учкуевка",
                 rating: 4.2,
-                isOpen: true,
                 bathingComfort: "NO_BATHING",
                 beachProblems: "DANGER",
                 waterTemp: 15.9,
@@ -34,10 +32,9 @@ class SidebarStore {
             },
             {
                 id: 3,
-                updateTime: 12,
+                updateTime: "2023-03-24T13:57:00",
                 name: "Хрустальный",
                 rating: 3.9,
-                isOpen: true,
                 bathingComfort: "BEACH_CLOSE",
                 beachProblems: "WARNING",
                 waterTemp: 16.3,
