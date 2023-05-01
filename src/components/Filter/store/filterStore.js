@@ -1,31 +1,36 @@
 import { makeAutoObservable } from "mobx";
 import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
 import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
+import sidebarStore from "../../Sidebar/store/sidebarStore";
 
 class FilterStore {
-    isOpen = false
+    isOpen = true
     width = 0
     filterTypes = {
         select: {
             variants: [],
             type: "select",
-            open: true
+            open: true,
+            selected: [],
         },
         checkbox: {
             variants: [],
             type: "checkbox",
-            open: true
+            open: true,
+            selected: [],
         },
         selectFromTo: {
             from: Infinity,
             to: 0,
             type: "selectFromTo",
-            open: true
+            open: true,
+            selected: [],
         },
         radioBtn: {
             variants: [],
             type: "radioBtn",
-            open: true
+            open: true,
+            selected: [],
         },
     }
 
@@ -67,6 +72,19 @@ class FilterStore {
             name: "Скорость ветра",
             ...this.filterTypes.selectFromTo
         },
+    }
+
+    get filteredBeaches() {
+        if (sidebarStore.searchQuery.trim() !== "") {
+            return BeachLocalStore.beachList.filter((beach) => {
+                return beach
+                    .name
+                    .toLowerCase()
+                    .indexOf(sidebarStore.searchQuery.toLowerCase()) >= 0
+            })
+        }
+
+        return BeachLocalStore.beachList
     }
 
     constructor(data) {

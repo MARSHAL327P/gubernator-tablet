@@ -6,7 +6,7 @@ const Search = observer(() => {
     return (
         <div className={"relative"}>
             <input className={"text-gray-500 transition bg-gray-200 rounded-xl py-3 px-5 flex " +
-                "justify-between w-[287px]" + (!sidebarStore.isOpen ? " bg-white shadow-lg" : "")}
+                "justify-between w-[287px]"}
                    type="text"
                    placeholder={"Поиск..."}
                    onChange={(e) => {sidebarStore.searchQuery = e.currentTarget.value}}
