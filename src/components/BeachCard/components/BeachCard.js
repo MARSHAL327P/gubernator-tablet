@@ -8,11 +8,11 @@ import { ReactComponent as Chevron } from "../../../assets/icons/Chevron.svg";
 import Button from "../../RedefinedTags/components/Button";
 import { observer } from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
-import BeachCardStore from "../store/beachCardStore";
 import dayjs from "dayjs";
 import 'dayjs/locale/ru';
 import 'dayjs/plugin/updateLocale';
 import { capitalizeFirstLetter } from "../../../Utils";
+import BeachLocalStore from "../store/beachLocalStore";
 
 let relativeTime = require('dayjs/plugin/relativeTime')
 
@@ -30,7 +30,7 @@ const BeachCard = observer((
     }) => {
 
     let classes = {
-        indications: "flex items-center gap-2",
+        indications: "flex items-center gap-2 whitespace-nowrap",
         paddings: "px-7 pb-2 pt-4"
     }
 
@@ -42,8 +42,8 @@ const BeachCard = observer((
             <div className={classes.paddings}>
                 <div className="text-gray-400 text-[12px]">{updateTime}</div>
                 <div className="flex justify-between items-center">
-                    <span className={"font-bold text-[24px]"}>{name}</span>
-                    {BeachCardStore.beachProblems[beachProblems]}
+                    <span className={"text-title"}>{name}</span>
+                    {beachProblems && BeachLocalStore.beachProblemsType[beachProblems]}
                     <div className={"flex gap-1 items-center"}>
                         <Star className={"fill-warning"}/>
                         <span className={"h-[20px]"}>{rating}</span>
@@ -67,8 +67,12 @@ const BeachCard = observer((
                     </div>
                 </div>
                 <div className="flex justify-between gap-5 mt-5">
-                    <Button classes={"w-full"} text={"На карте"} icon={Map}/>
-                    <Button classes={"w-full"} text={"Маршрут"} icon={Route}/>
+                    <Button classes={"w-full"}  icon={Map}>
+                        На карте
+                    </Button>
+                    <Button classes={"w-full"} icon={Route}>
+                        Маршрут
+                    </Button>
                 </div>
             </div>
             <div className="bg-gray-200 px-3 py-2 rounded-b-xl flex items-center justify-center gap-2">

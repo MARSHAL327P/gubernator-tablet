@@ -1,12 +1,12 @@
 import { ReactComponent as Swimmer } from "../../../assets/icons/Swimmer.svg";
-import BeachCardStore from "../store/beachCardStore";
+import BeachLocalStore from "../store/beachLocalStore";
 
 export default function BathingComfort({ bathingComfort }){
     let classes = "flex justify-center items-center gap-3 w-full p-3"
     let textColor = "text-white"
-    let bathingComfortObject = BeachCardStore.bathingComfort[bathingComfort]
+    let bathingComfortObject = BeachLocalStore.bathingComfortType[bathingComfort]
 
-    return (
+    return bathingComfortObject && (
         <div className={classes + bathingComfortObject.classes}>
             { bathingComfortObject.showIcon ?? <Swimmer className={"fill-white"}/>}
             <span className={bathingComfortObject.textClasses ?? textColor }>{bathingComfortObject.text}</span>

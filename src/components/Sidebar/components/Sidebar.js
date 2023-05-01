@@ -5,9 +5,12 @@ import Search from "../../Search/components/Search";
 import Button from "../../RedefinedTags/components/Button";
 import FilterStore from "../../Filter/store/filterStore";
 import { ReactComponent as Settings } from "../../../assets/icons/Settings.svg";
+import { ReactComponent as Close } from "../../../assets/icons/Close.svg";
+import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
+// import { Button, IconButton } from "@material-tailwind/react";
 
 const Sidebar = observer(() => {
-    let filteredBeaches = sidebarStore.beachList
+    let filteredBeaches = BeachLocalStore.beachList
     let filterWidth = {
         transform: `translateX(${FilterStore.width}px)`
     }
@@ -25,7 +28,10 @@ const Sidebar = observer(() => {
         <div className={"h-full bg-white transition absolute"} style={FilterStore.isOpen ? filterWidth : {}}>
             <div className={"flex gap-4 py-7 transition px-3" + (sidebarStore.topOffset > 0 && sidebarStore.isOpen ? " shadow-xl" : "")}>
                 <Search/>
-                <Button onClick={() => {FilterStore.isOpen = !FilterStore.isOpen}} icon={Settings}/>
+                <Button
+                    onClick={() => {FilterStore.isOpen = !FilterStore.isOpen}}
+                    icon={FilterStore.isOpen ? Close : Settings}
+                />
             </div>
             <div
                 onScroll={(e) => {sidebarStore.topOffset = e.currentTarget.scrollTop}}

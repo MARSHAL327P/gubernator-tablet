@@ -1,5 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+/** @type {(tailwindConfig: object) => object} */
+const withMT = require("@material-tailwind/react/utils/withMT");
+
+module.exports = withMT({
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {
@@ -21,13 +23,9 @@ module.exports = {
         'danger': '#FF4C28',
       },
     },
-    fontFamily: {
-      sans: ['"Roboto"', 'sans-serif']
-    },
     transitionDuration: {
       DEFAULT: '300ms',
     }
   },
   plugins: [],
-}
-
+})

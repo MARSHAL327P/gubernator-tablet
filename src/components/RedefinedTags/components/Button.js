@@ -4,12 +4,12 @@ export const WHITE = "white"
 export default function Button(
     {
         icon = "",
-        text = "",
+        children,
         classes = "",
         type = PRIMARY,
         iconClasses = "",
         numNotify = 0,
-        onClick = null
+        onClick = null,
     }) {
 
     let Icon = icon
@@ -30,7 +30,7 @@ export default function Button(
             " flex flex-wrap justify-center items-center"
         }>
             {icon && <Icon className={iconClasses}/>}
-            {text}
+            {children || ""}
             {numNotify > 0 && <div className={"bg-danger text-white px-[10px] py-[2px] rounded-full"}>{numNotify}</div>}
         </button>
     )

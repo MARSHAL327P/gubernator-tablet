@@ -4,7 +4,6 @@ import useWindowSize from "../hooks/useWindowSize";
 import Button, { WHITE } from "../components/RedefinedTags/components/Button";
 import { ReactComponent as Human } from "../assets/icons/Human.svg";
 import Filter from "../components/Filter/components/Filter";
-import FilterStore from "../components/Filter/store/filterStore";
 import { observer } from "mobx-react-lite";
 
 const HomePage = observer(() => {
@@ -30,10 +29,11 @@ const HomePage = observer(() => {
             <Button
                 classes={"absolute top-7 right-5"}
                 type={WHITE}
-                text={"Профиль"}
                 icon={Human}
                 numNotify={2}
-            />
+            >
+                Профиль
+            </Button>
             <div
                 className={"absolute top-0 left-0 flex drop-shadow-xl h-full transition"}
             >
