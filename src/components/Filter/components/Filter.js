@@ -110,7 +110,10 @@ const Filter = observer(() => {
                             <AccordionHeader onClick={() => {
                                 inputParams.open = !inputParams.open
                             }}>
-                                {inputParams.name}
+                                <div className="flex gap-2">
+                                    {inputParams.icon}
+                                    {inputParams.name}
+                                </div>
                             </AccordionHeader>
                             <AccordionBody>
                                 {inputValues(inputName, inputParams)}

@@ -4,7 +4,7 @@ import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
 import sidebarStore from "../../Sidebar/store/sidebarStore";
 
 class FilterStore {
-    isOpen = true
+    isOpen = false
     width = 0
     filterTypes = {
         select: {
@@ -37,6 +37,12 @@ class FilterStore {
         },
     }
     filterInputs = {
+        rating: {
+            name: "Рейтинг пляжа",
+            icon: <Star className={"fill-warning mt-[2px]"}/>,
+            ...this.filterTypes.radioBtn,
+            variants: ["Больше 4", "Больше 4.5"],
+        },
         beachType: {
             name: "Тип пляжа",
             ...this.filterTypes.checkbox
@@ -59,12 +65,6 @@ class FilterStore {
         waterTemp: {
             name: "Температура воды",
             ...this.filterTypes.selectFromTo
-        },
-        rating: {
-            name: "Рейтинг пляжа",
-            icon: <Star/>,
-            ...this.filterTypes.radioBtn,
-            variants: ["Больше 4", "Больше 4.5"],
         },
         props: {
             name: "Дополнительные параметры",
