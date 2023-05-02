@@ -7,12 +7,16 @@ import { ReactComponent as Settings } from "../../../assets/icons/Settings.svg";
 import { ReactComponent as Close } from "../../../assets/icons/Close.svg";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import { useState } from "react";
+import { toJS } from "mobx";
 
 const Sidebar = observer(() => {
     let [elOffset, setElOffset] = useState(0)
+
     let filterWidth = {
         transform: `translateX(${FilterStore.width}px)`
     }
+
+    // console.log(toJS(FilterStore.filterInputs))
 
     return (
         <div className={"h-full bg-white transition absolute"} style={FilterStore.isOpen ? filterWidth : {}}>

@@ -1,33 +1,63 @@
 import { observer } from "mobx-react-lite";
 import FilterStore from "../store/filterStore";
 import { useEffect, useRef, useState } from "react";
-import { Accordion, AccordionHeader, AccordionBody, Checkbox } from "@material-tailwind/react";
-import filterStore from "../store/filterStore";
+import { Accordion, AccordionHeader, AccordionBody, Checkbox, Input } from "@material-tailwind/react";
 import FixedHeader from "../../FixedHeader/FixedHeader";
+import { toJS } from "mobx";
 
-function setCheckedItems(e, item, inputName, inputParams){
+function findSelectedItem(inputName, item) {
+    return FilterStore.filterInputs[inputName].selected.indexOf(item)
+}
+
+function setCheckedItems(e, item, inputName, inputParams) {
     let isChecked = e.target.checked
 
-    if( isChecked ){
+    if (isChecked) {
         inputParams.selected.push(item)
     } else {
-        let findItemIndex = FilterStore.filterInputs[inputName].selected.indexOf(item)
+        let findItemIndex = findSelectedItem(inputName, item)
 
-        if( findItemIndex !== -1 ){
+        if (findItemIndex !== -1) {
             inputParams.selected.splice(findItemIndex, 1)
         }
     }
 
-    FilterStore.filterInputs = {
-        ...FilterStore.filterInputs,
-        [inputName]: inputParams
-    }
+    FilterStore.filterInputs[inputName] = inputParams
+}
+
+function setSelectFromToItem(e, inputName, inputParams){
+    FilterStore.filterInputs[inputName].selected[e.target.name] = e.target.value
 }
 
 function inputValues(inputName, inputParams) {
     switch (inputParams.type) {
-        case filterStore.filterTypes.selectFromTo.type:
-            return <></>
+        case FilterStore.filterTypes.selectFromTo.type:
+            let defaultParams = {
+                min: inputParams.from,
+                max: inputParams.to,
+                step: 0.2,
+                type: "number",
+                variant: "standard",
+                label: "",
+                onInput: (e) => setSelectFromToItem(e, inputName)
+            }
+
+            return (
+                <div className={"flex gap-5"}>
+                    <Input
+                        {...defaultParams}
+                        value={inputParams.selected.from ?? ""}
+                        name={"from"}
+                        placeholder={"От " + inputParams.from}
+                    />
+                    <Input
+                        {...defaultParams}
+                        value={inputParams.selected.to ?? ""}
+                        name={"to"}
+                        placeholder={"До " + inputParams.to}
+                    />
+                </div>
+            )
         default:
             return (
                 <div className={"flex flex-col"}>
@@ -39,6 +69,7 @@ function inputValues(inputName, inputParams) {
                             className={"checked:bg-primary checked:border-primary checked:before:bg-primary"}
                             label={item}
                             name={inputName}
+                            checked={findSelectedItem(inputName, item) !== -1}
                         />
                     })}
                 </div>
@@ -51,15 +82,19 @@ const Filter = observer(() => {
     let [elOffset, setElOffset] = useState(0)
 
     useEffect(() => {
-        FilterStore.width = filterEl.current.offsetWidth
+        FilterStore.fillFilterInputs()
     }, [])
+
+    useEffect(() => {
+        FilterStore.width = filterEl.current.clientWidth
+    }, [filterEl.current])
 
     return (
         <div ref={filterEl}
              className={"h-full bg-white transition" + (FilterStore.isOpen ? "" : " -translate-x-full")}>
             <FixedHeader elOffset={elOffset} classes={"py-7 px-7 items-baseline"}>
                 <div className={"text-title"}>Фильтр пляжей</div>
-                <span>Очистить</span>
+                <span className={"hover:cursor-pointer"} onClick={() => FilterStore.clearFilter()}>Очистить</span>
             </FixedHeader>
             <div
                 className={"overflow-auto p-7 pt-0 transition filter"}

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
 import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
 import sidebarStore from "../../Sidebar/store/sidebarStore";
@@ -24,7 +24,10 @@ class FilterStore {
             to: 0,
             type: "selectFromTo",
             open: true,
-            selected: [],
+            selected: {
+                from: null,
+                to: null,
+            },
         },
         radioBtn: {
             variants: [],
@@ -33,7 +36,6 @@ class FilterStore {
             selected: [],
         },
     }
-
     filterInputs = {
         beachType: {
             name: "Тип пляжа",
@@ -73,10 +75,27 @@ class FilterStore {
             ...this.filterTypes.selectFromTo
         },
     }
+    filterInputsKeys = Object.keys(this.filterInputs)
 
     get filteredBeaches() {
         if (sidebarStore.searchQuery.trim() !== "") {
             return BeachLocalStore.beachList.filter((beach) => {
+                // this.filterInputsKeys.forEach(filterInputKey => {
+                //     let beachInputInfo = beach[filterInputKey]
+                //     let filterInput = this.filterInputs[filterInputKey]
+                //
+                //     switch (filterInput.type){
+                //         case this.filterTypes.selectFromTo.type:
+                //             return false
+                //         default:
+                //             if( filterInput.selected.indexOf(beachInputInfo) === -1 )
+                //                 return false
+                //
+                //
+                //             return false
+                //     }
+                //
+                // })
                 return beach
                     .name
                     .toLowerCase()
@@ -87,14 +106,28 @@ class FilterStore {
         return BeachLocalStore.beachList
     }
 
-    constructor(data) {
-        makeAutoObservable(this);
+    clearFilter(){
+        Object.keys(this.filterInputs).forEach(filterInputKey => {
+            let filterInput = this.filterInputs[filterInputKey]
 
-        let filterInputsKeys = Object.keys(this.filterInputs)
+            switch (filterInput.type){
+                case this.filterTypes.selectFromTo.type:
+                    filterInput.selected = {
+                        from: null,
+                        to: null,
+                    }
+                    break;
+                default:
+                    filterInput.selected = []
+            }
+        })
+    }
+
+    fillFilterInputs(){
         let excludedFilters = ["rating", "price", "workTime"]
 
         BeachLocalStore.beachList.forEach(beach => {
-            filterInputsKeys.forEach(filterInputKey => {
+            this.filterInputsKeys.forEach(filterInputKey => {
                 let beachInputInfo = beach[filterInputKey]
                 let filterInput = this.filterInputs[filterInputKey]
 
@@ -124,6 +157,10 @@ class FilterStore {
                 }
             })
         })
+    }
+
+    constructor(data) {
+        makeAutoObservable(this);
     }
 }
 
