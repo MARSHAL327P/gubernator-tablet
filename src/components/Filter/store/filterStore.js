@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from "mobx";
+import { makeAutoObservable } from "mobx";
 import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
 import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
 import sidebarStore from "../../Sidebar/store/sidebarStore";

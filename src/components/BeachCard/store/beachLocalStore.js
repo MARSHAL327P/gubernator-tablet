@@ -32,19 +32,6 @@ class BeachLocalStore {
         WARNING: <Warning className={"fill-warning w-[25px] h-[25px]"}/>,
     }
 
-    get bachListPropValues(){
-        if( this.beachList.length <= 0 ) return null
-
-        let propNames = Object.keys(this.beachList[0])
-        console.log(propNames)
-
-        return this.beachList.map(item => {
-            console.log(item)
-            return item
-
-        })
-    }
-
     constructor(data) {
         makeAutoObservable(this);
 

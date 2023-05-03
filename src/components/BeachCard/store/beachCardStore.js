@@ -128,10 +128,6 @@ export class BeachCardStore {
         })
     }
 
-    static getPropNames(){
-        return Object.keys(this)
-    }
-
     constructor(data) {
         makeAutoObservable(this);
 

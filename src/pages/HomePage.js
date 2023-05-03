@@ -1,10 +1,14 @@
-import { Map, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
+import { Clusterer, Map, ObjectManager, Placemark, useYMaps, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
 import Sidebar from "../components/Sidebar/components/Sidebar";
 import useWindowSize from "../hooks/useWindowSize";
 import Button, { WHITE } from "../components/RedefinedTags/components/Button";
 import { ReactComponent as Human } from "../assets/icons/Human.svg";
 import Filter from "../components/Filter/components/Filter";
 import { observer } from "mobx-react-lite";
+import LocalStationStore from "../components/Stations/store/localStationStore";
+import { toJS } from "mobx";
+import { useEffect } from "react";
+// import ymaps from "yandex-maps";
 
 const HomePage = observer(() => {
     const [, height] = useWindowSize() // Следим за изменением высоты
@@ -13,16 +17,86 @@ const HomePage = observer(() => {
         zoom: 12,
         controls: [],
     }
+    const ymaps = useYMaps(['Placemark']);
+
+    useEffect(() => {
+        console.log(ymaps)
+        // const layout = ymaps.templateLayoutFactory.createClass(
+        //     `<div>test</div>`,
+        //     {
+        //         build: function () {
+        //             layout.superclass.build.call(this);
+        //         }
+        //     }
+        // )
+    }, [ymaps]);
+    // const collection = {
+    //     type: "FeatureCollection",
+    //     features: LocalStationStore.stationList.map((station, index) => {
+    //         return {
+    //             id: station.id,
+    //             type: "Feature",
+    //             geometry: {
+    //                 type: "Point",
+    //                 coordinates: station.coord
+    //             },
+    //             properties: {
+    //                 balloonContent: `<div>${station.name}</div>`,
+    //             }
+    //         };
+    //     })
+    // };
+    //
 
 
     return (
-        <YMaps>
+        <>
             <Map
                 width={"100%"}
                 height={height}
                 defaultState={mapDefaultState}
             >
                 <ZoomControl options={{ float: "right" }}/>
+                {/*<ObjectManager*/}
+                {/*    objects={{*/}
+                {/*        openBalloonOnClick: true*/}
+                {/*    }}*/}
+                {/*    clusters={{}}*/}
+                {/*    options={{*/}
+                {/*        clusterize: true,*/}
+                {/*        gridSize: 32*/}
+                {/*    }}*/}
+                {/*    defaultFeatures={collection}*/}
+                {/*    modules={[*/}
+                {/*        "objectManager.addon.objectsBalloon",*/}
+                {/*        "objectManager.addon.clustersBalloon"*/}
+                {/*    ]}*/}
+                {/*/>*/}
+                <Clusterer
+                    options={{
+                        preset: "islands#darkBlueCircleDotIcon",
+                        groupByCoordinates: false,
+                        openBalloonOnClick: true,
+                    }}
+                >
+                    {LocalStationStore.stationList.map((station, index) => (
+                        <Placemark
+                            name={"test" + index}
+                            onClick={(e) => {
+                                console.log(e)
+                            }
+                            }
+                            key={index}
+                            geometry={station.coord}
+                            options={{
+                                // iconLayout: layout,
+                            }}
+                            properties={{
+                                balloonContent: "test balloon content"
+                            }}
+                        />
+                    ))}
+                </Clusterer>
                 {/*<RouteButton options={{ float: "right" }} />*/}
             </Map>
 
@@ -34,15 +108,12 @@ const HomePage = observer(() => {
             >
                 Профиль
             </Button>
-            <div
-                className={"absolute top-0 left-0 flex drop-shadow-xl h-full transition"}
-            >
+            <div className={"absolute top-0 left-0 flex drop-shadow-xl h-full transition"}>
                 <Filter/>
                 <Sidebar/>
             </div>
-
-        </YMaps>
-    )
+        </>
+)
 })
 
 export default HomePage

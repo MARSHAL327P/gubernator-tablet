@@ -3,7 +3,6 @@ import FilterStore from "../store/filterStore";
 import { useEffect, useRef, useState } from "react";
 import { Accordion, AccordionHeader, AccordionBody, Checkbox, Input } from "@material-tailwind/react";
 import FixedHeader from "../../FixedHeader/FixedHeader";
-import { toJS } from "mobx";
 
 function findSelectedItem(inputName, item) {
     return FilterStore.filterInputs[inputName].selected.indexOf(item)
