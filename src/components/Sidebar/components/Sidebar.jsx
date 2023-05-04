@@ -1,7 +1,7 @@
 import BeachCard from "../../BeachCard/components/BeachCard";
 import { observer } from "mobx-react-lite";
 import Search from "../../Search/components/Search";
-import Button from "../../RedefinedTags/components/Button";
+import Button from "../../RedefinedTags/Button/Button";
 import FilterStore from "../../Filter/store/filterStore";
 import { ReactComponent as Settings } from "../../../assets/icons/Settings.svg";
 import { ReactComponent as Close } from "../../../assets/icons/Close.svg";

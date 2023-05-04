@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 export class BeachCardStore {
     id = 0
     updateTime = null
+    code = ""
     name = ""
     rating = 0
     bathingComfort = ""
@@ -23,6 +24,7 @@ export class BeachCardStore {
                 id: 1,
                 updateTime: "2023-04-26T13:57:00",
                 name: "Любимовка",
+                code: "lubimovka",
                 rating: 4.7,
                 bathingComfort: "GOOD",
                 waterTemp: 14.7,
@@ -55,6 +57,7 @@ export class BeachCardStore {
                 id: 2,
                 updateTime: "2023-04-27T21:54:00",
                 name: "Учкуевка",
+                code: "uchkuevka",
                 rating: 4.2,
                 bathingComfort: "NO_BATHING",
                 beachProblems: "DANGER",
@@ -88,6 +91,7 @@ export class BeachCardStore {
                 id: 3,
                 updateTime: "2023-03-24T13:57:00",
                 name: "Хрустальный",
+                code: "hrustalniy",
                 rating: 3.9,
                 bathingComfort: "BEACH_CLOSE",
                 beachProblems: "WARNING",

@@ -5,7 +5,7 @@ import { ReactComponent as Wind } from "../../../assets/icons/Wind.svg";
 import { ReactComponent as Map } from "../../../assets/icons/Map.svg";
 import { ReactComponent as Route } from "../../../assets/icons/Route.svg";
 import { ReactComponent as Chevron } from "../../../assets/icons/Chevron.svg";
-import Button from "../../RedefinedTags/components/Button";
+import Button, { WHITE } from "../../RedefinedTags/Button/Button";
 import { observer } from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
 import dayjs from "dayjs";
@@ -13,6 +13,7 @@ import 'dayjs/locale/ru';
 import 'dayjs/plugin/updateLocale';
 import { capitalizeFirstLetter } from "../../../Utils";
 import BeachLocalStore from "../store/beachLocalStore";
+import { Link } from "react-router-dom";
 
 let relativeTime = require('dayjs/plugin/relativeTime')
 
@@ -20,6 +21,7 @@ const BeachCard = observer((
     {
         updateTime,
         name,
+        code,
         rating,
         bathingComfort,
         beachProblems,
@@ -67,7 +69,7 @@ const BeachCard = observer((
                     </div>
                 </div>
                 <div className="flex justify-between gap-5 mt-5">
-                    <Button classes={"w-full"}  icon={Map}>
+                    <Button classes={"w-full"} icon={Map}>
                         На карте
                     </Button>
                     <Button classes={"w-full"} icon={Route}>
@@ -75,9 +77,14 @@ const BeachCard = observer((
                     </Button>
                 </div>
             </div>
-            <div className="bg-gray-200 px-3 py-2 rounded-b-xl flex items-center justify-center gap-2">
+            <Link to={`/beach/${code}`}>
+                <Button classes={"w-full !shadow-none"} type={WHITE} rounded={"none"}>
+                    Подробнее о пляже
+                </Button>
+            </Link>
+            <div className="bg-gray-200 text-sm px-3 py-2 rounded-b-xl flex items-center justify-center gap-2">
                 <Chevron className={"-rotate-90"}/>
-                Подробнее
+                Дополнительная информация
             </div>
         </div>
     )

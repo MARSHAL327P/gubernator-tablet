@@ -1,35 +1,31 @@
-import { Clusterer, Map, ObjectManager, Placemark, useYMaps, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
-import Sidebar from "../components/Sidebar/components/Sidebar";
-import useWindowSize from "../hooks/useWindowSize";
-import Button, { WHITE } from "../components/RedefinedTags/components/Button";
-import { ReactComponent as Human } from "../assets/icons/Human.svg";
-import Filter from "../components/Filter/components/Filter";
 import { observer } from "mobx-react-lite";
+import { Clusterer, Map, Placemark, ZoomControl } from "@pbe/react-yandex-maps";
 import LocalStationStore from "../components/Stations/store/localStationStore";
-import { toJS } from "mobx";
-import { useEffect } from "react";
-// import ymaps from "yandex-maps";
+import Button, { WHITE } from "../components/RedefinedTags/Button/Button";
+import { ReactComponent as Human } from "../assets/icons/Human.svg";
+import useWindowSize from "../hooks/useWindowSize";
 
-const HomePage = observer(() => {
+
+const MapTemplate = observer(() => {
     const [, height] = useWindowSize() // Следим за изменением высоты
     const mapDefaultState = {
         center: [44.556972, 33.526402],
         zoom: 12,
         controls: [],
     }
-    const ymaps = useYMaps(['Placemark']);
-
-    useEffect(() => {
-        console.log(ymaps)
-        // const layout = ymaps.templateLayoutFactory.createClass(
-        //     `<div>test</div>`,
-        //     {
-        //         build: function () {
-        //             layout.superclass.build.call(this);
-        //         }
-        //     }
-        // )
-    }, [ymaps]);
+    // const ymaps = useYMaps(['Placemark']);
+    //
+    // useEffect(() => {
+    //     console.log(ymaps)
+    //     const layout = ymaps.templateLayoutFactory.createClass(
+    //         `<div>test</div>`,
+    //         {
+    //             build: function () {
+    //                 layout.superclass.build.call(this);
+    //             }
+    //         }
+    //     )
+    // }, [ymaps]);
     // const collection = {
     //     type: "FeatureCollection",
     //     features: LocalStationStore.stationList.map((station, index) => {
@@ -47,7 +43,6 @@ const HomePage = observer(() => {
     //     })
     // };
     //
-
 
     return (
         <>
@@ -99,21 +94,16 @@ const HomePage = observer(() => {
                 </Clusterer>
                 {/*<RouteButton options={{ float: "right" }} />*/}
             </Map>
-
             <Button
-                classes={"absolute top-7 right-5"}
+                classes={"!absolute top-7 right-5"}
                 type={WHITE}
                 icon={Human}
                 numNotify={2}
             >
                 Профиль
             </Button>
-            <div className={"absolute top-0 left-0 flex drop-shadow-xl h-full transition"}>
-                <Filter/>
-                <Sidebar/>
-            </div>
         </>
-)
+    )
 })
 
-export default HomePage
+export default MapTemplate
