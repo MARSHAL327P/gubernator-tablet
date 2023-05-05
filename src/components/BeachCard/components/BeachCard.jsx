@@ -8,64 +8,44 @@ import { ReactComponent as Chevron } from "../../../assets/icons/Chevron.svg";
 import Button, { WHITE } from "../../RedefinedTags/Button/Button";
 import { observer } from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
-import dayjs from "dayjs";
 import 'dayjs/locale/ru';
 import 'dayjs/plugin/updateLocale';
-import { capitalizeFirstLetter } from "../../../Utils";
 import BeachLocalStore from "../store/beachLocalStore";
 import { Link } from "react-router-dom";
 
-let relativeTime = require('dayjs/plugin/relativeTime')
-
-const BeachCard = observer((
-    {
-        updateTime,
-        name,
-        code,
-        rating,
-        bathingComfort,
-        beachProblems,
-        waterTemp,
-        airTemp,
-        wind,
-        coord,
-    }) => {
-
+const BeachCard = observer(({ beach }) => {
     let classes = {
         indications: "flex items-center gap-2 whitespace-nowrap",
         paddings: "px-7 pb-2 pt-4"
     }
 
-    dayjs.extend(relativeTime)
-    updateTime = capitalizeFirstLetter(dayjs(updateTime).locale("ru").fromNow())
-
     return (
         <div className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}>
             <div className={classes.paddings}>
-                <div className="text-gray-400 text-[12px]">{updateTime}</div>
+                <div className="text-gray-400 text-[12px]">{beach.updateTimeText}</div>
                 <div className="flex justify-between items-center">
-                    <span className={"text-title"}>{name}</span>
-                    {beachProblems && BeachLocalStore.beachProblemsType[beachProblems]}
+                    <span className={"text-title"}>{beach.name}</span>
+                    {beach.beachProblems && BeachLocalStore.beachProblemsType[beach.beachProblems]}
                     <div className={"flex gap-1 items-center"}>
                         <Star className={"fill-warning"}/>
-                        <span className={"h-[20px]"}>{rating}</span>
+                        <span className={"h-[20px]"}>{beach.rating}</span>
                     </div>
                 </div>
             </div>
-            <BathingComfort bathingComfort={bathingComfort} />
+            <BathingComfort bathingComfort={beach.bathingComfort} />
             <div className="px-7 py-5">
                 <div className={"flex gap-10 items-center"}>
                     <div className={classes.indications}>
                         <Water className={"fill-primary"}/>
-                        <span>{waterTemp}°</span>
+                        <span>{beach.waterTemp}°</span>
                     </div>
                     <div className={classes.indications}>
                         <Temperature className={"fill-warning"}/>
-                        <span>{airTemp}°</span>
+                        <span>{beach.airTemp}°</span>
                     </div>
                     <div className={classes.indications}>
                         <Wind className={"fill-danger"}/>
-                        <span>{wind} м/c</span>
+                        <span>{beach.wind} м/c</span>
                     </div>
                 </div>
                 <div className="flex justify-between gap-5 mt-5">
@@ -77,7 +57,7 @@ const BeachCard = observer((
                     </Button>
                 </div>
             </div>
-            <Link to={`/beach/${code}`}>
+            <Link to={`/beach/${beach.code}`}>
                 <Button classes={"w-full !shadow-none"} type={WHITE} rounded={"none"}>
                     Подробнее о пляже
                 </Button>

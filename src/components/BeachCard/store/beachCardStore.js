@@ -1,4 +1,7 @@
 import { makeAutoObservable } from "mobx";
+import { capitalizeFirstLetter } from "../../../Utils";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 export class BeachCardStore {
     id = 0
@@ -130,6 +133,11 @@ export class BeachCardStore {
         return beachCardList.map(item => {
             return new BeachCardStore(item)
         })
+    }
+
+    get updateTimeText(){
+        dayjs.extend(relativeTime)
+        return capitalizeFirstLetter(dayjs(this.updateTime).locale("ru").fromNow())
     }
 
     constructor(data) {

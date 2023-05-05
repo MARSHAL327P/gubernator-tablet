@@ -32,6 +32,10 @@ class BeachLocalStore {
         WARNING: <Warning className={"fill-warning w-[25px] h-[25px]"}/>,
     }
 
+    findBeach(beachCode){
+        return this.beachList.filter((beach) => beach.code === beachCode)[0]
+    }
+
     constructor(data) {
         makeAutoObservable(this);
 

@@ -7,13 +7,14 @@ export const TEXT = "text"
 export default function Button(
     {
         icon = "",
-        children,
+        children = null,
         classes = "",
         type = PRIMARY,
         iconClasses = "",
         numNotify = 0,
         onClick = null,
-        rounded = "xl"
+        rounded = "xl",
+        size = "md"
     }) {
 
     let Icon = icon
@@ -22,22 +23,31 @@ export default function Button(
     switch (type) {
         case WHITE:
             classes += " bg-white hover:bg-gray-100 shadow-lg"
-            iconClasses += " fill-black "
+            iconClasses += " fill-black"
             rippleColor = "rgba(161,161,161,0.69)"
             break;
         case TEXT:
-            classes += " bg-white hover:bg-gray-100"
-            iconClasses += " fill-black "
+            classes += " hover:bg-gray-100"
+            iconClasses += " fill-black"
             rippleColor = "rgba(161,161,161,0.69)"
             break;
         default:
-            classes += " bg-primary hover:bg-primary-600 text-white "
-            iconClasses += " fill-white "
+            classes += " bg-primary hover:bg-primary-600 text-white"
+            iconClasses += " fill-white"
             break;
     }
 
+    switch (size){
+        case "sm":
+            classes += " w-[30px] h-[30px] !p-2"
+            break;
+        default:
+    }
+
+    classes += (children === null && icon !== "") ? " px-3" : " px-5" // calculate paddings
+
     return (
-        <button onClick={onClick} className={classes + ` p-3 px-5 gap-2 rounded-${rounded} transition` +
+        <button onClick={onClick} className={classes + ` py-3 gap-2 rounded-${rounded} transition` +
             " flex justify-center items-center overflow-hidden relative outline-0"
         }>
             {icon && <Icon className={iconClasses}/>}

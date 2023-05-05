@@ -32,7 +32,7 @@ const Sidebar = observer(() => {
                     " z-[1]"}>
                 {FilterStore.filteredBeaches.length > 0 ?
                     FilterStore.filteredBeaches.map((beach) => {
-                        return <BeachCard {...beach} key={beach.id}/>
+                        return <BeachCard beach={beach} key={beach.id}/>
                     }) :
                     <div className={"w-[348px] text-center font-bold text-2xl"}>Нет результатов</div>
                 }
