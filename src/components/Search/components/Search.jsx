@@ -4,9 +4,9 @@ import { observer } from "mobx-react-lite";
 
 const Search = observer(() => {
     return (
-        <div className={"relative"}>
+        <div className={"relative w-full"}>
             <input className={"text-gray-500 transition bg-gray-200 rounded-xl py-3 px-5 flex " +
-                "justify-between w-[287px]"}
+                "justify-between w-full"}
                    type="text"
                    placeholder={"Поиск..."}
                    onChange={(e) => {sidebarStore.searchQuery = e.currentTarget.value}}

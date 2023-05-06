@@ -33,7 +33,7 @@ class BeachLocalStore {
     }
 
     findBeach(beachCode){
-        return this.beachList.filter((beach) => beach.code === beachCode)[0]
+        return this.beachList.find((beach) => beach.code === beachCode)
     }
 
     constructor(data) {

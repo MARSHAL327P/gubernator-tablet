@@ -1,9 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { Tab } from '@headlessui/react'
-import Button, { PRIMARY, TEXT, WHITE } from "../../RedefinedTags/Button/Button";
+// import Button, { PRIMARY, TEXT, WHITE } from "../../RedefinedTags/Button/Button";
+import { Button } from "@material-tailwind/react";
 import { ReactComponent as Home } from "../../../assets/icons/Home.svg";
 import { Link, useParams } from "react-router-dom";
 import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
+import { classNames } from "../../../Utils";
 
 const Dashboard = observer(({ tabItems, dashboardName }) => {
     const { beachCode } = useParams()
@@ -13,16 +15,17 @@ const Dashboard = observer(({ tabItems, dashboardName }) => {
         <>
             <Link to={"/"}>
                 <Button
-                    classes={"!absolute top-7 left-5"}
-                    type={WHITE}
-                    icon={Home}
+                    className={"!absolute top-7 left-5"}
+                    color={"white"}
                 >
+                    <Home className={"fill-black"}/>
                     На главную
                 </Button>
             </Link>
             <div className={"absolute bottom-0 w-full h-[500px]"}>
                 <Tab.Group>
-                    <Tab.List className={"grid grid-cols-3 px-7 py-5 backdrop-blur-sm bg-white/50"}>
+                    <Tab.List
+                        className={"grid grid-cols-[400px_1fr_400px] gap-5 px-7 py-5 backdrop-blur-sm bg-white/50"}>
                         <div>
                             <div className={"text-title"}>
                                 {dashboardName} «{beach.name}»
@@ -36,8 +39,14 @@ const Dashboard = observer(({ tabItems, dashboardName }) => {
                                     return (
                                         <Tab as={"div"} key={idx} className={"outline-none"}>
                                             {({ selected }) => (
-                                                <Button classes={"text-lg font-semibold px-7"}
-                                                        type={selected ? PRIMARY : TEXT}>
+                                                <Button
+                                                    color={selected ? "" : "white"}
+                                                    variant={selected ? "filled" : "text"}
+                                                    className={classNames(
+                                                        "text-lg font-semibold px-7",
+                                                        selected ? "shadow-lg" : ""
+                                                    )}
+                                                >
                                                     {tabName}
                                                 </Button>
                                             )}

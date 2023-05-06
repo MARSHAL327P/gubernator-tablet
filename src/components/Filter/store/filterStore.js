@@ -5,7 +5,6 @@ import sidebarStore from "../../Sidebar/store/sidebarStore";
 
 class FilterStore {
     isOpen = false
-    width = 0
     filterTypes = {
         select: {
             variants: [],

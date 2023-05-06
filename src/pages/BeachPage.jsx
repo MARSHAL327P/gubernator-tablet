@@ -5,14 +5,16 @@ import WidgetTemplateStore from "../components/Widgets/store/widgetTemplateStore
 
 const BeachPage = observer(() => {
     const tabItems = {
+        "Информация об объекте": {
+            content: "Информация об объекте"
+        },
+        "Отзывы": {
+            content: "Отзывы"
+        },
         "Виджеты": {
             content: <WidgetTemplate
                 widgets={[
                     WidgetTemplateStore.widgets.TEMPERATURE,
-                    WidgetTemplateStore.widgets.HUMIDITY,
-                    WidgetTemplateStore.widgets.HUMIDITY,
-                    WidgetTemplateStore.widgets.HUMIDITY,
-                    WidgetTemplateStore.widgets.HUMIDITY,
                     WidgetTemplateStore.widgets.HUMIDITY,
                 ]}
             />

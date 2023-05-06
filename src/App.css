@@ -15,12 +15,16 @@
     background-color: rgba(0, 0, 0, .3);
 }
 
+body{
+    overflow-x: hidden;
+}
+
 .sidebar{
     height: calc(100% - 104px);
 }
 
 .filter{
-    height: calc(100% - 92px);
+    height: calc(100% - 104px);
 }
 
 .text-title{

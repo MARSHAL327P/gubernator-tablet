@@ -5,7 +5,8 @@ import { ReactComponent as Wind } from "../../../assets/icons/Wind.svg";
 import { ReactComponent as Map } from "../../../assets/icons/Map.svg";
 import { ReactComponent as Route } from "../../../assets/icons/Route.svg";
 import { ReactComponent as Chevron } from "../../../assets/icons/Chevron.svg";
-import Button, { WHITE } from "../../RedefinedTags/Button/Button";
+// import Button, { WHITE } from "../../RedefinedTags/Button/Button";
+import { Button } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
 import 'dayjs/locale/ru';
@@ -49,16 +50,18 @@ const BeachCard = observer(({ beach }) => {
                     </div>
                 </div>
                 <div className="flex justify-between gap-5 mt-5">
-                    <Button classes={"w-full"} icon={Map}>
+                    <Button fullWidth className={"flex items-center gap-2"}>
+                        <Map className={"fill-white"}/>
                         На карте
                     </Button>
-                    <Button classes={"w-full"} icon={Route}>
+                    <Button fullWidth className={"flex items-center gap-2"}>
+                        <Route className={"fill-white"}/>
                         Маршрут
                     </Button>
                 </div>
             </div>
             <Link to={`/beach/${beach.code}`}>
-                <Button classes={"w-full !shadow-none"} type={WHITE} rounded={"none"}>
+                <Button className={"rounded-none"} color={"white"} variant={"text"} fullWidth>
                     Подробнее о пляже
                 </Button>
             </Link>
