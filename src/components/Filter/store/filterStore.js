@@ -20,7 +20,7 @@ class FilterStore {
         },
         selectFromTo: {
             from: Infinity,
-            to: 0,
+            to: -Infinity,
             type: "selectFromTo",
             open: true,
             selected: {
@@ -74,6 +74,7 @@ class FilterStore {
             ...this.filterTypes.selectFromTo
         },
     }
+    // filterIsChanged = false
     filterInputsKeys = Object.keys(this.filterInputs)
 
     get filteredBeaches() {
@@ -106,7 +107,7 @@ class FilterStore {
     }
 
     clearFilter(){
-        Object.keys(this.filterInputs).forEach(filterInputKey => {
+        for (const filterInputKey in this.filterInputs) {
             let filterInput = this.filterInputs[filterInputKey]
 
             switch (filterInput.type){
@@ -119,7 +120,25 @@ class FilterStore {
                 default:
                     filterInput.selected = []
             }
-        })
+        }
+    }
+
+    get filterIsChanged(){
+        for (const filterInputKey in this.filterInputs) {
+            let filterInput = this.filterInputs[filterInputKey]
+
+            switch (filterInput.type){
+                case this.filterTypes.selectFromTo.type:
+                    if( filterInput.selected.from !== null || filterInput.selected.to !== null )
+                        return true;
+                    break;
+                default:
+                    if( filterInput.selected.length > 0 )
+                        return true;
+            }
+        }
+
+        return false
     }
 
     fillFilterInputs(){

@@ -99,10 +99,10 @@ const Filter = observer(() => {
     return (
         <div ref={filterEl}
              className={"h-full bg-white transition absolute top-0 left-0" + (FilterStore.isOpen ? " translate-x-full" : "")}>
-            <FixedHeader elOffset={elOffset} classes={"p-7 items-baseline justify-between"}>
+            <FixedHeader elOffset={elOffset} classes={"p-7 items-center justify-between h-[104px]"}>
                 <div className={"text-title"}>Фильтр пляжей</div>
                 <Transition
-                    show={true}
+                    show={FilterStore.filterIsChanged}
                     enter="transition-opacity duration-75"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
