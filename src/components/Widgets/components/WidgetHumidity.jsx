@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 
-const WidgetHumidity = observer(() => {
+const WidgetHumidity = observer(({ color }) => {
     const params = [
         {
             name: "Вчера было",
@@ -10,7 +10,7 @@ const WidgetHumidity = observer(() => {
 
     return (
         <>
-            <div className="text-info text-center font-bold text-6xl mb-3">
+            <div className={`text-${color} text-center font-bold text-6xl mb-3`}>
                 {"70%"}
             </div>
             <div className={"flex"}>

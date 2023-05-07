@@ -16,6 +16,7 @@ const BeachPage = observer(() => {
                 widgets={[
                     WidgetTemplateStore.widgets.TEMPERATURE,
                     WidgetTemplateStore.widgets.HUMIDITY,
+                    WidgetTemplateStore.widgets.PRESSURE,
                 ]}
             />
         },

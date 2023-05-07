@@ -8,6 +8,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { classNames } from "../../../Utils";
 import Ripple from "../../RedefinedTags/Ripple/Ripple";
 import { Transition } from '@headlessui/react'
+import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
 
 function findSelectedItem(inputName, item) {
     return FilterStore.filterInputs[inputName].selected.indexOf(item)
@@ -31,6 +32,25 @@ function setSelectFromToItem(e, inputName){
 
 function inputValues(inputName, inputParams) {
     switch (inputParams.type) {
+        case FilterStore.filterTypes.radioBtn.type:
+            return (
+                <div className={"flex flex-row gap-5"}>
+                    {inputParams.variants.map((item, i) => {
+                        return (
+                            <Button
+                                onClick={setCheckedItems.bind(null, item, inputName, inputParams)}
+                                className={classNames("flex", findSelectedItem(inputName, item) !== -1 ? "" : "shadow-md")}
+                                fullWidth
+                                color={findSelectedItem(inputName, item) !== -1 ? "" : "white"}
+                            >
+                                {item}
+                                {inputName === "rating" && <Star className={"fill-warning"}/>}
+                            </Button>
+                        )
+                    })
+                    }
+                </div>
+            )
         case FilterStore.filterTypes.selectFromTo.type:
             let defaultParams = {
                 min: inputParams.from,

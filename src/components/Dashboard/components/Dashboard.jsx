@@ -15,14 +15,14 @@ const Dashboard = observer(({ tabItems, dashboardName }) => {
         <>
             <Link to={"/"}>
                 <Button
-                    className={"!absolute top-7 left-5"}
+                    className={"fixed top-7 left-5 w-fit whitespace-nowrap"}
                     color={"white"}
                 >
                     <Home className={"fill-black"}/>
                     На главную
                 </Button>
             </Link>
-            <div className={"absolute bottom-0 w-full h-[500px]"}>
+            <div className={"absolute bottom-0 w-screen min-h-[300px]"}>
                 <Tab.Group>
                     <Tab.List
                         className={"grid grid-cols-[400px_1fr_400px] gap-5 px-7 py-5 backdrop-blur-sm bg-white/50"}>
@@ -56,7 +56,7 @@ const Dashboard = observer(({ tabItems, dashboardName }) => {
                             )}
                         </div>
                     </Tab.List>
-                    <Tab.Panels className={"p-7 bg-gray-50 h-full"}>
+                    <Tab.Panels className={"p-7 bg-gray-50 min-h-[300px]"}>
                         {Object.values(tabItems).map((tabInfo, idx) => {
                                 return <Tab.Panel key={idx}>{tabInfo.content}</Tab.Panel>
                             }

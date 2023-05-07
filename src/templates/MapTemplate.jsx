@@ -6,7 +6,7 @@ import { ReactComponent as Human } from "../assets/icons/Human.svg";
 import useWindowSize from "../hooks/useWindowSize";
 
 const MapTemplate = observer(() => {
-    const [, height] = useWindowSize() // Следим за изменением высоты
+    const [width, height] = useWindowSize() // Следим за изменением высоты
     const mapDefaultState = {
         center: [44.556972, 33.526402],
         zoom: 12,
@@ -46,7 +46,7 @@ const MapTemplate = observer(() => {
     return (
         <>
             <Map
-                width={"100%"}
+                width={width}
                 height={height}
                 defaultState={mapDefaultState}
             >
