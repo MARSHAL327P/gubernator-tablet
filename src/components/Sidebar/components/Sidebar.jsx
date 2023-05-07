@@ -1,7 +1,7 @@
 import BeachCard from "../../BeachCard/components/BeachCard";
 import { observer } from "mobx-react-lite";
 import Search from "../../Search/components/Search";
-import { Button } from "@material-tailwind/react";
+import { Button, Tooltip } from "@material-tailwind/react";
 import FilterStore from "../../Filter/store/filterStore";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import { useState } from "react";
@@ -16,18 +16,20 @@ const Sidebar = observer(() => {
         <div className={"h-full bg-white transition z-20"}>
             <FixedHeader elOffset={elOffset} classes={"px-3 py-7 mr-[6px]"}>
                 <Search/>
-                <Button
-                    className={"flex items-center px-4 max-h-[48px]"}
-                    onClick={() => {
-                        FilterStore.isOpen = !FilterStore.isOpen
-                    }}
-                >
-                    {
-                        FilterStore.isOpen ?
-                            <XMarkIcon className={iconStyles}/> :
-                            <AdjustmentsVerticalIcon className={iconStyles}/>
-                    }
-                </Button>
+                <Tooltip content={FilterStore.isOpen ? "Закрыть фильтр" : "Фильтр пляжей"} >
+                    <Button
+                        className={"flex items-center px-4 max-h-[48px]"}
+                        onClick={() => {
+                            FilterStore.isOpen = !FilterStore.isOpen
+                        }}
+                    >
+                        {
+                            FilterStore.isOpen ?
+                                <XMarkIcon className={iconStyles}/> :
+                                <AdjustmentsVerticalIcon className={iconStyles}/>
+                        }
+                    </Button>
+                </Tooltip>
             </FixedHeader>
             <div
                 onScroll={(e) => {

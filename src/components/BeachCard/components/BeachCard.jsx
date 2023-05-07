@@ -6,7 +6,7 @@ import { ReactComponent as Map } from "../../../assets/icons/Map.svg";
 import { ReactComponent as Route } from "../../../assets/icons/Route.svg";
 import { ReactComponent as Chevron } from "../../../assets/icons/Chevron.svg";
 // import Button, { WHITE } from "../../RedefinedTags/Button/Button";
-import { Button } from "@material-tailwind/react";
+import { Button, Tooltip } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
 import 'dayjs/locale/ru';
@@ -23,7 +23,12 @@ const BeachCard = observer(({ beach }) => {
     return (
         <div className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}>
             <div className={classes.paddings}>
-                <div className="text-gray-400 text-[12px]">{beach.updateTimeText}</div>
+                <Tooltip content={"Время последнего обновления данных"}>
+                    <div className="text-gray-400 text-[12px]">
+                        {beach.updateTimeText}
+                    </div>
+                </Tooltip>
+
                 <div className="flex justify-between items-center">
                     <span className={"text-title"}>{beach.name}</span>
                     {beach.beachProblems && BeachLocalStore.beachProblemsType[beach.beachProblems]}
