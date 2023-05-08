@@ -23,7 +23,7 @@ export class BeachCardStore {
     props = {}
 
     static get(){
-        return axios.get("http://185.180.230.129:8081/api/beaches")
+        return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 // eslint-disable-next-line no-unused-vars
                 let beachCardList = [
