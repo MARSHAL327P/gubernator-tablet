@@ -18,9 +18,9 @@ const WidgetTemperature = observer(({ color }) => {
                 {"18.5°"}
             </div>
             <div className={"flex"}>
-                {tempParams.map((item, i) => {
+                {tempParams.map((item, idx) => {
                     return (
-                        <div className={"px-2" + (i === 0 ? " border-r" : "")}>
+                        <div key={idx} className={"px-2" + (idx === 0 ? " border-r" : "")}>
                             <div className={"text-gray-500"}>{item.name}</div>
                             <div className={"text-center"}>{item.value}</div>
                         </div>

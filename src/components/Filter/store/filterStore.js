@@ -142,16 +142,20 @@ class FilterStore {
     }
 
     fillFilterInputs(){
+        if( BeachLocalStore.beachList === null ) return
         let excludedFilters = ["rating", "price", "workTime"]
 
         BeachLocalStore.beachList.forEach(beach => {
             this.filterInputsKeys.forEach(filterInputKey => {
+                if( excludedFilters.indexOf(filterInputKey) !== -1 ) return false
+
                 let beachInputInfo = beach[filterInputKey]
                 let filterInput = this.filterInputs[filterInputKey]
 
-                if (beachInputInfo && excludedFilters.indexOf(filterInputKey) === -1) {
+                if (beachInputInfo) {
                     switch (filterInput.type) {
                         case this.filterTypes.selectFromTo.type:
+
                             if (beachInputInfo > filterInput.to)
                                 filterInput.to = beachInputInfo
 
@@ -163,15 +167,18 @@ class FilterStore {
                                 return false
 
                             if( typeof beachInputInfo === "object" ){
-                                Object.values(beachInputInfo).forEach(item => {
-                                    if( filterInput.variants.indexOf(item.name) === -1 )
-                                        filterInput.variants.push(item.name)
-                                })
+                                for (const item in beachInputInfo) {
+                                    if( filterInput.variants.indexOf(beachInputInfo[item].name) === -1 )
+                                        filterInput.variants.push(beachInputInfo[item].name)
+                                }
+                                // console.log(filterInput.variants)
                             } else {
                                 filterInput.variants.push(beachInputInfo)
                             }
 
                     }
+                } else {
+                    delete this.filterInputs[filterInputKey]
                 }
             })
         })

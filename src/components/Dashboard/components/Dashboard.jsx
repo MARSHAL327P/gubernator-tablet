@@ -12,12 +12,12 @@ const Dashboard = observer(({ tabItems, dashboardName }) => {
     const { beachCode } = useParams()
     let beach = BeachLocalStore.findBeach(beachCode)
 
-    return (
+    return (beach &&
         <div className={"absolute bottom-0 w-screen min-h-[300px]"}>
             <Tab.Group>
                 <Tab.List
                     className={"grid grid-cols-[400px_1fr_400px] gap-5 px-7 py-5 backdrop-blur-sm bg-white/50"}>
-                    <div className={"flex gap-5"}>
+                    <div className={"flex items-center gap-5"}>
                         <Tooltip placement="top-start" content="Вернуться на главную">
                             <Link to={"/"}>
                                 <Button
@@ -32,18 +32,21 @@ const Dashboard = observer(({ tabItems, dashboardName }) => {
                             <div className={"text-title"}>
                                 {dashboardName} «{beach.name}»
                             </div>
-                            <div className={"text-xs text-gray-500"}>
-                                Обновлено {beach.updateTimeText}
-                            </div>
+                            {
+                                beach.updateTimeText &&
+                                <div className={"text-xs text-gray-500"}>
+                                    Обновлено {beach.updateTimeText}
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={"flex flex-wrap gap-2 justify-self-center"}>
-                        {Object.keys(tabItems).map((tabName, idx) => {
+                        {Object.keys(tabItems).map((tabName) => {
                                 return (
-                                    <Tab as={"div"} key={idx} className={"outline-none"}>
+                                    <Tab as={"div"} key={tabName} className={"outline-none"}>
                                         {({ selected }) => (
                                             <Button
-                                                color={selected ? "" : "white"}
+                                                color={selected ? "blue" : "white"}
                                                 variant={selected ? "filled" : "text"}
                                                 className={classNames(
                                                     "text-lg font-semibold px-7",

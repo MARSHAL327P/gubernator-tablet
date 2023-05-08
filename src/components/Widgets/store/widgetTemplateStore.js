@@ -9,16 +9,19 @@ import WidgetPressure from "../components/WidgetPressure";
 class WidgetTemplateStore{
     widgets = {
         TEMPERATURE: {
+            id: 1,
             name: "Температура",
             icon: <Temperature className={"fill-warning"}/>,
             content: <WidgetTemperature color={"warning"}/>
         },
         HUMIDITY: {
+            id: 2,
             name: "Влажность",
             icon: <Humidity className={"fill-info"}/>,
             content: <WidgetHumidity color={"info"}/>
         },
         PRESSURE: {
+            id: 3,
             name: "Давление",
             icon: <Pressure className={"fill-success"}/>,
             content: <WidgetPressure color={"success"}/>

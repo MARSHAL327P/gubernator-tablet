@@ -9,6 +9,7 @@ import { classNames } from "../../../Utils";
 import Ripple from "../../RedefinedTags/Ripple/Ripple";
 import { Transition } from '@headlessui/react'
 import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
+import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
 
 function findSelectedItem(inputName, item) {
     return FilterStore.filterInputs[inputName].selected.indexOf(item)
@@ -18,7 +19,12 @@ function setCheckedItems(item, inputName, inputParams) {
     let findItemIndex = findSelectedItem(inputName, item)
 
     if (findItemIndex === -1) {
-        inputParams.selected.push(item)
+        if( inputParams.type === FilterStore.filterTypes.radioBtn.type ){
+            inputParams.selected = [item]
+        } else {
+            inputParams.selected.push(item)
+        }
+
     } else {
         inputParams.selected.splice(findItemIndex, 1)
     }
@@ -35,9 +41,10 @@ function inputValues(inputName, inputParams) {
         case FilterStore.filterTypes.radioBtn.type:
             return (
                 <div className={"flex flex-row gap-5"}>
-                    {inputParams.variants.map((item, i) => {
+                    {inputParams.variants.map((item, idx) => {
                         return (
                             <Button
+                                key={idx}
                                 onClick={setCheckedItems.bind(null, item, inputName, inputParams)}
                                 className={classNames("flex", findSelectedItem(inputName, item) !== -1 ? "" : "shadow-md")}
                                 fullWidth
@@ -108,13 +115,27 @@ function inputValues(inputName, inputParams) {
     }
 }
 
+function hasVariants(filterInput){
+    switch (filterInput.type){
+        case FilterStore.filterTypes.selectFromTo.type:
+            if( filterInput.from === Infinity || filterInput.to === -Infinity )
+                return false;
+            break;
+        default:
+            if( filterInput.variants.length <= 0 )
+                return false;
+    }
+
+    return true
+}
+
 const Filter = observer(() => {
     let filterEl = useRef(null)
     let [elOffset, setElOffset] = useState(0)
 
     useEffect(() => {
         FilterStore.fillFilterInputs()
-    }, [])
+    }, [BeachLocalStore.beachList])
 
     return (
         <div ref={filterEl}
@@ -147,6 +168,8 @@ const Filter = observer(() => {
                 <List className={"p-0"}>
                     {Object.keys(FilterStore.filterInputs).map((inputName) => {
                         let inputParams = FilterStore.filterInputs[inputName]
+
+                        if( !hasVariants(inputParams) ) return false
 
                         return (
 

@@ -14,9 +14,9 @@ const WidgetHumidity = observer(({ color }) => {
                 {"70%"}
             </div>
             <div className={"flex"}>
-                {params.map((item, i) => {
+                {params.map((item, idx) => {
                     return (
-                        <div className={"px-2" + (params.length > 1 && i === 0 ? " border-r" : "")}>
+                        <div key={idx} className={"px-2" + (params.length > 1 && idx === 0 ? " border-r" : "")}>
                             <div className={"text-gray-500"}>{item.name}</div>
                             <div className={"text-center"}>{item.value}</div>
                         </div>

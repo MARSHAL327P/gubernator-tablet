@@ -19,6 +19,30 @@ const BeachCard = observer(({ beach }) => {
         indications: "flex items-center gap-2 whitespace-nowrap",
         paddings: "px-7 pb-2 pt-4"
     }
+    let beachProblems = BeachLocalStore.beachProblemsType[beach.beachProblems]
+    let indications = [
+        {
+            name: "Температура воды",
+            color: "info",
+            value: beach.waterTemp,
+            icon: Water,
+            units: "°",
+        },
+        {
+            name: "Температура воздуха",
+            color: "warning",
+            value: beach.airTemp,
+            icon: Temperature,
+            units: "°",
+        },
+        {
+            name: "Скорость ветра",
+            color: "danger",
+            value: beach.wind,
+            icon: Wind,
+            units: " м/с",
+        }
+    ]
 
     return (
         <div className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}>
@@ -31,7 +55,13 @@ const BeachCard = observer(({ beach }) => {
 
                 <div className="flex justify-between items-center">
                     <span className={"text-title"}>{beach.name}</span>
-                    {beach.beachProblems && BeachLocalStore.beachProblemsType[beach.beachProblems]}
+                    {
+                        beach.beachProblems &&
+                        <Tooltip content={beachProblems.name}>
+                            {beachProblems.icon}
+                        </Tooltip>
+                    }
+
                     <div className={"flex gap-1 items-center"}>
                         <Star className={"fill-warning"}/>
                         <span className={"h-[20px]"}>{beach.rating}</span>
@@ -40,19 +70,23 @@ const BeachCard = observer(({ beach }) => {
             </div>
             <BathingComfort bathingComfort={beach.bathingComfort} />
             <div className="px-7 py-5">
-                <div className={"flex gap-10 items-center"}>
-                    <div className={classes.indications}>
-                        <Water className={"fill-primary"}/>
-                        <span>{beach.waterTemp}°</span>
-                    </div>
-                    <div className={classes.indications}>
-                        <Temperature className={"fill-warning"}/>
-                        <span>{beach.airTemp}°</span>
-                    </div>
-                    <div className={classes.indications}>
-                        <Wind className={"fill-danger"}/>
-                        <span>{beach.wind} м/c</span>
-                    </div>
+                <div className={"flex gap-10 items-center justify-around"}>
+                    {
+                        indications.map((item, idx) => {
+                            let Icon = item.icon
+
+                            return (
+                                item.value &&
+                                <Tooltip content={item.name} placement={"bottom"}>
+                                    <div key={idx} className={classes.indications}>
+                                        <Icon className={`fill-${item.color}`}/>
+                                        <span>{item.value}{item.units}</span>
+                                    </div>
+                                </Tooltip>
+                            )
+                        })
+                    }
+
                 </div>
                 <div className="flex justify-between gap-5 mt-5">
                     <Button fullWidth className={"flex items-center gap-2"}>
