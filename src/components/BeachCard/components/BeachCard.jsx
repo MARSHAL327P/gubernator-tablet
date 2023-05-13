@@ -5,7 +5,6 @@ import { ReactComponent as Wind } from "../../../assets/icons/Wind.svg";
 import { ReactComponent as Map } from "../../../assets/icons/Map.svg";
 import { ReactComponent as Route } from "../../../assets/icons/Route.svg";
 import { ReactComponent as Chevron } from "../../../assets/icons/Chevron.svg";
-// import Button, { WHITE } from "../../RedefinedTags/Button/Button";
 import { Button, Tooltip } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
@@ -43,6 +42,11 @@ const BeachCard = observer(({ beach }) => {
             units: " м/с",
         }
     ]
+
+    const styles = {
+        btn: "flex items-center gap-2 shadow-none border hover:shadow-md p-0 w-full",
+        btnIcon: "fill-black w-5 h-5"
+    }
 
     return (
         <div className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}>
@@ -88,22 +92,24 @@ const BeachCard = observer(({ beach }) => {
                     }
 
                 </div>
-                <div className="flex justify-between gap-5 mt-5">
-                    <Button fullWidth className={"flex items-center gap-2"}>
-                        <Map className={"fill-white"}/>
-                        На карте
-                    </Button>
-                    <Button fullWidth className={"flex items-center gap-2"}>
-                        <Route className={"fill-white"}/>
-                        Маршрут
-                    </Button>
+                <div className="flex justify-between gap-2 mt-5">
+                    <Tooltip content={"На карте"}>
+                        <Button color={"white"} className={styles.btn}>
+                            <Map className={styles.btnIcon}/>
+                        </Button>
+                    </Tooltip>
+                    <Tooltip content={"Маршрут"}>
+                        <Button color={"white"} className={styles.btn}>
+                            <Route className={styles.btnIcon}/>
+                        </Button>
+                    </Tooltip>
+                    <Link to={`/beach/${beach.code}`}>
+                        <Button fullWidth className={"w-[200px] flex items-center gap-2"}>
+                            Подробнее о пляже
+                        </Button>
+                    </Link>
                 </div>
             </div>
-            <Link to={`/beach/${beach.code}`}>
-                <Button className={"rounded-none"} color={"white"} variant={"text"} fullWidth>
-                    Подробнее о пляже
-                </Button>
-            </Link>
             <div className="bg-gray-200 text-sm px-3 py-2 rounded-b-xl flex items-center justify-center gap-2">
                 <Chevron className={"-rotate-90"}/>
                 Дополнительная информация

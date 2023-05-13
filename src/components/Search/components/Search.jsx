@@ -2,7 +2,6 @@ import { ReactComponent as SearchIcon } from "../../../assets/icons/Search.svg";
 import sidebarStore from "../../Sidebar/store/sidebarStore";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
-import FilterStore from "../../Filter/store/filterStore";
 
 const Search = observer(() => {
     return (
