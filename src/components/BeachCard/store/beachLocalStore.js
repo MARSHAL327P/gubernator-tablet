@@ -1,10 +1,12 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, makeAutoObservable, runInAction } from "mobx";
 import { ReactComponent as Warning } from "../../../assets/icons/Warning.svg";
 import { ReactComponent as Danger } from "../../../assets/icons/Danger.svg";
-import { BeachCardStore } from "./beachCardStore";
+import BeachCardStore from "./beachCardStore";
+import FilterStore from "../../Filter/store/filterStore";
 
 class BeachLocalStore {
-    beachList = null
+    beachList = []
+    isLoading = false
     bathingComfortType = {
         GOOD: {
             text: "Комфортно",
@@ -42,18 +44,21 @@ class BeachLocalStore {
         return this.beachList && this.beachList.find((beach) => beach.code === beachCode)
     }
 
-    constructor(data) {
+    constructor() {
         makeAutoObservable(this);
 
-        BeachCardStore.get().then(data => {
-            runInAction(() => {
-                this.beachList = data ?? []
-
-                console.log(this.beachList)
-            })
-        });
-
-
+        this.isLoading = true
+        BeachCardStore
+            .get()
+            .then(
+                action(data => {
+                    this.beachList = data ?? []
+                    FilterStore.fillFilterInputs()
+                })
+            )
+            .finally(action(() => {
+                this.isLoading = false
+            }));
     }
 }
 

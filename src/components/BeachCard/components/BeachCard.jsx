@@ -23,21 +23,21 @@ const BeachCard = observer(({ beach }) => {
     let indications = [
         {
             name: "Температура воды",
-            color: "info",
+            color: "fill-primary",
             value: beach.waterTemp,
             icon: Water,
             units: "°",
         },
         {
             name: "Температура воздуха",
-            color: "warning",
+            color: "fill-warning",
             value: beach.airTemp,
             icon: Temperature,
             units: "°",
         },
         {
             name: "Скорость ветра",
-            color: "danger",
+            color: "fill-danger",
             value: beach.wind,
             icon: Wind,
             units: " м/с",
@@ -77,9 +77,9 @@ const BeachCard = observer(({ beach }) => {
 
                             return (
                                 item.value &&
-                                <Tooltip content={item.name} placement={"bottom"}>
-                                    <div key={idx} className={classes.indications}>
-                                        <Icon className={`fill-${item.color}`}/>
+                                <Tooltip key={idx} content={item.name} placement={"bottom"}>
+                                    <div className={classes.indications}>
+                                        <Icon className={item.color}/>
                                         <span>{item.value}{item.units}</span>
                                     </div>
                                 </Tooltip>

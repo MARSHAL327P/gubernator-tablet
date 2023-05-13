@@ -56,6 +56,11 @@ const theme = {
         defaultProps: {
             className: "bg-danger"
         }
+    },
+    spinner: {
+        defaultProps: {
+            className: "spinner_primary"
+        }
     }
 }
 

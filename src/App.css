@@ -61,3 +61,7 @@ body{
         opacity: 0;
     }
 }
+
+.spinner_primary path:last-child{
+    color: #3366FF;
+}

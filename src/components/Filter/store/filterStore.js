@@ -1,7 +1,8 @@
-import { makeAutoObservable } from "mobx";
+import { action, autorun, makeAutoObservable, reaction, toJS } from "mobx";
 import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
-import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
-import sidebarStore from "../../Sidebar/store/sidebarStore";
+import SidebarStore from "../../Sidebar/store/sidebarStore";
+import axios from "axios";
+import _ from "lodash";
 
 class FilterStore {
     isOpen = false
@@ -38,9 +39,14 @@ class FilterStore {
     filterInputs = {
         rating: {
             name: "Рейтинг пляжа",
-            icon: <Star className={"fill-warning mt-[2px]"}/>,
             ...this.filterTypes.radioBtn,
-            variants: ["Больше 4", "Больше 4.5"],
+            variants: [{
+                key: "4",
+                name: "Больше 4"
+            }, {
+                key: "4.5",
+                name: "Больше 4.5"
+            }],
         },
         beachType: {
             name: "Тип пляжа",
@@ -74,36 +80,58 @@ class FilterStore {
             ...this.filterTypes.selectFromTo
         },
     }
-    // filterIsChanged = false
-    filterInputsKeys = Object.keys(this.filterInputs)
+    // filteredBeaches = null
 
     get filteredBeaches() {
-        if (sidebarStore.searchQuery.trim() !== "") {
+        if (SidebarStore.searchQuery.trim() !== "") {
             return BeachLocalStore.beachList.filter((beach) => {
-                // this.filterInputsKeys.forEach(filterInputKey => {
-                //     let beachInputInfo = beach[filterInputKey]
-                //     let filterInput = this.filterInputs[filterInputKey]
-                //
-                //     switch (filterInput.type){
-                //         case this.filterTypes.selectFromTo.type:
-                //             return false
-                //         default:
-                //             if( filterInput.selected.indexOf(beachInputInfo) === -1 )
-                //                 return false
-                //
-                //
-                //             return false
-                //     }
-                //
-                // })
                 return beach
                     .name
                     .toLowerCase()
-                    .indexOf(sidebarStore.searchQuery.toLowerCase()) >= 0
+                    .indexOf(SidebarStore.searchQuery.toLowerCase()) >= 0
             })
         }
 
+        // if( this.filterInputs ){
+        //     this.fetchFilterBeaches()
+        // }
+
         return BeachLocalStore.beachList
+    }
+
+    fetchFilterBeaches(){
+        let sendData = _.cloneDeep(this.filterInputs)
+
+        for (let filterInputKey in sendData) {
+            let inputDelete = false
+
+            switch (sendData[filterInputKey].type) {
+                case this.filterTypes.selectFromTo.type:
+                    inputDelete = sendData[filterInputKey].selected.from === null && sendData[filterInputKey].selected.to === null
+                    break;
+                default:
+                    inputDelete = sendData[filterInputKey].selected.length <= 0
+            }
+
+            if (inputDelete) {
+                delete sendData[filterInputKey]
+            } else {
+                delete sendData[filterInputKey].open
+                delete sendData[filterInputKey].variants
+            }
+        }
+
+        BeachLocalStore.isLoading = true
+        axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
+            .then(
+                action(({ data }) => {
+                    console.log(data)
+                    BeachLocalStore.beachList = data
+                })
+            )
+            .finally(action(() => {
+                BeachLocalStore.isLoading = false
+            }))
     }
 
     clearFilter(){
@@ -121,6 +149,7 @@ class FilterStore {
                     filterInput.selected = []
             }
         }
+        this.fetchFilterBeaches()
     }
 
     get filterIsChanged(){
@@ -133,7 +162,7 @@ class FilterStore {
                         return true;
                     break;
                 default:
-                    if( filterInput.selected.length > 0 )
+                    if (filterInput.selected.length > 0)
                         return true;
             }
         }
@@ -141,17 +170,15 @@ class FilterStore {
         return false
     }
 
-    fillFilterInputs(){
-        if( BeachLocalStore.beachList === null ) return
+    fillFilterInputs() {
         let excludedFilters = ["rating", "price", "workTime"]
 
         BeachLocalStore.beachList.forEach(beach => {
-            this.filterInputsKeys.forEach(filterInputKey => {
-                if( excludedFilters.indexOf(filterInputKey) !== -1 ) return false
+            for (const filterInputKey in this.filterInputs) {
+                if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
 
                 let beachInputInfo = beach[filterInputKey]
                 let filterInput = this.filterInputs[filterInputKey]
-
                 if (beachInputInfo) {
                     switch (filterInput.type) {
                         case this.filterTypes.selectFromTo.type:
@@ -163,15 +190,17 @@ class FilterStore {
                                 filterInput.from = beachInputInfo
                             break;
                         default:
-                            if( filterInput.variants.indexOf(beachInputInfo) !== -1 )
-                                return false
+                            if (filterInput.variants.indexOf(beachInputInfo) !== -1)
+                                continue;
 
-                            if( typeof beachInputInfo === "object" ){
+                            if (typeof beachInputInfo === "object") {
                                 for (const item in beachInputInfo) {
-                                    if( filterInput.variants.indexOf(beachInputInfo[item].name) === -1 )
-                                        filterInput.variants.push(beachInputInfo[item].name)
+                                    if (filterInput.variants.find((variant) => variant.key === item) === undefined)
+                                        filterInput.variants.push({
+                                            name: beachInputInfo[item].name,
+                                            key: item
+                                        })
                                 }
-                                // console.log(filterInput.variants)
                             } else {
                                 filterInput.variants.push(beachInputInfo)
                             }
@@ -180,8 +209,50 @@ class FilterStore {
                 } else {
                     delete this.filterInputs[filterInputKey]
                 }
-            })
+            }
         })
+    }
+
+    findSelectedItem(inputName, item) {
+        return this.filterInputs[inputName].selected.indexOf(item)
+    }
+
+    setCheckedItems(item, inputName, inputParams) {
+        let findItemIndex = this.findSelectedItem(inputName, item)
+
+        if (findItemIndex === -1) {
+            if (inputParams.type === this.filterTypes.radioBtn.type) {
+                inputParams.selected = [item]
+            } else {
+                inputParams.selected.push(item)
+            }
+        } else {
+            inputParams.selected.splice(findItemIndex, 1)
+        }
+
+        this.filterInputs[inputName] = inputParams
+        this.fetchFilterBeaches()
+    }
+
+    setSelectFromToItem(e, inputName) {
+        this.filterInputs[inputName].selected[e.target.name] = e.target.value
+        this.fetchFilterBeaches()
+    }
+
+    getInputAttr(inputName, item) {
+        let id = inputName
+        let label = item
+        let sendData = label
+
+        if (typeof item === "object") {
+            id = item.key
+            label = item.name
+            sendData = id
+        }
+
+        return {
+            id, label, sendData
+        }
     }
 
     constructor(data) {

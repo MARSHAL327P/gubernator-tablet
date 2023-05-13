@@ -1,128 +1,23 @@
 import { observer } from "mobx-react-lite";
 import FilterStore from "../store/filterStore";
-import { useEffect, useRef, useState } from "react";
-import { Accordion, AccordionHeader, AccordionBody, Checkbox, Input, List, ListItem } from "@material-tailwind/react";
+import { useRef, useState } from "react";
+import { Accordion, AccordionHeader, AccordionBody, List, ListItem } from "@material-tailwind/react";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import { Button } from "@material-tailwind/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { classNames } from "../../../Utils";
-import Ripple from "../../RedefinedTags/Ripple/Ripple";
 import { Transition } from '@headlessui/react'
 import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
-import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
+import { FilterInputs } from "./FilterInputs";
 
-function findSelectedItem(inputName, item) {
-    return FilterStore.filterInputs[inputName].selected.indexOf(item)
-}
-
-function setCheckedItems(item, inputName, inputParams) {
-    let findItemIndex = findSelectedItem(inputName, item)
-
-    if (findItemIndex === -1) {
-        if( inputParams.type === FilterStore.filterTypes.radioBtn.type ){
-            inputParams.selected = [item]
-        } else {
-            inputParams.selected.push(item)
-        }
-
-    } else {
-        inputParams.selected.splice(findItemIndex, 1)
-    }
-
-    FilterStore.filterInputs[inputName] = inputParams
-}
-
-function setSelectFromToItem(e, inputName){
-    FilterStore.filterInputs[inputName].selected[e.target.name] = e.target.value
-}
-
-function inputValues(inputName, inputParams) {
-    switch (inputParams.type) {
-        case FilterStore.filterTypes.radioBtn.type:
-            return (
-                <div className={"flex flex-row gap-5"}>
-                    {inputParams.variants.map((item, idx) => {
-                        return (
-                            <Button
-                                key={idx}
-                                onClick={setCheckedItems.bind(null, item, inputName, inputParams)}
-                                className={classNames("flex", findSelectedItem(inputName, item) !== -1 ? "" : "shadow-md")}
-                                fullWidth
-                                color={findSelectedItem(inputName, item) !== -1 ? "" : "white"}
-                            >
-                                {item}
-                                {inputName === "rating" && <Star className={"fill-warning"}/>}
-                            </Button>
-                        )
-                    })
-                    }
-                </div>
-            )
+function hasVariants(filterInput) {
+    switch (filterInput.type) {
         case FilterStore.filterTypes.selectFromTo.type:
-            let defaultParams = {
-                min: inputParams.from,
-                max: inputParams.to,
-                step: 0.2,
-                type: "number",
-                variant: "standard",
-                label: "",
-                onInput: (e) => setSelectFromToItem(e, inputName)
-            }
-
-            return (
-                <div className={"flex gap-5"}>
-                    <Input
-                        {...defaultParams}
-                        value={inputParams.selected.from ?? ""}
-                        name={"from"}
-                        placeholder={"От " + inputParams.from}
-                    />
-                    <Input
-                        {...defaultParams}
-                        value={inputParams.selected.to ?? ""}
-                        name={"to"}
-                        placeholder={"До " + inputParams.to}
-                    />
-                </div>
-            )
-        default:
-            return (
-                <div className={"flex flex-col"}>
-                    {inputParams.variants.map((item, i) => {
-                        let id = inputName + "-" + i
-
-                        return (
-                            <div
-                                key={id}
-                                className={"overflow-hidden relative rounded-md hover:cursor-pointer hover:bg-gray-100 transition duration-150"}
-                                onClick={setCheckedItems.bind(null, item, inputName, inputParams)}
-                            >
-                                <Checkbox
-                                    readOnly
-                                    id={id}
-                                    className={"checked:bg-primary checked:border-primary checked:before:bg-primary"}
-                                    label={item}
-                                    name={inputName}
-                                    checked={findSelectedItem(inputName, item) !== -1}
-                                />
-                                <Ripple color={"rgba(161,161,161,0.69)"} />
-                            </div>
-
-                        )
-                    })}
-                </div>
-            )
-    }
-}
-
-function hasVariants(filterInput){
-    switch (filterInput.type){
-        case FilterStore.filterTypes.selectFromTo.type:
-            if( filterInput.from === Infinity || filterInput.to === -Infinity )
+            if (filterInput.from === Infinity || filterInput.to === -Infinity)
                 return false;
             break;
         default:
-            if( filterInput.variants.length <= 0 )
+            if (filterInput.variants.length <= 0)
                 return false;
     }
 
@@ -132,10 +27,9 @@ function hasVariants(filterInput){
 const Filter = observer(() => {
     let filterEl = useRef(null)
     let [elOffset, setElOffset] = useState(0)
-
-    useEffect(() => {
-        FilterStore.fillFilterInputs()
-    }, [BeachLocalStore.beachList])
+    const icons = {
+        rating: <Star className={"fill-warning mt-[2px]"}/>
+    }
 
     return (
         <div ref={filterEl}
@@ -172,7 +66,6 @@ const Filter = observer(() => {
                         if( !hasVariants(inputParams) ) return false
 
                         return (
-
                             <Accordion
                                 key={inputName}
                                 open={inputParams.open}
@@ -190,7 +83,7 @@ const Filter = observer(() => {
                                         className={"border-b-0 p-3"}
                                     >
                                         <div className="flex gap-2">
-                                            {inputParams.icon}
+                                            {icons[inputName]}
                                             {inputParams.name}
                                         </div>
                                     </AccordionHeader>
@@ -198,9 +91,12 @@ const Filter = observer(() => {
                                 <AccordionBody
                                     className={classNames(
                                         "p-0 mb-3",
-                                        inputParams.type !== FilterStore.filterTypes.checkbox.type  ? "pl-3" : ""
+                                        inputParams.type !== FilterStore.filterTypes.checkbox.type ? "pl-3" : ""
                                     )}>
-                                    {inputValues(inputName, inputParams)}
+                                    <FilterInputs
+                                        inputName={inputName}
+                                        inputParams={inputParams}
+                                    />
                                 </AccordionBody>
                             </Accordion>
                         )
