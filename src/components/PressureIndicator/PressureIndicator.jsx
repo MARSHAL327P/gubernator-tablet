@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useGauge } from "use-gauge";
 import { Fragment } from 'react'
+import cc from "classcat";
 
 const PressureIndicator = observer(({value, color}) => {
     const gauge = useGauge({
@@ -56,7 +57,7 @@ const PressureIndicator = observer(({value, color}) => {
                 </g>
             </svg>
             <div className={`absolute bottom-0 left-0 w-full text-center`}>
-                <div className={`text-${color} text-2xl font-bold`}>
+                <div className={cc([color.text, "text-2xl font-bold"])}>
                     {value}
                 </div>
                 <div>мм рт. ст</div>

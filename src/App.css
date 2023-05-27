@@ -1,6 +1,32 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/* TODO: Выглядит так себе :) */
+/*@font-face {*/
+/*    font-family: 'Roboto';*/
+/*    src: url('assets/fonts/Roboto-Bold.ttf') format('truetype');*/
+/*    font-weight: bold;*/
+/*    font-style: normal;*/
+/*}*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root{
+    --primary-color: #3366FF;
+    --success-color: #87E827;
+    --info-color: #36CFF9;
+    --warning-color: #FCC33F;
+    --danger-color: #FF4C28;
+}
 
 *::-webkit-scrollbar-track {
     background-color: rgba(200, 200, 200, .3);

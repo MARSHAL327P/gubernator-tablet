@@ -1,6 +1,7 @@
-import { observer } from "mobx-react-lite";
+import {observer} from "mobx-react-lite";
+import cc from "classcat";
 
-const WidgetTemperature = observer(({ color }) => {
+const WidgetTemperature = observer(({color}) => {
     const tempParams = [
         {
             name: "Вчера было",
@@ -14,7 +15,7 @@ const WidgetTemperature = observer(({ color }) => {
 
     return (
         <>
-            <div className={`text-${color} text-center font-bold text-6xl mb-3`}>
+            <div className={cc([color.text, "text-center font-bold text-6xl mb-3"])}>
                 {"18.5°"}
             </div>
             <div className={"flex"}>

@@ -1,4 +1,4 @@
-import { action, makeAutoObservable } from "mobx";
+import {action, makeAutoObservable} from "mobx";
 import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
 import SidebarStore from "../../Sidebar/store/sidebarStore";
 import axios from "axios";
@@ -56,16 +56,10 @@ class FilterStore {
             name: "Покрытие пляжа",
             ...this.filterTypes.checkbox
         },
-        price: {
-            name: "Стоимость",
-            ...this.filterTypes.checkbox,
-            variants: ["Бесплатный", "Платный"],
-        },
         workTime: {
             name: "Режим работы",
             ...this.filterTypes.checkbox,
             variants: ["Круглосуточно", "Не круглосуточно"],
-
         },
         waterTemp: {
             name: "Температура воды",
@@ -80,6 +74,7 @@ class FilterStore {
             ...this.filterTypes.selectFromTo
         },
     }
+
     // filteredBeaches = null
 
     get filteredBeaches() {
@@ -99,7 +94,7 @@ class FilterStore {
         return BeachLocalStore.beachList
     }
 
-    fetchFilterBeaches(){
+    fetchFilterBeaches() {
         let sendData = _.cloneDeep(this.filterInputs)
 
         for (let filterInputKey in sendData) {
@@ -124,7 +119,7 @@ class FilterStore {
         BeachLocalStore.isLoading = true
         axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
             .then(
-                action(({ data }) => {
+                action(({data}) => {
                     console.log(data)
                     BeachLocalStore.beachList = data
                 })
@@ -134,11 +129,11 @@ class FilterStore {
             }))
     }
 
-    clearFilter(){
+    clearFilter() {
         for (const filterInputKey in this.filterInputs) {
             let filterInput = this.filterInputs[filterInputKey]
 
-            switch (filterInput.type){
+            switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
                     filterInput.selected = {
                         from: null,
@@ -152,22 +147,24 @@ class FilterStore {
         this.fetchFilterBeaches()
     }
 
-    get filterIsChanged(){
+    get numChangedParams() {
+        let numChangedParams = 0
+
         for (const filterInputKey in this.filterInputs) {
             let filterInput = this.filterInputs[filterInputKey]
 
-            switch (filterInput.type){
+            switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
-                    if( filterInput.selected.from !== null || filterInput.selected.to !== null )
-                        return true;
+                    if (filterInput.selected.from !== null || filterInput.selected.to !== null)
+                        numChangedParams++
                     break;
                 default:
                     if (filterInput.selected.length > 0)
-                        return true;
+                        numChangedParams++
             }
         }
 
-        return false
+        return numChangedParams
     }
 
     fillFilterInputs() {

@@ -12,19 +12,19 @@ class WidgetTemplateStore{
             id: 1,
             name: "Температура",
             icon: <Temperature className={"fill-warning"}/>,
-            content: <WidgetTemperature color={"warning"}/>
+            content: <WidgetTemperature color={{text: "text-warning"}}/>
         },
         HUMIDITY: {
             id: 2,
             name: "Влажность",
             icon: <Humidity className={"fill-info"}/>,
-            content: <WidgetHumidity color={"info"}/>
+            content: <WidgetHumidity color={{text: "text-info"}}/>
         },
         PRESSURE: {
             id: 3,
             name: "Давление",
             icon: <Pressure className={"fill-success"}/>,
-            content: <WidgetPressure color={"success"}/>
+            content: <WidgetPressure color={{text: "text-success"}}/>
         },
     }
 

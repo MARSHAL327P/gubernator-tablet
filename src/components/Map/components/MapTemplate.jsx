@@ -1,9 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Clusterer, Map, Placemark, Polygon, ZoomControl } from "@pbe/react-yandex-maps";
-import LocalStationStore from "../components/Stations/store/localStationStore";
-import { Badge, Button } from "@material-tailwind/react";
-import { ReactComponent as Human } from "../assets/icons/Human.svg";
-import useWindowSize from "../hooks/useWindowSize";
+import LocalStationStore from "../../Stations/store/localStationStore";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
@@ -119,14 +117,6 @@ const MapTemplate = observer(() => {
                 }
                 {/*<RouteButton options={{ float: "right" }} />*/}
             </Map>
-            <div className={"!absolute top-7 right-5"}>
-                {/*<Badge content="2">*/}
-                    <Button color={"white"}>
-                        <Human className={"fill-black"}/>
-                        Профиль
-                    </Button>
-                {/*</Badge>*/}
-            </div>
         </>
     )
 })

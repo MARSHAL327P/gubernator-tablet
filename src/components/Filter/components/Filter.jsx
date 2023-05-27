@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import FilterStore from "../store/filterStore";
 import { useRef, useState } from "react";
-import { Accordion, AccordionHeader, AccordionBody, List, ListItem } from "@material-tailwind/react";
+import {Accordion, AccordionHeader, AccordionBody, List, ListItem, Badge} from "@material-tailwind/react";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import { Button } from "@material-tailwind/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -36,8 +36,9 @@ const Filter = observer(() => {
              className={"h-full bg-white transition absolute top-0 left-0" + (FilterStore.isOpen ? " translate-x-full" : "")}>
             <FixedHeader elOffset={elOffset} classes={"p-7 items-center justify-between h-[104px]"}>
                 <div className={"text-title"}>Фильтр пляжей</div>
+
                 <Transition
-                    show={FilterStore.filterIsChanged}
+                    show={FilterStore.numChangedParams > 0}
                     enter="transition-opacity duration-75"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"

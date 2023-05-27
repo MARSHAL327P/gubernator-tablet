@@ -4,14 +4,17 @@ import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
 import WidgetTemplateStore from "../components/Widgets/store/widgetTemplateStore";
 
 const BeachPage = observer(() => {
-    const tabItems = {
-        "Информация об объекте": {
-            content: "Информация об объекте"
+    const tabItems = [
+        {
+            title: "Информация",
+            content: "Информация",
         },
-        "Отзывы": {
-            content: "Отзывы"
+        {
+            title: "Отзывы",
+            content: "Отзывы",
         },
-        "Виджеты": {
+        {
+            title: "Виджеты",
             content: <WidgetTemplate
                 widgets={[
                     WidgetTemplateStore.widgets.TEMPERATURE,
@@ -20,10 +23,7 @@ const BeachPage = observer(() => {
                 ]}
             />
         },
-        "Графики": {
-            content: "Тут будут графики"
-        },
-    }
+    ]
 
     return (
         <Dashboard

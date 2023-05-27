@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import cc from "classcat";
 
 const WidgetHumidity = observer(({ color }) => {
     const params = [
@@ -10,7 +11,7 @@ const WidgetHumidity = observer(({ color }) => {
 
     return (
         <>
-            <div className={`text-${color} text-center font-bold text-6xl mb-3`}>
+            <div className={cc([color.text, "text-center font-bold text-6xl mb-3"])}>
                 {"70%"}
             </div>
             <div className={"flex"}>

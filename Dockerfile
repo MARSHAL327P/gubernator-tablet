@@ -1,13 +1,13 @@
-FROM node
+FROM node:18.16.0
 
 WORKDIR /app
 
-COPY package.json .
+EXPOSE 80
 
-RUN npm install
+COPY package*.json ./
+
+RUN npm install -g serve
 
 COPY . .
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "80"]
