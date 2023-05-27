@@ -5,11 +5,17 @@ import {Badge, Button, Spinner, Tooltip} from "@material-tailwind/react";
 import FilterStore from "../../Filter/store/filterStore";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import {useState} from "react";
-import {AdjustmentsVerticalIcon} from "@heroicons/react/24/solid";
+import {AdjustmentsVerticalIcon, HomeIcon} from "@heroicons/react/24/solid";
 import {XMarkIcon} from "@heroicons/react/24/solid";
 import {action} from "mobx";
 import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
 import FilterBtn from "../../Filter/components/FilterBtn";
+import Loading from "../../Loading/components/Loading";
+import {Link} from "react-router-dom";
+import TabHeader, {tabHeaderVariants} from "../../Tabs/components/TabHeader";
+import AdminBtn from "../../AdminPanel/components/AdminBtn";
+import {Tab} from "@headlessui/react";
+import SidebarStore from "../store/sidebarStore";
 
 const Sidebar = observer(() => {
 
@@ -27,29 +33,35 @@ const Sidebar = observer(() => {
                     <FilterBtn/>
                 }
             </FixedHeader>
-            <div
-                onScroll={(e) => {
-                    setElOffset(e.currentTarget.scrollTop)
-                }}
-                className={"min-w-[400px] sidebar p-3 pb-7 overflow-auto transition"}>
-                <div className={"mb-7"}>
-                    ads
+            <Tab.Group>
+                <div
+                    onScroll={(e) => {
+                        setElOffset(e.currentTarget.scrollTop)
+                    }}
+                    className={"min-w-[400px] sidebar p-3 pb-7 overflow-auto transition"}>
+                    <div className="mb-7">
+                        <TabHeader variant={tabHeaderVariants.WHITE} size={"sm"} tabItems={SidebarStore.tabItems}/>
+                    </div>
+
+                    <Tab.Panels>
+                        {SidebarStore.tabItems.map((tab, idx) => {
+                                return <Tab.Panel key={idx} className="flex flex-col gap-10">
+                                    {
+                                        BeachLocalStore.isLoading ?
+                                            <Loading text={"Загрузка пляжей"}/> :
+                                            filteredBeaches.length > 0 ?
+                                                filteredBeaches.map((beach) => {
+                                                    return <BeachCard beach={beach} key={beach.id}/>
+                                                }) :
+                                                <div className={"text-center font-bold text-2xl"}>Нет результатов</div>
+                                    }
+                                </Tab.Panel>
+                            }
+                        )}
+                    </Tab.Panels>
                 </div>
-                <div className={"flex flex-col gap-10"}>
-                    {
-                        BeachLocalStore.isLoading ?
-                            <div className={"flex items-center gap-3 mx-auto"}>
-                                <Spinner className={"w-10 h-10"}/>
-                                Загрузка пляжей
-                            </div> :
-                            filteredBeaches.length > 0 ?
-                                filteredBeaches.map((beach) => {
-                                    return <BeachCard beach={beach} key={beach.id}/>
-                                }) :
-                                <div className={"text-center font-bold text-2xl"}>Нет результатов</div>
-                    }
-                </div>
-            </div>
+            </Tab.Group>
+
         </div>
 
     )
