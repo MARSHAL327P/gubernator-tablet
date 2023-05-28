@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import FilterStore from "../store/filterStore";
+import FilterStore from "../store/filter.store";
 import { Button, Checkbox, Input } from "@material-tailwind/react";
 import { action } from "mobx";
 import cc from "classcat";

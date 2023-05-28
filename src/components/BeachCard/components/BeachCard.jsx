@@ -1,43 +1,42 @@
-import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
-import { ReactComponent as Water } from "../../../assets/icons/Water.svg";
-import { ReactComponent as Temperature } from "../../../assets/icons/Temperature.svg";
-import { ReactComponent as Wind } from "../../../assets/icons/Wind.svg";
-import { ReactComponent as Map } from "../../../assets/icons/Map.svg";
-import { ReactComponent as Route } from "../../../assets/icons/Route.svg";
-import { ReactComponent as Chevron } from "../../../assets/icons/Chevron.svg";
-import { Button, Tooltip } from "@material-tailwind/react";
-import { observer } from "mobx-react-lite";
+import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
+import {ReactComponent as Water} from "../../../assets/icons/Water.svg";
+import {ReactComponent as Temperature} from "../../../assets/icons/Temperature.svg";
+import {ReactComponent as Wind} from "../../../assets/icons/Wind.svg";
+import {ReactComponent as Map} from "../../../assets/icons/Map.svg";
+import {ReactComponent as Route} from "../../../assets/icons/Route.svg";
+import {ReactComponent as Chevron} from "../../../assets/icons/Chevron.svg";
+import {Button, Tooltip} from "@material-tailwind/react";
+import {observer} from "mobx-react-lite";
 import BathingComfort from "./BathingComfort";
 import 'dayjs/locale/ru';
 import 'dayjs/plugin/updateLocale';
-import BeachLocalStore from "../store/beachLocalStore";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import CardHeader from "../../Card/components/CardHeader";
 
-const BeachCard = observer(({ beach }) => {
+const BeachCard = observer(({card}) => {
     let classes = {
         indications: "flex items-center gap-2 whitespace-nowrap",
         paddings: "px-7 pb-2 pt-4"
     }
-    let beachProblems = BeachLocalStore.beachProblemsType[beach.beachProblems]
     let indications = [
         {
             name: "Температура воды",
             color: "fill-primary",
-            value: beach.waterTemp,
+            value: card.waterTemp,
             icon: Water,
             units: "°",
         },
         {
             name: "Температура воздуха",
             color: "fill-warning",
-            value: beach.airTemp,
+            value: card.airTemp,
             icon: Temperature,
             units: "°",
         },
         {
             name: "Скорость ветра",
             color: "fill-danger",
-            value: beach.wind,
+            value: card.wind,
             icon: Wind,
             units: " м/с",
         }
@@ -49,30 +48,9 @@ const BeachCard = observer(({ beach }) => {
     }
 
     return (
-        <div className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}>
-            <div className={classes.paddings}>
-                <Tooltip content={"Время последнего обновления данных"}>
-                    <div className="text-gray-400 text-[12px]">
-                        {beach.updateTimeText}
-                    </div>
-                </Tooltip>
-
-                <div className="flex justify-between items-center">
-                    <span className={"text-title"}>{beach.name}</span>
-                    {
-                        beach.beachProblems &&
-                        <Tooltip content={beachProblems.name}>
-                            {beachProblems.icon}
-                        </Tooltip>
-                    }
-
-                    <div className={"flex gap-1 items-center"}>
-                        <Star className={"fill-warning"}/>
-                        <span className={"h-[20px]"}>{beach.rating}</span>
-                    </div>
-                </div>
-            </div>
-            <BathingComfort bathingComfort={beach.bathingComfort} />
+        <>
+            <CardHeader updateTimeText={card.updateTimeText} rating={card.rating} name={card.name} problems={card.beachProblems} />
+            <BathingComfort bathingComfort={card.bathingComfort}/>
             <div className="px-7 py-5">
                 <div className={"flex gap-10 items-center justify-around"}>
                     {
@@ -103,7 +81,7 @@ const BeachCard = observer(({ beach }) => {
                             <Route className={styles.btnIcon}/>
                         </Button>
                     </Tooltip>
-                    <Link to={`/beach/${beach.code}`}>
+                    <Link to={`/beach/${card.code}`}>
                         <Button fullWidth className={"w-[200px] flex items-center gap-2"}>
                             Подробнее о пляже
                         </Button>
@@ -114,7 +92,7 @@ const BeachCard = observer(({ beach }) => {
                 <Chevron className={"-rotate-90"}/>
                 Дополнительная информация
             </div>
-        </div>
+        </>
     )
 })
 

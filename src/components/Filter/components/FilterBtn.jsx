@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import FilterStore from "../store/filterStore";
+import FilterStore from "../store/filter.store";
 import {Button, Tooltip} from "@material-tailwind/react";
 import {action} from "mobx";
 import {AdjustmentsVerticalIcon, XMarkIcon} from "@heroicons/react/24/solid";
@@ -9,12 +9,12 @@ const FilterBtn = observer(() => {
 
     return (
         <Tooltip
-            content={FilterStore.isOpen ? "Закрыть фильтр" : FilterStore.filteredBeaches ? "Фильтр пляжей" : "Фильтр недоступен"}>
+            content={FilterStore.isOpen ? "Закрыть фильтр" : FilterStore.filteredCards ? "Фильтр пляжей" : "Фильтр недоступен"}>
 
             <Button
                 className={"flex items-center px-4 max-h-[48px]"}
                 onClick={action(() => {
-                    if (FilterStore.filteredBeaches !== null)
+                    if (FilterStore.filteredCards !== null)
                         FilterStore.isOpen = !FilterStore.isOpen
                 })}
             >

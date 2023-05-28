@@ -6,7 +6,7 @@ import cc from "classcat";
 const AdminBtn = observer(({color = "white", classes = null}) => {
     return (
         <div className={classes ?? "!absolute top-7 right-5"}>
-            <Badge content="2">
+            {/*<Badge content="2">*/}
                 <Button color={color}>
                     <Human className={cc({
                         "fill-black": color === "white",
@@ -14,7 +14,7 @@ const AdminBtn = observer(({color = "white", classes = null}) => {
                     })}/>
                     Профиль
                 </Button>
-            </Badge>
+            {/*</Badge>*/}
         </div>
     )
 })

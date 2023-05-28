@@ -1,5 +1,5 @@
 import { ReactComponent as Swimmer } from "../../../assets/icons/Swimmer.svg";
-import BeachLocalStore from "../store/beachLocalStore";
+import BeachLocalStore from "../store/beachLocal.store";
 
 export default function BathingComfort({ bathingComfort }){
     let classes = "flex justify-center items-center gap-3 w-full p-3"

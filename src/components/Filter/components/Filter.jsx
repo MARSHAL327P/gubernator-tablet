@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
-import FilterStore from "../store/filterStore";
+import FilterStore from "../store/filter.store";
 import { useRef, useState } from "react";
-import {Accordion, AccordionHeader, AccordionBody, List, ListItem, Badge} from "@material-tailwind/react";
+import {Accordion, AccordionHeader, AccordionBody, List, ListItem} from "@material-tailwind/react";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import { Button } from "@material-tailwind/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -9,6 +9,7 @@ import { classNames } from "../../../Utils";
 import { Transition } from '@headlessui/react'
 import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
 import { FilterInputs } from "./FilterInputs";
+import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 
 function hasVariants(filterInput) {
     switch (filterInput.type) {
@@ -24,7 +25,7 @@ function hasVariants(filterInput) {
     return true
 }
 
-const Filter = observer(() => {
+const Filter = observer(({filterInputs}) => {
     let filterEl = useRef(null)
     let [elOffset, setElOffset] = useState(0)
     const icons = {
@@ -61,8 +62,8 @@ const Filter = observer(() => {
                 }}
             >
                 <List className={"p-0"}>
-                    {Object.keys(FilterStore.filterInputs).map((inputName) => {
-                        let inputParams = FilterStore.filterInputs[inputName]
+                    {Object.keys(BeachLocalStore.filterInputs).map((inputName) => {
+                        let inputParams = BeachLocalStore.filterInputs[inputName]
 
                         if( !hasVariants(inputParams) ) return false
 

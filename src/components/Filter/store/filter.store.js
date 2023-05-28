@@ -1,8 +1,9 @@
 import {action, makeAutoObservable} from "mobx";
-import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
-import SidebarStore from "../../Sidebar/store/sidebarStore";
+import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import _ from "lodash";
+// import GlobalStore from "../../../stores/global.store";
 
 class FilterStore {
     isOpen = false
@@ -36,50 +37,12 @@ class FilterStore {
             selected: [],
         },
     }
-    filterInputs = {
-        rating: {
-            name: "Рейтинг пляжа",
-            ...this.filterTypes.radioBtn,
-            variants: [{
-                key: "4",
-                name: "Больше 4"
-            }, {
-                key: "4.5",
-                name: "Больше 4.5"
-            }],
-        },
-        beachType: {
-            name: "Тип пляжа",
-            ...this.filterTypes.checkbox
-        },
-        beachCoverage: {
-            name: "Покрытие пляжа",
-            ...this.filterTypes.checkbox
-        },
-        workTime: {
-            name: "Режим работы",
-            ...this.filterTypes.checkbox,
-            variants: ["Круглосуточно", "Не круглосуточно"],
-        },
-        waterTemp: {
-            name: "Температура воды",
-            ...this.filterTypes.selectFromTo
-        },
-        props: {
-            name: "Дополнительные параметры",
-            ...this.filterTypes.checkbox
-        },
-        wind: {
-            name: "Скорость ветра",
-            ...this.filterTypes.selectFromTo
-        },
-    }
 
     // filteredBeaches = null
 
-    get filteredBeaches() {
+    filteredCards(objectClass) {
         if (SidebarStore.searchQuery.trim() !== "") {
-            return BeachLocalStore.beachList.filter((beach) => {
+            return objectClass.beachList.filter((beach) => {
                 return beach
                     .name
                     .toLowerCase()
@@ -87,15 +50,15 @@ class FilterStore {
             })
         }
 
-        // if( this.filterInputs ){
+        // if( BeachLocalStore.filterInputs ){
         //     this.fetchFilterBeaches()
         // }
 
-        return BeachLocalStore.beachList
+        return objectClass.beachList
     }
 
     fetchFilterBeaches() {
-        let sendData = _.cloneDeep(this.filterInputs)
+        let sendData = _.cloneDeep(BeachLocalStore.filterInputs)
 
         for (let filterInputKey in sendData) {
             let inputDelete = false
@@ -116,22 +79,22 @@ class FilterStore {
             }
         }
 
-        BeachLocalStore.isLoading = true
+        BeachLocalStore.filterInputs.isLoading = true
         axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
             .then(
                 action(({data}) => {
                     console.log(data)
-                    BeachLocalStore.beachList = data
+                    BeachLocalStore.filterInputs.beachList = data
                 })
             )
             .finally(action(() => {
-                BeachLocalStore.isLoading = false
+                BeachLocalStore.filterInputs.isLoading = false
             }))
     }
 
     clearFilter() {
-        for (const filterInputKey in this.filterInputs) {
-            let filterInput = this.filterInputs[filterInputKey]
+        for (const filterInputKey in BeachLocalStore.filterInputs) {
+            let filterInput = BeachLocalStore.filterInputs[filterInputKey]
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
@@ -150,8 +113,8 @@ class FilterStore {
     get numChangedParams() {
         let numChangedParams = 0
 
-        for (const filterInputKey in this.filterInputs) {
-            let filterInput = this.filterInputs[filterInputKey]
+        for (const filterInputKey in BeachLocalStore.filterInputs) {
+            let filterInput = BeachLocalStore.filterInputs[filterInputKey]
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
@@ -171,11 +134,11 @@ class FilterStore {
         let excludedFilters = ["rating", "price", "workTime"]
 
         BeachLocalStore.beachList.forEach(beach => {
-            for (const filterInputKey in this.filterInputs) {
+            for (const filterInputKey in BeachLocalStore.filterInputs) {
                 if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
 
                 let beachInputInfo = beach[filterInputKey]
-                let filterInput = this.filterInputs[filterInputKey]
+                let filterInput = BeachLocalStore.filterInputs[filterInputKey]
                 if (beachInputInfo) {
                     switch (filterInput.type) {
                         case this.filterTypes.selectFromTo.type:
@@ -204,14 +167,14 @@ class FilterStore {
 
                     }
                 } else {
-                    delete this.filterInputs[filterInputKey]
+                    delete BeachLocalStore.filterInputs[filterInputKey]
                 }
             }
         })
     }
 
     findSelectedItem(inputName, item) {
-        return this.filterInputs[inputName].selected.indexOf(item)
+        return BeachLocalStore.filterInputs[inputName].selected.indexOf(item)
     }
 
     setCheckedItems(item, inputName, inputParams) {
@@ -227,12 +190,12 @@ class FilterStore {
             inputParams.selected.splice(findItemIndex, 1)
         }
 
-        this.filterInputs[inputName] = inputParams
+        BeachLocalStore.filterInputs[inputName] = inputParams
         this.fetchFilterBeaches()
     }
 
     setSelectFromToItem(e, inputName) {
-        this.filterInputs[inputName].selected[e.target.name] = e.target.value
+        BeachLocalStore.filterInputs[inputName].selected[e.target.name] = e.target.value
         this.fetchFilterBeaches()
     }
 

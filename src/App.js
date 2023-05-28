@@ -5,6 +5,7 @@ import {YMaps} from "@pbe/react-yandex-maps";
 import BeachPage from "./pages/BeachPage";
 import MapTemplate from "./components/Map/components/MapTemplate";
 import {useEffect, useState} from "react";
+import {useStores} from "./stores/global.store";
 
 function App() {
     const location = useLocation()

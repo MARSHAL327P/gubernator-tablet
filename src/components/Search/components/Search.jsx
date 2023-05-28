@@ -1,5 +1,5 @@
 import { ReactComponent as SearchIcon } from "../../../assets/icons/Search.svg";
-import sidebarStore from "../../Sidebar/store/sidebarStore";
+import sidebarStore from "../../Sidebar/store/sidebar.store";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
 

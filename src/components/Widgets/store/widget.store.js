@@ -6,7 +6,7 @@ import WidgetTemperature from "../components/WidgetTemperature";
 import WidgetHumidity from "../components/WidgetHumidity";
 import WidgetPressure from "../components/WidgetPressure";
 
-class WidgetTemplateStore{
+class WidgetStore {
     widgets = {
         TEMPERATURE: {
             id: 1,
@@ -33,4 +33,4 @@ class WidgetTemplateStore{
     }
 }
 
-export default WidgetTemplateStore = new WidgetTemplateStore()
+export default WidgetStore = new WidgetStore()

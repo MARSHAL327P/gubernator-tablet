@@ -1,25 +1,27 @@
 import {observer} from "mobx-react-lite";
 import {Tab} from '@headlessui/react'
 import {Button, Tooltip} from "@material-tailwind/react";
-import {Link, useParams} from "react-router-dom";
-import BeachLocalStore from "../../BeachCard/store/beachLocalStore";
+import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {HomeIcon} from "@heroicons/react/24/solid";
 import TabHeader from "../../Tabs/components/TabHeader";
 import AdminBtn from "../../AdminPanel/components/AdminBtn";
+import {getIndexLinkInArray} from "../../../Utils";
+import {useState} from "react";
 
 const Dashboard = observer(({tabItems, dashboardName}) => {
     const {beachCode} = useParams()
+    const [searchParams, ] = useSearchParams();
+    const [selectedIndex, setSelectedIndex] = useState(getIndexLinkInArray(searchParams.get("tab"), tabItems))
     let beach = BeachLocalStore.findBeach(beachCode)
 
     return (beach &&
-        <Tab.Group>
+        <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
             <div className="absolute top-0 backdrop-blur-sm bg-white/50 flex justify-between items-center px-7 py-4 w-full">
                 <div className={"flex items-center gap-5"}>
                     <Tooltip placement="top-start" content="Вернуться на главную">
                         <Link to={"/"}>
-                            <Button
-                                className={"whitespace-nowrap p-3"}
-                            >
+                            <Button className={"whitespace-nowrap p-3"}>
                                 <HomeIcon className={"w-6 h-6"}/>
                             </Button>
                         </Link>
@@ -41,8 +43,8 @@ const Dashboard = observer(({tabItems, dashboardName}) => {
             </div>
             <div className={"absolute bottom-0 w-screen min-h-[300px]"}>
                 <Tab.Panels className={"p-7 bg-gray-50 min-h-[300px]"}>
-                    {tabItems.map((tab, idx) => {
-                            return <Tab.Panel key={idx}>{tab.content}</Tab.Panel>
+                    {tabItems.map((tab) => {
+                            return <Tab.Panel key={tab.title}>{tab.content}</Tab.Panel>
                         }
                     )}
                 </Tab.Panels>
