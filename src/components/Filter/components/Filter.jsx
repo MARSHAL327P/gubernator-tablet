@@ -1,15 +1,17 @@
-import { observer } from "mobx-react-lite";
+import {observer} from "mobx-react-lite";
 import FilterStore from "../store/filter.store";
-import { useRef, useState } from "react";
+import {useRef, useState} from "react";
 import {Accordion, AccordionHeader, AccordionBody, List, ListItem} from "@material-tailwind/react";
 import FixedHeader from "../../FixedHeader/FixedHeader";
-import { Button } from "@material-tailwind/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { classNames } from "../../../Utils";
-import { Transition } from '@headlessui/react'
-import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
-import { FilterInputs } from "./FilterInputs";
+import {Button} from "@material-tailwind/react";
+import {ChevronDownIcon} from "@heroicons/react/20/solid";
+import {classNames} from "../../../Utils";
+import {Transition} from '@headlessui/react'
+import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
+import {FilterInputs} from "./FilterInputs";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
+import cc from "classcat";
 
 function hasVariants(filterInput) {
     switch (filterInput.type) {
@@ -36,7 +38,9 @@ const Filter = observer(({filterInputs}) => {
         <div ref={filterEl}
              className={"h-full bg-white transition absolute top-0 left-0" + (FilterStore.isOpen ? " translate-x-full" : "")}>
             <FixedHeader elOffset={elOffset} classes={"p-7 items-center justify-between h-[104px]"}>
-                <div className={"text-title"}>Фильтр пляжей</div>
+                <div className={"text-title"}>
+                    {SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.filterName}
+                </div>
 
                 <Transition
                     show={FilterStore.numChangedParams > 0}
@@ -62,10 +66,10 @@ const Filter = observer(({filterInputs}) => {
                 }}
             >
                 <List className={"p-0"}>
-                    {Object.keys(BeachLocalStore.filterInputs).map((inputName) => {
-                        let inputParams = BeachLocalStore.filterInputs[inputName]
+                    {FilterStore.filterInputs && Object.keys(FilterStore.filterInputs).map((inputName) => {
+                        let inputParams = FilterStore.filterInputs[inputName]
 
-                        if( !hasVariants(inputParams) ) return false
+                        if (!hasVariants(inputParams)) return false
 
                         return (
                             <Accordion
@@ -77,7 +81,8 @@ const Filter = observer(({filterInputs}) => {
                                         className={`mx-auto h-5 w-5 transition-transform ${inputParams.open ? "rotate-180" : ""}`}
                                     />
                                 }>
-                                <ListItem className="p-0 active:bg-transparent bg-transparent" selected={inputParams.open}>
+                                <ListItem className="p-0 active:bg-transparent bg-transparent"
+                                          selected={inputParams.open}>
                                     <AccordionHeader
                                         onClick={() => {
                                             inputParams.open = !inputParams.open
@@ -91,9 +96,11 @@ const Filter = observer(({filterInputs}) => {
                                     </AccordionHeader>
                                 </ListItem>
                                 <AccordionBody
-                                    className={classNames(
-                                        "p-0 mb-3",
-                                        inputParams.type !== FilterStore.filterTypes.checkbox.type ? "pl-3" : ""
+                                    className={cc(
+                                        {
+                                            "p-0 mb-3": true,
+                                            "pl-3": inputParams.type !== FilterStore.filterTypes.checkbox.type
+                                        }
                                     )}>
                                     <FilterInputs
                                         inputName={inputName}

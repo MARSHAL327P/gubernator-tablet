@@ -42,6 +42,19 @@ class RealObjectStore {
         },
     }
 
+    filterInputs = {
+        pressure: {
+            name: "Давление",
+            ...FilterStore.filterTypes.selectFromTo
+        },
+        windSpeed: {
+            name: "Скорость ветра",
+            ...FilterStore.filterTypes.selectFromTo
+        },
+    }
+
+    filterName = "Фильтр объектов"
+
     get filteredCards(){
         return FilterStore.filteredCards(this)
     }

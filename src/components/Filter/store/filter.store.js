@@ -1,5 +1,4 @@
 import {action, makeAutoObservable} from "mobx";
-import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import _ from "lodash";
@@ -50,7 +49,7 @@ class FilterStore {
             })
         }
 
-        // if( BeachLocalStore.filterInputs ){
+        // if( SidebarStore.selectedTabClass.filterInputs ){
         //     this.fetchFilterBeaches()
         // }
 
@@ -58,7 +57,7 @@ class FilterStore {
     }
 
     fetchFilterInputs() {
-        let sendData = _.cloneDeep(BeachLocalStore.filterInputs)
+        let sendData = _.cloneDeep(SidebarStore.selectedTabClass.filterInputs)
 
         for (let filterInputKey in sendData) {
             let inputDelete = false
@@ -79,22 +78,22 @@ class FilterStore {
             }
         }
 
-        BeachLocalStore.isLoading = true
+        SidebarStore.selectedTabClass.isLoading = true
         axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
             .then(
                 action(({data}) => {
                     console.log(data)
-                    BeachLocalStore.filterInputs.beachList = data
+                    SidebarStore.selectedTabClass.list = data
                 })
             )
             .finally(action(() => {
-                BeachLocalStore.isLoading = false
+                SidebarStore.selectedTabClass.isLoading = false
             }))
     }
 
     clearFilter() {
-        for (const filterInputKey in BeachLocalStore.filterInputs) {
-            let filterInput = BeachLocalStore.filterInputs[filterInputKey]
+        for (const filterInputKey in this.filterInputs) {
+            let filterInput = this.filterInputs[filterInputKey]
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
@@ -113,8 +112,8 @@ class FilterStore {
     get numChangedParams() {
         let numChangedParams = 0
 
-        for (const filterInputKey in BeachLocalStore.filterInputs) {
-            let filterInput = BeachLocalStore.filterInputs[filterInputKey]
+        for (const filterInputKey in this.filterInputs) {
+            let filterInput = this.filterInputs[filterInputKey]
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
@@ -130,52 +129,55 @@ class FilterStore {
         return numChangedParams
     }
 
-    fillFilterInputs() {
+    get filterInputs() {
+        if( SidebarStore.selectedTabClass === null ) return null
+
         let excludedFilters = ["rating", "price", "workTime"]
 
-        BeachLocalStore.list.forEach(beach => {
-            for (const filterInputKey in BeachLocalStore.filterInputs) {
+        SidebarStore.selectedTabClass.list.forEach(beach => {
+            for (const filterInputKey in SidebarStore.selectedTabClass.defaultFilterInputs) {
                 if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
 
-                let beachInputInfo = beach[filterInputKey]
-                let filterInput = BeachLocalStore.filterInputs[filterInputKey]
-                if (beachInputInfo) {
+                let inputInfo = beach[filterInputKey]
+                let filterInput = SidebarStore.selectedTabClass.defaultFilterInputs[filterInputKey]
+                if (inputInfo) {
                     switch (filterInput.type) {
                         case this.filterTypes.selectFromTo.type:
 
-                            if (beachInputInfo > filterInput.to)
-                                filterInput.to = beachInputInfo
+                            if (inputInfo > filterInput.to)
+                                filterInput.to = inputInfo
 
-                            if (beachInputInfo < filterInput.from)
-                                filterInput.from = beachInputInfo
+                            if (inputInfo < filterInput.from)
+                                filterInput.from = inputInfo
                             break;
                         default:
-                            if (filterInput.variants.indexOf(beachInputInfo) !== -1)
+                            if (filterInput.variants.indexOf(inputInfo) !== -1)
                                 continue;
 
-                            if (typeof beachInputInfo === "object") {
-                                for (const item in beachInputInfo) {
+                            if (typeof inputInfo === "object") {
+                                for (const item in inputInfo) {
                                     if (filterInput.variants.find((variant) => variant.key === item) === undefined)
                                         filterInput.variants.push({
-                                            name: beachInputInfo[item].name,
+                                            name: inputInfo[item].name,
                                             key: item
                                         })
                                 }
                             } else {
-                                filterInput.variants.push(beachInputInfo)
+                                filterInput.variants.push(inputInfo)
                             }
 
                     }
                 } else {
-                    delete BeachLocalStore.filterInputs[filterInputKey]
+                    delete SidebarStore.selectedTabClass.defaultFilterInputs[filterInputKey]
                 }
             }
         })
 
+        return SidebarStore.selectedTabClass.defaultFilterInputs
     }
 
     findSelectedItem(inputName, item) {
-        return BeachLocalStore.filterInputs[inputName].selected.indexOf(item)
+        return this.filterInputs[inputName].selected.indexOf(item)
     }
 
     setCheckedItems(item, inputName, inputParams) {
@@ -191,12 +193,12 @@ class FilterStore {
             inputParams.selected.splice(findItemIndex, 1)
         }
 
-        BeachLocalStore.filterInputs[inputName] = inputParams
+        this.filterInputs[inputName] = inputParams
         this.fetchFilterInputs()
     }
 
     setSelectFromToItem(e, inputName) {
-        BeachLocalStore.filterInputs[inputName].selected[e.target.name] = e.target.value
+        this.filterInputs[inputName].selected[e.target.name] = e.target.value
         this.fetchFilterInputs()
     }
 

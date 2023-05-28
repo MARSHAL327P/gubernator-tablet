@@ -40,7 +40,7 @@ class BeachLocalStore {
         },
     }
 
-    filterInputs = {
+    defaultFilterInputs = {
         rating: {
             name: "Рейтинг пляжа",
             ...FilterStore.filterTypes.radioBtn,
@@ -79,6 +79,8 @@ class BeachLocalStore {
         },
     }
 
+    filterName = "Фильтр пляжей"
+
     findBeach(beachCode){
         return this.list && this.list.find((beach) => beach.code === beachCode)
     }
@@ -96,7 +98,6 @@ class BeachLocalStore {
             .then(
                 action(data => {
                     this.list = data ?? []
-                    FilterStore.fillFilterInputs()
                 })
             )
             .finally(action(() => {
