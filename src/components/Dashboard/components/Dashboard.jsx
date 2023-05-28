@@ -12,11 +12,11 @@ import {useState} from "react";
 const Dashboard = observer(({tabItems, dashboardName}) => {
     const {beachCode} = useParams()
     const [searchParams, ] = useSearchParams();
-    const [selectedIndex, setSelectedIndex] = useState(getIndexLinkInArray(searchParams.get("tab"), tabItems))
     let beach = BeachLocalStore.findBeach(beachCode)
+    let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
 
     return (beach &&
-        <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+        <Tab.Group defaultIndex={selectedTabIndex}>
             <div className="absolute top-0 backdrop-blur-sm bg-white/50 flex justify-between items-center px-7 py-4 w-full">
                 <div className={"flex items-center gap-5"}>
                     <Tooltip placement="top-start" content="Вернуться на главную">

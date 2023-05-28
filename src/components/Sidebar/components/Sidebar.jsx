@@ -4,16 +4,30 @@ import Search from "../../Search/components/Search";
 import {Badge} from "@material-tailwind/react";
 import FilterStore from "../../Filter/store/filter.store";
 import FixedHeader from "../../FixedHeader/FixedHeader";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import FilterBtn from "../../Filter/components/FilterBtn";
 import Loading from "../../Loading/components/Loading";
 import TabHeader, {tabHeaderVariants} from "../../Tabs/components/TabHeader";
 import {Tab} from "@headlessui/react";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import Card from "../../Card/components/Card"
+import {Outlet, useLocation} from "react-router-dom";
+import {getIndexLinkInArray} from "../../../Utils";
+import SidebarStore from "../store/sidebar.store";
+
 
 const Sidebar = observer(({tabItems}) => {
+    function changeSelectedTabClass(tabIndex){
+        SidebarStore.selectedTabClass = tabItems[tabIndex].data
+    }
+
     let [elOffset, setElOffset] = useState(0)
+    const location = useLocation();
+    let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
+
+    useEffect(() => {
+        SidebarStore.selectedTabClass = tabItems[0]?.data
+    }, [])
 
     return (
         <div className={"h-full bg-white transition z-20"}>
@@ -26,7 +40,7 @@ const Sidebar = observer(({tabItems}) => {
                     <FilterBtn/>
                 }
             </FixedHeader>
-            <Tab.Group>
+            <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTabClass}>
                 <div
                     onScroll={(e) => {
                         setElOffset(e.currentTarget.scrollTop)

@@ -42,7 +42,7 @@ class FilterStore {
 
     filteredCards(objectClass) {
         if (SidebarStore.searchQuery.trim() !== "") {
-            return objectClass.beachList.filter((beach) => {
+            return objectClass.list.filter((beach) => {
                 return beach
                     .name
                     .toLowerCase()
@@ -54,10 +54,10 @@ class FilterStore {
         //     this.fetchFilterBeaches()
         // }
 
-        return objectClass.beachList
+        return objectClass.list
     }
 
-    fetchFilterBeaches() {
+    fetchFilterInputs() {
         let sendData = _.cloneDeep(BeachLocalStore.filterInputs)
 
         for (let filterInputKey in sendData) {
@@ -79,7 +79,7 @@ class FilterStore {
             }
         }
 
-        BeachLocalStore.filterInputs.isLoading = true
+        BeachLocalStore.isLoading = true
         axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
             .then(
                 action(({data}) => {
@@ -88,7 +88,7 @@ class FilterStore {
                 })
             )
             .finally(action(() => {
-                BeachLocalStore.filterInputs.isLoading = false
+                BeachLocalStore.isLoading = false
             }))
     }
 
@@ -107,7 +107,7 @@ class FilterStore {
                     filterInput.selected = []
             }
         }
-        this.fetchFilterBeaches()
+        this.fetchFilterInputs()
     }
 
     get numChangedParams() {
@@ -133,7 +133,7 @@ class FilterStore {
     fillFilterInputs() {
         let excludedFilters = ["rating", "price", "workTime"]
 
-        BeachLocalStore.beachList.forEach(beach => {
+        BeachLocalStore.list.forEach(beach => {
             for (const filterInputKey in BeachLocalStore.filterInputs) {
                 if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
 
@@ -171,6 +171,7 @@ class FilterStore {
                 }
             }
         })
+
     }
 
     findSelectedItem(inputName, item) {
@@ -191,12 +192,12 @@ class FilterStore {
         }
 
         BeachLocalStore.filterInputs[inputName] = inputParams
-        this.fetchFilterBeaches()
+        this.fetchFilterInputs()
     }
 
     setSelectFromToItem(e, inputName) {
         BeachLocalStore.filterInputs[inputName].selected[e.target.name] = e.target.value
-        this.fetchFilterBeaches()
+        this.fetchFilterInputs()
     }
 
     getInputAttr(inputName, item) {

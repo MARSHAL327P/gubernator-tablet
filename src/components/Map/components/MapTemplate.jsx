@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Clusterer, Map, Placemark, Polygon, ZoomControl } from "@pbe/react-yandex-maps";
-import LocalStationStore from "../../Stations/store/localStationStore";
+import LocalStationStore from "../../RealObjects/store/realObject.store";
 import useWindowSize from "../../../hooks/useWindowSize";
 
 const MapTemplate = observer(() => {
@@ -83,7 +83,7 @@ const MapTemplate = observer(() => {
                         openBalloonOnClick: true,
                     }}
                 >
-                    {LocalStationStore.stationList.map((station, index) => (
+                    {LocalStationStore.list.map((station, index) => (
                         <Placemark
                             name={"test" + index}
                             onClick={(e) => {

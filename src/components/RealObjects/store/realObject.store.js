@@ -1,8 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import { StationStore } from "./stationStore";
+import { StationStore } from "./station.store";
+import FilterStore from "../../Filter/store/filter.store";
 
-class LocalStationStore {
-    stationList = []
+class RealObjectStore {
+    list = []
     meteoProps = {
         windSpeed: 0,
         windDirection: 0,
@@ -41,12 +42,15 @@ class LocalStationStore {
         },
     }
 
+    get filteredCards(){
+        return FilterStore.filteredCards(this)
+    }
 
     constructor(data) {
         makeAutoObservable(this);
 
-        this.stationList = StationStore.get()
+        this.list = StationStore.get()
     }
 }
 
-export default LocalStationStore = new LocalStationStore()
+export default RealObjectStore = new RealObjectStore()

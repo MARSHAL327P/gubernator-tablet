@@ -6,33 +6,11 @@ import AdminBtn from "../components/AdminPanel/components/AdminBtn";
 // import {useStores} from "../stores/global.store";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 import BeachCard from "../components/BeachCard/components/BeachCard";
+import RealObjectCard from "../components/RealObjects/components/RealObjectCard";
+import RealObjectStore from "../components/RealObjects/store/realObject.store";
 
-const HomePage = observer(() => {
+const HomePage = observer(({tabItems}) => {
     // const { sidebarStore } = useStores();
-
-    let tabItems = [
-        {
-            title: "Пляжи",
-            loadingText: "Загрузка пляжей",
-            data: BeachLocalStore,
-            component: BeachCard,
-            link: "/",
-        },
-        {
-            title: "Объекты",
-            loadingText: "Загрузка объектов",
-            data: BeachLocalStore,
-            component: BeachCard,
-            link: "/objects",
-        },
-        {
-            title: "Архитектура",
-            loadingText: "Загрузка архитектуры",
-            data: BeachLocalStore,
-            component: BeachCard,
-            link: "/architecture",
-        },
-    ]
 
     return (
         <>

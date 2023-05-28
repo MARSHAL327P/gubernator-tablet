@@ -4,6 +4,7 @@ import BeachCard from "../../BeachCard/components/BeachCard";
 
 class SidebarStore {
     searchQuery = ""
+    selectedTabClass = null
     tabItems = []
 
     constructor() {

@@ -5,7 +5,7 @@ import BeachCardStore from "./beachCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 
 class BeachLocalStore {
-    beachList = []
+    list = []
     isLoading = false
     bathingComfortType = {
         GOOD: {
@@ -80,7 +80,7 @@ class BeachLocalStore {
     }
 
     findBeach(beachCode){
-        return this.beachList && this.beachList.find((beach) => beach.code === beachCode)
+        return this.list && this.list.find((beach) => beach.code === beachCode)
     }
 
     get filteredCards(){
@@ -95,7 +95,7 @@ class BeachLocalStore {
             .get()
             .then(
                 action(data => {
-                    this.beachList = data ?? []
+                    this.list = data ?? []
                     FilterStore.fillFilterInputs()
                 })
             )

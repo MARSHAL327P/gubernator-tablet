@@ -6,6 +6,11 @@ import BeachPage from "./pages/BeachPage";
 import MapTemplate from "./components/Map/components/MapTemplate";
 import {useEffect, useState} from "react";
 import {useStores} from "./stores/global.store";
+import Card from "./components/Card/components/Card";
+import BeachLocalStore from "./components/BeachCard/store/beachLocal.store";
+import BeachCard from "./components/BeachCard/components/BeachCard";
+import RealObjectStore from "./components/RealObjects/store/realObject.store";
+import RealObjectCard from "./components/RealObjects/components/RealObjectCard";
 
 function App() {
     const location = useLocation()
@@ -17,6 +22,30 @@ function App() {
         if (location !== displayLocation) setTransitionStage("fadeOut");
     }, [location, displayLocation]);
 
+    let tabItems = [
+        {
+            title: "Пляжи",
+            loadingText: "Загрузка пляжей",
+            data: BeachLocalStore,
+            component: BeachCard,
+            link: "/",
+        },
+        {
+            title: "Объекты",
+            loadingText: "Загрузка объектов",
+            data: RealObjectStore,
+            component: RealObjectCard,
+            link: "/object",
+        },
+        {
+            title: "Архитектура",
+            loadingText: "Загрузка архитектуры",
+            data: BeachLocalStore,
+            component: BeachCard,
+            link: "/architecture",
+        },
+    ]
+
     return (
         <YMaps>
             <MapTemplate/>
@@ -24,7 +53,10 @@ function App() {
                 <Route path={"/beach"}>
                     <Route path={":beachCode"} element={<BeachPage/>}/>
                 </Route>
-                <Route path={"/"} element={<HomePage/>}/>
+                <Route path={"/"} element={<HomePage tabItems={tabItems}/>}>
+                    <Route path={"object"}/>
+                    <Route path={"architecture"}/>
+                </Route>
             </Routes>
         </YMaps>
     );

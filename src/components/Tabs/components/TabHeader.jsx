@@ -15,7 +15,7 @@ export const tabHeaderVariants = {
     }
 }
 
-function TabItem (variant, size, tabTitle) {
+function TabItem(variant, size, tabTitle) {
     return <Tab as={"div"} className={"outline-none w-full"}>
         {({selected}) => (
             <Button
@@ -42,7 +42,11 @@ const TabHeader = observer(({tabItems, variant = tabHeaderVariants.DEFAULT, size
             {tabItems.map((tab) => {
                     return (
                         tab.link ?
-                            <Link key={tab.title} to={tab.getParam ? ("?tab=" + tab.link) : tab.link} className={"outline-none w-full"}>
+                            <Link
+                                key={tab.title}
+                                to={tab.getParam ? ("?tab=" + tab.link) : tab.link}
+                                className={"outline-none w-full"}
+                            >
                                 {TabItem(variant, size, tab.title)}
                             </Link>
                             : TabItem(variant, size, tab.title)
