@@ -14,7 +14,7 @@ export default class BeachCardStore {
     beachProblems = ""
     waterTemp = 0
     airTemp = 0
-    wind = 0
+    windSpeed = 0
     coord = [0, 0]
     beachType = ""
     beachCoverage = ""
@@ -26,6 +26,7 @@ export default class BeachCardStore {
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 return data.map(item => {
+                    item.windSpeed = item.wind
                     return new BeachCardStore(item)
                 });
             })

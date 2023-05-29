@@ -1,4 +1,3 @@
-import BeachCard from "../../BeachCard/components/BeachCard";
 import {observer} from "mobx-react-lite";
 import Search from "../../Search/components/Search";
 import {Badge} from "@material-tailwind/react";
@@ -6,12 +5,10 @@ import FilterStore from "../../Filter/store/filter.store";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import {useEffect, useState} from "react";
 import FilterBtn from "../../Filter/components/FilterBtn";
-import Loading from "../../Loading/components/Loading";
 import TabHeader, {tabHeaderVariants} from "../../Tabs/components/TabHeader";
 import {Tab} from "@headlessui/react";
-import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import Card from "../../Card/components/Card"
-import {Outlet, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import SidebarStore from "../store/sidebar.store";
 
@@ -26,7 +23,7 @@ const Sidebar = observer(({tabItems}) => {
     let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
 
     useEffect(() => {
-        SidebarStore.selectedTabClass = tabItems[0]?.data
+       SidebarStore.selectedTabClass = tabItems[0]?.data
     }, [])
 
     return (

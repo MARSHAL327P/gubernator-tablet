@@ -12,6 +12,7 @@ import {FilterInputs} from "./FilterInputs";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import cc from "classcat";
+import {toJS} from "mobx";
 
 function hasVariants(filterInput) {
     switch (filterInput.type) {
@@ -36,7 +37,14 @@ const Filter = observer(({filterInputs}) => {
 
     return (
         <div ref={filterEl}
-             className={"h-full bg-white transition absolute top-0 left-0" + (FilterStore.isOpen ? " translate-x-full" : "")}>
+             className={cc({
+                 "h-full bg-white transition absolute top-0 left-0": true,
+                 "active": FilterStore.isOpen,
+             })}
+            style={{
+                transform: `translateX(})`
+            }}
+        >
             <FixedHeader elOffset={elOffset} classes={"p-7 items-center justify-between h-[104px]"}>
                 <div className={"text-title"}>
                     {SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.filterName}

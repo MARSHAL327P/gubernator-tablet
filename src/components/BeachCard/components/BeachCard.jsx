@@ -12,36 +12,10 @@ import 'dayjs/locale/ru';
 import 'dayjs/plugin/updateLocale';
 import {Link} from "react-router-dom";
 import CardHeader from "../../Card/components/CardHeader";
+import Indications from "../../Indications/components/Indications";
+import IndicationsStore from "../../Indications/store/indications.store";
 
 const BeachCard = observer(({card}) => {
-    let classes = {
-        indications: "flex items-center gap-2 whitespace-nowrap",
-        paddings: "px-7 pb-2 pt-4"
-    }
-    let indications = [
-        {
-            name: "Температура воды",
-            color: "fill-primary",
-            value: card.waterTemp,
-            icon: Water,
-            units: "°",
-        },
-        {
-            name: "Температура воздуха",
-            color: "fill-warning",
-            value: card.airTemp,
-            icon: Temperature,
-            units: "°",
-        },
-        {
-            name: "Скорость ветра",
-            color: "fill-danger",
-            value: card.wind,
-            icon: Wind,
-            units: " м/с",
-        }
-    ]
-
     const styles = {
         btn: "flex items-center gap-2 shadow-none border hover:shadow-md p-0 w-full",
         btnIcon: "fill-black w-5 h-5"
@@ -52,24 +26,14 @@ const BeachCard = observer(({card}) => {
             <CardHeader updateTimeText={card.updateTimeText} rating={card.rating} name={card.name} problems={card.beachProblems} />
             <BathingComfort bathingComfort={card.bathingComfort}/>
             <div className="px-7 py-5">
-                <div className={"flex gap-10 items-center justify-around"}>
-                    {
-                        indications.map((item, idx) => {
-                            let Icon = item.icon
-
-                            return (
-                                item.value &&
-                                <Tooltip key={idx} content={item.name} placement={"bottom"}>
-                                    <div className={classes.indications}>
-                                        <Icon className={item.color}/>
-                                        <span>{item.value}{item.units}</span>
-                                    </div>
-                                </Tooltip>
-                            )
-                        })
-                    }
-
-                </div>
+                <Indications
+                    data={card}
+                    indications={[
+                        IndicationsStore.indicationTypes.WATER_TEMP,
+                        IndicationsStore.indicationTypes.AIR_TEMP,
+                        IndicationsStore.indicationTypes.WIND_SPEED,
+                    ]}
+                />
                 <div className="flex justify-between gap-2 mt-5">
                     <Tooltip content={"На карте"}>
                         <Button color={"white"} className={styles.btn}>

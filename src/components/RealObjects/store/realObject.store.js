@@ -42,7 +42,7 @@ class RealObjectStore {
         },
     }
 
-    filterInputs = {
+    defaultFilterInputs = {
         pressure: {
             name: "Давление",
             ...FilterStore.filterTypes.selectFromTo

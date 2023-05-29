@@ -1,4 +1,4 @@
-import {action, makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import _ from "lodash";
@@ -57,7 +57,7 @@ class FilterStore {
     }
 
     fetchFilterInputs() {
-        let sendData = _.cloneDeep(SidebarStore.selectedTabClass.filterInputs)
+        let sendData = _.cloneDeep(this.filterInputs)
 
         for (let filterInputKey in sendData) {
             let inputDelete = false
@@ -79,6 +79,7 @@ class FilterStore {
         }
 
         SidebarStore.selectedTabClass.isLoading = true
+        console.log(sendData)
         axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
             .then(
                 action(({data}) => {
@@ -133,47 +134,56 @@ class FilterStore {
         if( SidebarStore.selectedTabClass === null ) return null
 
         let excludedFilters = ["rating", "price", "workTime"]
+        let tabClass = SidebarStore.selectedTabClass
 
-        SidebarStore.selectedTabClass.list.forEach(beach => {
-            for (const filterInputKey in SidebarStore.selectedTabClass.defaultFilterInputs) {
+        tabClass.list.forEach(action(card => {
+            // debugger;
+            for (const filterInputKey in tabClass.defaultFilterInputs) {
                 if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
 
-                let inputInfo = beach[filterInputKey]
-                let filterInput = SidebarStore.selectedTabClass.defaultFilterInputs[filterInputKey]
-                if (inputInfo) {
+                let cardValue = card[filterInputKey]
+                let filterInput = tabClass.defaultFilterInputs[filterInputKey]
+
+                if (cardValue) {
                     switch (filterInput.type) {
                         case this.filterTypes.selectFromTo.type:
+                            if (cardValue > filterInput.to)
+                                filterInput.to = cardValue
 
-                            if (inputInfo > filterInput.to)
-                                filterInput.to = inputInfo
-
-                            if (inputInfo < filterInput.from)
-                                filterInput.from = inputInfo
+                            if (cardValue < filterInput.from)
+                                filterInput.from = cardValue
                             break;
                         default:
-                            if (filterInput.variants.indexOf(inputInfo) !== -1)
+                            if (filterInput.variants.indexOf(cardValue) !== -1)
                                 continue;
 
-                            if (typeof inputInfo === "object") {
-                                for (const item in inputInfo) {
-                                    if (filterInput.variants.find((variant) => variant.key === item) === undefined)
+                            if (typeof cardValue === "object") {
+                                for (const item in cardValue) {
+                                    if (!filterInput.variants.find((variant) => variant.key === item))
                                         filterInput.variants.push({
-                                            name: inputInfo[item].name,
+                                            name: cardValue[item].name,
                                             key: item
                                         })
                                 }
                             } else {
-                                filterInput.variants.push(inputInfo)
+                                tabClass.defaultFilterInputs = {
+                                    ...tabClass.defaultFilterInputs,
+                                    [filterInputKey]: {
+                                        ...filterInput,
+                                        variants: [...filterInput.variants, cardValue]
+                                    }
+                                }
                             }
 
                     }
                 } else {
-                    delete SidebarStore.selectedTabClass.defaultFilterInputs[filterInputKey]
+                    delete tabClass.defaultFilterInputs[filterInputKey]
                 }
             }
-        })
 
-        return SidebarStore.selectedTabClass.defaultFilterInputs
+        }))
+
+        return tabClass.defaultFilterInputs
     }
 
     findSelectedItem(inputName, item) {
@@ -187,7 +197,10 @@ class FilterStore {
             if (inputParams.type === this.filterTypes.radioBtn.type) {
                 inputParams.selected = [item]
             } else {
-                inputParams.selected.push(item)
+                inputParams = {
+                    ...inputParams,
+                    selected: [...inputParams.selected, item]
+                }
             }
         } else {
             inputParams.selected.splice(findItemIndex, 1)
