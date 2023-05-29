@@ -1,10 +1,10 @@
 import {observer} from "mobx-react-lite";
-import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import Loading from "../../Loading/components/Loading";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 const Card = observer(({loadingText, data, component}) => {
     return (
-        BeachLocalStore.isLoading ?
+        SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.isLoading ?
             <Loading text={loadingText}/> :
             data.length > 0 ?
                 data.map((card) => {

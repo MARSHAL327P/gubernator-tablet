@@ -10,6 +10,7 @@ import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import {FilterInputs} from "./FilterInputs";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import cc from "classcat";
+import {toJS} from "mobx";
 
 function hasVariants(filterInput) {
     switch (filterInput.type) {
@@ -36,7 +37,7 @@ const Filter = observer(() => {
     return (
         <div ref={filterEl}
              className={cc({
-                 "h-full bg-white transition": true,
+                 "h-full bg-white transition min-w-[400px]": true,
                  "-translate-x-full": !FilterStore.isOpen
              })}
         >
@@ -69,7 +70,7 @@ const Filter = observer(() => {
                 }}
             >
                 {
-                    FilterStore.filterInputs ?
+                    FilterStore.filterInputs && Object.keys(FilterStore.filterInputs).length > 0 ?
                         <List className={"p-0"}>
                             {Object.keys(FilterStore.filterInputs).map((inputName) => {
                                 let inputParams = FilterStore.filterInputs[inputName]
@@ -116,7 +117,7 @@ const Filter = observer(() => {
                                 )
                             })}
                         </List> :
-                        <div className={"text-center font-bold text-2xl"}>Нет свойств для фильтрации</div>
+                        <div className={"text-xl"}>Нет свойств для фильтрации</div>
                 }
 
             </div>

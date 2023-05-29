@@ -28,9 +28,9 @@ const Sidebar = observer(({tabItems}) => {
 
     useEffect(() => {
         runInAction(() => {
-            SidebarStore.selectedTabClass = tabItems[0]?.data
+            SidebarStore.selectedTabClass = tabItems[selectedTabIndex]?.data
         })
-    }, [])
+    }, [selectedTabIndex, tabItems])
 
     return (
         <div className={"h-full bg-white transition z-20"}>
