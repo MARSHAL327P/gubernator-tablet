@@ -1,8 +1,7 @@
-import {action, makeAutoObservable, toJS} from "mobx";
+import {action, makeAutoObservable} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import _ from "lodash";
-// import GlobalStore from "../../../stores/global.store";
 
 class FilterStore {
     isOpen = false

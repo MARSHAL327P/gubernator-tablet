@@ -1,6 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
-import BeachCard from "../../BeachCard/components/BeachCard";
 
 class SidebarStore {
     searchQuery = ""

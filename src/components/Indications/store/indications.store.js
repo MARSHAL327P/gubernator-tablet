@@ -5,19 +5,19 @@ import {ReactComponent as Wind} from "../../../assets/icons/Wind.svg";
 
 class IndicationsStore {
     indicationTypes = {
-        WATER_TEMP: "waterTemp",
-        AIR_TEMP: "airTemp",
+        WATER_TEMP: "t_surf",
+        AIR_TEMP: "temperature",
         WIND_SPEED: "windSpeed",
     }
     indications = {
-        waterTemp: {
+        t_surf: {
             name: "Температура воды",
             color: "fill-primary",
             background: "bg-primary/20",
             icon: Water,
             units: "°",
         },
-        airTemp: {
+        temperature: {
             name: "Температура воздуха",
             color: "fill-warning",
             background: "bg-warning/20",

@@ -10,6 +10,7 @@ const Search = observer(() => {
                 "justify-between w-full"}
                    type="text"
                    placeholder={"Поиск..."}
+                   value={sidebarStore.searchQuery}
                    onChange={action((e) => {sidebarStore.searchQuery = e.currentTarget.value})}
             />
             <SearchIcon className={"absolute top-[13px] right-5 fill-gray-500"}/>

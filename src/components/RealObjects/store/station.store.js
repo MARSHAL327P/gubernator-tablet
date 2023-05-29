@@ -22,10 +22,10 @@ export class StationStore {
                 coord: [
                     44.615223, 33.487778
                 ],
-                created_at: "2023-05-22T09:47:06.000000Z",
-                updated_at: "2023-05-22T09:47:06.000000Z",
+                created_at: "2023-05-22T09:47:06",
+                updated_at: "2023-05-22T09:47:06",
                 props: {
-                    t_surf: 0,
+                    t_surf: 12.3,
                     t_sub_surf: 0,
                     turbidity: 0,
                     turbidity_mg: 0,
@@ -50,9 +50,9 @@ export class StationStore {
                 created_at: "2023-05-22T09:47:06.000000Z",
                 updated_at: "2023-05-22T09:47:06.000000Z",
                 props: {
-                    windSpeed: 0,
+                    windSpeed: 3,
                     windDirection: 0,
-                    temperature: 0,
+                    temperature: 16.8,
                     pressure: 0,
                     rainfall: 0,
                     uvIndex: 0,

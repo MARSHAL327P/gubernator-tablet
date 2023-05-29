@@ -11,7 +11,7 @@ export const tabHeaderVariants = {
     },
     WHITE: {
         name: "white",
-        noSelected: "white"
+        noSelected: "filled"
     }
 }
 

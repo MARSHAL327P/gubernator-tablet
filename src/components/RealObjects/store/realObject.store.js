@@ -7,7 +7,7 @@ class RealObjectStore {
     meteoProps = {
         windSpeed: 0,
         windDirection: 0,
-        temperature: 0,
+        airTemp: 0,
         pressure: 0,
         rainfall: 0,
         uvIndex: 0,

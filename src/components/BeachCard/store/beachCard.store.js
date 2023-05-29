@@ -1,7 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { capitalizeFirstLetter } from "../../../Utils";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import axios from "axios";
 
 export default class BeachCardStore {
@@ -12,8 +9,8 @@ export default class BeachCardStore {
     rating = 0
     bathingComfort = ""
     beachProblems = ""
-    waterTemp = 0
-    airTemp = 0
+    t_surf = 0
+    temperature = 0
     windSpeed = 0
     coord = [0, 0]
     beachType = ""
@@ -27,14 +24,11 @@ export default class BeachCardStore {
             .then(({data}) => {
                 return data.map(item => {
                     item.windSpeed = item.wind
+                    item.temperature = item.airTemp
+                    item.t_surf = item.waterTemp
                     return new BeachCardStore(item)
                 });
             })
-    }
-
-    get updateTimeText(){
-        dayjs.extend(relativeTime)
-        return capitalizeFirstLetter(dayjs(this.updateTime).locale("ru").fromNow())
     }
 
     constructor(data) {

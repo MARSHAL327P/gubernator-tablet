@@ -37,27 +37,37 @@ function App() {
             component: RealObjectCard,
             link: "/object",
         },
-        {
-            title: "Архитектура",
-            loadingText: "Загрузка архитектуры",
-            data: BeachLocalStore,
-            component: BeachCard,
-            link: "/architecture",
-        },
+        // {
+        //     title: "Архитектура",
+        //     loadingText: "Загрузка архитектуры",
+        //     data: BeachLocalStore,
+        //     component: BeachCard,
+        //     link: "/architecture",
+        // },
     ]
 
     return (
         <YMaps>
             <MapTemplate/>
-            <Routes>
-                <Route path={"/beach"}>
-                    <Route path={":beachCode"} element={<BeachPage/>}/>
-                </Route>
-                <Route path={"/"} element={<HomePage tabItems={tabItems}/>}>
-                    <Route path={"object"}/>
-                    <Route path={"architecture"}/>
-                </Route>
-            </Routes>
+            {/*<div*/}
+            {/*    className={`absolute top-0 left-0 h-full ${transitionStage}`}*/}
+            {/*    onAnimationEnd={() => {*/}
+            {/*        if (transitionStage === "fadeOut") {*/}
+            {/*            setTransitionStage("fadeIn");*/}
+            {/*            setDisplayLocation(location);*/}
+            {/*        }*/}
+            {/*    }}*/}
+            {/*>*/}
+                <Routes>
+                    <Route path={"/beach"}>
+                        <Route path={":beachCode"} element={<BeachPage/>}/>
+                    </Route>
+                    <Route path={"/"} element={<HomePage tabItems={tabItems}/>}>
+                        <Route path={"object"} element={null}/>
+                        <Route path={"architecture"}/>
+                    </Route>
+                </Routes>
+            {/*</div>*/}
         </YMaps>
     );
 }

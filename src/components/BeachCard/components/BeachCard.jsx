@@ -1,7 +1,3 @@
-import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
-import {ReactComponent as Water} from "../../../assets/icons/Water.svg";
-import {ReactComponent as Temperature} from "../../../assets/icons/Temperature.svg";
-import {ReactComponent as Wind} from "../../../assets/icons/Wind.svg";
 import {ReactComponent as Map} from "../../../assets/icons/Map.svg";
 import {ReactComponent as Route} from "../../../assets/icons/Route.svg";
 import {ReactComponent as Chevron} from "../../../assets/icons/Chevron.svg";
@@ -23,7 +19,7 @@ const BeachCard = observer(({card}) => {
 
     return (
         <>
-            <CardHeader updateTimeText={card.updateTimeText} rating={card.rating} name={card.name} problems={card.beachProblems} />
+            <CardHeader updateTime={card.updateTime} rating={card.rating} name={card.name} problems={card.beachProblems} />
             <BathingComfort bathingComfort={card.bathingComfort}/>
             <div className="px-7 py-5">
                 <Indications

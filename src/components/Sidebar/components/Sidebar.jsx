@@ -11,19 +11,25 @@ import Card from "../../Card/components/Card"
 import {useLocation} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import SidebarStore from "../store/sidebar.store";
+import {runInAction} from "mobx";
 
 
 const Sidebar = observer(({tabItems}) => {
-    function changeSelectedTabClass(tabIndex){
-        SidebarStore.selectedTabClass = tabItems[tabIndex].data
+    function changeSelectedTab(tabIndex) {
+        runInAction(() => {
+            SidebarStore.selectedTabClass = tabItems[tabIndex].data
+            SidebarStore.searchQuery = ""
+        })
     }
 
-    let [elOffset, setElOffset] = useState(0)
     const location = useLocation();
+    let [elOffset, setElOffset] = useState(0)
     let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
 
     useEffect(() => {
-       SidebarStore.selectedTabClass = tabItems[0]?.data
+        runInAction(() => {
+            SidebarStore.selectedTabClass = tabItems[0]?.data
+        })
     }, [])
 
     return (
@@ -37,12 +43,12 @@ const Sidebar = observer(({tabItems}) => {
                     <FilterBtn/>
                 }
             </FixedHeader>
-            <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTabClass}>
+            <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
                 <div
                     onScroll={(e) => {
                         setElOffset(e.currentTarget.scrollTop)
                     }}
-                    className={"min-w-[400px] sidebar p-3 pb-7 overflow-auto transition"}>
+                    className={"w-[435px] sidebar p-3 pb-7 overflow-auto transition"}>
                     <div className="mb-7">
                         <TabHeader
                             variant={tabHeaderVariants.WHITE}

@@ -2,17 +2,18 @@ import {observer} from "mobx-react-lite";
 import {Tooltip} from "@material-tailwind/react";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
+import {getUpdateTimeText} from "../../../Utils";
 
-const CardHeader = observer(({updateTimeText, problems, name, rating = 0}) => {
+const CardHeader = observer(({updateTime, problems, name, rating = 0}) => {
     let cardProblems = BeachLocalStore.beachProblemsType[problems]
 
     return (
-        <div className={"px-7 pb-2 pt-4"}>
+        <div className={"px-7 pt-4"}>
             {
-                updateTimeText &&
+                updateTime &&
                 <Tooltip content={"Время последнего обновления данных"}>
                     <div className="text-gray-400 text-[12px]">
-                        {updateTimeText}
+                        {getUpdateTimeText(updateTime)}
                     </div>
                 </Tooltip>
             }
