@@ -25,7 +25,6 @@ export default class BeachCardStore {
             .then(({data}) => {
                 return data.map(item => {
                     item.isOpen = true
-                    console.log(item)
                     return new BeachCardStore(item)
                 });
             })

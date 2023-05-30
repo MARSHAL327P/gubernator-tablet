@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { StationStore } from "./station.store";
+import { RealObjectCardStore } from "./realObjectCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
 import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
@@ -71,7 +71,7 @@ class RealObjectStore {
     constructor(data) {
         makeAutoObservable(this);
 
-        this.list = StationStore.get()
+        this.list = RealObjectCardStore.get()
     }
 }
 

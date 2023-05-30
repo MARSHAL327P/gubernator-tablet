@@ -37,7 +37,6 @@ const Filter = observer(() => {
         <div ref={filterEl}
              className={cc({
                  "h-full bg-white transition min-w-[400px]": true,
-                 "-translate-x-full": !FilterStore.isOpen
              })}
         >
             <FixedHeader elOffset={elOffset} classes={"p-7 items-center justify-between h-[104px]"}>

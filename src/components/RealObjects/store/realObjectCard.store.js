@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-export class StationStore {
+export class RealObjectCardStore {
     id = 0
     code = ""
     name = ""
@@ -12,7 +12,7 @@ export class StationStore {
     props = {}
 
     static get() {
-        let stationList = [
+        let realObjects = [
             {
                 id: 1,
                 code: "buoy-1",
@@ -62,8 +62,8 @@ export class StationStore {
             },
         ]
 
-        return stationList.map(item => {
-            return new StationStore(item)
+        return realObjects.map(item => {
+            return new RealObjectCardStore(item)
         })
     }
 

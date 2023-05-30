@@ -19,8 +19,9 @@ const makeLayout = (layoutFactory, component) => {
 };
 
 const ActivePlacemark = (props) => {
-    console.log(MapStore.ymaps)
-    let balloonLayout = MapStore.ymaps && makeLayout(
+    if( !MapStore.ymaps ) return null
+
+    let balloonLayout = makeLayout(
         MapStore.ymaps.templateLayoutFactory,
         props.component
     );
