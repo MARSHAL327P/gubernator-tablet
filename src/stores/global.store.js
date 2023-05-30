@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import SidebarStore from "../components/Sidebar/store/sidebar.store";
-import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
+// import SidebarStore from "../components/Sidebar/store/sidebar.store";
+// import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 import {createContext, useContext} from "react";
 
 class GlobalStore {

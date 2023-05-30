@@ -17,12 +17,15 @@ export default class BeachCardStore {
     beachCoverage = ""
     price = 0
     workTime = ["0", "0"]
+    isOpen = true
     props = {}
 
     static get(){
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 return data.map(item => {
+                    item.isOpen = true
+                    console.log(item)
                     return new BeachCardStore(item)
                 });
             })

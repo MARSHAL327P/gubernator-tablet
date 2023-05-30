@@ -1,6 +1,7 @@
 import React from 'react';
 import {Placemark} from '@pbe/react-yandex-maps';
 import ReactDOMServer from 'react-dom/server';
+import MapStore from "../Map/store/map.store";
 
 const makeLayout = (layoutFactory, component) => {
     let generatedHTML = ReactDOMServer.renderToStaticMarkup(component)
@@ -18,8 +19,9 @@ const makeLayout = (layoutFactory, component) => {
 };
 
 const ActivePlacemark = (props) => {
-    let balloonLayout = makeLayout(
-        props.yMapObject.templateLayoutFactory,
+    console.log(MapStore.ymaps)
+    let balloonLayout = MapStore.ymaps && makeLayout(
+        MapStore.ymaps.templateLayoutFactory,
         props.component
     );
 

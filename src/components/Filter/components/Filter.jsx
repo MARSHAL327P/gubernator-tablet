@@ -10,7 +10,6 @@ import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import {FilterInputs} from "./FilterInputs";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import cc from "classcat";
-import {toJS} from "mobx";
 
 function hasVariants(filterInput) {
     switch (filterInput.type) {

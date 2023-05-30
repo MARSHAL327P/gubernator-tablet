@@ -14,7 +14,6 @@ import RealObjectCard from "./components/RealObjects/components/RealObjectCard";
 
 function App() {
     const location = useLocation()
-
     const [displayLocation, setDisplayLocation] = useState(location);
     const [transitionStage, setTransitionStage] = useState("fadeIn");
 

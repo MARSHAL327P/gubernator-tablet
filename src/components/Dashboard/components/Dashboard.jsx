@@ -1,13 +1,12 @@
 import {observer} from "mobx-react-lite";
 import {Tab} from '@headlessui/react'
 import {Button, Tooltip} from "@material-tailwind/react";
-import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {Link, useParams, useSearchParams} from "react-router-dom";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {HomeIcon} from "@heroicons/react/24/solid";
 import TabHeader from "../../Tabs/components/TabHeader";
 import AdminBtn from "../../AdminPanel/components/AdminBtn";
 import {getIndexLinkInArray} from "../../../Utils";
-import {useState} from "react";
 
 const Dashboard = observer(({tabItems, dashboardName}) => {
     const {beachCode} = useParams()
