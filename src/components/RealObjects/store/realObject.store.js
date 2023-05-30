@@ -1,13 +1,16 @@
 import { makeAutoObservable } from "mobx";
 import { StationStore } from "./station.store";
 import FilterStore from "../../Filter/store/filter.store";
+import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
+import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
+import IndicationsStore from "../../Indications/store/indications.store";
 
 class RealObjectStore {
     list = []
     meteoProps = {
         windSpeed: 0,
         windDirection: 0,
-        airTemp: 0,
+        temperature: 0,
         pressure: 0,
         rainfall: 0,
         uvIndex: 0,
@@ -30,11 +33,17 @@ class RealObjectStore {
     realObjectTypes = {
         BUOY: {
             name: "Буй",
-            props: this.buoyProps
+            props: this.buoyProps,
+            mapIndication: IndicationsStore.indicationTypes.WATER_TEMP,
+            bgColor: "bg-warning",
+            icon: Buoy,
         },
         METEO_STATION: {
             name: "Метеостанция",
-            props: this.meteoProps
+            props: this.meteoProps,
+            mapIndication: IndicationsStore.indicationTypes.AIR_TEMP,
+            bgColor: "bg-primary",
+            icon: Meteo,
         },
         WASTEWATER: {
             name: "Сточные воды",

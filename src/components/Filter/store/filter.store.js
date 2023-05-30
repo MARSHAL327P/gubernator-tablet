@@ -78,7 +78,7 @@ class FilterStore {
         }
 
         SidebarStore.selectedTabClass.isLoading = true
-        console.log(sendData)
+
         axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
             .then(
                 action(({data}) => {

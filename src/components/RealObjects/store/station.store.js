@@ -15,12 +15,12 @@ export class StationStore {
         let stationList = [
             {
                 id: 1,
-                code: "buoy-1-1",
+                code: "buoy-1",
                 name: "Буй 1",
                 description: "Описание буя",
                 type: "BUOY",
                 coord: [
-                    44.615223, 33.487778
+                    44.617309514457844, 33.518458637702622
                 ],
                 created_at: "2023-05-22T09:47:06",
                 updated_at: "2023-05-22T09:47:06",
@@ -40,15 +40,15 @@ export class StationStore {
             },
             {
                 id: 2,
-                code: "meteostantsiya-1-2",
+                code: "meteostantsiya-1",
                 name: "Метеостанция 1",
                 description: "Описание метеостанции",
                 type: "METEO_STATION",
                 coord: [
-                    44.615223, 33.487778
+                    44.616762540148841, 33.517701416658646
                 ],
-                created_at: "2023-05-22T09:47:06.000000Z",
-                updated_at: "2023-05-22T09:47:06.000000Z",
+                created_at: "2023-05-22T09:47:06",
+                updated_at: "2023-05-22T09:47:06",
                 props: {
                     windSpeed: 3,
                     windDirection: 0,
