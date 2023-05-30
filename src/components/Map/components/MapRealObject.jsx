@@ -34,7 +34,7 @@ const MapRealObject = observer(() => {
                 }
             />
         )
-    }
+    })
 })
 
 export default MapRealObject
