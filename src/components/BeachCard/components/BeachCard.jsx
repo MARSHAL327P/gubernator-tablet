@@ -43,7 +43,7 @@ const BeachCard = observer(({card}) => {
                         </Button>
                     </Tooltip>
                     <Link to={`/beach/${card.code}`}>
-                        <Button fullWidth className={"w-[200px] flex items-center gap-2"}>
+                        <Button onClick={MapStore.zoomToItem.bind(MapStore, card.coord, true)} fullWidth className={"w-[200px] flex items-center gap-2"}>
                             Подробнее о пляже
                         </Button>
                     </Link>

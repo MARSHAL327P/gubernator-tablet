@@ -5,20 +5,8 @@ import WidgetTemplateStore from "../components/Widgets/store/widget.store";
 import {useParams} from "react-router-dom";
 import SidebarStore from "../components/Sidebar/store/sidebar.store";
 
-const BeachPage = observer(() => {
+const RealObjectPage = observer(() => {
     const tabItems = [
-        {
-            title: "Информация",
-            content: "Информация",
-            link: "info",
-            getParam: true,
-        },
-        {
-            title: "Отзывы",
-            content: "Отзывы",
-            link: "reviews",
-            getParam: true,
-        },
         {
             title: "Виджеты",
             content: <WidgetTemplate
@@ -27,24 +15,29 @@ const BeachPage = observer(() => {
                     WidgetTemplateStore.widgets.HUMIDITY,
                     WidgetTemplateStore.widgets.PRESSURE,
                 ]}
-                hasCharts={false}
             />,
             link: "widgets",
             getParam: true,
         },
+        {
+            title: "Графики",
+            content: "Графики",
+            link: "charts",
+            getParam: true,
+        },
     ]
 
-    const {beachCode} = useParams()
-    let card = SidebarStore.selectedTabClass.findCard(beachCode)
+    let {objectType, objectCode} = useParams()
+    objectType = objectType.toUpperCase().replace(/-/g, "_")
+    let card = SidebarStore.selectedTabClass.findCard(objectType, objectCode)
 
     return (
         <Dashboard
             card={card}
             tabItems={tabItems}
-            dashboardName={"Пляж"}
-
+            dashboardName={"Объект"}
         />
     )
 })
 
-export default BeachPage
+export default RealObjectPage

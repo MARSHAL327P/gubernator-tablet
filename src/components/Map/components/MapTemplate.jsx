@@ -5,6 +5,7 @@ import MapStore from "../store/map.store";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef} from "react";
 import {action, runInAction} from "mobx";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 
 const MapTemplate = observer((callback, deps) => {
@@ -42,7 +43,9 @@ const MapTemplate = observer((callback, deps) => {
         navigate(location.pathname + "?" + queryParameters.toString())
     }, [location.pathname, navigate, queryParameters])
 
-    useEffect(() => {setMapCoords(mapDefaultState)}, [mapDefaultState, setMapCoords])
+    useEffect(() => {
+        setMapCoords(mapDefaultState)
+    }, [mapDefaultState, setMapCoords])
 
     MapStore.ymaps = useYMaps()
     runInAction(() => {
@@ -50,18 +53,18 @@ const MapTemplate = observer((callback, deps) => {
     })
 
     return (
-        <>
-            <Map
-                instanceRef={MapStore.mapRef}
-                width={width}
-                height={height}
-                defaultState={mapDefaultState}
-                onBoundsChange={(e) => {setMapCoords(e)}}
-            >
-                <ZoomControl options={{float: "right"}}/>
-                {MapStore.mapItems[location.pathname]}
-            </Map>
-        </>
+        <Map
+            instanceRef={MapStore.mapRef}
+            width={width}
+            height={height}
+            defaultState={mapDefaultState}
+            onBoundsChange={(e) => {
+                setMapCoords(e)
+            }}
+        >
+            <ZoomControl options={{float: "right"}}/>
+            {SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.mapLayer}
+        </Map>
     )
 })
 

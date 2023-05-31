@@ -1,19 +1,15 @@
 import {makeAutoObservable, observable} from "mobx";
-import BeachMap from "../components/BeachMap";
-import RealObjectMap from "../components/RealObjectMap";
 
 class MapStore {
     ymaps = null
     mapRef = null
-    mapItems = {
-        "/": <BeachMap/>,
-        "/object": <RealObjectMap/>
-    }
     queryParam = null
 
-    zoomToItem(coord){
-        this.mapRef.current.panTo(coord, {
-            delay: 1500
+    zoomToItem(coord, dashboardMargin = false){
+        this.mapRef.current.panTo([coord[0] - (dashboardMargin ? 0.001 : 0), coord[1]], {
+            delay: 1500,
+        }).then(() => {
+            this.mapRef.current.setZoom(17)
         });
     }
 

@@ -3,6 +3,7 @@ import { ReactComponent as Warning } from "../../../assets/icons/Warning.svg";
 import { ReactComponent as Danger } from "../../../assets/icons/Danger.svg";
 import BeachCardStore from "./beachCard.store";
 import FilterStore from "../../Filter/store/filter.store";
+import BeachMap from "../../Map/components/BeachMap";
 
 class BeachLocalStore {
     list = []
@@ -23,12 +24,10 @@ class BeachLocalStore {
             textClasses: "text-danger font-bold"
         }
     }
-
     beachType = {
         CITY: "Городской",
         WILD: "Дикий",
     }
-
     beachProblemsType = {
         DANGER: {
             name: "Серъёзные проблемы",
@@ -39,7 +38,6 @@ class BeachLocalStore {
             icon: <Warning className={"fill-warning w-6 h-6"}/>,
         },
     }
-
     defaultFilterInputs = {
         rating: {
             name: "Рейтинг пляжа",
@@ -78,11 +76,11 @@ class BeachLocalStore {
             ...FilterStore.filterTypes.selectFromTo
         },
     }
-
     filterName = "Фильтр пляжей"
+    mapLayer = <BeachMap/>
 
-    findBeach(beachCode){
-        return this.list && this.list.find((beach) => beach.code === beachCode)
+    findCard(code){
+        return this.list && this.list.find((card) => card.code === code)
     }
 
     get filteredCards(){

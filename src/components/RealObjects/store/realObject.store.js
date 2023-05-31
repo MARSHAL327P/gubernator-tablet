@@ -4,7 +4,7 @@ import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
 import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
-import BeachCardStore from "../../BeachCard/store/beachCard.store";
+import RealObjectMap from "../../Map/components/RealObjectMap";
 
 class RealObjectStore {
     list = []
@@ -65,9 +65,14 @@ class RealObjectStore {
     }
 
     filterName = "Фильтр объектов"
+    mapLayer = <RealObjectMap/>
 
     get filteredCards(){
         return FilterStore.filteredCards(this)
+    }
+
+    findCard(type, code){
+        return this.list && this.list.find((card) => card.code === code && card.type === type)
     }
 
     constructor(data) {

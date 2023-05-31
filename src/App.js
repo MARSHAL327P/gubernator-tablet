@@ -11,6 +11,7 @@ import BeachLocalStore from "./components/BeachCard/store/beachLocal.store";
 import BeachCard from "./components/BeachCard/components/BeachCard";
 import RealObjectStore from "./components/RealObjects/store/realObject.store";
 import RealObjectCard from "./components/RealObjects/components/RealObjectCard";
+import RealObjectPage from "./pages/RealObjectPage";
 
 function App() {
     const location = useLocation()
@@ -67,6 +68,9 @@ function App() {
                     <Route path={"/"} element={<HomePage tabItems={tabItems}/>}>
                         <Route path={"object"} element={null}/>
                         <Route path={"architecture"}/>
+                    </Route>
+                    <Route path={"/object"}>
+                        <Route path={":objectType/:objectCode"} element={<RealObjectPage/>}/>
                     </Route>
                 </Routes>
             {/*</div>*/}

@@ -4,9 +4,9 @@ import { ReactComponent as Share } from "../../../assets/icons/Share.svg";
 // import Button from "../../RedefinedTags/Button/Button";
 import { Button, Tooltip } from "@material-tailwind/react";
 
-const WidgetTemplate = observer(({ widgets = [] }) => {
+const WidgetTemplate = observer(({ widgets = [], hasCharts = true }) => {
     const buttons = [
-        {
+         {
             name: "Графики",
             icon: Chart
         },

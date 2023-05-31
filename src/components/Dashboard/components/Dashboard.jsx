@@ -6,15 +6,16 @@ import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {HomeIcon} from "@heroicons/react/24/solid";
 import TabHeader from "../../Tabs/components/TabHeader";
 import AdminBtn from "../../AdminPanel/components/AdminBtn";
-import {getIndexLinkInArray} from "../../../Utils";
+import {getIndexLinkInArray, getUpdateTimeText} from "../../../Utils";
+import Sidebar from "../../Sidebar/components/Sidebar";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
-const Dashboard = observer(({tabItems, dashboardName}) => {
-    const {beachCode} = useParams()
+const Dashboard = observer(({card, tabItems, dashboardName}) => {
     const [searchParams, ] = useSearchParams();
-    let beach = BeachLocalStore.findBeach(beachCode)
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
+    let updateTimeField = card.updateTimeText || card.updated_at
 
-    return (beach &&
+    return (card &&
         <Tab.Group defaultIndex={selectedTabIndex}>
             <div className="absolute top-0 backdrop-blur-sm bg-white/50 flex justify-between items-center px-7 py-4 w-full">
                 <div className={"flex items-center gap-5"}>
@@ -27,12 +28,12 @@ const Dashboard = observer(({tabItems, dashboardName}) => {
                     </Tooltip>
                     <div>
                         <div className={"text-title"}>
-                            {dashboardName} «{beach.name}»
+                            {dashboardName} «{card.name}»
                         </div>
                         {
-                            beach.updateTimeText &&
+                            updateTimeField &&
                             <div className={"text-xs text-gray-500"}>
-                                Обновлено {beach.updateTimeText}
+                                Обновлено {getUpdateTimeText(updateTimeField)}
                             </div>
                         }
                     </div>

@@ -5,23 +5,21 @@ import RealObjectPlacemarker from "../../RealObjects/components/RealObjectPlacem
 import IndicationsStore from "../../Indications/store/indications.store";
 
 const RealObjectMap = observer(() => {
-    return RealObjectStore.list.map((realObject, index) => {
+    return RealObjectStore.list && RealObjectStore.list.map((realObject, index) => {
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
         let mapIndication = realObject.props[indicationName]
 
         return (
-            <div key={realObject.id}>
-                <ActivePlacemark
-                    geometry={realObject.coord}
-                    component={
-                        <RealObjectPlacemarker
-                            data={mapIndication + IndicationsStore.indications[indicationName].units}
-                            type={realObject.type}
-                        />
-                    }
-                />
-            </div>
-
+            <ActivePlacemark
+                geometry={realObject.coord}
+                key={realObject.id}
+                component={
+                    <RealObjectPlacemarker
+                        data={mapIndication + IndicationsStore.indications[indicationName].units}
+                        type={realObject.type}
+                    />
+                }
+            />
         )
     })
 })
