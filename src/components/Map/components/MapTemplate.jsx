@@ -3,7 +3,8 @@ import {Map, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../store/map.store";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {useCallback, useEffect, useMemo} from "react";
+import {useCallback, useEffect, useMemo, useRef} from "react";
+import {action, runInAction} from "mobx";
 
 
 const MapTemplate = observer((callback, deps) => {
@@ -34,19 +35,24 @@ const MapTemplate = observer((callback, deps) => {
         queryParameters.set("ll", center)
         queryParameters.set("zoom", zoom)
 
-        MapStore.queryParam = queryParameters
+        runInAction(() => {
+            MapStore.queryParam = queryParameters
+        })
 
         navigate(location.pathname + "?" + queryParameters.toString())
     }, [location.pathname, navigate, queryParameters])
 
     useEffect(() => {setMapCoords(mapDefaultState)}, [mapDefaultState, setMapCoords])
 
-
     MapStore.ymaps = useYMaps()
+    runInAction(() => {
+        MapStore.mapRef = useRef(null);
+    })
 
     return (
         <>
             <Map
+                instanceRef={MapStore.mapRef}
                 width={width}
                 height={height}
                 defaultState={mapDefaultState}

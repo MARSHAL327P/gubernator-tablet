@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
 import CardHeader from "../../Card/components/CardHeader";
 import Indications from "../../Indications/components/Indications";
 import IndicationsStore from "../../Indications/store/indications.store";
+import MapStore from "../../Map/store/map.store";
 
 const RealObjectCard = observer(({card}) => {
     const styles = {
@@ -30,7 +31,7 @@ const RealObjectCard = observer(({card}) => {
                 />
                 <div className="flex justify-between gap-2 mt-5">
                     <Tooltip content={"На карте"}>
-                        <Button color={"white"} className={styles.btn}>
+                        <Button onClick={MapStore.zoomToItem.bind(MapStore, card.coord)} color={"white"} className={styles.btn}>
                             <Map className={styles.btnIcon}/>
                         </Button>
                     </Tooltip>
