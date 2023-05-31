@@ -4,6 +4,9 @@ import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
 import WidgetTemplateStore from "../components/Widgets/store/widget.store";
 import {useParams} from "react-router-dom";
 import SidebarStore from "../components/Sidebar/store/sidebar.store";
+import RealObjectStore from "../components/RealObjects/store/realObject.store";
+import {useEffect, useState} from "react";
+import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 
 const BeachPage = observer(() => {
     const tabItems = [
@@ -35,14 +38,19 @@ const BeachPage = observer(() => {
     ]
 
     const {beachCode} = useParams()
-    let card = SidebarStore.selectedTabClass.findCard(beachCode)
+    let [card, setCard] = useState(null)
+
+    SidebarStore.selectedTabClass = BeachLocalStore
+
+    useEffect(() => {
+        setCard(SidebarStore.selectedTabClass.findCard(beachCode))
+    }, [SidebarStore.selectedTabClass.list])
 
     return (
-        <Dashboard
+        card && <Dashboard
             card={card}
             tabItems={tabItems}
             dashboardName={"Пляж"}
-
         />
     )
 })

@@ -72,7 +72,7 @@ class RealObjectStore {
     }
 
     findCard(type, code){
-        return this.list && this.list.find((card) => card.code === code && card.type === type)
+        return this.list.length > 0 && this.list.find((card) => card.code === code && card.type === type)
     }
 
     constructor(data) {
