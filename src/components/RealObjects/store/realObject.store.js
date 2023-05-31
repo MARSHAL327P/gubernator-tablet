@@ -1,12 +1,14 @@
-import { makeAutoObservable } from "mobx";
+import {action, makeAutoObservable} from "mobx";
 import { RealObjectCardStore } from "./realObjectCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
 import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
+import BeachCardStore from "../../BeachCard/store/beachCard.store";
 
 class RealObjectStore {
     list = []
+    isLoading = false
     meteoProps = {
         windSpeed: 0,
         windDirection: 0,
@@ -71,7 +73,17 @@ class RealObjectStore {
     constructor(data) {
         makeAutoObservable(this);
 
-        this.list = RealObjectCardStore.get()
+        this.isLoading = true
+        RealObjectCardStore
+            .get()
+            .then(
+                action(data => {
+                    this.list = data ?? []
+                })
+            )
+            .finally(action(() => {
+                this.isLoading = false
+            }));
     }
 }
 

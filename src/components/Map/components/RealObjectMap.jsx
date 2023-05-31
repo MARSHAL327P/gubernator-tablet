@@ -5,39 +5,23 @@ import RealObjectPlacemarker from "../../RealObjects/components/RealObjectPlacem
 import IndicationsStore from "../../Indications/store/indications.store";
 
 const RealObjectMap = observer(() => {
-    const realObjectPolygons = [
-        {
-            "type": "Feature",
-            "properties": {"id": 1, "type": "BUOY"},
-            "geometry": {"type": "MultiPoint", "coordinates": [[44.617309514457844, 33.518458637702622]]}
-        },
-        {
-            "type": "Feature",
-            "properties": {"id": 2, "type": "METEO_STATION"},
-            "geometry": {"type": "MultiPoint", "coordinates": [[44.616762540148841, 33.517701416658646]]}
-        }
-    ]
-
-    return realObjectPolygons.map((realObjectPolygon, index) => {
-        let realObject = RealObjectStore.list[
-            RealObjectStore
-                .list
-                .findIndex((item) => item.id === realObjectPolygon.properties.id && item.type === realObjectPolygon.properties.type)
-            ]
+    return RealObjectStore.list.map((realObject, index) => {
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
         let mapIndication = realObject.props[indicationName]
 
         return (
-            <ActivePlacemark
-                key={index}
-                geometry={realObjectPolygon.geometry.coordinates[0]}
-                component={
-                    <RealObjectPlacemarker
-                        data={mapIndication + IndicationsStore.indications[indicationName].units}
-                        type={realObject.type}
-                    />
-                }
-            />
+            <div key={realObject.id}>
+                <ActivePlacemark
+                    geometry={realObject.coord}
+                    component={
+                        <RealObjectPlacemarker
+                            data={mapIndication + IndicationsStore.indications[indicationName].units}
+                            type={realObject.type}
+                        />
+                    }
+                />
+            </div>
+
         )
     })
 })
