@@ -8,6 +8,7 @@ class MapStore {
         "/": <BeachMap/>,
         "/object": <RealObjectMap/>
     }
+    queryParam = null
 
     constructor(data) {
         makeAutoObservable(this, {
