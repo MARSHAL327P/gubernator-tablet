@@ -1,13 +1,19 @@
-FROM node:18.16.0
+FROM node:18.16.0 as builder
 
-WORKDIR /app
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+COPY tailwind.config.js tailwind.config.js
 
-EXPOSE 80
+RUN npm install
 
-COPY package*.json ./
+COPY public ./public/
+COPY nginx ./nginx/
+COPY src src
+COPY .env.local ./
 
-RUN npm install -g serve
+RUN npm run build
 
-COPY . .
+FROM nginx:latest AS front
 
-CMD ["serve", "-s", "build", "-l", "80"]
+#COPY --from=builder nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --chown=www-data:www-data --from=builder build/ /usr/share/nginx/html/
