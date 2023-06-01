@@ -7,7 +7,6 @@ COPY tailwind.config.js tailwind.config.js
 RUN npm install
 
 COPY public ./public/
-COPY nginx ./nginx/
 COPY src src
 COPY .env.local ./
 
