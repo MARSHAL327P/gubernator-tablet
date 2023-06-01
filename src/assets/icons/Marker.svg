@@ -1,10 +1,18 @@
-<svg width="9" height="18" viewBox="0 0 9 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_170_527)">
-<path d="M0.312501 1.41488e-06C0.271429 -0.000122361 0.230737 0.00787615 0.192766 0.0235369C0.154796 0.0391977 0.120297 0.0622115 0.0912543 0.0912545C0.0622114 0.120297 0.0391977 0.154796 0.0235369 0.192767C0.00787615 0.230737 -0.000122361 0.271429 1.41488e-06 0.312501V17.1875C1.41488e-06 17.2704 0.0329252 17.3499 0.0915303 17.4085C0.150135 17.4671 0.229621 17.5 0.312501 17.5C0.395382 17.5 0.474867 17.4671 0.533473 17.4085C0.592078 17.3499 0.625001 17.2704 0.625001 17.1875V8.84375L8.1625 5.23125C8.2151 5.20506 8.25935 5.16472 8.29029 5.11476C8.32122 5.0648 8.33761 5.0072 8.33761 4.94844C8.33761 4.88968 8.32122 4.83208 8.29029 4.78212C8.25935 4.73216 8.2151 4.69182 8.1625 4.66563L0.625001 1.05313V0.312501C0.624754 0.229697 0.591751 0.150355 0.533199 0.0918037C0.474647 0.0332521 0.395306 0.000248716 0.312501 1.41488e-06Z" fill="current"/>
-</g>
-<defs>
-<clipPath id="clip0_170_527">
-<rect width="8.33761" height="17.5" fill="white"/>
-</clipPath>
-</defs>
+<svg width="58" height="67" viewBox="0 0 58 67" xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#filter)">
+        <path d="M34.342 49.376c-3.076.93-4.687 2.979-4.831 6.147a.5.5 0 0 1-.5.477h-.022a.5.5 0 0 1-.5-.477c-.144-3.168-1.755-5.217-4.831-6.147C13.53 46.968 6 37.863 6 27 6 14.297 16.297 4 29 4s23 10.297 23 23c0 10.863-7.531 19.968-17.658 22.376z" fill="current" />
+    </g>
+    <path d="M29 67a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="#fff" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M29 65a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="current" />
+    <defs>
+        <filter id="filter" x="0" y="0" width="58" height="64" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+            <feOffset dy="2" />
+            <feGaussianBlur stdDeviation="3" />
+            <feColorMatrix values="0 0 0 0 0.4 0 0 0 0 0.396078 0 0 0 0 0.380392 0 0 0 0.2 0" />
+            <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_9595_81428" />
+            <feBlend in="SourceGraphic" in2="effect1_dropShadow_9595_81428" result="shape" />
+        </filter>
+    </defs>
 </svg>
