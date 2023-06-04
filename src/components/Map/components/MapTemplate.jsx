@@ -6,6 +6,7 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef} from "react";
 import {action, runInAction} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
+// const HeatmapLayer = import('../../../Libs/heatMap')
 
 
 const MapTemplate = observer((callback, deps) => {
@@ -48,9 +49,11 @@ const MapTemplate = observer((callback, deps) => {
     }, [mapDefaultState, setMapCoords])
 
     MapStore.ymaps = useYMaps()
+
     runInAction(() => {
         MapStore.mapRef = useRef(null);
     })
+
 
     return (
         <Map

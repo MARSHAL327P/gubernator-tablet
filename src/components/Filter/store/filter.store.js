@@ -1,4 +1,4 @@
-import {action, makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import _ from "lodash";
@@ -35,54 +35,58 @@ class FilterStore {
             selected: [],
         },
     }
+    sentFilterInputs = {}
 
     // filteredBeaches = null
 
-    filteredCards(objectClass) {
+    filteredCards() {
+        if( !SidebarStore.selectedTabClass )
+            return []
+
         if (SidebarStore.searchQuery.trim() !== "") {
-            return objectClass.list.filter((beach) => {
-                return beach
+            return SidebarStore.selectedTabClass.list.filter((card) => {
+                return card
                     .name
                     .toLowerCase()
                     .indexOf(SidebarStore.searchQuery.toLowerCase()) >= 0
             })
         }
 
-        // if( SidebarStore.selectedTabClass.filterInputs ){
-        //     this.fetchFilterBeaches()
-        // }
+        // return this.fetchFilterInputs()
 
-        return objectClass.list
+        return SidebarStore.selectedTabClass.list
     }
 
     fetchFilterInputs() {
-        let sendData = _.cloneDeep(this.filterInputs)
 
-        for (let filterInputKey in sendData) {
-            let inputDelete = false
+        // let sendData = _.cloneDeep(this.filterInputs)
+        //
+        // for (let filterInputKey in sendData) {
+        //     let inputDelete = false
+        //
+        //     switch (sendData[filterInputKey].type) {
+        //         case this.filterTypes.selectFromTo.type:
+        //             inputDelete = sendData[filterInputKey].selected.from === null && sendData[filterInputKey].selected.to === null
+        //             break;
+        //         default:
+        //             inputDelete = sendData[filterInputKey].selected.length <= 0
+        //     }
+        //
+        //     if (inputDelete) {
+        //         delete sendData[filterInputKey]
+        //     } else {
+        //         delete sendData[filterInputKey].open
+        //         delete sendData[filterInputKey].variants
+        //     }
+        // }
 
-            switch (sendData[filterInputKey].type) {
-                case this.filterTypes.selectFromTo.type:
-                    inputDelete = sendData[filterInputKey].selected.from === null && sendData[filterInputKey].selected.to === null
-                    break;
-                default:
-                    inputDelete = sendData[filterInputKey].selected.length <= 0
-            }
-
-            if (inputDelete) {
-                delete sendData[filterInputKey]
-            } else {
-                delete sendData[filterInputKey].open
-                delete sendData[filterInputKey].variants
-            }
-        }
+        console.log(toJS(this.sentFilterInputs))
 
         SidebarStore.selectedTabClass.isLoading = true
 
-        axios.post(process.env.REACT_APP_BEACHES_FILTER, sendData)
+        axios.post(process.env.REACT_APP_BEACHES_FILTER, this.sentFilterInputs)
             .then(
                 action(({data}) => {
-                    console.log(data)
                     SidebarStore.selectedTabClass.list = data
                 })
             )
@@ -106,6 +110,8 @@ class FilterStore {
                     filterInput.selected = []
             }
         }
+
+        this.sentFilterInputs = {}
         this.fetchFilterInputs()
     }
 
@@ -201,8 +207,13 @@ class FilterStore {
                     selected: [...inputParams.selected, item]
                 }
             }
+
+            this.sentFilterInputs[inputName] = inputParams
         } else {
             inputParams.selected.splice(findItemIndex, 1)
+
+            if( inputParams.selected.length <= 0 )
+                delete this.sentFilterInputs[inputName]
         }
 
         this.filterInputs[inputName] = inputParams
@@ -210,6 +221,7 @@ class FilterStore {
     }
 
     setSelectFromToItem(e, inputName) {
+        console.log(this.filterInputs[inputName])
         this.filterInputs[inputName].selected[e.target.name] = e.target.value
         this.fetchFilterInputs()
     }
