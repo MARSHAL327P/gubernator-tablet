@@ -6,7 +6,7 @@ import cc from "classcat";
 const Indications = observer(({data, indications}) => {
 
     return (
-        <div className={"flex gap-2 items-center"}>
+        <div className={"flex flex-wrap gap-2 items-center"}>
             {
                 indications.map((indication, idx) => {
                     let hasIndications = data[indication] !== undefined && data[indication] !== null

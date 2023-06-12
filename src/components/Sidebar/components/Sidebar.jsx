@@ -34,28 +34,29 @@ const Sidebar = observer(({tabItems}) => {
 
     return (
         <div className={"h-full bg-white transition z-20"}>
-            <FixedHeader elOffset={elOffset} classes={"px-3 py-7 mr-[6px]"}>
-                <Search/>
-                {FilterStore.numChangedParams > 0 ?
-                    <Badge withBorder content={FilterStore.numChangedParams}>
-                        <FilterBtn/>
-                    </Badge> :
-                    <FilterBtn/>
-                }
-            </FixedHeader>
+
             <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
+                <FixedHeader elOffset={elOffset} classes={"px-3 py-7 mr-[6px] flex-col"}>
+                    <div className="flex gap-4">
+                        <Search/>
+                        {FilterStore.numChangedParams > 0 ?
+                            <Badge withBorder content={FilterStore.numChangedParams}>
+                                <FilterBtn/>
+                            </Badge> :
+                            <FilterBtn/>
+                        }
+                    </div>
+                    <TabHeader
+                        variant={tabHeaderVariants.WHITE}
+                        size={"sm"}
+                        tabItems={tabItems}
+                    />
+                </FixedHeader>
                 <div
                     onScroll={(e) => {
                         setElOffset(e.currentTarget.scrollTop)
                     }}
                     className={"w-[435px] sidebar p-3 pb-7 overflow-auto transition"}>
-                    <div className="mb-7">
-                        <TabHeader
-                            variant={tabHeaderVariants.WHITE}
-                            size={"sm"}
-                            tabItems={tabItems}
-                        />
-                    </div>
 
                     <Tab.Panels>
                         {tabItems.map((tab, idx) => {

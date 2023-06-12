@@ -1,7 +1,6 @@
 import './App.css';
 import {Route, Routes, useLocation} from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import {useYMaps, YMaps} from "@pbe/react-yandex-maps";
 import BeachPage from "./pages/BeachPage";
 import MapTemplate from "./components/Map/components/MapTemplate";
 import {useEffect, useState} from "react";
@@ -47,11 +46,10 @@ function App() {
     ]
 
     return (
-        <YMaps query={{
-            load: "package.full",
-            apikey: "6701facf-e92e-4104-965a-471884673190"
-        }}>
+        <>
             <MapTemplate/>
+            {/*    {SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.mapLayer}*/}
+            {/*</div>*/}
             {/*<div*/}
             {/*    className={`absolute top-0 left-0 h-full ${transitionStage}`}*/}
             {/*    onAnimationEnd={() => {*/}
@@ -61,20 +59,21 @@ function App() {
             {/*        }*/}
             {/*    }}*/}
             {/*>*/}
-                <Routes>
-                    <Route path={"/beach"}>
-                        <Route path={":beachCode"} element={<BeachPage/>}/>
-                    </Route>
-                    <Route path={"/"} element={<HomePage tabItems={tabItems}/>}>
-                        <Route path={"object"} element={null}/>
-                        <Route path={"architecture"}/>
-                    </Route>
-                    <Route path={"/object"}>
-                        <Route path={":objectType/:objectCode"} element={<RealObjectPage/>}/>
-                    </Route>
-                </Routes>
+            <Routes>
+                <Route path={"/beach"}>
+                    <Route path={":beachCode"} element={<BeachPage/>}/>
+                </Route>
+                <Route path={"/"} element={<HomePage tabItems={tabItems}/>}>
+                    <Route path={"object"} element={null}/>
+                    <Route path={"architecture"}/>
+                </Route>
+                <Route path={"/object"}>
+                    <Route path={":objectType/:objectCode"} element={<RealObjectPage/>}/>
+                </Route>
+            </Routes>
             {/*</div>*/}
-        </YMaps>
+        </>
+
     );
 }
 

@@ -4,6 +4,8 @@ class MapStore {
     ymaps = null
     mapRef = null
     queryParam = null
+    map = null
+    mapgl = null
 
     zoomToItem(coord, dashboardMargin = false){
         this.mapRef.current.panTo([coord[0] - (dashboardMargin ? 0.001 : 0), coord[1]], {
