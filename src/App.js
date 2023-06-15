@@ -1,11 +1,10 @@
 import './App.css';
-import {Route, Routes, useLocation} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import {YMaps} from "@pbe/react-yandex-maps";
 import BeachPage from "./pages/BeachPage";
 import MapTemplate from "./components/Map/components/MapTemplate";
-import {useEffect, useState} from "react";
-import {useStores} from "./stores/global.store";
-import Card from "./components/Card/components/Card";
+// import {useEffect, useState} from "react";
 import BeachLocalStore from "./components/BeachCard/store/beachLocal.store";
 import BeachCard from "./components/BeachCard/components/BeachCard";
 import RealObjectStore from "./components/RealObjects/store/realObject.store";
@@ -13,13 +12,13 @@ import RealObjectCard from "./components/RealObjects/components/RealObjectCard";
 import RealObjectPage from "./pages/RealObjectPage";
 
 function App() {
-    const location = useLocation()
-    const [displayLocation, setDisplayLocation] = useState(location);
-    const [transitionStage, setTransitionStage] = useState("fadeIn");
+    // const location = useLocation()
+    // const [displayLocation, setDisplayLocation] = useState(location);
+    // const [transitionStage, setTransitionStage] = useState("fadeIn");
 
-    useEffect(() => {
-        if (location !== displayLocation) setTransitionStage("fadeOut");
-    }, [location, displayLocation]);
+    // useEffect(() => {
+    //     if (location !== displayLocation) setTransitionStage("fadeOut");
+    // }, [location, displayLocation]);
 
     let tabItems = [
         {
@@ -46,10 +45,11 @@ function App() {
     ]
 
     return (
-        <>
+        <YMaps query={{
+            load: "package.full",
+            apikey: "6701facf-e92e-4104-965a-471884673190"
+        }}>
             <MapTemplate/>
-            {/*    {SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.mapLayer}*/}
-            {/*</div>*/}
             {/*<div*/}
             {/*    className={`absolute top-0 left-0 h-full ${transitionStage}`}*/}
             {/*    onAnimationEnd={() => {*/}
@@ -72,8 +72,7 @@ function App() {
                 </Route>
             </Routes>
             {/*</div>*/}
-        </>
-
+        </YMaps>
     );
 }
 

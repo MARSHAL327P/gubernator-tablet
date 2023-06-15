@@ -10,7 +10,7 @@ import {getIndexLinkInArray, getUpdateTimeText} from "../../../Utils";
 const Dashboard = observer(({card, tabItems, dashboardName, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
-    let updateTimeField = card.updateTimeText || card.updated_at
+    let updateTimeField = card.updateTimeText || card.updated_at || card.updateTime
 
     return (<Tab.Group defaultIndex={selectedTabIndex}>
             <div

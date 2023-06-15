@@ -10,17 +10,16 @@ const RealObjectMap = observer(() => {
         let mapIndication = realObject.props[indicationName]
 
         return (
-            <div></div>
-            // <ActivePlacemark
-            //     geometry={realObject.coord}
-            //     key={realObject.id}
-            //     component={
-            //         <RealObjectPlacemarker
-            //             data={mapIndication + IndicationsStore.indications[indicationName].units}
-            //             type={realObject.type}
-            //         />
-            //     }
-            // />
+            <ActivePlacemark
+                geometry={realObject.coord}
+                key={realObject.id}
+                component={
+                    <RealObjectPlacemarker
+                        data={mapIndication + IndicationsStore.indications[indicationName].units}
+                        type={realObject.type}
+                    />
+                }
+            />
         )
     })
 })

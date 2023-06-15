@@ -1,4 +1,4 @@
-import {action, computed, makeAutoObservable} from "mobx";
+import {action, makeAutoObservable} from "mobx";
 import { ReactComponent as Warning } from "../../../assets/icons/Warning.svg";
 import { ReactComponent as Danger } from "../../../assets/icons/Danger.svg";
 import BeachCardStore from "./beachCard.store";
