@@ -82,7 +82,9 @@ const Filter = observer(() => {
                                         icon={
                                             <ChevronDownIcon
                                                 strokeWidth={2.5}
-                                                className={`mx-auto h-5 w-5 transition-transform ${inputParams.open ? "rotate-180" : ""}`}
+                                                className={cc(["mx-auto h-5 w-5 transition-transform", {
+                                                    "rotate-180": inputParams.open
+                                                }])}
                                             />
                                         }>
                                         <ListItem className="p-0 active:bg-transparent bg-transparent"

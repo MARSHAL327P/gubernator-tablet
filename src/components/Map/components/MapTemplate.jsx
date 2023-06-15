@@ -3,8 +3,8 @@ import {Map, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../store/map.store";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {useCallback, useEffect, useMemo, useRef} from "react";
-import {action, runInAction} from "mobx";
+import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {runInAction} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 
@@ -13,7 +13,6 @@ const MapTemplate = observer((callback, deps) => {
     const location = useLocation();
     const [queryParameters] = useSearchParams()
     const navigate = useNavigate()
-
     const mapDefaultState = useMemo(() => {
         let data = MapStore.queryParam || queryParameters
 
@@ -23,6 +22,8 @@ const MapTemplate = observer((callback, deps) => {
             controls: [],
         }
     }, [queryParameters])
+
+    let [mapHeight, setMapHeight] = useState(height)
 
     let setMapCoords = useCallback((mapStates) => {
         let center = mapStates.center
@@ -48,15 +49,20 @@ const MapTemplate = observer((callback, deps) => {
     }, [mapDefaultState, setMapCoords])
 
     MapStore.ymaps = useYMaps()
+
     runInAction(() => {
         MapStore.mapRef = useRef(null);
     })
+
+    useEffect(() => {
+        setMapHeight(height - (location.pathname === "/" || location.pathname === "/object" ? 0 : 500))
+    }, [height, location.pathname])
 
     return (
         <Map
             instanceRef={MapStore.mapRef}
             width={width}
-            height={height}
+            height={mapHeight}
             defaultState={mapDefaultState}
             onBoundsChange={(e) => {
                 setMapCoords(e)

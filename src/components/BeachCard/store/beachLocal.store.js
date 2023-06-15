@@ -1,4 +1,4 @@
-import { action, makeAutoObservable } from "mobx";
+import {action, makeAutoObservable} from "mobx";
 import { ReactComponent as Warning } from "../../../assets/icons/Warning.svg";
 import { ReactComponent as Danger } from "../../../assets/icons/Danger.svg";
 import BeachCardStore from "./beachCard.store";
@@ -63,7 +63,11 @@ class BeachLocalStore {
             ...FilterStore.filterTypes.checkbox,
             variants: ["Круглосуточно", "Не круглосуточно"],
         },
-        waterTemp: {
+        temperature: {
+            name: "Температура воздуха",
+            ...FilterStore.filterTypes.selectFromTo
+        },
+        t_surf: {
             name: "Температура воды",
             ...FilterStore.filterTypes.selectFromTo
         },
@@ -84,7 +88,7 @@ class BeachLocalStore {
     }
 
     get filteredCards(){
-        return FilterStore.filteredCards(this)
+        return FilterStore.filteredCards()
     }
 
     constructor() {

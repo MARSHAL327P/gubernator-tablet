@@ -23,7 +23,7 @@ function TabItem(variant, size, tabTitle) {
                 variant={selected ? "filled" : variant.noSelected}
                 className={
                     cc({
-                        "outline-none": true,
+                        "outline-none whitespace-nowrap": true,
                         "text-lg font-semibold px-7": size === "md",
                         "shadow-lg": selected && variant.name === tabHeaderVariants.DEFAULT.name,
                         "text-sm w-full": size === "sm"

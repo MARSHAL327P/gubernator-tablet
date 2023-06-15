@@ -7,9 +7,13 @@ import SidebarStore from "../components/Sidebar/store/sidebar.store";
 import RealObjectStore from "../components/RealObjects/store/realObject.store";
 import {useEffect, useState} from "react";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
+import AirQuality from "../components/AirQuality/components/AirQuality";
 
 const BeachPage = observer(() => {
-    const tabItems = [
+    let [card, setCard] = useState(null)
+
+    const {beachCode} = useParams()
+    const tabItems = card && [
         {
             title: "Информация",
             content: "Информация",
@@ -20,6 +24,12 @@ const BeachPage = observer(() => {
             title: "Отзывы",
             content: "Отзывы",
             link: "reviews",
+            getParam: true,
+        },
+        {
+            title: "Качество воздуха",
+            content: <AirQuality airQualityData={card.airQuality} />,
+            link: "aqi",
             getParam: true,
         },
         {
@@ -36,9 +46,6 @@ const BeachPage = observer(() => {
             getParam: true,
         },
     ]
-
-    const {beachCode} = useParams()
-    let [card, setCard] = useState(null)
 
     SidebarStore.selectedTabClass = BeachLocalStore
 

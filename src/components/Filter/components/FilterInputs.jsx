@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite";
 import FilterStore from "../store/filter.store";
 import { Button, Checkbox, Input } from "@material-tailwind/react";
-import { action } from "mobx";
+import {action, toJS} from "mobx";
 import cc from "classcat";
 import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
 import Ripple from "../../RedefinedTags/Ripple/Ripple";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 const FilterInputsComponent = ({ inputName, inputParams }) => {
     switch (inputParams.type) {
@@ -50,13 +51,13 @@ const FilterInputsComponent = ({ inputName, inputParams }) => {
                     <Input
                         {...defaultParams}
                         value={inputParams.selected.from ?? ""}
-                        name={"from"}
+                        name={`from`}
                         placeholder={"От " + inputParams.from}
                     />
                     <Input
                         {...defaultParams}
                         value={inputParams.selected.to ?? ""}
-                        name={"to"}
+                        name={`to`}
                         placeholder={"До " + inputParams.to}
                     />
                 </div>
