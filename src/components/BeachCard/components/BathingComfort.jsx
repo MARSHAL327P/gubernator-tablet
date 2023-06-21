@@ -6,7 +6,7 @@ export default function BathingComfort({ bathingComfort }){
     let bathingComfortObject = BeachLocalStore.bathingComfortType[bathingComfort]
 
     return bathingComfortObject && (
-        <div className={cc(["flex justify-center items-center gap-3 w-full p-3 mt-2", bathingComfortObject.classes])}>
+        <div className={cc(["flex justify-center items-center gap-3 w-full p-3", bathingComfortObject.classes])}>
             { bathingComfortObject.showIcon ?? <Swimmer className={"fill-white"}/>}
             <span className={bathingComfortObject.textClasses ?? "text-white" }>{bathingComfortObject.text}</span>
         </div>

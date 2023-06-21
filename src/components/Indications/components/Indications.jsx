@@ -3,7 +3,7 @@ import {Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../store/indications.store";
 import cc from "classcat";
 
-const Indications = observer(({data, indications}) => {
+const Indications = observer(({data, indications, fixedValue = false}) => {
 
     return (
         <div className={"flex flex-wrap gap-2 items-center"}>
@@ -21,7 +21,7 @@ const Indications = observer(({data, indications}) => {
                                 indicationData.background
                             ])}>
                                 <Icon className={indicationData.color}/>
-                                <span>{data[indication]}{indicationData.units}</span>
+                                <span>{fixedValue ? data[indication].toFixed(1) : data[indication]}{indicationData.units}</span>
                             </div>
                         </Tooltip>
                     )

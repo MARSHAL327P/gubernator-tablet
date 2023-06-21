@@ -14,7 +14,7 @@ const Dashboard = observer(({card, tabItems, dashboardName, homeLink = "/"}) => 
 
     return (<Tab.Group defaultIndex={selectedTabIndex}>
             <div
-                className="border-b border-white fixed z-10 top-0 backdrop-blur-sm bg-white/50 flex justify-between items-center px-7 py-4 w-full">
+                className="border-b border-white fixed z-10 top-0 backdrop-blur bg-white/50 flex justify-between items-center px-7 py-4 w-full">
                 <div className={"flex items-center gap-5"}>
                     <Tooltip placement="top-start" content="Вернуться на главную">
                         <Link to={homeLink}>

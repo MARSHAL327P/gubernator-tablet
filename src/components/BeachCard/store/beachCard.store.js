@@ -22,6 +22,7 @@ export default class BeachCardStore {
     polygon = []
     props = {}
     airQuality = {}
+    img = []
 
     static get() {
         return axios.get(process.env.REACT_APP_BEACHES)
