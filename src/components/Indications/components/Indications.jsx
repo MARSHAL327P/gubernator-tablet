@@ -3,10 +3,10 @@ import {Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../store/indications.store";
 import cc from "classcat";
 
-const Indications = observer(({data, indications, fixedValue = false}) => {
+const Indications = observer(({data, indications, fixedValue = false, classes = ""}) => {
 
     return (
-        <div className={"flex flex-wrap gap-2 items-center"}>
+        <div className={cc(["flex flex-wrap gap-2 items-center", classes])}>
             {
                 indications.map((indication, idx) => {
                     let hasIndications = data[indication] !== undefined && data[indication] !== null

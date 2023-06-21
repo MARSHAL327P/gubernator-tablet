@@ -56,7 +56,7 @@ const Sidebar = observer(({tabItems}) => {
                     onScroll={(e) => {
                         setElOffset(e.currentTarget.scrollTop)
                     }}
-                    className={"w-[435px] sidebar p-3 pb-7 overflow-auto transition"}>
+                    className={"w-[460px] sidebar p-3 pb-7 overflow-auto transition"}>
 
                     <Tab.Panels>
                         {tabItems.map((tab, idx) => {
