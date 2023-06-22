@@ -6,6 +6,7 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 
 const MapTemplate = observer((callback, deps) => {
@@ -69,7 +70,7 @@ const MapTemplate = observer((callback, deps) => {
             }}
         >
             <ZoomControl options={{float: "right"}}/>
-            {SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.mapLayer}
+            {SelectedClassInfoStore.currentClass?.mapLayer}
         </Map>
     )
 })

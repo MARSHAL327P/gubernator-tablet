@@ -8,6 +8,7 @@ import RealObjectStore from "../components/RealObjects/store/realObject.store";
 import {useEffect, useState} from "react";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 import AirQuality from "../components/AirQuality/components/AirQuality";
+import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 
 const BeachPage = observer(() => {
     let [card, setCard] = useState(null)
@@ -47,11 +48,11 @@ const BeachPage = observer(() => {
         },
     ]
 
-    SidebarStore.selectedTabClass = BeachLocalStore
+    SelectedClassInfoStore.currentClass = BeachLocalStore
 
     useEffect(() => {
-        setCard(SidebarStore.selectedTabClass.findCard(beachCode))
-    }, [SidebarStore.selectedTabClass.list])
+        setCard(SelectedClassInfoStore.currentClass.findCard(beachCode))
+    }, [beachCode])
 
     return (
         card && <Dashboard

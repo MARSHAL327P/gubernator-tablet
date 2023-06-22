@@ -10,6 +10,7 @@ import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import {FilterInputs} from "./FilterInputs";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import cc from "classcat";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 function hasVariants(filterInput) {
     switch (filterInput.type) {
@@ -41,7 +42,7 @@ const Filter = observer(() => {
         >
             <FixedHeader elOffset={elOffset} classes={"p-7 items-center justify-between h-[104px]"}>
                 <div className={"text-title"}>
-                    {SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.filterName}
+                    {SelectedClassInfoStore.currentClass?.filterName}
                 </div>
 
                 <Transition

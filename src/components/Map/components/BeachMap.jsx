@@ -4,9 +4,10 @@ import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {Polygon} from "@pbe/react-yandex-maps";
 import {ReactComponent as Marker} from "../../../assets/icons/Marker.svg";
 import cc from "classcat";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const BeachMap = observer(() => {
-    return BeachLocalStore.list.length > 0 && BeachLocalStore.list.map(beach => {
+    return BeachLocalStore.list.map(beach => {
         return (
             <div key={beach.id}>
                 <Polygon

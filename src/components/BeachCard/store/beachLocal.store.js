@@ -1,13 +1,13 @@
-import {action, makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, observable, toJS} from "mobx";
 import { ReactComponent as Warning } from "../../../assets/icons/Warning.svg";
 import { ReactComponent as Danger } from "../../../assets/icons/Danger.svg";
 import BeachCardStore from "./beachCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import BeachMap from "../../Map/components/BeachMap";
+import BeachCard from "../components/BeachCard";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 class BeachLocalStore {
-    list = []
-    isLoading = false
     bathingComfortType = {
         GOOD: {
             text: "Комфортно",
@@ -80,31 +80,22 @@ class BeachLocalStore {
             ...FilterStore.filterTypes.selectFromTo
         },
     }
+
+    list = []
     filterName = "Фильтр пляжей"
+    loadingText = "Загрузка пляжей"
+    component = BeachCard
     mapLayer = <BeachMap/>
 
     findCard(code){
-        return this.list && this.list.find((card) => card.code === code)
-    }
-
-    get filteredCards(){
-        return FilterStore.filteredCards()
+        return SelectedClassInfoStore.list && SelectedClassInfoStore.list.find((card) => card.code === code)
     }
 
     constructor() {
+        // super(BeachCardStore)
         makeAutoObservable(this);
 
-        this.isLoading = true
-        BeachCardStore
-            .get()
-            .then(
-                action(data => {
-                    this.list = data ?? []
-                })
-            )
-            .finally(action(() => {
-                this.isLoading = false
-            }));
+        this.cardStore = BeachCardStore
     }
 }
 

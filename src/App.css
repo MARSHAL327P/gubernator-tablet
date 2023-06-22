@@ -45,8 +45,12 @@ body{
     overflow-x: hidden;
 }
 
-.filter, .sidebar{
+.sidebar{
     height: calc(100% - 164px);
+}
+
+.filter{
+    height: calc(100% - 104px);
 }
 
 .text-title{

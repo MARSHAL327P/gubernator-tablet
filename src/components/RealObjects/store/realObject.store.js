@@ -5,10 +5,10 @@ import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
 import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
 import RealObjectMap from "../../Map/components/RealObjectMap";
+import RealObjectCard from "../components/RealObjectCard";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 class RealObjectStore {
-    list = []
-    isLoading = false
     meteoProps = {
         windSpeed: 0,
         windDirection: 0,
@@ -64,31 +64,20 @@ class RealObjectStore {
         },
     }
 
+    list = []
     filterName = "Фильтр объектов"
     mapLayer = <RealObjectMap/>
-
-    get filteredCards(){
-        return FilterStore.filteredCards(this)
-    }
+    component = RealObjectCard
+    loadingText = "Загрузка объектов"
 
     findCard(type, code){
-        return this.list.length > 0 && this.list.find((card) => card.code === code && card.type === type)
+        return SelectedClassInfoStore.list.length > 0 && SelectedClassInfoStore.list.find((card) => card.code === code && card.type === type)
     }
 
     constructor(data) {
         makeAutoObservable(this);
 
-        this.isLoading = true
-        RealObjectCardStore
-            .get()
-            .then(
-                action(data => {
-                    this.list = data ?? []
-                })
-            )
-            .finally(action(() => {
-                this.isLoading = false
-            }));
+        this.cardStore = RealObjectCardStore
     }
 }
 

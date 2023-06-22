@@ -1,19 +1,19 @@
-import { observer } from "mobx-react-lite";
+import {observer} from "mobx-react-lite";
 import FilterStore from "../store/filter.store";
-import { Button, Checkbox, Input } from "@material-tailwind/react";
-import {action, toJS} from "mobx";
+import {Button, Checkbox, Input} from "@material-tailwind/react";
+import {action} from "mobx";
 import cc from "classcat";
-import { ReactComponent as Star } from "../../../assets/icons/Star.svg";
+import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import Ripple from "../../RedefinedTags/Ripple/Ripple";
-import SidebarStore from "../../Sidebar/store/sidebar.store";
+import {useRef, useState} from "react";
 
-const FilterInputsComponent = ({ inputName, inputParams }) => {
+const FilterInputsComponent = ({inputName, inputParams}) => {
     switch (inputParams.type) {
         case FilterStore.filterTypes.radioBtn.type:
             return (
                 <div className={"flex flex-row gap-5"}>
                     {inputParams.variants.map((item, idx) => {
-                        let { id, label, sendData } = FilterStore.getInputAttr(inputName + "-" + idx, item)
+                        let {id, label, sendData} = FilterStore.getInputAttr(inputName + "-" + idx, item)
                         let itemIsSelected = FilterStore.findSelectedItem(inputName, sendData) !== -1
 
                         return (
@@ -41,13 +41,20 @@ const FilterInputsComponent = ({ inputName, inputParams }) => {
                 max: inputParams.to,
                 step: 0.2,
                 type: "number",
-                variant: "standard",
                 label: "",
-                onInput: action((e) => FilterStore.setSelectFromToItem(e, inputName))
+                onInput: action((e) => {
+                    FilterStore.setSelectFromToItem(e, inputName, inputParams)
+                }),
+                className: "focus:!border-t-blue-500 focus:!border-blue-500 ring-4 ring-transparent focus:ring-blue-500/20 " +
+                    "!border !border-blue-gray-50 bg-white shadow-lg shadow-blue-gray-900/5 placeholder:text-blue-gray-200 text-blue-gray-500",
+                labelProps: {
+                    className: "hidden"
+                },
+                containerProps: {className: "min-w-[100px]"}
             }
 
             return (
-                <div className={"flex gap-5"}>
+                <div className={"flex gap-5 mt-2"}>
                     <Input
                         {...defaultParams}
                         value={inputParams.selected.from ?? ""}
@@ -63,16 +70,30 @@ const FilterInputsComponent = ({ inputName, inputParams }) => {
                 </div>
             )
         default:
+            let checkedCheckbox = []
             return (
                 <div className={"flex flex-col"}>
                     {inputParams.variants.map((item, i) => {
-                        let { id, label, sendData } = FilterStore.getInputAttr(inputName + "-" + i, item)
+                        let {id, label, sendData} = FilterStore.getInputAttr(inputName + "-" + i, item)
+                        let checkedItemIndex = FilterStore.findSelectedItem(inputName, sendData)
+                        let isChecked = checkedItemIndex !== -1
+
+                        if( isChecked )
+                            checkedCheckbox.push(sendData)
 
                         return (
                             <div
                                 key={id}
                                 className={"overflow-hidden relative rounded-md hover:cursor-pointer hover:bg-gray-100 transition duration-150"}
-                                onClick={action(FilterStore.setCheckedItems.bind(FilterStore, sendData, inputName, inputParams))}
+                                onClick={action(() => {
+                                    if( isChecked ){
+                                        checkedCheckbox.splice(checkedItemIndex, 1)
+                                    } else {
+                                        checkedCheckbox.push(sendData)
+                                    }
+
+                                    FilterStore.setCheckedItems(checkedCheckbox, inputName, inputParams)
+                                })}
                             >
                                 <Checkbox
                                     readOnly
@@ -80,7 +101,7 @@ const FilterInputsComponent = ({ inputName, inputParams }) => {
                                     className={"checked:bg-primary checked:border-primary checked:before:bg-primary"}
                                     label={label}
                                     name={inputName}
-                                    checked={FilterStore.findSelectedItem(inputName, sendData) !== -1}
+                                    checked={isChecked}
                                 />
                                 <Ripple color={"rgba(161,161,161,0.69)"}/>
                             </div>

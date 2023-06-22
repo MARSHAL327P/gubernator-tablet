@@ -1,7 +1,7 @@
 import {action, makeAutoObservable, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
-import _ from "lodash";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 class FilterStore {
     isOpen = false
@@ -36,15 +36,11 @@ class FilterStore {
         },
     }
     sentFilterInputs = {}
-
-    // filteredBeaches = null
+    filteredList = null
 
     filteredCards() {
-        if( !SidebarStore.selectedTabClass )
-            return []
-
         if (SidebarStore.searchQuery.trim() !== "") {
-            return SidebarStore.selectedTabClass.list.filter((card) => {
+            return SelectedClassInfoStore.list.filter((card) => {
                 return card
                     .name
                     .toLowerCase()
@@ -52,46 +48,22 @@ class FilterStore {
             })
         }
 
-        // return this.fetchFilterInputs()
-
-        return SidebarStore.selectedTabClass.list
+        return this.filteredList ?? SelectedClassInfoStore.list
     }
 
     fetchFilterInputs() {
-
-        // let sendData = _.cloneDeep(this.filterInputs)
-        //
-        // for (let filterInputKey in sendData) {
-        //     let inputDelete = false
-        //
-        //     switch (sendData[filterInputKey].type) {
-        //         case this.filterTypes.selectFromTo.type:
-        //             inputDelete = sendData[filterInputKey].selected.from === null && sendData[filterInputKey].selected.to === null
-        //             break;
-        //         default:
-        //             inputDelete = sendData[filterInputKey].selected.length <= 0
-        //     }
-        //
-        //     if (inputDelete) {
-        //         delete sendData[filterInputKey]
-        //     } else {
-        //         delete sendData[filterInputKey].open
-        //         delete sendData[filterInputKey].variants
-        //     }
-        // }
-
-        console.log(toJS(this.sentFilterInputs))
-
-        SidebarStore.selectedTabClass.isLoading = true
+        SelectedClassInfoStore.isLoading = true
 
         axios.post(process.env.REACT_APP_BEACHES_FILTER, this.sentFilterInputs)
             .then(
                 action(({data}) => {
-                    SidebarStore.selectedTabClass.list = data
+                    this.filteredList = SelectedClassInfoStore.list.filter(card => {
+                        return data.includes(card.id)
+                    })
                 })
             )
             .finally(action(() => {
-                SidebarStore.selectedTabClass.isLoading = false
+                SelectedClassInfoStore.isLoading = false
             }))
     }
 
@@ -123,7 +95,7 @@ class FilterStore {
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
-                    if (filterInput.selected.from !== null || filterInput.selected.to !== null)
+                    if (filterInput.selected.from  || filterInput.selected.to )
                         numChangedParams++
                     break;
                 default:
@@ -136,13 +108,12 @@ class FilterStore {
     }
 
     get filterInputs() {
-        if( SidebarStore.selectedTabClass === null ) return null
+        if( SelectedClassInfoStore.currentClass === null ) return null
 
         let excludedFilters = ["rating", "price", "workTime"]
-        let tabClass = SidebarStore.selectedTabClass
+        let tabClass = SelectedClassInfoStore.currentClass
 
-        tabClass.list.forEach(action(card => {
-            // debugger;
+        SelectedClassInfoStore.list.forEach(action(card => {
             for (const filterInputKey in tabClass.defaultFilterInputs) {
                 if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
 
@@ -195,34 +166,37 @@ class FilterStore {
         return this.filterInputs[inputName].selected.indexOf(item)
     }
 
-    setCheckedItems(item, inputName, inputParams) {
-        let findItemIndex = this.findSelectedItem(inputName, item)
-
-        if (findItemIndex === -1) {
-            if (inputParams.type === this.filterTypes.radioBtn.type) {
-                inputParams.selected = [item]
-            } else {
-                inputParams = {
-                    ...inputParams,
-                    selected: [...inputParams.selected, item]
-                }
-            }
-
-            this.sentFilterInputs[inputName] = inputParams
+    setCheckedItems(checkedItems, inputName, inputParams) {
+        if (inputParams.type === this.filterTypes.radioBtn.type) {
+            inputParams.selected = [checkedItems]
         } else {
-            inputParams.selected.splice(findItemIndex, 1)
-
-            if( inputParams.selected.length <= 0 )
-                delete this.sentFilterInputs[inputName]
+            inputParams = {
+                ...inputParams,
+                selected: checkedItems
+            }
         }
+
+        this.sentFilterInputs[inputName] = inputParams
+
+        if( inputParams.selected.length <= 0 )
+            delete this.sentFilterInputs[inputName]
 
         this.filterInputs[inputName] = inputParams
         this.fetchFilterInputs()
     }
 
-    setSelectFromToItem(e, inputName) {
-        console.log(this.filterInputs[inputName])
-        this.filterInputs[inputName].selected[e.target.name] = e.target.value
+    setSelectFromToItem(e, inputName, inputParams) {
+        inputParams = {
+            ...inputParams,
+            selected: {
+                ...inputParams.selected,
+                [e.target.name]: e.target.value,
+            }
+        }
+
+        this.sentFilterInputs[inputName] = inputParams
+        this.filterInputs[inputName] = inputParams
+        // console.log(toJS(this.filterInputs))
         this.fetchFilterInputs()
     }
 

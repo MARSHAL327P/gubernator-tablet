@@ -11,13 +11,15 @@ import Card from "../../Card/components/Card"
 import {useLocation} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import SidebarStore from "../store/sidebar.store";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {
         runInAction(() => {
-            SidebarStore.selectedTabClass = tabItems[tabIndex].data
+            SelectedClassInfoStore.currentClass = tabItems[tabIndex].data
+            SelectedClassInfoStore.fetchInfo()
             SidebarStore.searchQuery = ""
         })
     }
@@ -28,7 +30,8 @@ const Sidebar = observer(({tabItems}) => {
 
     useEffect(() => {
         runInAction(() => {
-            SidebarStore.selectedTabClass = tabItems[selectedTabIndex]?.data
+            SelectedClassInfoStore.currentClass = tabItems[selectedTabIndex]?.data
+            SelectedClassInfoStore.fetchInfo()
         })
     }, [selectedTabIndex, tabItems])
 
@@ -61,11 +64,10 @@ const Sidebar = observer(({tabItems}) => {
                     <Tab.Panels>
                         {tabItems.map((tab, idx) => {
                                 return (
-                                    <Tab.Panel key={idx} className="flex flex-col gap-10">
-                                        <Card component={tab.component}
-                                              loadingText={tab.loadingText}
-                                              data={tab.data.filteredCards}
-                                        />
+                                    <Tab.Panel key={idx} className={"flex flex-col"}>
+                                        {
+                                            selectedTabIndex === idx && <Card />
+                                        }
                                     </Tab.Panel>
                                 )
                             }

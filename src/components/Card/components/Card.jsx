@@ -1,24 +1,14 @@
 import {observer} from "mobx-react-lite";
 import Loading from "../../Loading/components/Loading";
-import SidebarStore from "../../Sidebar/store/sidebar.store";
+import CardComponent from "./CardComponent";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
-const Card = observer(({loadingText, data, component}) => {
+const Card = observer(() => {
     return (
-        SidebarStore.selectedTabClass && SidebarStore.selectedTabClass.isLoading ?
-            <Loading text={loadingText}/> :
-            data.length > 0 ?
-                data.map((card) => {
-                    let Component = component
-
-                    return (
-                        <div key={card.id}
-                             className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}
-                        >
-                            <Component card={card}/>
-                        </div>
-
-                    )
-                }) :
+        SelectedClassInfoStore && SelectedClassInfoStore.isLoading ?
+            <Loading text={SelectedClassInfoStore.currentClass.loadingText}/> :
+            SelectedClassInfoStore.filteredCards.length > 0 ?
+                <CardComponent/> :
                 <div className={"text-center font-bold text-2xl"}>Нет результатов</div>
     )
 })
