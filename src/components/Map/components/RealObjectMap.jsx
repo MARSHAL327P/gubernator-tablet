@@ -3,7 +3,6 @@ import RealObjectStore from "../../RealObjects/store/realObject.store";
 import ActivePlacemark from "../../ActivePlacemark/ActivePlacemark";
 import RealObjectPlacemarker from "../../RealObjects/components/RealObjectPlacemarker";
 import IndicationsStore from "../../Indications/store/indications.store";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const RealObjectMap = observer(() => {
     return RealObjectStore.list.map((realObject, index) => {

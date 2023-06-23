@@ -11,9 +11,8 @@ import Card from "../../Card/components/Card"
 import {useLocation} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import SidebarStore from "../store/sidebar.store";
-import {runInAction, toJS} from "mobx";
+import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {

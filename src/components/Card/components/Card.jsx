@@ -5,7 +5,7 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const Card = observer(() => {
     return (
-        SelectedClassInfoStore && SelectedClassInfoStore.isLoading ?
+        SelectedClassInfoStore.isLoading ?
             <Loading text={SelectedClassInfoStore.currentClass.loadingText}/> :
             SelectedClassInfoStore.filteredCards.length > 0 ?
                 <CardComponent/> :
