@@ -71,7 +71,7 @@ class RealObjectStore {
     loadingText = "Загрузка объектов"
 
     findCard(type, code){
-        return SelectedClassInfoStore.list.length > 0 && SelectedClassInfoStore.list.find((card) => card.code === code && card.type === type)
+        return this.list.length > 0 && this.list.find((card) => card.code === code && card.type === type)
     }
 
     constructor(data) {

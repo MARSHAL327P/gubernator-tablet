@@ -88,11 +88,10 @@ class BeachLocalStore {
     mapLayer = <BeachMap/>
 
     findCard(code){
-        return SelectedClassInfoStore.list && SelectedClassInfoStore.list.find((card) => card.code === code)
+        return this.list && this.list.find((card) => card.code === code)
     }
 
     constructor() {
-        // super(BeachCardStore)
         makeAutoObservable(this);
 
         this.cardStore = BeachCardStore

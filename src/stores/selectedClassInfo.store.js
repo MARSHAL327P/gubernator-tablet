@@ -2,13 +2,18 @@ import FilterStore from "../components/Filter/store/filter.store";
 import {action, makeAutoObservable} from "mobx";
 
 class SelectedClassInfoStore{
-    list = []
     allClasses = []
     isLoading = false
     currentClass = null
 
     get filteredCards(){
         return FilterStore.filteredCards()
+    }
+
+    initCurrentClass(currentClass){
+        this.currentClass = currentClass
+        this.allClasses.push(currentClass)
+        this.fetchInfo()
     }
 
     // set currentClass(currentClass){
@@ -28,8 +33,7 @@ class SelectedClassInfoStore{
             .get()
             .then(
                 action(data => {
-                    this.list = data ?? []
-                    this.currentClass.list = this.list
+                    this.currentClass.list = data ?? []
                 })
             )
             .finally(action(() => {

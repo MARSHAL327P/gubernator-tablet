@@ -11,14 +11,13 @@ import Card from "../../Card/components/Card"
 import {useLocation} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import SidebarStore from "../store/sidebar.store";
-import {runInAction} from "mobx";
+import {runInAction, toJS} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {
         runInAction(() => {
-            SelectedClassInfoStore.currentClass = tabItems[tabIndex].data
-            SelectedClassInfoStore.fetchInfo()
+            SelectedClassInfoStore.initCurrentClass(tabItems[tabIndex].data)
             SidebarStore.searchQuery = ""
         })
     }
@@ -29,8 +28,7 @@ const Sidebar = observer(({tabItems}) => {
 
     useEffect(() => {
         runInAction(() => {
-            SelectedClassInfoStore.currentClass = tabItems[selectedTabIndex]?.data
-            SelectedClassInfoStore.fetchInfo()
+            SelectedClassInfoStore.initCurrentClass(tabItems[selectedTabIndex].data)
         })
     }, [selectedTabIndex, tabItems])
 
@@ -65,7 +63,8 @@ const Sidebar = observer(({tabItems}) => {
                                 return (
                                     <Tab.Panel key={idx} className={"flex flex-col"}>
                                         {
-                                            selectedTabIndex === idx && <Card />
+
+                                            <Card/>
                                         }
                                     </Tab.Panel>
                                 )

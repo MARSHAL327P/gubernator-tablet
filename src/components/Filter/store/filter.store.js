@@ -39,8 +39,11 @@ class FilterStore {
     filteredList = null
 
     filteredCards() {
+        if( SelectedClassInfoStore.currentClass === null )
+            return []
+
         if (SidebarStore.searchQuery.trim() !== "") {
-            return SelectedClassInfoStore.list.filter((card) => {
+            return SelectedClassInfoStore.currentClass.list.filter((card) => {
                 return card
                     .name
                     .toLowerCase()
@@ -48,7 +51,7 @@ class FilterStore {
             })
         }
 
-        return this.filteredList ?? SelectedClassInfoStore.list
+        return this.filteredList ?? SelectedClassInfoStore.currentClass.list
     }
 
     fetchFilterInputs() {
@@ -57,7 +60,7 @@ class FilterStore {
         axios.post(process.env.REACT_APP_BEACHES_FILTER, this.sentFilterInputs)
             .then(
                 action(({data}) => {
-                    this.filteredList = SelectedClassInfoStore.list.filter(card => {
+                    this.filteredList = SelectedClassInfoStore.currentClass.list.filter(card => {
                         return data.includes(card.id)
                     })
                 })
@@ -113,7 +116,7 @@ class FilterStore {
         let excludedFilters = ["rating", "price", "workTime"]
         let tabClass = SelectedClassInfoStore.currentClass
 
-        SelectedClassInfoStore.list.forEach(action(card => {
+        tabClass.list.forEach(action(card => {
             for (const filterInputKey in tabClass.defaultFilterInputs) {
                 if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
 
