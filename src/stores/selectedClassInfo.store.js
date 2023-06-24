@@ -1,5 +1,5 @@
 import FilterStore from "../components/Filter/store/filter.store";
-import {action, makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 
 class SelectedClassInfoStore{
     allClasses = []
@@ -11,9 +11,11 @@ class SelectedClassInfoStore{
     }
 
     initCurrentClass(currentClass){
-        this.currentClass = currentClass
-        this.allClasses.push(currentClass)
-        this.fetchInfo()
+        runInAction(() => {
+            this.currentClass = currentClass
+            this.allClasses.push(currentClass)
+            this.fetchInfo()
+        })
     }
 
     // set currentClass(currentClass){

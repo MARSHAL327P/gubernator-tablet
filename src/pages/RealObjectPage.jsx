@@ -3,9 +3,10 @@ import Dashboard from "../components/Dashboard/components/Dashboard";
 import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
 import WidgetTemplateStore from "../components/Widgets/store/widget.store";
 import {useParams} from "react-router-dom";
-import SidebarStore from "../components/Sidebar/store/sidebar.store";
 import RealObjectStore from "../components/RealObjects/store/realObject.store";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import {runInAction} from "mobx";
+import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 
 const RealObjectPage = observer(() => {
     const tabItems = [
@@ -30,20 +31,20 @@ const RealObjectPage = observer(() => {
     ]
 
     let {objectType, objectCode} = useParams()
-    let [card, setCard] = useState(null)
 
     objectType = objectType.toUpperCase().replace(/-/g, "_")
-    SidebarStore.selectedTabClass = RealObjectStore
 
     useEffect(() => {
-        setCard(SidebarStore.selectedTabClass.findCard(objectType, objectCode))
-    }, [SidebarStore.selectedTabClass.list])
+        runInAction(() => {
+            RealObjectStore.code = objectCode
+            RealObjectStore.type = objectType
+            SelectedClassInfoStore.initCurrentClass(RealObjectStore)
+        })
+    }, [objectType, objectCode])
 
     return (
-        card && <Dashboard
-            card={card}
+        <Dashboard
             tabItems={tabItems}
-            dashboardName={"Объект"}
             homeLink={"/object"}
         />
     )

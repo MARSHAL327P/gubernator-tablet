@@ -82,13 +82,15 @@ class BeachLocalStore {
     }
 
     list = []
+    code = ""
+    title = "Пляж"
     filterName = "Фильтр пляжей"
     loadingText = "Загрузка пляжей"
     component = BeachCard
     mapLayer = <BeachMap/>
 
-    findCard(code){
-        return this.list && this.list.find((card) => card.code === code)
+    get card(){
+        return this.list && this.list.find((card) => card.code === this.code)
     }
 
     constructor() {

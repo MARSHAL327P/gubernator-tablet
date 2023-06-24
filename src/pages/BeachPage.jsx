@@ -3,18 +3,23 @@ import Dashboard from "../components/Dashboard/components/Dashboard";
 import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
 import WidgetTemplateStore from "../components/Widgets/store/widget.store";
 import {useParams} from "react-router-dom";
-import SidebarStore from "../components/Sidebar/store/sidebar.store";
-import RealObjectStore from "../components/RealObjects/store/realObject.store";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 import AirQuality from "../components/AirQuality/components/AirQuality";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
+import {runInAction} from "mobx";
 
 const BeachPage = observer(() => {
-    let [card, setCard] = useState(null)
-
     const {beachCode} = useParams()
-    const tabItems = card && [
+    
+    useEffect(() => {
+        runInAction(() => {
+            BeachLocalStore.code = beachCode
+            SelectedClassInfoStore.initCurrentClass(BeachLocalStore)
+        })
+    }, [beachCode])
+
+    const tabItems = [
         {
             title: "Информация",
             content: "Информация",
@@ -29,7 +34,7 @@ const BeachPage = observer(() => {
         },
         {
             title: "Качество воздуха",
-            content: <AirQuality airQualityData={card.airQuality} />,
+            content: SelectedClassInfoStore.currentClass?.card && <AirQuality airQualityData={SelectedClassInfoStore.currentClass.card.airQuality} />,
             link: "aqi",
             getParam: true,
         },
@@ -48,17 +53,10 @@ const BeachPage = observer(() => {
         },
     ]
 
-    SelectedClassInfoStore.currentClass = BeachLocalStore
-
-    useEffect(() => {
-        setCard(SelectedClassInfoStore.currentClass.findCard(beachCode))
-    }, [beachCode])
 
     return (
-        card && <Dashboard
-            card={card}
+        <Dashboard
             tabItems={tabItems}
-            dashboardName={"Пляж"}
         />
     )
 })

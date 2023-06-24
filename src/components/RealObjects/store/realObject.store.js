@@ -65,13 +65,16 @@ class RealObjectStore {
     }
 
     list = []
+    code = ""
+    type = ""
+    title = "Объект"
     filterName = "Фильтр объектов"
     mapLayer = <RealObjectMap/>
     component = RealObjectCard
     loadingText = "Загрузка объектов"
 
-    findCard(type, code){
-        return this.list.length > 0 && this.list.find((card) => card.code === code && card.type === type)
+    get card(){
+        return this.list.length > 0 && this.list.find((card) => card.code === this.code && card.type === this.type)
     }
 
     constructor(data) {
