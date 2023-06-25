@@ -8,6 +8,7 @@ import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 import AirQuality from "../components/AirQuality/components/AirQuality";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
+import BeachInfo from "../components/BeachCard/components/BeachInfo";
 
 const BeachPage = observer(() => {
     const {beachCode} = useParams()
@@ -22,7 +23,7 @@ const BeachPage = observer(() => {
     const tabItems = [
         {
             title: "Информация",
-            content: "Информация",
+            content: <BeachInfo/>,
             link: "info",
             getParam: true,
         },
@@ -34,7 +35,7 @@ const BeachPage = observer(() => {
         },
         {
             title: "Качество воздуха",
-            content: SelectedClassInfoStore.currentClass?.card && <AirQuality airQualityData={SelectedClassInfoStore.currentClass.card.airQuality} />,
+            content: <AirQuality />,
             link: "aqi",
             getParam: true,
         },

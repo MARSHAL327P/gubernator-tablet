@@ -23,12 +23,15 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
             </div>
 
             <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50"}>
-                {tabItems.map((tab) => {
-                        return (card ?
-                            <Tab.Panel key={tab.title}>{tab.content}</Tab.Panel> :
-                            <Skeleton/>)
-                    }
-                )}
+                {
+                    card ? tabItems.map((tab) => {
+                                return <Tab.Panel key={tab.title}>{tab.content}</Tab.Panel>
+
+                            }
+                        ) :
+                        <Skeleton count={5} />
+                }
+
             </Tab.Panels>
 
 

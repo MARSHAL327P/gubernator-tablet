@@ -1,4 +1,4 @@
-import {action, makeAutoObservable} from "mobx";
+import {makeAutoObservable} from "mobx";
 import { RealObjectCardStore } from "./realObjectCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
@@ -6,7 +6,6 @@ import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
 import RealObjectMap from "../../Map/components/RealObjectMap";
 import RealObjectCard from "../components/RealObjectCard";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 class RealObjectStore {
     meteoProps = {
@@ -72,12 +71,13 @@ class RealObjectStore {
     mapLayer = <RealObjectMap/>
     component = RealObjectCard
     loadingText = "Загрузка объектов"
+    excludedFilters = []
 
     get card(){
         return this.list.length > 0 && this.list.find((card) => card.code === this.code && card.type === this.type)
     }
 
-    constructor(data) {
+    constructor() {
         makeAutoObservable(this);
 
         this.cardStore = RealObjectCardStore

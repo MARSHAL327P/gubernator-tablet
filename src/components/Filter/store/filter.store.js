@@ -113,14 +113,13 @@ class FilterStore {
     get filterInputs() {
         if( SelectedClassInfoStore.currentClass === null ) return null
 
-        let excludedFilters = ["rating", "price", "workTime"]
         let tabClass = SelectedClassInfoStore.currentClass
 
         tabClass.list.forEach(action(card => {
             for (const filterInputKey in tabClass.defaultFilterInputs) {
-                if (excludedFilters.indexOf(filterInputKey) !== -1) continue;
+                if (tabClass.excludedFilters.includes(filterInputKey)) continue;
 
-                let cardValue = card[filterInputKey]
+                let cardValue = card[filterInputKey] || (card.indications && card.indications[filterInputKey])
                 let filterInput = tabClass.defaultFilterInputs[filterInputKey]
 
                 if (cardValue) {

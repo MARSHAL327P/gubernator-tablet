@@ -27,7 +27,7 @@ const BeachCard = observer(({card}) => {
             <BathingComfort bathingComfort={card.bathingComfort}/>
             <div className="px-7 py-5">
                 <Indications
-                    data={card}
+                    data={card.indications}
                     indications={[
                         IndicationsStore.indicationTypes.WATER_TEMP,
                         IndicationsStore.indicationTypes.AIR_TEMP,
