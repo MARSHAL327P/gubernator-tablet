@@ -16,7 +16,8 @@ const BeachPage = observer(() => {
     useEffect(() => {
         runInAction(() => {
             BeachLocalStore.code = beachCode
-            SelectedClassInfoStore.initCurrentClass(BeachLocalStore)
+            if( SelectedClassInfoStore.currentClass === null )
+                SelectedClassInfoStore.initCurrentClass(BeachLocalStore)
         })
     }, [beachCode])
 
