@@ -22,6 +22,14 @@ export class RealObjectCardStore {
             })
     }
 
+    get link(){
+        return `/object/${this.formattedType}/${this.id}`
+    }
+
+    get formattedType(){
+        return this.type.toLowerCase().replace(/_/g, "-")
+    }
+
     constructor(data) {
         makeAutoObservable(this);
 

@@ -13,8 +13,11 @@ class SelectedClassInfoStore{
     initCurrentClass(currentClass){
         runInAction(() => {
             this.currentClass = currentClass
-            this.allClasses.push(currentClass)
-            this.fetchInfo()
+
+            if( !this.allClasses.includes(currentClass) ){
+                this.allClasses.push(currentClass)
+                this.fetchInfo()
+            }
         })
     }
 

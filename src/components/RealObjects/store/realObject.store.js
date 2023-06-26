@@ -64,7 +64,7 @@ class RealObjectStore {
     }
 
     list = []
-    code = ""
+    id = 0
     type = ""
     title = "Объект"
     filterName = "Фильтр объектов"
@@ -74,7 +74,7 @@ class RealObjectStore {
     excludedFilters = []
 
     get card(){
-        return this.list.length > 0 && this.list.find((card) => card.code === this.code && card.type === this.type)
+        return this.list.length > 0 && this.list.find((card) => card.id === parseInt(this.id) && card.type === this.type)
     }
 
     constructor() {

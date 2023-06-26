@@ -15,7 +15,6 @@ const RealObjectCard = observer(({card}) => {
         btn: "flex items-center gap-2 shadow-none border hover:shadow-md p-0 w-full",
         btnIcon: "fill-black w-5 h-5"
     }
-    let linkType = card.type.toLowerCase().replace(/_/g, "-")
 
     return (
         <>
@@ -30,14 +29,14 @@ const RealObjectCard = observer(({card}) => {
                             <Map className={styles.btnIcon}/>
                         </Button>
                     </Tooltip>
-                    <Link to={`/object/${linkType}/${card.code}?tab=charts`}>
-                        <Button onClick={MapStore.zoomToItem.bind(MapStore, card.coord, true)} fullWidth className={"flex items-center gap-2"}>
+                    <Link to={`${card.link}?tab=charts`}>
+                        <Button fullWidth className={"flex items-center gap-2"}>
                             <Chart className={"fill-white"}/>
                             Графики
                         </Button>
                     </Link>
-                    <Link to={`/object/${linkType}/${card.code}?tab=widgets`}>
-                        <Button onClick={MapStore.zoomToItem.bind(MapStore, card.coord, true)} fullWidth className={"flex items-center gap-2"}>
+                    <Link to={`${card.link}?tab=widgets`}>
+                        <Button fullWidth className={"flex items-center gap-2"}>
                             <Widgets className={"fill-white"}/>
                             Виджеты
                         </Button>

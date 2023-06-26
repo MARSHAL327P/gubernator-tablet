@@ -64,7 +64,7 @@ function App() {
                     <Route path={"architecture"}/>
                 </Route>
                 <Route path={"/object"}>
-                    <Route path={":objectType/:objectCode"} element={<RealObjectPage/>}/>
+                    <Route path={":objectType/:objectId"} element={<RealObjectPage/>}/>
                 </Route>
             </Routes>
             {/*</div>*/}
