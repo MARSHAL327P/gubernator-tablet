@@ -57,6 +57,17 @@ const theme = {
             className: "bg-danger"
         }
     },
+    chip: {
+        styles: {
+            variants: {
+                filled: {
+                    blue: {
+                        background: "bg-primary"
+                    }
+                }
+            }
+        }
+    },
     spinner: {
         defaultProps: {
             className: "spinner_primary"

@@ -3,18 +3,19 @@ import FilterStore from "../store/filter.store";
 import {Button, Tooltip} from "@material-tailwind/react";
 import {action} from "mobx";
 import {AdjustmentsVerticalIcon, XMarkIcon} from "@heroicons/react/24/solid";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const FilterBtn = observer(() => {
     const iconStyles = "fill-white w-7 h-7"
 
     return (
         <Tooltip
-            content={FilterStore.isOpen ? "Закрыть фильтр" : FilterStore.filteredCards ? "Фильтр пляжей" : "Фильтр недоступен"}>
+            content={FilterStore.isOpen ? "Закрыть фильтр" : SelectedClassInfoStore.filteredCards ? "Фильтр пляжей" : "Фильтр недоступен"}>
 
             <Button
                 className={"flex items-center px-4 max-h-[48px]"}
                 onClick={action(() => {
-                    if (FilterStore.filteredCards !== null)
+                    if (SelectedClassInfoStore.filteredCards !== null)
                         FilterStore.isOpen = !FilterStore.isOpen
                 })}
             >

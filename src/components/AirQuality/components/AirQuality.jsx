@@ -4,8 +4,9 @@ import {Accordion, AccordionBody, AccordionHeader, List, ListItem, Tooltip} from
 import {action} from "mobx";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import cc from "classcat";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
-const AirQuality = observer(({airQualityData}) => {
+const AirQuality = observer(({ airQualityData = SelectedClassInfoStore.currentClass.card.airQuality }) => {
     return (
         <div className={"flex w-[1300px] mx-auto gap-10"}>
             <div className={"flex flex-col gap-14"}>

@@ -10,9 +10,9 @@ export default class BeachCardStore {
     rating = 0
     bathingComfort = ""
     beachProblems = ""
-    t_surf = 0
-    temperature = 0
-    windSpeed = 0
+    // t_surf = 0
+    // temperature = 0
+    // windSpeed = 0
     coord = [0, 0]
     beachType = ""
     beachCoverage = ""
@@ -22,12 +22,24 @@ export default class BeachCardStore {
     polygon = []
     props = {}
     airQuality = {}
+    img = []
+    description = ""
+    indications = {}
 
     static get() {
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 return data.map(item => {
                     item.airQuality = new AirQualityStore(item.airQuality)
+                    item.indications = {
+                        temperature: item.temperature,
+                        windSpeed: item.windSpeed,
+                        pressure: item.pressure,
+                        humidity: item.humidity,
+                        t_surf: item.t_surf,
+                        Honf: item.Honf,
+                    }
+                    item.bathingComfort = ["COLD_WATER", "HIGH_WAVE"]
 
                     return new BeachCardStore(item)
                 });

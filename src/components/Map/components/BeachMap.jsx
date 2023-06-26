@@ -6,7 +6,7 @@ import {ReactComponent as Marker} from "../../../assets/icons/Marker.svg";
 import cc from "classcat";
 
 const BeachMap = observer(() => {
-    return BeachLocalStore.list.length > 0 && BeachLocalStore.list.map(beach => {
+    return BeachLocalStore.list.map(beach => {
         return (
             <div key={beach.id}>
                 <Polygon

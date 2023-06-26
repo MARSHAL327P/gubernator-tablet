@@ -23,16 +23,12 @@ function App() {
     let tabItems = [
         {
             title: "Пляжи",
-            loadingText: "Загрузка пляжей",
             data: BeachLocalStore,
-            component: BeachCard,
             link: "/",
         },
         {
             title: "Объекты",
-            loadingText: "Загрузка объектов",
             data: RealObjectStore,
-            component: RealObjectCard,
             link: "/object",
         },
         // {

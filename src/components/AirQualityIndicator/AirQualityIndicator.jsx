@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {useGauge} from "use-gauge";
 import cc from "classcat";
 
@@ -59,7 +59,7 @@ export default function AirQualityIndicator({value}) {
             </svg>
             <div className={`absolute bottom-0 left-0 w-full text-center`}>
                 <div className={cc(["text-3xl font-bold"])}>
-                    {value}
+                    {Math.round(value)}
                 </div>
             </div>
         </div>

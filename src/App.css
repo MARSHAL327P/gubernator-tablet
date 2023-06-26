@@ -45,8 +45,12 @@ body{
     overflow-x: hidden;
 }
 
-.filter, .sidebar{
+.sidebar{
     height: calc(100% - 164px);
+}
+
+.filter{
+    height: calc(100% - 104px);
 }
 
 .text-title{
@@ -86,4 +90,13 @@ body{
 
 .spinner_primary path:last-child{
     color: #3366FF;
+}
+
+.LazyLoad {
+    opacity: 0;
+    transition: all 1s ease-in-out;
+}
+
+.is-visible {
+    opacity: 1;
 }

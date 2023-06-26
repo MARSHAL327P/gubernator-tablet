@@ -11,13 +11,13 @@ import Card from "../../Card/components/Card"
 import {useLocation} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import SidebarStore from "../store/sidebar.store";
-import {runInAction} from "mobx";
-
+import {runInAction, toJS} from "mobx";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {
         runInAction(() => {
-            SidebarStore.selectedTabClass = tabItems[tabIndex].data
+            SelectedClassInfoStore.initCurrentClass(tabItems[tabIndex].data)
             SidebarStore.searchQuery = ""
         })
     }
@@ -28,7 +28,7 @@ const Sidebar = observer(({tabItems}) => {
 
     useEffect(() => {
         runInAction(() => {
-            SidebarStore.selectedTabClass = tabItems[selectedTabIndex]?.data
+            SelectedClassInfoStore.initCurrentClass(tabItems[selectedTabIndex].data)
         })
     }, [selectedTabIndex, tabItems])
 
@@ -56,16 +56,16 @@ const Sidebar = observer(({tabItems}) => {
                     onScroll={(e) => {
                         setElOffset(e.currentTarget.scrollTop)
                     }}
-                    className={"w-[435px] sidebar p-3 pb-7 overflow-auto transition"}>
+                    className={"w-[460px] sidebar p-3 pb-7 overflow-auto transition"}>
 
                     <Tab.Panels>
                         {tabItems.map((tab, idx) => {
                                 return (
-                                    <Tab.Panel key={idx} className="flex flex-col gap-10">
-                                        <Card component={tab.component}
-                                              loadingText={tab.loadingText}
-                                              data={tab.data.filteredCards}
-                                        />
+                                    <Tab.Panel key={idx} className={"flex flex-col"}>
+                                        {
+
+                                            <Card/>
+                                        }
                                     </Tab.Panel>
                                 )
                             }
