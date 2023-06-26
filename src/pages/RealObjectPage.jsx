@@ -7,6 +7,7 @@ import RealObjectStore from "../components/RealObjects/store/realObject.store";
 import {useEffect} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
+import MapStore from "../components/Map/store/map.store";
 
 const RealObjectPage = observer(() => {
     const tabItems = [
@@ -30,17 +31,23 @@ const RealObjectPage = observer(() => {
         },
     ]
 
-    let {objectType, objectCode} = useParams()
+    let {objectType, objectId} = useParams()
 
     objectType = objectType.toUpperCase().replace(/-/g, "_")
 
     useEffect(() => {
         runInAction(() => {
-            RealObjectStore.code = objectCode
+            RealObjectStore.id = objectId
             RealObjectStore.type = objectType
-            SelectedClassInfoStore.initCurrentClass(RealObjectStore)
+
+            if( SelectedClassInfoStore.currentClass === null )
+                SelectedClassInfoStore.initCurrentClass(RealObjectStore)
+
+            if(SelectedClassInfoStore.currentClass.list.length > 0 && !SelectedClassInfoStore.isLoading)
+                MapStore.zoomToItem(SelectedClassInfoStore.currentClass.card.coord)
+
         })
-    }, [objectType, objectCode])
+    }, [objectType, objectId, SelectedClassInfoStore.isLoading])
 
     return (
         <Dashboard

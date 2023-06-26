@@ -31,15 +31,6 @@ export default class BeachCardStore {
             .then(({data}) => {
                 return data.map(item => {
                     item.airQuality = new AirQualityStore(item.airQuality)
-                    item.indications = {
-                        temperature: item.temperature,
-                        windSpeed: item.windSpeed,
-                        pressure: item.pressure,
-                        humidity: item.humidity,
-                        t_surf: item.t_surf,
-                        Honf: item.Honf,
-                    }
-                    item.bathingComfort = ["COLD_WATER", "HIGH_WAVE"]
 
                     return new BeachCardStore(item)
                 });

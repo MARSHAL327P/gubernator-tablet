@@ -5,7 +5,6 @@ import MapStore from "../store/map.store";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
-import SidebarStore from "../../Sidebar/store/sidebar.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 

@@ -2,15 +2,30 @@ import React from 'react';
 import {Placemark} from '@pbe/react-yandex-maps';
 import ReactDOMServer from 'react-dom/server';
 import MapStore from "../Map/store/map.store";
+import transparent from '../../assets/img/transparent.png';
 
-const makeLayout = (layoutFactory, component) => {
+const makeLayout = (layoutFactory, component, onClickEvent) => {
     let generatedHTML = ReactDOMServer.renderToStaticMarkup(component)
 
     const Layout = layoutFactory.createClass(generatedHTML, {
         build: function () {
             Layout.superclass.build.call(this);
+
+            const backgroundElement = this.getParentElement().getElementsByClassName(
+                'scale-marker',
+            )[0];
+
+            this.getData().geoObject.events.add('click', onClickEvent);
+            this.getData().geoObject.events.add('mouseenter', (e) => {
+                backgroundElement.style.transform = `scale(1.2)`;
+            });
+            this.getData().geoObject.events.add('mouseleave', (e) => {
+                backgroundElement.style.transform = `scale(1)`;
+            });
         },
         clear: function () {
+            this.getData().geoObject.events.remove('click');
+
             Layout.superclass.clear.call(this);
         },
     });
@@ -19,18 +34,21 @@ const makeLayout = (layoutFactory, component) => {
 };
 
 const ActivePlacemark = (props) => {
-    if( !MapStore.ymaps ) return null
+    if (!MapStore.ymaps) return null
 
     let balloonLayout = makeLayout(
         MapStore.ymaps.templateLayoutFactory,
-        props.component
+        props.component,
+        props.onClick
     );
 
     return (
         <Placemark
             {...props}
             options={{
-                iconLayout: balloonLayout,
+                iconLayout: "default#imageWithContent",
+                iconImageHref: transparent,
+                iconContentLayout: balloonLayout,
                 balloonPanelMaxMapArea: 0,
                 ...props.options,
             }}

@@ -9,18 +9,9 @@ import AirQuality from "../components/AirQuality/components/AirQuality";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import BeachInfo from "../components/BeachCard/components/BeachInfo";
+import MapStore from "../components/Map/store/map.store";
 
 const BeachPage = observer(() => {
-    const {beachCode} = useParams()
-    
-    useEffect(() => {
-        runInAction(() => {
-            BeachLocalStore.code = beachCode
-            if( SelectedClassInfoStore.currentClass === null )
-                SelectedClassInfoStore.initCurrentClass(BeachLocalStore)
-        })
-    }, [beachCode])
-
     const tabItems = [
         {
             title: "Информация",
@@ -54,6 +45,20 @@ const BeachPage = observer(() => {
             getParam: true,
         },
     ]
+
+    const {beachCode} = useParams()
+
+    useEffect(() => {
+        runInAction(() => {
+            BeachLocalStore.code = beachCode
+            if( SelectedClassInfoStore.currentClass === null )
+                SelectedClassInfoStore.initCurrentClass(BeachLocalStore)
+
+            if(SelectedClassInfoStore.currentClass.list.length > 0 && !SelectedClassInfoStore.isLoading)
+                MapStore.zoomToItem(SelectedClassInfoStore.currentClass.card.coord)
+
+        })
+    }, [beachCode, SelectedClassInfoStore.isLoading])
 
 
     return (

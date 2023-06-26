@@ -17,7 +17,6 @@ const BeachInfo = observer(() => {
     }
 
     Fancybox.bind("[data-fancybox]");
-    console.log(card.img)
 
     return (
         <div className={"flex gap-7"}>
