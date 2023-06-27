@@ -4,7 +4,7 @@ import ReactDOMServer from 'react-dom/server';
 import MapStore from "../Map/store/map.store";
 import transparent from '../../assets/img/transparent.png';
 
-const makeLayout = (layoutFactory, component, onClickEvent) => {
+const makeLayout = (layoutFactory, component) => {
     let generatedHTML = ReactDOMServer.renderToStaticMarkup(component)
 
     const Layout = layoutFactory.createClass(generatedHTML, {
@@ -15,7 +15,6 @@ const makeLayout = (layoutFactory, component, onClickEvent) => {
                 'scale-marker',
             )[0];
 
-            this.getData().geoObject.events.add('click', onClickEvent);
             this.getData().geoObject.events.add('mouseenter', (e) => {
                 backgroundElement.style.transform = `scale(1.2)`;
             });
@@ -24,8 +23,6 @@ const makeLayout = (layoutFactory, component, onClickEvent) => {
             });
         },
         clear: function () {
-            this.getData().geoObject.events.remove('click');
-
             Layout.superclass.clear.call(this);
         },
     });
@@ -39,7 +36,6 @@ const ActivePlacemark = (props) => {
     let balloonLayout = makeLayout(
         MapStore.ymaps.templateLayoutFactory,
         props.component,
-        props.onClick
     );
 
     return (

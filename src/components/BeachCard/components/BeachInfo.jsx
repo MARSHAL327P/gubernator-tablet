@@ -15,6 +15,29 @@ const BeachInfo = observer(() => {
         title: "text-2xl font-bold",
         bathingComfort: "flex gap-2 items-center"
     }
+    let temperatureTextValues = [
+        {
+            lessThan: 17,
+            text: "холодная"
+        },
+        {
+            lessThan: 20,
+            text: "прохладная"
+        },
+        {
+            lessThan: 25,
+            text: "тепловатая"
+        },
+        {
+            lessThan: 27,
+            text: "теплая"
+        }
+    ]
+
+    let temperatureText =
+        temperatureTextValues
+            .find((item) => item.lessThan > card.indications.t_surf)
+            .text
 
     Fancybox.bind("[data-fancybox]");
 
@@ -29,7 +52,7 @@ const BeachInfo = observer(() => {
                         {card.description}
                     </div>
                     <div className="flex gap-1">
-                        <BeachCardProps cardProps={card.props} />
+                        <BeachCardProps cardProps={card.props}/>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-7">
@@ -56,7 +79,7 @@ const BeachInfo = observer(() => {
                                     indications={[IndicationsStore.indicationTypes.HONF]}
                                     fixedValue={true}
                                 />
-                                Средняя высота 10% значительных волн {card.Honf} м.
+                                Средняя высота 10% значительных волн {card.indications.Honf} м.
                             </div>
                             <div className={styles.bathingComfort}>
                                 <Indications
@@ -64,7 +87,7 @@ const BeachInfo = observer(() => {
                                     indications={[IndicationsStore.indicationTypes.WATER_TEMP]}
                                     fixedValue={true}
                                 />
-                                Температура воды тепловатая
+                                Температура воды {temperatureText}
                             </div>
                         </div>
                     </div>
@@ -74,17 +97,9 @@ const BeachInfo = observer(() => {
                 <div className={styles.title}>
                     Фотографии
                 </div>
-                <MasonryGallery imgs={card.img} id={card.id} />
+                <MasonryGallery imgs={card.img} id={card.id}/>
             </div>
-            {/*<div className={"w-[25%]"}>*/}
-            {/*    <div className={styles.title}>*/}
-            {/*        Последние отзывы*/}
-            {/*    </div>*/}
-            {/*    <div></div>*/}
-            {/*</div>*/}
         </div>
-
-
     )
 })
 
