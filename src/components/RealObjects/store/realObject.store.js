@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, observable} from "mobx";
 import { RealObjectCardStore } from "./realObjectCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
@@ -38,6 +38,13 @@ class RealObjectStore {
             mapIndication: IndicationsStore.indicationTypes.WATER_TEMP,
             bgColor: "bg-warning",
             icon: Buoy,
+            filterOpen: true,
+            defaultFilterInputs: {
+                Honf: {
+                    name: "Средняя высота 10% наибольших волн (м)",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+            }
         },
         METEO_STATION: {
             name: "Метеостанция",
@@ -45,22 +52,22 @@ class RealObjectStore {
             mapIndication: IndicationsStore.indicationTypes.AIR_TEMP,
             bgColor: "bg-primary",
             icon: Meteo,
+            filterOpen: true,
+            defaultFilterInputs: {
+                pressure: {
+                    name: "Давление",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                windSpeed: {
+                    name: "Скорость ветра",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+            }
         },
-        WASTEWATER: {
-            name: "Сточные воды",
-            props: {}
-        },
-    }
-
-    defaultFilterInputs = {
-        pressure: {
-            name: "Давление",
-            ...FilterStore.filterTypes.selectFromTo
-        },
-        windSpeed: {
-            name: "Скорость ветра",
-            ...FilterStore.filterTypes.selectFromTo
-        },
+        // WASTEWATER: {
+        //     name: "Сточные воды",
+        //     props: {}
+        // },
     }
 
     list = []
@@ -71,7 +78,13 @@ class RealObjectStore {
     mapLayer = <RealObjectMap/>
     component = RealObjectCard
     loadingText = "Загрузка объектов"
+    filterGroup = this.realObjectTypes
     excludedFilters = []
+    fastFilter = {
+        type: {
+            selected: [],
+        }
+    }
 
     get card(){
         return this.list.length > 0 && this.list.find((card) => card.id === parseInt(this.id) && card.type === this.type)

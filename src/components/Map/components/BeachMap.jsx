@@ -6,11 +6,12 @@ import {ReactComponent as MarkerIcon} from "../../../assets/icons/Marker.svg";
 import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoint.svg";
 import cc from "classcat";
 import {useNavigate} from "react-router-dom";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const BeachMap = observer(() => {
     let navigate = useNavigate()
 
-    return BeachLocalStore.list.map(beach => {
+    return SelectedClassInfoStore.filteredCards.map(beach => {
         let iconClasses = {
             "fill-warning": beach.isOpen,
             "fill-danger": !beach.isOpen,

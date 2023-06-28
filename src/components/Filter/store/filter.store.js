@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, toJS} from "mobx";
+import {action, makeAutoObservable, observable, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -39,7 +39,7 @@ class FilterStore {
     filteredList = null
 
     filteredCards() {
-        if( SelectedClassInfoStore.currentClass === null )
+        if (SelectedClassInfoStore.currentClass === null)
             return []
 
         if (SidebarStore.searchQuery.trim() !== "") {
@@ -71,8 +71,8 @@ class FilterStore {
     }
 
     clearFilter() {
-        for (const filterInputKey in this.filterInputs) {
-            let filterInput = this.filterInputs[filterInputKey]
+        for (const filterInputKey in SelectedClassInfoStore.filterInputs) {
+            let filterInput = SelectedClassInfoStore.filterInputs[filterInputKey]
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
@@ -93,34 +93,32 @@ class FilterStore {
     get numChangedParams() {
         let numChangedParams = 0
 
-        for (const filterInputKey in this.filterInputs) {
-            let filterInput = this.filterInputs[filterInputKey]
-
-            switch (filterInput.type) {
-                case this.filterTypes.selectFromTo.type:
-                    if (filterInput.selected.from  || filterInput.selected.to )
-                        numChangedParams++
-                    break;
-                default:
-                    if (filterInput.selected.length > 0)
-                        numChangedParams++
-            }
-        }
+        // for (const filterInputKey in SelectedClassInfoStore.filterInputs) {
+        //     let filterInput = SelectedClassInfoStore.filterInputs[filterInputKey]
+        //
+        //     switch (filterInput.type) {
+        //         case this.filterTypes.selectFromTo.type:
+        //             if (filterInput.selected.from  || filterInput.selected.to )
+        //                 numChangedParams++
+        //             break;
+        //         default:
+        //             if (filterInput.selected.length > 0)
+        //                 numChangedParams++
+        //     }
+        // }
 
         return numChangedParams
     }
 
-    get filterInputs() {
-        if( SelectedClassInfoStore.currentClass === null ) return null
+    getDefaultFilterInputs(currentClass, defaultFilterInputs = currentClass.defaultFilterInputs) {
+        currentClass.list.forEach(action(card => {
+            for (const filterInputKey in defaultFilterInputs) {
+                if (currentClass.excludedFilters.includes(filterInputKey)) continue;
 
-        let tabClass = SelectedClassInfoStore.currentClass
-
-        tabClass.list.forEach(action(card => {
-            for (const filterInputKey in tabClass.defaultFilterInputs) {
-                if (tabClass.excludedFilters.includes(filterInputKey)) continue;
-
-                let cardValue = card[filterInputKey] || (card.indications && card.indications[filterInputKey])
-                let filterInput = tabClass.defaultFilterInputs[filterInputKey]
+                let cardValue = card[filterInputKey]
+                    || (card.indications && card.indications[filterInputKey])
+                    || (card.props && card.props[filterInputKey])
+                let filterInput = defaultFilterInputs[filterInputKey]
 
                 if (cardValue) {
                     switch (filterInput.type) {
@@ -144,8 +142,8 @@ class FilterStore {
                                         })
                                 }
                             } else {
-                                tabClass.defaultFilterInputs = {
-                                    ...tabClass.defaultFilterInputs,
+                                defaultFilterInputs = {
+                                    ...defaultFilterInputs,
                                     [filterInputKey]: {
                                         ...filterInput,
                                         variants: [...filterInput.variants, cardValue]
@@ -154,21 +152,40 @@ class FilterStore {
                             }
 
                     }
-                } else {
-                    delete tabClass.defaultFilterInputs[filterInputKey]
+                }
+
+                if (!cardValue && !currentClass.filterGroup) {
+                    delete currentClass.defaultFilterInputs[filterInputKey]
                 }
             }
 
         }))
 
-        return tabClass.defaultFilterInputs
+        return defaultFilterInputs
+    }
+
+    filterInputs(currentClass) {
+        if (currentClass.filterGroup) {
+            let filterGroupArray = {}
+
+            Object.entries(currentClass.filterGroup).forEach(([filterSectionName, filterSection]) => {
+                filterGroupArray[filterSectionName] = {
+                    ...filterSection,
+                    defaultFilterInputs: this.getDefaultFilterInputs(currentClass, filterSection.defaultFilterInputs)
+                }
+            })
+
+            return filterGroupArray
+        } else {
+            return this.getDefaultFilterInputs(currentClass)
+        }
     }
 
     findSelectedItem(inputName, item) {
-        return this.filterInputs[inputName].selected.indexOf(item)
+        return SelectedClassInfoStore.filterInputs[inputName].selected.indexOf(item)
     }
 
-    setCheckedItems(checkedItems, inputName, inputParams) {
+    setCheckedItems(inputName, inputParams, checkedItems) {
         if (inputParams.type === this.filterTypes.radioBtn.type) {
             inputParams.selected = [checkedItems]
         } else {
@@ -178,27 +195,37 @@ class FilterStore {
             }
         }
 
-        this.sentFilterInputs[inputName] = inputParams
-
-        if( inputParams.selected.length <= 0 )
-            delete this.sentFilterInputs[inputName]
-
-        this.filterInputs[inputName] = inputParams
-        this.fetchFilterInputs()
+        return inputParams
     }
 
-    setSelectFromToItem(e, inputName, inputParams) {
-        inputParams = {
+    setSelectFromToItem(inputName, inputParams, e) {
+        return {
             ...inputParams,
             selected: {
                 ...inputParams.selected,
                 [e.target.name]: e.target.value,
             }
         }
+    }
 
-        this.sentFilterInputs[inputName] = inputParams
-        this.filterInputs[inputName] = inputParams
-        // console.log(toJS(this.filterInputs))
+    setFilterInputs(inputName, inputParams, inputData){
+        let sentInputParams
+
+        switch (inputParams.type){
+            case this.filterTypes.selectFromTo.type:
+                sentInputParams = this.setSelectFromToItem(inputName, inputParams, inputData)
+                break;
+            default:
+                sentInputParams = this.setCheckedItems(inputName, inputParams, inputData)
+
+                if (sentInputParams.selected.length <= 0)
+                    delete this.sentFilterInputs[inputName]
+        }
+
+        this.sentFilterInputs[inputName] = sentInputParams
+        // SelectedClassInfoStore.filterInputs["BUOY"].defaultFilterInputs[inputName] = inputParams
+        console.log(sentInputParams)
+        SelectedClassInfoStore.filterInputs[inputName] = sentInputParams
         this.fetchFilterInputs()
     }
 
@@ -216,6 +243,20 @@ class FilterStore {
         return {
             id, label, sendData
         }
+    }
+
+    inputHasVariants(filterInput) {
+        switch (filterInput.type) {
+            case this.filterTypes.selectFromTo.type:
+                if (filterInput.from === Infinity || filterInput.to === -Infinity)
+                    return false;
+                break;
+            default:
+                if (filterInput.variants.length <= 0)
+                    return false;
+        }
+
+        return true
     }
 
     constructor(data) {

@@ -79,7 +79,9 @@ const BeachInfo = observer(() => {
                                     indications={[IndicationsStore.indicationTypes.HONF]}
                                     fixedValue={true}
                                 />
-                                Средняя высота 10% значительных волн {card.indications.Honf} м.
+                                <span>
+                                    Средняя высота 10% значительных волн <span className={"font-bold"}>{card.indications.Honf} м.</span>
+                                </span>
                             </div>
                             <div className={styles.bathingComfort}>
                                 <Indications
@@ -87,7 +89,10 @@ const BeachInfo = observer(() => {
                                     indications={[IndicationsStore.indicationTypes.WATER_TEMP]}
                                     fixedValue={true}
                                 />
-                                Температура воды {temperatureText}
+                                <span>
+                                    Вода <span className={"font-bold"}>{temperatureText}</span>
+                                </span>
+
                             </div>
                         </div>
                     </div>

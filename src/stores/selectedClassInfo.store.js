@@ -1,5 +1,5 @@
 import FilterStore from "../components/Filter/store/filter.store";
-import {action, makeAutoObservable, runInAction} from "mobx";
+import {action, computed, makeAutoObservable, observable, runInAction} from "mobx";
 
 class SelectedClassInfoStore{
     allClasses = []
@@ -8,6 +8,10 @@ class SelectedClassInfoStore{
 
     get filteredCards(){
         return FilterStore.filteredCards()
+    }
+
+    get filterInputs() {
+        return this.currentClass ? FilterStore.filterInputs(this.currentClass) : {}
     }
 
     initCurrentClass(currentClass){
@@ -20,17 +24,6 @@ class SelectedClassInfoStore{
             }
         })
     }
-
-    // set currentClass(currentClass){
-    //     this._currentClass = currentClass
-    //
-    //     if( !this.allClasses.includes(currentClass) )
-    //         this.allClasses.push(currentClass)
-    // }
-    //
-    // get currentClass(){
-    //     return this._currentClass
-    // }
 
     fetchInfo(){
         this.isLoading = true

@@ -62,10 +62,7 @@ const Sidebar = observer(({tabItems}) => {
                         {tabItems.map((tab, idx) => {
                                 return (
                                     <Tab.Panel key={idx} className={"flex flex-col"}>
-                                        {
-
-                                            <Card/>
-                                        }
+                                        <Card/>
                                     </Tab.Panel>
                                 )
                             }

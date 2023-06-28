@@ -5,7 +5,7 @@ import {action} from "mobx";
 import cc from "classcat";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import Ripple from "../../RedefinedTags/Ripple/Ripple";
-import {useRef, useState} from "react";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const FilterInputsComponent = ({inputName, inputParams}) => {
     switch (inputParams.type) {
@@ -19,7 +19,11 @@ const FilterInputsComponent = ({inputName, inputParams}) => {
                         return (
                             <Button
                                 key={id}
-                                onClick={action(FilterStore.setCheckedItems.bind(FilterStore, sendData, inputName, inputParams))}
+                                onClick={
+                                    action(() => {
+                                        FilterStore.setFilterInputs(inputName, inputParams, sendData)
+                                    })
+                                }
                                 className={cc({
                                     "flex": true,
                                     "shadow-md": itemIsSelected
@@ -43,7 +47,7 @@ const FilterInputsComponent = ({inputName, inputParams}) => {
                 type: "number",
                 label: "",
                 onInput: action((e) => {
-                    FilterStore.setSelectFromToItem(e, inputName, inputParams)
+                    FilterStore.setFilterInputs(inputName, inputParams, e)
                 }),
                 className: "focus:!border-t-blue-500 focus:!border-blue-500 ring-4 ring-transparent focus:ring-blue-500/20 " +
                     "!border !border-blue-gray-50 bg-white shadow-lg shadow-blue-gray-900/5 placeholder:text-blue-gray-200 text-blue-gray-500",
@@ -54,7 +58,7 @@ const FilterInputsComponent = ({inputName, inputParams}) => {
             }
 
             return (
-                <div className={"flex gap-5 mt-2"}>
+                <div className={"flex gap-5 mt-2 mr-2"}>
                     <Input
                         {...defaultParams}
                         value={inputParams.selected.from ?? ""}
@@ -78,7 +82,7 @@ const FilterInputsComponent = ({inputName, inputParams}) => {
                         let checkedItemIndex = FilterStore.findSelectedItem(inputName, sendData)
                         let isChecked = checkedItemIndex !== -1
 
-                        if( isChecked )
+                        if (isChecked)
                             checkedCheckbox.push(sendData)
 
                         return (
@@ -86,13 +90,13 @@ const FilterInputsComponent = ({inputName, inputParams}) => {
                                 key={id}
                                 className={"overflow-hidden relative rounded-md hover:cursor-pointer hover:bg-gray-100 transition duration-150"}
                                 onClick={action(() => {
-                                    if( isChecked ){
+                                    if (isChecked) {
                                         checkedCheckbox.splice(checkedItemIndex, 1)
                                     } else {
                                         checkedCheckbox.push(sendData)
                                     }
 
-                                    FilterStore.setCheckedItems(checkedCheckbox, inputName, inputParams)
+                                    FilterStore.setFilterInputs(inputName, inputParams, checkedCheckbox)
                                 })}
                             >
                                 <Checkbox
