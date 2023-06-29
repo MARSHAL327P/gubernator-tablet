@@ -9,7 +9,7 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 const RealObjectMap = observer(() => {
     let navigate = useNavigate()
 
-    return SelectedClassInfoStore.filteredCards.map((realObject, index) => {
+    return !RealObjectStore.isLoading && SelectedClassInfoStore.filteredCards.map((realObject, index) => {
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
         let mapIndication = realObject.props[indicationName]
 

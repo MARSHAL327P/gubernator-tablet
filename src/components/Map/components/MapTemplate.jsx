@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Map, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
+import {Map, RulerControl, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../store/map.store";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
@@ -68,6 +68,7 @@ const MapTemplate = observer((callback, deps) => {
                 setMapCoords(e)
             }}
         >
+            <RulerControl options={{ float: "right" }} />
             <ZoomControl options={{float: "right"}}/>
             {SelectedClassInfoStore.currentClass?.mapLayer}
         </Map>

@@ -39,9 +39,6 @@ class FilterStore {
     filteredList = null
 
     filteredCards() {
-        if (SelectedClassInfoStore.currentClass === null)
-            return []
-
         if (SidebarStore.searchQuery.trim() !== "") {
             return SelectedClassInfoStore.currentClass.list.filter((card) => {
                 return card
@@ -55,7 +52,7 @@ class FilterStore {
     }
 
     fetchFilterInputs() {
-        SelectedClassInfoStore.isLoading = true
+        SelectedClassInfoStore.currentClass.isLoading = true
 
         axios.post(process.env.REACT_APP_BEACHES_FILTER, this.sentFilterInputs)
             .then(
@@ -66,7 +63,7 @@ class FilterStore {
                 })
             )
             .finally(action(() => {
-                SelectedClassInfoStore.isLoading = false
+                SelectedClassInfoStore.currentClass.isLoading = false
             }))
     }
 
@@ -118,6 +115,7 @@ class FilterStore {
                 let cardValue = card[filterInputKey]
                     || (card.indications && card.indications[filterInputKey])
                     || (card.props && card.props[filterInputKey])
+
                 let filterInput = defaultFilterInputs[filterInputKey]
 
                 if (cardValue) {
@@ -142,40 +140,34 @@ class FilterStore {
                                         })
                                 }
                             } else {
-                                defaultFilterInputs = {
-                                    ...defaultFilterInputs,
-                                    [filterInputKey]: {
-                                        ...filterInput,
-                                        variants: [...filterInput.variants, cardValue]
-                                    }
-                                }
+                                filterInput.variants =  [...filterInput.variants, cardValue]
                             }
-
                     }
                 }
 
-                if (!cardValue && !currentClass.filterGroup) {
-                    delete currentClass.defaultFilterInputs[filterInputKey]
-                }
+                // if (!cardValue && !currentClass.filterGroup) {
+                //     delete currentClass.defaultFilterInputs[filterInputKey]
+                // }
             }
 
         }))
 
+        // currentClass.filterInputs = {...defaultFilterInputs}
         return defaultFilterInputs
     }
 
     filterInputs(currentClass) {
         if (currentClass.filterGroup) {
-            let filterGroupArray = {}
+            let filterGroup = currentClass.filterGroup
 
-            Object.entries(currentClass.filterGroup).forEach(([filterSectionName, filterSection]) => {
-                filterGroupArray[filterSectionName] = {
+            Object.entries(filterGroup).forEach(([filterSectionName, filterSection]) => {
+                filterGroup[filterSectionName] = {
                     ...filterSection,
                     defaultFilterInputs: this.getDefaultFilterInputs(currentClass, filterSection.defaultFilterInputs)
                 }
             })
 
-            return filterGroupArray
+            return filterGroup
         } else {
             return this.getDefaultFilterInputs(currentClass)
         }
@@ -208,10 +200,10 @@ class FilterStore {
         }
     }
 
-    setFilterInputs(inputName, inputParams, inputData){
+    setFilterInputs(inputName, inputParams, inputData) {
         let sentInputParams
 
-        switch (inputParams.type){
+        switch (inputParams.type) {
             case this.filterTypes.selectFromTo.type:
                 sentInputParams = this.setSelectFromToItem(inputName, inputParams, inputData)
                 break;
@@ -223,7 +215,7 @@ class FilterStore {
         }
 
         this.sentFilterInputs[inputName] = sentInputParams
-        // SelectedClassInfoStore.filterInputs["BUOY"].defaultFilterInputs[inputName] = inputParams
+        // SelectedClassInfoStore.filterInputs["BUOY"].defaultFilterInputs[inputName] = sentInputParams
         console.log(sentInputParams)
         SelectedClassInfoStore.filterInputs[inputName] = sentInputParams
         this.fetchFilterInputs()

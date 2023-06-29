@@ -3,11 +3,10 @@ import {action, computed, makeAutoObservable, observable, runInAction} from "mob
 
 class SelectedClassInfoStore{
     allClasses = []
-    isLoading = false
     currentClass = null
 
     get filteredCards(){
-        return FilterStore.filteredCards()
+        return this.currentClass && !this.currentClass.isLoading ? FilterStore.filteredCards() : []
     }
 
     get filterInputs() {
@@ -20,22 +19,22 @@ class SelectedClassInfoStore{
 
             if( !this.allClasses.includes(currentClass) ){
                 this.allClasses.push(currentClass)
-                this.fetchInfo()
+                this.currentClass.fetchInfo()
             }
         })
     }
 
-    fetchInfo(){
-        this.isLoading = true
-        this.currentClass.cardStore
+    fetchInfo(currentClass){
+        currentClass.isLoading = true
+        currentClass.cardStore
             .get()
             .then(
                 action(data => {
-                    this.currentClass.list = data ?? []
+                    currentClass.list = data ?? []
                 })
             )
             .finally(action(() => {
-                this.isLoading = false
+                currentClass.isLoading = false
             }));
     }
 

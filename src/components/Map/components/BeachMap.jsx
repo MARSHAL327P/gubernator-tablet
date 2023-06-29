@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import ActivePlacemark from "../../ActivePlacemark/ActivePlacemark";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
-import {Polygon} from "@pbe/react-yandex-maps";
+import {Placemark, Polygon} from "@pbe/react-yandex-maps";
 import {ReactComponent as MarkerIcon} from "../../../assets/icons/Marker.svg";
 import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoint.svg";
 import cc from "classcat";

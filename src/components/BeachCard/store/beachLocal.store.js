@@ -7,6 +7,7 @@ import BeachCardStore from "./beachCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import BeachMap from "../../Map/components/BeachMap";
 import BeachCard from "../components/BeachCard";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 class BeachLocalStore {
     bathingComfortType = {
@@ -106,6 +107,7 @@ class BeachLocalStore {
         },
     }
 
+    isLoading = false
     list = []
     code = ""
     title = "Пляж"
@@ -114,9 +116,14 @@ class BeachLocalStore {
     component = BeachCard
     mapLayer = <BeachMap/>
     excludedFilters = ["rating", "price", "workTime"]
+    filterInputs = {}
 
     get card(){
         return this.list && this.list.find((card) => card.code === this.code)
+    }
+
+    fetchInfo(){
+        return SelectedClassInfoStore.fetchInfo(this)
     }
 
     constructor() {

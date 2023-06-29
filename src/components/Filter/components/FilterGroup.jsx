@@ -4,23 +4,20 @@ import {Accordion, AccordionBody, AccordionHeader, List, ListItem} from "@materi
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import cc from "classcat";
 import FilterInputSection from "./FilterInputSection";
-import {action, runInAction} from "mobx";
+import {runInAction, action} from "mobx";
 
 const FilterGroup = observer(() => {
-    // console.log(SelectedClassInfoStore.filterInputs)
-    console.log("ok")
-    return SelectedClassInfoStore.currentClass.filterGroup ?
+    return SelectedClassInfoStore.currentClass?.filterGroup ?
         (
             <List className={"p-0"}>
                 {
-                    Object.entries(SelectedClassInfoStore.filterInputs).map(([filterSectionName,]) => {
-                        let filterSection = SelectedClassInfoStore.filterInputs[filterSectionName]
+                    Object.entries(SelectedClassInfoStore.filterInputs).map(([filterSectionName, filterSection]) => {
                         let Icon = filterSection.icon
 
+                        console.log(filterSection)
                         if (Object.keys(filterSection.defaultFilterInputs).length <= 0)
                             return false
 
-                        console.log(filterSection.filterOpen)
                         return (
                             <Accordion
                                 key={filterSectionName}
@@ -37,9 +34,9 @@ const FilterGroup = observer(() => {
                                     className="p-0 active:bg-transparent bg-transparent"
                                     selected={filterSection.filterOpen}>
                                     <AccordionHeader
-                                        onClick={() => {
+                                        onClick={action(() => {
                                             filterSection.filterOpen = !filterSection.filterOpen
-                                        }}
+                                        })}
                                         className={"border-b-0 p-3 bg-gray-200 hover:bg-gray-300 rounded-xl"}
                                     >
                                         <div className={cc(["flex items-center gap-2"])}>
@@ -59,7 +56,6 @@ const FilterGroup = observer(() => {
                                         }
                                     )}>
                                     <FilterInputSection
-                                        key={filterSectionName}
                                         filterInputs={filterSection.defaultFilterInputs}
                                     />
                                 </AccordionBody>

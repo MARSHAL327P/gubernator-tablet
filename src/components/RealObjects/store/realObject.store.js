@@ -6,6 +6,7 @@ import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
 import RealObjectMap from "../../Map/components/RealObjectMap";
 import RealObjectCard from "../components/RealObjectCard";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 class RealObjectStore {
     meteoProps = {
@@ -70,6 +71,7 @@ class RealObjectStore {
         // },
     }
 
+    isLoading = false
     list = []
     id = 0
     type = ""
@@ -80,6 +82,7 @@ class RealObjectStore {
     loadingText = "Загрузка объектов"
     filterGroup = this.realObjectTypes
     excludedFilters = []
+    filterInputs = {}
     fastFilter = {
         type: {
             selected: [],
@@ -88,6 +91,10 @@ class RealObjectStore {
 
     get card(){
         return this.list.length > 0 && this.list.find((card) => card.id === parseInt(this.id) && card.type === this.type)
+    }
+
+    fetchInfo(){
+        return SelectedClassInfoStore.fetchInfo(this)
     }
 
     constructor() {

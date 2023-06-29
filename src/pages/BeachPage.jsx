@@ -54,11 +54,11 @@ const BeachPage = observer(() => {
             if( SelectedClassInfoStore.currentClass === null )
                 SelectedClassInfoStore.initCurrentClass(BeachLocalStore)
 
-            if(SelectedClassInfoStore.currentClass.list.length > 0 && !SelectedClassInfoStore.isLoading)
+            if(SelectedClassInfoStore.currentClass.list.length > 0 && !SelectedClassInfoStore.currentClass.isLoading)
                 MapStore.zoomToItem(SelectedClassInfoStore.currentClass.card.coord)
 
         })
-    }, [beachCode, SelectedClassInfoStore.isLoading])
+    }, [beachCode, SelectedClassInfoStore.currentClass.isLoading])
 
 
     return (

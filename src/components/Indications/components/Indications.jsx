@@ -21,7 +21,7 @@ const Indications = observer(({data, indications = Object.keys(IndicationsStore.
                                 indicationData.background
                             ])}>
                                 <Icon className={indicationData.color}/>
-                                <span>{fixedValue ? parseInt(data[indication]).toFixed(1) : data[indication]}{indicationData.units}</span>
+                                <span>{fixedValue ? data[indication].toFixed(1) : data[indication]}{indicationData.units}</span>
                             </div>
                         </Tooltip>
                     )

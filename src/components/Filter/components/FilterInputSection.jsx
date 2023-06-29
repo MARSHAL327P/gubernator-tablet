@@ -7,11 +7,18 @@ import FilterStore from "../store/filter.store";
 import {FilterInputs} from "./FilterInputs";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import {action} from "mobx";
+import {useEffect} from "react";
 
-const FilterInputSection = observer(({filterInputs = SelectedClassInfoStore.filterInputs}) => {
+const FilterInputSection = observer(({filterInputs = SelectedClassInfoStore.filterInputs, filterGroup = {}}) => {
     const icons = {
         rating: <Star className={"fill-warning mt-[2px]"}/>
     }
+
+    // useEffect(() => {
+    //     SelectedClassInfoStore.currentClass.filterInputs = FilterStore.generateFilterInputs
+    // }, [])
+    //
+    // console.log("ok")
 
     return (
         Object.keys(filterInputs).length > 0 ?
