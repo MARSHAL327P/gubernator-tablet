@@ -9,7 +9,12 @@ import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import {action} from "mobx";
 import {useEffect} from "react";
 
-const FilterInputSection = observer(({filterInputs = SelectedClassInfoStore.filterInputs, filterGroup = {}}) => {
+const FilterInputSection = observer((
+    {
+        filterInputs = SelectedClassInfoStore.filterInputs,
+        filterGroupName = {}
+    }
+) => {
     const icons = {
         rating: <Star className={"fill-warning mt-[2px]"}/>
     }
@@ -64,6 +69,7 @@ const FilterInputSection = observer(({filterInputs = SelectedClassInfoStore.filt
                                 <FilterInputs
                                     inputName={inputName}
                                     inputParams={inputParams}
+                                    filterGroupName={filterGroupName}
                                 />
                             </AccordionBody>
                         </Accordion>

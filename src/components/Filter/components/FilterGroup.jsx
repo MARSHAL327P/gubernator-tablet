@@ -11,41 +11,41 @@ const FilterGroup = observer(() => {
         (
             <List className={"p-0"}>
                 {
-                    Object.entries(SelectedClassInfoStore.filterInputs).map(([filterSectionName, filterSection]) => {
-                        let Icon = filterSection.icon
+                    Object.entries(SelectedClassInfoStore.filterInputs).map(([filterGroupName, filterGroup]) => {
+                        let Icon = filterGroup.icon
 
-                        console.log(filterSection)
-                        if (Object.keys(filterSection.defaultFilterInputs).length <= 0)
+                        console.log(filterGroup)
+                        if (Object.keys(filterGroup.defaultFilterInputs).length <= 0)
                             return false
 
                         return (
                             <Accordion
-                                key={filterSectionName}
-                                open={filterSection.filterOpen}
+                                key={filterGroupName}
+                                open={filterGroup.filterOpen}
                                 icon={
                                     <ChevronDownIcon
                                         strokeWidth={2.5}
                                         className={cc(["mx-auto h-5 w-5 transition-transform", {
-                                            "rotate-180": filterSection.filterOpen
+                                            "rotate-180": filterGroup.filterOpen
                                         }])}
                                     />
                                 }>
                                 <ListItem
                                     className="p-0 active:bg-transparent bg-transparent"
-                                    selected={filterSection.filterOpen}>
+                                    selected={filterGroup.filterOpen}>
                                     <AccordionHeader
                                         onClick={action(() => {
-                                            filterSection.filterOpen = !filterSection.filterOpen
+                                            filterGroup.filterOpen = !filterGroup.filterOpen
                                         })}
                                         className={"border-b-0 p-3 bg-gray-200 hover:bg-gray-300 rounded-xl"}
                                     >
                                         <div className={cc(["flex items-center gap-2"])}>
                                             <div
-                                                className={cc(["flex items-center rounded-full p-2", filterSection.bgColor])}>
+                                                className={cc(["flex items-center rounded-full p-2", filterGroup.bgColor])}>
                                                 <Icon className={"w-4 h-4"}/>
                                             </div>
 
-                                            {filterSection.name}
+                                            {filterGroup.name}
                                         </div>
                                     </AccordionHeader>
                                 </ListItem>
@@ -56,7 +56,8 @@ const FilterGroup = observer(() => {
                                         }
                                     )}>
                                     <FilterInputSection
-                                        filterInputs={filterSection.defaultFilterInputs}
+                                        filterInputs={filterGroup.defaultFilterInputs}
+                                        filterGroupName={filterGroupName}
                                     />
                                 </AccordionBody>
                             </Accordion>

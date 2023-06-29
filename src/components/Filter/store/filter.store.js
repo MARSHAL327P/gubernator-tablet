@@ -200,7 +200,7 @@ class FilterStore {
         }
     }
 
-    setFilterInputs(inputName, inputParams, inputData) {
+    setFilterInputs(inputName, inputParams, inputData, filterGroupName) {
         let sentInputParams
 
         switch (inputParams.type) {
@@ -214,10 +214,13 @@ class FilterStore {
                     delete this.sentFilterInputs[inputName]
         }
 
+        if( SelectedClassInfoStore.currentClass.filterGroup ){
+            SelectedClassInfoStore.filterInputs[filterGroupName].defaultFilterInputs[inputName] = sentInputParams
+        } else {
+            SelectedClassInfoStore.filterInputs[inputName] = sentInputParams
+        }
+
         this.sentFilterInputs[inputName] = sentInputParams
-        // SelectedClassInfoStore.filterInputs["BUOY"].defaultFilterInputs[inputName] = sentInputParams
-        console.log(sentInputParams)
-        SelectedClassInfoStore.filterInputs[inputName] = sentInputParams
         this.fetchFilterInputs()
     }
 
