@@ -98,38 +98,37 @@ class FilterStore {
         this.fetchFilterInputs()
     }
 
-    calculateChangedParams() {
-        // for (const filterInputKey in SelectedClassInfoStore.filterInputs) {
-        //     let filterInput = SelectedClassInfoStore.filterInputs[filterInputKey]
-        //
-        //     switch (filterInput.type) {
-        //         case this.filterTypes.selectFromTo.type:
-        //             if (filterInput.selected.from  || filterInput.selected.to )
-        //                 numChangedParams++
-        //             break;
-        //         default:
-        //             if (filterInput.selected.length > 0)
-        //                 numChangedParams++
-        //     }
-        // }
+    calculateChangedParams(filterInputs) {
+        let numChangedParams = 0
+
+        for (const filterInputKey in filterInputs) {
+            let filterInput = filterInputs[filterInputKey]
+
+            switch (filterInput.type) {
+                case this.filterTypes.selectFromTo.type:
+                    if (filterInput.selected.from  || filterInput.selected.to )
+                        numChangedParams++
+                    break;
+                default:
+                    if (filterInput.selected.length > 0)
+                        numChangedParams++
+            }
+        }
+
+        return numChangedParams
     }
 
     get numChangedParams() {
         let numChangedParams = 0
+        let filterGroup = SelectedClassInfoStore.currentClass?.filterGroup
 
-        // for (const filterInputKey in SelectedClassInfoStore.filterInputs) {
-        //     let filterInput = SelectedClassInfoStore.filterInputs[filterInputKey]
-        //
-        //     switch (filterInput.type) {
-        //         case this.filterTypes.selectFromTo.type:
-        //             if (filterInput.selected.from  || filterInput.selected.to )
-        //                 numChangedParams++
-        //             break;
-        //         default:
-        //             if (filterInput.selected.length > 0)
-        //                 numChangedParams++
-        //     }
-        // }
+        if( filterGroup ){
+            for (let filterGroupName in filterGroup) {
+                numChangedParams += this.calculateChangedParams(filterGroup[filterGroupName].defaultFilterInputs)
+            }
+        } else {
+            numChangedParams = this.calculateChangedParams(SelectedClassInfoStore.filterInputs)
+        }
 
         return numChangedParams
     }
