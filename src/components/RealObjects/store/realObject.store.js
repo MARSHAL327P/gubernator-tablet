@@ -83,10 +83,16 @@ class RealObjectStore {
     filterGroup = this.realObjectTypes
     excludedFilters = []
     filterInputs = {}
+    filterUrl = process.env.REACT_APP_REAL_OBJECTS_FILTER
     fastFilter = {
-        type: {
-            selected: [],
-        }
+        fields: {
+            type: []
+        },
+        alias: {
+            METEO_STATION: this.realObjectTypes.METEO_STATION.name,
+            BUOY: this.realObjectTypes.BUOY.name
+        },
+        selected: [],
     }
 
     get card(){

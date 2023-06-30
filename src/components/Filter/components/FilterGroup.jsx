@@ -14,7 +14,6 @@ const FilterGroup = observer(() => {
                     Object.entries(SelectedClassInfoStore.filterInputs).map(([filterGroupName, filterGroup]) => {
                         let Icon = filterGroup.icon
 
-                        console.log(filterGroup)
                         if (Object.keys(filterGroup.defaultFilterInputs).length <= 0)
                             return false
 

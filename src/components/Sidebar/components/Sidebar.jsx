@@ -13,6 +13,7 @@ import {getIndexLinkInArray} from "../../../Utils";
 import SidebarStore from "../store/sidebar.store";
 import {runInAction, toJS} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import FastFilter from "../../Filter/components/FastFilter";
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {
@@ -51,6 +52,7 @@ const Sidebar = observer(({tabItems}) => {
                         size={"sm"}
                         tabItems={tabItems}
                     />
+                    <FastFilter/>
                 </FixedHeader>
                 <div
                     onScroll={(e) => {

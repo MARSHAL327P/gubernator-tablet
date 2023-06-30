@@ -7,7 +7,6 @@ import FastFilter from "../../Filter/components/FastFilter";
 const CardComponent = observer(() => {
     return (
         <>
-            <FastFilter/>
             {
                 (FilterStore.numChangedParams > 0 || SidebarStore.searchQuery.trim() !== "") && <div className={"text-center font-bold mb-5"}>
                     Показано {SelectedClassInfoStore.filteredCards.length} из {SelectedClassInfoStore.currentClass.list.length}

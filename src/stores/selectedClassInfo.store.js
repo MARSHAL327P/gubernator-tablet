@@ -1,5 +1,5 @@
 import FilterStore from "../components/Filter/store/filter.store";
-import {action, computed, makeAutoObservable, observable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 
 class SelectedClassInfoStore{
     allClasses = []

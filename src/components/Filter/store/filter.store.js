@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, observable, toJS} from "mobx";
+import {action, makeAutoObservable, observable, runInAction, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -39,8 +39,11 @@ class FilterStore {
     filteredList = null
 
     filteredCards() {
+        let fastFilter = SelectedClassInfoStore.currentClass.fastFilter
+        let filteredList = this.filteredList || SelectedClassInfoStore.currentClass.list
+
         if (SidebarStore.searchQuery.trim() !== "") {
-            return SelectedClassInfoStore.currentClass.list.filter((card) => {
+            filteredList = filteredList.filter((card) => {
                 return card
                     .name
                     .toLowerCase()
@@ -48,13 +51,21 @@ class FilterStore {
             })
         }
 
-        return this.filteredList ?? SelectedClassInfoStore.currentClass.list
+        if (fastFilter?.selected.length > 0) {
+            for (let fieldName in fastFilter.fields) {
+                filteredList = filteredList.filter((card) => {
+                    return fastFilter.selected.includes(card[fieldName])
+                })
+            }
+        }
+
+        return filteredList
     }
 
     fetchFilterInputs() {
         SelectedClassInfoStore.currentClass.isLoading = true
 
-        axios.post(process.env.REACT_APP_BEACHES_FILTER, this.sentFilterInputs)
+        axios.post(SelectedClassInfoStore.currentClass.filterUrl, this.sentFilterInputs)
             .then(
                 action(({data}) => {
                     this.filteredList = SelectedClassInfoStore.currentClass.list.filter(card => {
@@ -85,6 +96,22 @@ class FilterStore {
 
         this.sentFilterInputs = {}
         this.fetchFilterInputs()
+    }
+
+    calculateChangedParams() {
+        // for (const filterInputKey in SelectedClassInfoStore.filterInputs) {
+        //     let filterInput = SelectedClassInfoStore.filterInputs[filterInputKey]
+        //
+        //     switch (filterInput.type) {
+        //         case this.filterTypes.selectFromTo.type:
+        //             if (filterInput.selected.from  || filterInput.selected.to )
+        //                 numChangedParams++
+        //             break;
+        //         default:
+        //             if (filterInput.selected.length > 0)
+        //                 numChangedParams++
+        //     }
+        // }
     }
 
     get numChangedParams() {
@@ -140,7 +167,7 @@ class FilterStore {
                                         })
                                 }
                             } else {
-                                filterInput.variants =  [...filterInput.variants, cardValue]
+                                filterInput.variants = [...filterInput.variants, cardValue]
                             }
                     }
                 }
@@ -149,7 +176,6 @@ class FilterStore {
                 //     delete currentClass.defaultFilterInputs[filterInputKey]
                 // }
             }
-
         }))
 
         // currentClass.filterInputs = {...defaultFilterInputs}
@@ -191,6 +217,9 @@ class FilterStore {
     }
 
     setSelectFromToItem(inputName, inputParams, e) {
+        if (e.target.value === "")
+            e.target.value = null
+
         return {
             ...inputParams,
             selected: {
@@ -206,6 +235,9 @@ class FilterStore {
         switch (inputParams.type) {
             case this.filterTypes.selectFromTo.type:
                 sentInputParams = this.setSelectFromToItem(inputName, inputParams, inputData)
+
+                if (!sentInputParams.selected.from && !sentInputParams.selected.to)
+                    delete this.sentFilterInputs[inputName]
                 break;
             default:
                 sentInputParams = this.setCheckedItems(inputName, inputParams, inputData)
@@ -214,13 +246,18 @@ class FilterStore {
                     delete this.sentFilterInputs[inputName]
         }
 
-        if( SelectedClassInfoStore.currentClass.filterGroup ){
+        if (SelectedClassInfoStore.currentClass.filterGroup) {
             SelectedClassInfoStore.filterInputs[filterGroupName].defaultFilterInputs[inputName] = sentInputParams
+            this.sentFilterInputs[filterGroupName] = {
+                [inputName]: {...sentInputParams}
+            }
         } else {
             SelectedClassInfoStore.filterInputs[inputName] = sentInputParams
+            this.sentFilterInputs[inputName] = sentInputParams
         }
 
-        this.sentFilterInputs[inputName] = sentInputParams
+        console.log(toJS(this.sentFilterInputs))
+
         this.fetchFilterInputs()
     }
 
@@ -252,6 +289,21 @@ class FilterStore {
         }
 
         return true
+    }
+
+    get fastFilter() {
+        let fastFilter = SelectedClassInfoStore.currentClass.fastFilter
+
+        if (fastFilter && SelectedClassInfoStore.currentClass.list.length > 0) {
+            for (let fieldName in fastFilter.fields) {
+                SelectedClassInfoStore.currentClass.list.forEach((card) => {
+                    if (!fastFilter.fields[fieldName].includes(card[fieldName]))
+                        fastFilter.fields[fieldName].push(card[fieldName])
+                })
+            }
+        }
+
+        return fastFilter
     }
 
     constructor(data) {
