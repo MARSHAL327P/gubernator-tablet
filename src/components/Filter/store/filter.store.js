@@ -78,9 +78,9 @@ class FilterStore {
             }))
     }
 
-    clearFilter() {
-        for (const filterInputKey in SelectedClassInfoStore.filterInputs) {
-            let filterInput = SelectedClassInfoStore.filterInputs[filterInputKey]
+    clearFilterInputs(filterInputs){
+        for (const filterInputKey in filterInputs) {
+            let filterInput = filterInputs[filterInputKey]
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
@@ -93,6 +93,19 @@ class FilterStore {
                     filterInput.selected = []
             }
         }
+    }
+
+    clearAllFilter() {
+        let filterGroup = SelectedClassInfoStore.currentClass?.filterGroup
+
+        if( filterGroup ){
+            for (let filterGroupName in filterGroup) {
+                this.clearFilterInputs(filterGroup[filterGroupName].defaultFilterInputs)
+            }
+        } else {
+            this.clearFilterInputs(SelectedClassInfoStore.filterInputs)
+        }
+
 
         this.sentFilterInputs = {}
         this.fetchFilterInputs()

@@ -2,7 +2,6 @@ import {observer} from "mobx-react-lite";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FilterStore from "../../Filter/store/filter.store";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
-import FastFilter from "../../Filter/components/FastFilter";
 
 const CardComponent = observer(() => {
     return (

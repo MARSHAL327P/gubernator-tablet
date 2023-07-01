@@ -53,7 +53,7 @@ const Filter = observer(() => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <span className={"hover:cursor-pointer"} onClick={() => FilterStore.clearFilter()}>
+                    <span className={"hover:cursor-pointer"} onClick={() => FilterStore.clearAllFilter()}>
                     <Button variant={"text"} color={"white"}>
                         Очистить
                     </Button>
