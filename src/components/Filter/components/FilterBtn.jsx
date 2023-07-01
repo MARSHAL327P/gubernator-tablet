@@ -7,10 +7,13 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const FilterBtn = observer(() => {
     const iconStyles = "fill-white w-7 h-7"
+    let tooltip = FilterStore.isOpen ? "Закрыть фильтр" : "Открыть фильтр"
+    if( !SelectedClassInfoStore.filteredCards || SelectedClassInfoStore.currentClass?.isLoading )
+        tooltip = "Фильтр недоступен"
 
     return (
         <Tooltip
-            content={FilterStore.isOpen ? "Закрыть фильтр" : SelectedClassInfoStore.filteredCards ? "Фильтр пляжей" : "Фильтр недоступен"}>
+            content={tooltip}>
             <Button
                 className={"flex items-center px-4 max-h-[48px]"}
                 onClick={action(() => {
