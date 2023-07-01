@@ -11,7 +11,6 @@ const FilterBtn = observer(() => {
     return (
         <Tooltip
             content={FilterStore.isOpen ? "Закрыть фильтр" : SelectedClassInfoStore.filteredCards ? "Фильтр пляжей" : "Фильтр недоступен"}>
-
             <Button
                 className={"flex items-center px-4 max-h-[48px]"}
                 onClick={action(() => {
@@ -25,8 +24,6 @@ const FilterBtn = observer(() => {
                         <AdjustmentsVerticalIcon className={iconStyles}/>
                 }
             </Button>
-
-
         </Tooltip>
     )
 })
