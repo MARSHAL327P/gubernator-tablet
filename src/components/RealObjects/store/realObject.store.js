@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, observable} from "mobx";
 import { RealObjectCardStore } from "./realObjectCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
@@ -6,6 +6,7 @@ import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
 import RealObjectMap from "../../Map/components/RealObjectMap";
 import RealObjectCard from "../components/RealObjectCard";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 class RealObjectStore {
     meteoProps = {
@@ -38,6 +39,13 @@ class RealObjectStore {
             mapIndication: IndicationsStore.indicationTypes.WATER_TEMP,
             bgColor: "bg-warning",
             icon: Buoy,
+            filterOpen: true,
+            defaultFilterInputs: {
+                Honf: {
+                    name: "Средняя высота 10% наибольших волн (м)",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+            }
         },
         METEO_STATION: {
             name: "Метеостанция",
@@ -45,24 +53,25 @@ class RealObjectStore {
             mapIndication: IndicationsStore.indicationTypes.AIR_TEMP,
             bgColor: "bg-primary",
             icon: Meteo,
+            filterOpen: true,
+            defaultFilterInputs: {
+                pressure: {
+                    name: "Давление",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                windSpeed: {
+                    name: "Скорость ветра",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+            }
         },
-        WASTEWATER: {
-            name: "Сточные воды",
-            props: {}
-        },
+        // WASTEWATER: {
+        //     name: "Сточные воды",
+        //     props: {}
+        // },
     }
 
-    defaultFilterInputs = {
-        pressure: {
-            name: "Давление",
-            ...FilterStore.filterTypes.selectFromTo
-        },
-        windSpeed: {
-            name: "Скорость ветра",
-            ...FilterStore.filterTypes.selectFromTo
-        },
-    }
-
+    isLoading = false
     list = []
     id = 0
     type = ""
@@ -71,10 +80,27 @@ class RealObjectStore {
     mapLayer = <RealObjectMap/>
     component = RealObjectCard
     loadingText = "Загрузка объектов"
+    filterGroup = this.realObjectTypes
     excludedFilters = []
+    filterInputs = {}
+    filterUrl = process.env.REACT_APP_REAL_OBJECTS_FILTER
+    fastFilter = {
+        fields: {
+            type: []
+        },
+        alias: {
+            METEO_STATION: this.realObjectTypes.METEO_STATION.name,
+            BUOY: this.realObjectTypes.BUOY.name
+        },
+        selected: [],
+    }
 
     get card(){
         return this.list.length > 0 && this.list.find((card) => card.id === parseInt(this.id) && card.type === this.type)
+    }
+
+    fetchInfo(){
+        return SelectedClassInfoStore.fetchInfo(this)
     }
 
     constructor() {

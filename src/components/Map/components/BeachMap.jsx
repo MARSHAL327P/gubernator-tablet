@@ -1,15 +1,22 @@
 import {observer} from "mobx-react-lite";
 import ActivePlacemark from "../../ActivePlacemark/ActivePlacemark";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
-import {Polygon} from "@pbe/react-yandex-maps";
+import {Placemark, Polygon} from "@pbe/react-yandex-maps";
 import {ReactComponent as MarkerIcon} from "../../../assets/icons/Marker.svg";
+import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoint.svg";
 import cc from "classcat";
 import {useNavigate} from "react-router-dom";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const BeachMap = observer(() => {
     let navigate = useNavigate()
 
-    return BeachLocalStore.list.map(beach => {
+    return SelectedClassInfoStore.filteredCards.map(beach => {
+        let iconClasses = {
+            "fill-warning": beach.isOpen,
+            "fill-danger": !beach.isOpen,
+        }
+
         return (
             <div key={beach.id}>
                 <Polygon
@@ -22,7 +29,7 @@ const BeachMap = observer(() => {
                 />
                 <ActivePlacemark
                     geometry={beach.coord}
-                    onClick={(e) => {
+                    onClick={() => {
                         navigate(`/beach/${beach.code}`)
                     }}
                     options={{
@@ -31,11 +38,9 @@ const BeachMap = observer(() => {
                         iconContentOffset: [-8, -2],
                     }}
                     component={
-                        <div className={"relative inline-flex transition scale-marker"}>
-                            <MarkerIcon className={cc(["w-14 h-14", {
-                                "fill-warning": beach.isOpen,
-                                "fill-danger": !beach.isOpen,
-                            }])}/>
+                        <div className={"relative inline-flex "}>
+                            <MarkerIcon className={cc(["w-14 h-14 transition scale-marker", iconClasses])}/>
+                            <MarkerPointIcon className={cc(["relative left-[-57px] top-[-10px]", iconClasses])}/>
                         </div>
                     }
                 />

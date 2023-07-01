@@ -3,11 +3,14 @@ import {action, makeAutoObservable, runInAction} from "mobx";
 
 class SelectedClassInfoStore{
     allClasses = []
-    isLoading = false
     currentClass = null
 
     get filteredCards(){
-        return FilterStore.filteredCards()
+        return this.currentClass && !this.currentClass.isLoading ? FilterStore.filteredCards() : []
+    }
+
+    get filterInputs() {
+        return this.currentClass && !this.currentClass.isLoading ? FilterStore.filterInputs(this.currentClass) : {}
     }
 
     initCurrentClass(currentClass){
@@ -16,33 +19,22 @@ class SelectedClassInfoStore{
 
             if( !this.allClasses.includes(currentClass) ){
                 this.allClasses.push(currentClass)
-                this.fetchInfo()
+                this.currentClass.fetchInfo()
             }
         })
     }
 
-    // set currentClass(currentClass){
-    //     this._currentClass = currentClass
-    //
-    //     if( !this.allClasses.includes(currentClass) )
-    //         this.allClasses.push(currentClass)
-    // }
-    //
-    // get currentClass(){
-    //     return this._currentClass
-    // }
-
-    fetchInfo(){
-        this.isLoading = true
-        this.currentClass.cardStore
+    fetchInfo(currentClass){
+        currentClass.isLoading = true
+        currentClass.cardStore
             .get()
             .then(
                 action(data => {
-                    this.currentClass.list = data ?? []
+                    currentClass.list = data ?? []
                 })
             )
             .finally(action(() => {
-                this.isLoading = false
+                currentClass.isLoading = false
             }));
     }
 

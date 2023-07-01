@@ -43,11 +43,11 @@ const RealObjectPage = observer(() => {
             if( SelectedClassInfoStore.currentClass === null )
                 SelectedClassInfoStore.initCurrentClass(RealObjectStore)
 
-            if(SelectedClassInfoStore.currentClass.list.length > 0 && !SelectedClassInfoStore.isLoading)
+            if(SelectedClassInfoStore.currentClass.list.length > 0 && !SelectedClassInfoStore.currentClass.isLoading)
                 MapStore.zoomToItem(SelectedClassInfoStore.currentClass.card.coord)
 
         })
-    }, [objectType, objectId, SelectedClassInfoStore.isLoading])
+    }, [objectType, objectId, SelectedClassInfoStore.currentClass.isLoading])
 
     return (
         <Dashboard

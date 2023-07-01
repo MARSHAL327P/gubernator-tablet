@@ -8,11 +8,16 @@ const MasonryGallery = observer(({imgs, id}) => {
                 {
                     imgs.map((imgItem, idx) => {
                         return (
-                            <a key={idx} href={imgItem} data-fancybox={`masonry-gallery-${id}`}>
+                            <a
+                                key={idx}
+                                href={imgItem}
+                                data-fancybox={`masonry-gallery-${id}`}
+                                className={"overflow-hidden rounded-md"}
+                            >
                                 <img
                                     src={imgItem}
                                     alt=""
-                                    className="h-full w-full object-cover rounded-md"
+                                    className="h-full w-full object-cover rounded-md hover:scale-110 transition"
                                 />
                             </a>
                         )
