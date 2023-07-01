@@ -15,7 +15,7 @@ const FilterBtn = observer(() => {
             <Button
                 className={"flex items-center px-4 max-h-[48px]"}
                 onClick={action(() => {
-                    if (SelectedClassInfoStore.filteredCards !== null)
+                    if (SelectedClassInfoStore.filteredCards !== null && !SelectedClassInfoStore.currentClass.isLoading)
                         FilterStore.isOpen = !FilterStore.isOpen
                 })}
             >

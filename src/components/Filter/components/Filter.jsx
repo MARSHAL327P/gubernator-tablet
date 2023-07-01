@@ -1,33 +1,12 @@
 import {observer} from "mobx-react-lite";
 import FilterStore from "../store/filter.store";
 import {useRef, useState} from "react";
-import {Accordion, AccordionHeader, AccordionBody, List, ListItem} from "@material-tailwind/react";
 import FixedHeader from "../../FixedHeader/FixedHeader";
 import {Button} from "@material-tailwind/react";
-import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {Transition} from '@headlessui/react'
-
-import {FilterInputs} from "./FilterInputs";
-import SidebarStore from "../../Sidebar/store/sidebar.store";
 import cc from "classcat";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import FilterInputSection from "./FilterInputSection";
-import {toJS} from "mobx";
 import FilterGroup from "./FilterGroup";
-
-function hasVariants(filterInput) {
-    switch (filterInput.type) {
-        case FilterStore.filterTypes.selectFromTo.type:
-            if (filterInput.from === Infinity || filterInput.to === -Infinity)
-                return false;
-            break;
-        default:
-            if (filterInput.variants.length <= 0)
-                return false;
-    }
-
-    return true
-}
 
 const Filter = observer(() => {
     let filterEl = useRef(null)

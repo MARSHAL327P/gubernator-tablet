@@ -10,7 +10,7 @@ class SelectedClassInfoStore{
     }
 
     get filterInputs() {
-        return this.currentClass ? FilterStore.filterInputs(this.currentClass) : {}
+        return this.currentClass && !this.currentClass.isLoading ? FilterStore.filterInputs(this.currentClass) : {}
     }
 
     initCurrentClass(currentClass){

@@ -199,10 +199,12 @@ class FilterStore {
             let filterGroup = currentClass.filterGroup
 
             Object.entries(filterGroup).forEach(([filterSectionName, filterSection]) => {
-                filterGroup[filterSectionName] = {
-                    ...filterSection,
-                    defaultFilterInputs: this.getDefaultFilterInputs(currentClass, filterSection.defaultFilterInputs)
-                }
+                runInAction(() => {
+                    filterGroup[filterSectionName] = {
+                        ...filterSection,
+                        defaultFilterInputs: this.getDefaultFilterInputs(currentClass, filterSection.defaultFilterInputs)
+                    }
+                })
             })
 
             return filterGroup
