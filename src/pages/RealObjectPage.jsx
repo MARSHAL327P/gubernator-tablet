@@ -32,6 +32,7 @@ const RealObjectPage = observer(() => {
     ]
 
     let {objectType, objectId} = useParams()
+    let isLoading = SelectedClassInfoStore.currentClass?.isLoading
 
     objectType = objectType.toUpperCase().replace(/-/g, "_")
 
@@ -43,11 +44,11 @@ const RealObjectPage = observer(() => {
             if( SelectedClassInfoStore.currentClass === null )
                 SelectedClassInfoStore.initCurrentClass(RealObjectStore)
 
-            if(SelectedClassInfoStore.currentClass.list.length > 0 && !SelectedClassInfoStore.currentClass.isLoading)
+            if(SelectedClassInfoStore.currentClass.list.length > 0 && !isLoading)
                 MapStore.zoomToItem(SelectedClassInfoStore.currentClass.card.coord)
 
         })
-    }, [objectType, objectId, SelectedClassInfoStore.currentClass.isLoading])
+    }, [objectType, objectId, isLoading])
 
     return (
         <Dashboard
