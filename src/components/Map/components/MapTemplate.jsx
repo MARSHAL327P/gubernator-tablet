@@ -71,7 +71,6 @@ const MapTemplate = observer((callback, deps) => {
             height={mapHeight}
             defaultState={mapDefaultState}
             onBoundsChange={(e) => {
-                console.log(e)
                 setMapCoords(e)
             }}
         >
@@ -81,12 +80,12 @@ const MapTemplate = observer((callback, deps) => {
             <AdditionalLayerBtns/>
             <Transition
                 show={!!MapStore.selectedAdditionalLayer}
-                enter="transition-opacity duration-75"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                enter="transition duration-75"
+                enterFrom="opacity-0 translate-y-5"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-5"
             >
                 <Alert
                     className={"alert fixed bottom-5 mx-auto inset-x-0 z-20 w-fit bg-white text-black shadow-xl flex"}

@@ -38,9 +38,12 @@ const BeachMap = observer(() => {
                         iconContentOffset: [-8, -2],
                     }}
                     component={
-                        <div className={"relative inline-flex "}>
+                        <div className={"relative inline-flex"}>
                             <MarkerIcon className={cc(["w-14 h-14 transition scale-marker", iconClasses])}/>
-                            <MarkerPointIcon className={cc(["relative left-[-57px] top-[-10px]", iconClasses])}/>
+                            <MarkerPointIcon className={cc(["absolute left-[-1px] top-[-10px]", iconClasses])}/>
+                            <div className={"absolute left-[-23px] top-[60px] w-[100px] font-sans font-bold text-xs drop-shadow-md shadow-black"}>
+                                {beach.name}
+                            </div>
                         </div>
                     }
                 />
