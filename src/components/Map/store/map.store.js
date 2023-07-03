@@ -24,10 +24,16 @@ class MapStore {
         //     indicationData: IndicationsStore.indications.t_surf
         // },
     }
+    zoomIsBlocked = false
 
     zoomToItem(coord, zoom = 17){
-        this.mapRef.current.setZoom(zoom)
-        this.mapRef.current.panTo([coord[0] + 0.0001, coord[1]])
+        if( this.zoomIsBlocked )
+            zoom = 13
+
+        this.mapRef.current.setCenter([coord[0] + 0.0001, coord[1]], zoom, {
+            duration: 500,
+            timingFunction: "ease"
+        })
     }
 
     get selectedAdditionalLayer(){
@@ -54,7 +60,7 @@ class MapStore {
         if( this.selectedAdditionalLayer ){
             this.blockZoom()
         } else {
-            this.mapRef.current.behaviors.enable("scrollZoom")
+            this.unBlockZoom()
         }
     }
 
@@ -103,6 +109,12 @@ class MapStore {
     blockZoom(zoomValue = 13){
         this.zoomToItem([44.577681655459656, 33.49127241954839], zoomValue)
         this.mapRef.current.behaviors.disable("scrollZoom")
+        this.zoomIsBlocked = true
+    }
+
+    unBlockZoom(){
+        this.mapRef.current.behaviors.enable("scrollZoom")
+        this.zoomIsBlocked = false
     }
 
     constructor() {

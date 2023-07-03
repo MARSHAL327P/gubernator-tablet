@@ -23,7 +23,7 @@ const BeachMap = observer(() => {
                     geometry={beach.polygon[0]}
                     options={{
                         fillColor: beach.isOpen === true ? "#FCC33F" : "#FF4C28",
-                        opacity: 0.4,
+                        opacity: 0.8,
                         strokeWidth: 0,
                     }}
                 />
