@@ -36,7 +36,7 @@ class RealObjectStore {
         BUOY: {
             name: "Буй",
             props: this.buoyProps,
-            mapIndication: IndicationsStore.indicationTypes.WATER_TEMP,
+            mapIndication: IndicationsStore.indications.t_surf.indicationName,
             bgColor: "bg-warning",
             icon: Buoy,
             filterOpen: true,
@@ -50,7 +50,7 @@ class RealObjectStore {
         METEO_STATION: {
             name: "Метеостанция",
             props: this.meteoProps,
-            mapIndication: IndicationsStore.indicationTypes.AIR_TEMP,
+            mapIndication: IndicationsStore.indications.temperature.indicationName,
             bgColor: "bg-primary",
             icon: Meteo,
             filterOpen: true,

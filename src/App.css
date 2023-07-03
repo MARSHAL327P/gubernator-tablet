@@ -42,7 +42,7 @@
 }
 
 body{
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .sidebar{
@@ -99,4 +99,11 @@ body{
 
 .is-visible {
     opacity: 1;
+}
+
+.alert>div{
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

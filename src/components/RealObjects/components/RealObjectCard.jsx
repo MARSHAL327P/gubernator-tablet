@@ -25,7 +25,7 @@ const RealObjectCard = observer(({card}) => {
                 />
                 <div className="flex justify-between gap-2 mt-5">
                     <Tooltip content={"На карте"}>
-                        <Button onClick={MapStore.zoomToItem.bind(MapStore, card.coord)} color={"white"} className={styles.btn}>
+                        <Button onClick={() => {MapStore.zoomToItem(card.coord)}} color={"white"} className={styles.btn}>
                             <Map className={styles.btnIcon}/>
                         </Button>
                     </Tooltip>

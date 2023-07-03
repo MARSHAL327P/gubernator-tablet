@@ -75,7 +75,7 @@ const BeachInfo = observer(() => {
                             <div className={styles.bathingComfort}>
                                 <Indications
                                     data={card.indications}
-                                    indications={[IndicationsStore.indicationTypes.HONF]}
+                                    indications={[IndicationsStore.indications.Honf]}
                                 />
                                 <span>
                                     Средняя высота 10% значительных волн <span className={"font-bold"}>{card.indications.Honf} м.</span>
@@ -84,7 +84,7 @@ const BeachInfo = observer(() => {
                             <div className={styles.bathingComfort}>
                                 <Indications
                                     data={card.indications}
-                                    indications={[IndicationsStore.indicationTypes.WATER_TEMP]}
+                                    indications={[IndicationsStore.indications.t_surf]}
                                 />
                                 <span>
                                     Вода <span className={"font-bold"}>{temperatureText}</span>

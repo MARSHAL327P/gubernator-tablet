@@ -29,16 +29,16 @@ const BeachCard = observer(({card}) => {
                 <Indications
                     data={card.indications}
                     indications={[
-                        IndicationsStore.indicationTypes.WATER_TEMP,
-                        IndicationsStore.indicationTypes.AIR_TEMP,
-                        IndicationsStore.indicationTypes.WIND_SPEED,
+                        IndicationsStore.indications.t_surf,
+                        IndicationsStore.indications.temperature,
+                        IndicationsStore.indications.windSpeed,
                     ]}
                     fixedValue={true}
                     classes={"justify-between"}
                 />
                 <div className="flex justify-between gap-2 mt-5">
                     <Tooltip content={"На карте"}>
-                        <Button onClick={MapStore.zoomToItem.bind(MapStore, card.coord)} color={"white"}
+                        <Button onClick={() => {MapStore.zoomToItem(card.coord)}} color={"white"}
                                 className={styles.btn}>
                             <Map className={styles.btnIcon}/>
                         </Button>

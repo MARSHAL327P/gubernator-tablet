@@ -7,16 +7,10 @@ import {ReactComponent as Pressure} from "../../../assets/icons/Pressure.svg";
 import {ReactComponent as Wave} from "../../../assets/icons/Wave.svg";
 
 class IndicationsStore {
-    indicationTypes = {
-        WATER_TEMP: "t_surf",
-        AIR_TEMP: "temperature",
-        WIND_SPEED: "windSpeed",
-        HUMIDITY: "humidity",
-        PRESSURE: "pressure",
-        HONF: "Honf",
-    }
     indications = {
         t_surf: {
+            id: 1,
+            indicationName: "t_surf",
             name: "Температура воды",
             color: "fill-primary",
             background: "bg-primary/20",
@@ -24,6 +18,8 @@ class IndicationsStore {
             units: "°",
         },
         temperature: {
+            id: 2,
+            indicationName: "temperature",
             name: "Температура воздуха",
             color: "fill-warning",
             background: "bg-warning/20",
@@ -31,6 +27,8 @@ class IndicationsStore {
             units: "°",
         },
         windSpeed: {
+            id: 3,
+            indicationName: "windSpeed",
             name: "Скорость ветра",
             color: "fill-danger",
             background: "bg-danger/20",
@@ -38,6 +36,8 @@ class IndicationsStore {
             units: " м/с",
         },
         humidity: {
+            id: 4,
+            indicationName: "humidity",
             name: "Влажность",
             color: "fill-info",
             background: "bg-info/20",
@@ -45,6 +45,8 @@ class IndicationsStore {
             units: " %",
         },
         pressure: {
+            id: 5,
+            indicationName: "pressure",
             name: "Давление",
             color: "fill-success",
             background: "bg-success/20",
@@ -52,6 +54,8 @@ class IndicationsStore {
             units: " мм.рт.ст",
         },
         Honf: {
+            id: 6,
+            indicationName: "Honf",
             name: "Средняя высота 10% наибольших волн (м)",
             color: "fill-primary",
             background: "bg-primary/20",
