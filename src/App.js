@@ -43,8 +43,9 @@ function App() {
     return (
         <YMaps query={{
             load: "package.full",
-            apikey: "6701facf-e92e-4104-965a-471884673190"
-        }}>
+            apikey: "6701facf-e92e-4104-965a-471884673190",
+        }}
+        >
             <MapTemplate/>
             {/*<div*/}
             {/*    className={`absolute top-0 left-0 h-full ${transitionStage}`}*/}

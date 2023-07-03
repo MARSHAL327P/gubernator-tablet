@@ -6,6 +6,9 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import heatMapData from "./heatMapData";
+import axios from "axios";
+import AdditionalLayerBtns from "./AdditionalLayerBtns";
 
 
 const MapTemplate = observer((callback, deps) => {
@@ -48,9 +51,8 @@ const MapTemplate = observer((callback, deps) => {
         setMapCoords(mapDefaultState)
     }, [mapDefaultState, setMapCoords])
 
-    MapStore.ymaps = useYMaps()
-
     runInAction(() => {
+        MapStore.ymaps = useYMaps()
         MapStore.mapRef = useRef(null);
     })
 
@@ -68,9 +70,10 @@ const MapTemplate = observer((callback, deps) => {
                 setMapCoords(e)
             }}
         >
-            <RulerControl options={{ float: "right" }} />
+            <RulerControl options={{float: "right"}}/>
             <ZoomControl options={{float: "right"}}/>
             {SelectedClassInfoStore.currentClass?.mapLayer}
+            {MapStore.ymaps && <AdditionalLayerBtns/>}
         </Map>
     )
 })
