@@ -1,6 +1,6 @@
 import {observer} from "mobx-react-lite";
 import cc from "classcat";
-import {Card, CardBody, CardFooter, CardHeader} from "@material-tailwind/react";
+import {Card, CardBody, CardFooter, CardHeader, Chip} from "@material-tailwind/react";
 import BathingComfort from "../../BeachCard/components/BathingComfort";
 import MyCardHeader from "../../Card/components/CardHeader";
 import LazyLoad from "react-lazy-load";
@@ -27,19 +27,31 @@ const BeachMarkerDescription = observer(({beach}) => {
             <CardBody>
                 <MyCardHeader classes={""} name={beach.name} rating={beach.rating} size={"md"}/>
                 <BathingComfort classes={"rounded-xl shadow-lg mt-2"} bathingComfort={beach.bathingComfort}/>
-                {/*<Indications*/}
-                {/*    classes={"mt-4 justify-between"}*/}
-                {/*    data={beach.indications}*/}
-                {/*    indications={[*/}
-                {/*        IndicationsStore.indications.t_surf,*/}
-                {/*        IndicationsStore.indications.temperature,*/}
-                {/*        IndicationsStore.indications.windSpeed,*/}
-                {/*    ]}*/}
-                {/*    fixedValue={true}*/}
-                {/*/>*/}
-                {/*<div className="flex gap-1">*/}
-                {/*    <BeachCardProps cardProps={beach.props}/>*/}
-                {/*</div>*/}
+                <Indications
+                    classes={"mt-4 justify-between"}
+                    data={beach.indications}
+                    indications={[
+                        IndicationsStore.indications.t_surf,
+                        IndicationsStore.indications.temperature,
+                        IndicationsStore.indications.windSpeed,
+                    ]}
+                    fixedValue={true}
+                    noTooltip={true}
+                />
+                <div className="flex gap-1">
+                    {
+                        Object.keys(beach.props).map(propId => {
+                            let prop = beach.props[propId]
+
+                            return (
+                                prop.value &&
+                                <div key={propId} className={"mt-4 relative grid items-center font-sans uppercase whitespace-nowrap select-none text-white bg-primary py-1.5 px-3 text-xs rounded-lg font-medium"}>
+                                    {prop.name}
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </CardBody>
         </Card>
     )
