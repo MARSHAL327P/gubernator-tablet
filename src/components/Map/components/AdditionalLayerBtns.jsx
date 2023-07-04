@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Button} from "@material-tailwind/react";
+import {Button, Spinner} from "@material-tailwind/react";
 import cc from "classcat";
 import MapStore from "../store/map.store";
 
@@ -7,7 +7,7 @@ const AdditionalLayerBtns = observer(() => {
     if( !MapStore.ymaps ) return
 
     return (
-        <div className={"flex gap-5 fixed bottom-5 right-5 z-10"}>
+        <div className={"flex gap-5 absolute bottom-5 right-5 z-10"}>
             {
                 Object.values(MapStore.additionalLayers).map((additionalLayer) => {
                     let indication = additionalLayer.indicationData
@@ -28,10 +28,15 @@ const AdditionalLayerBtns = observer(() => {
                                 MapStore.selectAdditionalLayer(indication.indicationName)
                             }}
                         >
-                            <Icon className={cc({
-                                "fill-black": !isSelected,
-                                "fill-white": isSelected,
-                            })}/>
+                            {
+                                MapStore.selectedAdditionalLayer?.isLoading ?
+                                    <Spinner className={"spinner_white"} /> :
+                                    <Icon className={cc({
+                                        "fill-black": !isSelected,
+                                        "fill-white": isSelected,
+                                    })}/>
+                            }
+
                             {indication.name}
                         </Button>
                     )

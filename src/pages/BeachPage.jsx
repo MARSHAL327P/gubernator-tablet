@@ -57,7 +57,6 @@ const BeachPage = observer(() => {
 
             if(SelectedClassInfoStore.currentClass.list.length > 0 && !isLoading)
                 MapStore.zoomToItem(SelectedClassInfoStore.currentClass.card.coord)
-
         })
     }, [beachCode, isLoading])
 

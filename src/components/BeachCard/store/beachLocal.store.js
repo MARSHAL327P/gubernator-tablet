@@ -123,6 +123,27 @@ class BeachLocalStore {
         return this.list && this.list.find((card) => card.code === this.code)
     }
 
+    bathingComfortMapColors(beach){
+        let result = {
+            polygon: "#FCC33F",
+            marker: "fill-warning"
+        }
+
+        if( beach.bathingComfort.includes("HIGH_WAVE") ){
+            result = {
+                polygon: "#FF4C28",
+                marker: "fill-danger"
+            }
+        } else if( beach.bathingComfort.includes("GOOD") ){
+            result = {
+                polygon: "#87E827",
+                marker: "fill-success"
+            }
+        }
+
+        return result
+    }
+
     fetchInfo(){
         return SelectedClassInfoStore.fetchInfo(this)
     }

@@ -42,11 +42,7 @@
 }
 
 body{
-    overflow: hidden;
-}
-
-.sidebar{
-    height: calc(100% - 164px);
+    overflow-x: hidden;
 }
 
 .filter{
@@ -92,6 +88,10 @@ body{
     color: #3366FF;
 }
 
+.spinner_white path:last-child{
+    color: #fff;
+}
+
 .LazyLoad {
     opacity: 0;
     transition: all 1s ease-in-out;
@@ -106,4 +106,24 @@ body{
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.scale-marker{
+    transform: scale(1);
+}
+
+.scale-marker_active{
+    transform: scale(1.2);
+}
+
+.hover-marker__body{
+    opacity: 0;
+    transform: translateY(10px);
+    transition: .3s;
+}
+
+.hover-marker_active .hover-marker__body{
+    opacity: 1;
+    transform: translateY(0);
+    transition: .3s;
 }

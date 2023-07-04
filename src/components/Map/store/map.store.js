@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable} from "mobx";
+import {makeAutoObservable, observable, runInAction} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 
@@ -13,7 +13,8 @@ class MapStore {
             heatmapObject: null,
             apiUrl: process.env.REACT_APP_HEATMAP,
             selected: false,
-            indicationData: IndicationsStore.indications.temperature
+            indicationData: IndicationsStore.indications.temperature,
+            isLoading: false
         },
         // t_surf: {
         //     fetchData: this.showHeatmap.bind(this),
@@ -25,6 +26,7 @@ class MapStore {
         // },
     }
     zoomIsBlocked = false
+    markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
 
     zoomToItem(coord, zoom = 17){
         if( this.zoomIsBlocked )
@@ -54,6 +56,9 @@ class MapStore {
         if( layerData.selected && this.selectedAdditionalLayer.data ){
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current)
         } else if( layerData.selected ){
+            runInAction(() => {
+                this.selectedAdditionalLayer.isLoading = true
+            })
             layerData.fetchData()
         }
 
@@ -103,6 +108,9 @@ class MapStore {
             });
 
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current);
+            runInAction(() => {
+                this.selectedAdditionalLayer.isLoading = false
+            })
         })
     }
 

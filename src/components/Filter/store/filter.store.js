@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, observable, runInAction, toJS} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -269,8 +269,6 @@ class FilterStore {
             SelectedClassInfoStore.filterInputs[inputName] = sentInputParams
             this.sentFilterInputs[inputName] = sentInputParams
         }
-
-        console.log(toJS(this.sentFilterInputs))
 
         this.fetchFilterInputs()
     }

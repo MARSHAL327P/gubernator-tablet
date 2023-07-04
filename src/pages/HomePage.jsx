@@ -1,7 +1,6 @@
 import Sidebar from "../components/Sidebar/components/Sidebar";
 import Filter from "../components/Filter/components/Filter";
 import {observer} from "mobx-react-lite";
-import AdminBtn from "../components/AdminPanel/components/AdminBtn";
 import FilterStore from "../components/Filter/store/filter.store";
 import {Transition} from "@headlessui/react";
 
@@ -23,7 +22,7 @@ const HomePage = observer(({tabItems}) => {
                 </Transition>
 
             </div>
-            <AdminBtn/>
+            {/*<AdminBtn/>*/}
         </>
     )
 })

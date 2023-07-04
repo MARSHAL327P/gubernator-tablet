@@ -3,12 +3,18 @@ import {Tooltip} from "@material-tailwind/react";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {getUpdateTimeText} from "../../../Utils";
+import cc from "classcat";
 
-const CardHeader = observer(({updateTime, problems, name, rating = 0}) => {
+const CardHeader = observer(({
+                                 updateTime, problems, name,
+                                 rating = 0,
+                                 size = "xs",
+                                 classes = "px-7 pt-4"
+                             }) => {
     let cardProblems = BeachLocalStore.beachProblemsType[problems]
 
     return (
-        <div className={"px-7 pt-4"}>
+        <div className={classes}>
             {
                 updateTime &&
                 <Tooltip content={"Время последнего обновления данных"}>
@@ -26,7 +32,11 @@ const CardHeader = observer(({updateTime, problems, name, rating = 0}) => {
                             {cardProblems.icon}
                         </Tooltip>
                     }
-                    <span className={"text-title"}>{name}</span>
+                    <span className={cc({
+                        "text-black": true,
+                        "text-title": size === "xs",
+                        "text-xl font-bold": size === "md"
+                    })}>{name}</span>
                 </div>
 
 

@@ -6,16 +6,13 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import heatMapData from "./heatMapData";
-import axios from "axios";
 import AdditionalLayerBtns from "./AdditionalLayerBtns";
-import {Alert, Button} from "@material-tailwind/react";
-import {ReactComponent as LockIcon} from '../../../assets/icons/Lock.svg'
-import {Transition} from "@headlessui/react";
-import FilterStore from "../../Filter/store/filter.store";
+import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
+import DashboardStore from "../../Dashboard/store/dashboard.store";
+import LockScaleNotification from "./LockScaleNotification";
 
 
-const MapTemplate = observer((callback, deps) => {
+const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
     const location = useLocation();
     const [queryParameters] = useSearchParams()
@@ -61,8 +58,9 @@ const MapTemplate = observer((callback, deps) => {
     })
 
     useEffect(() => {
-        setMapHeight(height - (location.pathname === "/" || location.pathname === "/object" ? 0 : 500))
-    }, [height, location.pathname])
+        setMapHeight(height - (DashboardStore.isDashboard() && DashboardStore.isOpen ? 500 : 0))
+    }, [height, window.location.pathname, DashboardStore.isOpen])
+
 
     return (
         <Map
@@ -71,30 +69,20 @@ const MapTemplate = observer((callback, deps) => {
             height={mapHeight}
             defaultState={mapDefaultState}
             onBoundsChange={(e) => {
-                console.log(e)
                 setMapCoords(e)
             }}
         >
             <RulerControl options={{float: "right"}}/>
             <ZoomControl options={{float: "right"}}/>
             {SelectedClassInfoStore.currentClass?.mapLayer}
-            <AdditionalLayerBtns/>
-            <Transition
-                show={!!MapStore.selectedAdditionalLayer}
-                enter="transition-opacity duration-75"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-            >
-                <Alert
-                    className={"alert fixed bottom-5 mx-auto inset-x-0 z-20 w-fit bg-white text-black shadow-xl flex"}
-                >
-                    <LockIcon className={"fill-black"}/>
-                    Изменение масштаба заблокировано
-                </Alert>
-            </Transition>
+            {
+                !DashboardStore.isDashboard() &&
+                <>
+                    <AdditionalLayerBtns/>
+                    <LockScaleNotification/>
+                    <BathingComfortGradeBlock/>
+                </>
+            }
 
         </Map>
     )

@@ -11,15 +11,23 @@ const makeLayout = (layoutFactory, component) => {
         build: function () {
             Layout.superclass.build.call(this);
 
-            const backgroundElement = this.getParentElement().getElementsByClassName(
-                'scale-marker',
-            )[0];
+            const markerWrapper = this.getParentElement().getElementsByClassName('marker-wrapper')[0];
+            const scaleMarker = markerWrapper.querySelector('.scale-marker');
+            const hoverMarker = markerWrapper.querySelector('.hover-marker');
 
             this.getData().geoObject.events.add('mouseenter', (e) => {
-                backgroundElement.style.transform = `scale(1.2)`;
+                if (scaleMarker)
+                    scaleMarker.classList.add("scale-marker_active")
+
+                if (hoverMarker)
+                    hoverMarker.classList.add("hover-marker_active")
             });
             this.getData().geoObject.events.add('mouseleave', (e) => {
-                backgroundElement.style.transform = `scale(1)`;
+                if (scaleMarker)
+                    scaleMarker.classList.remove("scale-marker_active")
+
+                if (hoverMarker)
+                    hoverMarker.classList.remove("hover-marker_active")
             });
         },
         clear: function () {
@@ -35,7 +43,7 @@ const ActivePlacemark = (props) => {
 
     let balloonLayout = makeLayout(
         MapStore.ymaps.templateLayoutFactory,
-        props.component,
+        <div className={"marker-wrapper font-sans"}>{props.component}</div>,
     );
 
     return (
