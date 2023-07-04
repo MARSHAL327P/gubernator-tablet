@@ -10,9 +10,10 @@ import AdditionalLayerBtns from "./AdditionalLayerBtns";
 import {Alert} from "@material-tailwind/react";
 import {ReactComponent as LockIcon} from '../../../assets/icons/Lock.svg'
 import {Transition} from "@headlessui/react";
+import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
 
 
-const MapTemplate = observer((callback, deps) => {
+const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
     const location = useLocation();
     const [queryParameters] = useSearchParams()
@@ -91,7 +92,7 @@ const MapTemplate = observer((callback, deps) => {
                     Изменение масштаба заблокировано
                 </Alert>
             </Transition>
-
+            <BathingComfortGradeBlock/>
         </Map>
     )
 })
