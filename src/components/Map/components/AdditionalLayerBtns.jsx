@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Button} from "@material-tailwind/react";
+import {Button, Spinner} from "@material-tailwind/react";
 import cc from "classcat";
 import MapStore from "../store/map.store";
 
@@ -28,10 +28,15 @@ const AdditionalLayerBtns = observer(() => {
                                 MapStore.selectAdditionalLayer(indication.indicationName)
                             }}
                         >
-                            <Icon className={cc({
-                                "fill-black": !isSelected,
-                                "fill-white": isSelected,
-                            })}/>
+                            {
+                                MapStore.selectedAdditionalLayer?.isLoading ?
+                                    <Spinner className={"spinner_white"} /> :
+                                    <Icon className={cc({
+                                        "fill-black": !isSelected,
+                                        "fill-white": isSelected,
+                                    })}/>
+                            }
+
                             {indication.name}
                         </Button>
                     )

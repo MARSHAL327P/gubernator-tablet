@@ -7,11 +7,28 @@ import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoi
 import cc from "classcat";
 import {useNavigate} from "react-router-dom";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import {useEffect, useRef, useState} from "react";
+import MapStore from "../store/map.store";
+import {Transition} from "@headlessui/react";
+import BeachMarkerDescription from "./BeachMarkerDescription";
 
 const BeachMap = observer(() => {
     let navigate = useNavigate()
+    let numFilteredCards = SelectedClassInfoStore.filteredCards.length
+    let initialValues = new Array(numFilteredCards).fill(false)
+    let [showMarkerDescription, setShowMarkerDescription] = useState(initialValues)
 
-    return SelectedClassInfoStore.filteredCards.map(beach => {
+    useEffect(() => {
+        setShowMarkerDescription(initialValues)
+    }, [numFilteredCards])
+
+    function changeMarkerDescriptionVisibility(id, newValue) {
+        setShowMarkerDescription(
+            showMarkerDescription.map((item, idx) => idx === id ? newValue : item)
+        )
+    }
+
+    return SelectedClassInfoStore.filteredCards.map((beach, idx) => {
         let iconClasses = {
             "fill-warning": beach.isOpen,
             "fill-danger": !beach.isOpen,
@@ -32,18 +49,28 @@ const BeachMap = observer(() => {
                     onClick={() => {
                         navigate(`/beach/${beach.code}`)
                     }}
+                    // onMouseEnter={(e) => {
+                    //     changeMarkerDescriptionVisibility(idx, true)
+                    // }}
+                    // onMouseLeave={(e) => {
+                    //     changeMarkerDescriptionVisibility(idx, false)
+                    // }}
                     options={{
                         iconImageSize: [40, 55],
                         iconImageOffset: [-20, -50],
                         iconContentOffset: [-8, -2],
                     }}
                     component={
-                        <div className={"relative inline-flex"}>
+                        <div
+                            className={"relative inline-flex beach-marker font-sans"}
+                        >
                             <MarkerIcon className={cc(["w-14 h-14 transition scale-marker", iconClasses])}/>
                             <MarkerPointIcon className={cc(["absolute left-[-1px] top-[-10px]", iconClasses])}/>
-                            <div className={"absolute left-[-23px] top-[60px] w-[100px] font-sans font-bold text-xs drop-shadow-md shadow-black"}>
+                            <div
+                                className={"absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"}>
                                 {beach.name}
                             </div>
+                            <BeachMarkerDescription beach={beach} />
                         </div>
                     }
                 />

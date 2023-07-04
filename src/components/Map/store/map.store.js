@@ -13,7 +13,8 @@ class MapStore {
             heatmapObject: null,
             apiUrl: process.env.REACT_APP_HEATMAP,
             selected: false,
-            indicationData: IndicationsStore.indications.temperature
+            indicationData: IndicationsStore.indications.temperature,
+            isLoading: false
         },
         // t_surf: {
         //     fetchData: this.showHeatmap.bind(this),
@@ -54,6 +55,7 @@ class MapStore {
         if( layerData.selected && this.selectedAdditionalLayer.data ){
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current)
         } else if( layerData.selected ){
+            this.selectedAdditionalLayer.isLoading = true
             layerData.fetchData()
         }
 
@@ -103,6 +105,7 @@ class MapStore {
             });
 
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current);
+            this.selectedAdditionalLayer.isLoading = false
         })
     }
 

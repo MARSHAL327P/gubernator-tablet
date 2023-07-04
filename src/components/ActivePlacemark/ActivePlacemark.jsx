@@ -14,12 +14,19 @@ const makeLayout = (layoutFactory, component) => {
             const backgroundElement = this.getParentElement().getElementsByClassName(
                 'scale-marker',
             )[0];
+            let parentClassList = backgroundElement.parentNode.classList
 
             this.getData().geoObject.events.add('mouseenter', (e) => {
-                backgroundElement.style.transform = `scale(1.2)`;
+                backgroundElement.classList.add("scale-marker_active")
+
+                if( parentClassList.contains("beach-marker") )
+                    parentClassList.add("beach-marker_active")
             });
             this.getData().geoObject.events.add('mouseleave', (e) => {
-                backgroundElement.style.transform = `scale(1)`;
+                backgroundElement.classList.remove("scale-marker_active")
+
+                if( parentClassList.contains("beach-marker") )
+                    parentClassList.remove("beach-marker_active")
             });
         },
         clear: function () {

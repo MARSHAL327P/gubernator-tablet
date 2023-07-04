@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import {HomeIcon} from "@heroicons/react/24/solid";
 import {getUpdateTimeText} from "../../../Utils";
 import TabHeader from "../../Tabs/components/TabHeader";
-import AdminBtn from "../../AdminPanel/components/AdminBtn";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -43,7 +42,7 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
                 </div>
             </div>
             <TabHeader tabItems={tabItems}/>
-            <AdminBtn color={"blue"} classes={""}/>
+            {/*<AdminBtn color={"blue"} classes={""}/>*/}
         </>
     )
 })

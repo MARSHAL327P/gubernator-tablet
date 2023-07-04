@@ -270,8 +270,6 @@ class FilterStore {
             this.sentFilterInputs[inputName] = sentInputParams
         }
 
-        console.log(toJS(this.sentFilterInputs))
-
         this.fetchFilterInputs()
     }
 

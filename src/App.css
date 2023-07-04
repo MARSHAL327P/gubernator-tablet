@@ -92,6 +92,10 @@ body{
     color: #3366FF;
 }
 
+.spinner_white path:last-child{
+    color: #fff;
+}
+
 .LazyLoad {
     opacity: 0;
     transition: all 1s ease-in-out;
@@ -106,4 +110,22 @@ body{
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.scale-marker{
+    transform: scale(1);
+}
+
+.scale-marker_active{
+    transform: scale(1.2);
+}
+
+.beach-marker__description{
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.beach-marker_active .beach-marker__description{
+    opacity: 1;
+    transform: translateY(0);
 }
