@@ -7,10 +7,9 @@ import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import AdditionalLayerBtns from "./AdditionalLayerBtns";
-import {Alert} from "@material-tailwind/react";
-import {ReactComponent as LockIcon} from '../../../assets/icons/Lock.svg'
-import {Transition} from "@headlessui/react";
 import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
+import DashboardStore from "../../Dashboard/store/dashboard.store";
+import LockScaleNotification from "./LockScaleNotification";
 
 
 const MapTemplate = observer(() => {
@@ -59,8 +58,9 @@ const MapTemplate = observer(() => {
     })
 
     useEffect(() => {
-        setMapHeight(height - (location.pathname === "/" || location.pathname === "/object" ? 0 : 500))
-    }, [height, location.pathname])
+        setMapHeight(height - (DashboardStore.isDashboard() && DashboardStore.isOpen ? 500 : 0))
+    }, [height, window.location.pathname, DashboardStore.isOpen])
+
 
     return (
         <Map
@@ -75,24 +75,15 @@ const MapTemplate = observer(() => {
             <RulerControl options={{float: "right"}}/>
             <ZoomControl options={{float: "right"}}/>
             {SelectedClassInfoStore.currentClass?.mapLayer}
-            <AdditionalLayerBtns/>
-            <Transition
-                show={!!MapStore.selectedAdditionalLayer}
-                enter="transition duration-75"
-                enterFrom="opacity-0 translate-y-5"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-5"
-            >
-                <Alert
-                    className={"alert fixed bottom-5 mx-auto inset-x-0 z-20 w-fit bg-white text-black shadow-xl flex"}
-                >
-                    <LockIcon className={"fill-black"}/>
-                    Изменение масштаба заблокировано
-                </Alert>
-            </Transition>
-            <BathingComfortGradeBlock/>
+            {
+                !DashboardStore.isDashboard() &&
+                <>
+                    <AdditionalLayerBtns/>
+                    <LockScaleNotification/>
+                    <BathingComfortGradeBlock/>
+                </>
+            }
+
         </Map>
     )
 })

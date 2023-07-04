@@ -6,9 +6,7 @@ import BeachPage from "./pages/BeachPage";
 import MapTemplate from "./components/Map/components/MapTemplate";
 // import {useEffect, useState} from "react";
 import BeachLocalStore from "./components/BeachCard/store/beachLocal.store";
-import BeachCard from "./components/BeachCard/components/BeachCard";
 import RealObjectStore from "./components/RealObjects/store/realObject.store";
-import RealObjectCard from "./components/RealObjects/components/RealObjectCard";
 import RealObjectPage from "./pages/RealObjectPage";
 
 function App() {
@@ -62,7 +60,6 @@ function App() {
                 </Route>
                 <Route path={"/"} element={<HomePage tabItems={tabItems}/>}>
                     <Route path={"object"} element={null}/>
-                    <Route path={"architecture"}/>
                 </Route>
                 <Route path={"/object"}>
                     <Route path={":objectType/:objectId"} element={<RealObjectPage/>}/>

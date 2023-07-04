@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable} from "mobx";
+import {makeAutoObservable, observable, runInAction} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 
@@ -56,7 +56,9 @@ class MapStore {
         if( layerData.selected && this.selectedAdditionalLayer.data ){
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current)
         } else if( layerData.selected ){
-            this.selectedAdditionalLayer.isLoading = true
+            runInAction(() => {
+                this.selectedAdditionalLayer.isLoading = true
+            })
             layerData.fetchData()
         }
 
@@ -106,7 +108,9 @@ class MapStore {
             });
 
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current);
-            this.selectedAdditionalLayer.isLoading = false
+            runInAction(() => {
+                this.selectedAdditionalLayer.isLoading = false
+            })
         })
     }
 

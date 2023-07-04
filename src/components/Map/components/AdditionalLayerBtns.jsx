@@ -7,7 +7,7 @@ const AdditionalLayerBtns = observer(() => {
     if( !MapStore.ymaps ) return
 
     return (
-        <div className={"flex gap-5 fixed bottom-5 right-5 z-10"}>
+        <div className={"flex gap-5 absolute bottom-5 right-5 z-10"}>
             {
                 Object.values(MapStore.additionalLayers).map((additionalLayer) => {
                     let indication = additionalLayer.indicationData
