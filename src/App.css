@@ -42,11 +42,7 @@
 }
 
 body{
-    overflow: hidden;
-}
-
-.sidebar{
-    height: calc(100% - 164px);
+    overflow-x: hidden;
 }
 
 .filter{
@@ -120,12 +116,14 @@ body{
     transform: scale(1.2);
 }
 
-.beach-marker__description{
+.hover-marker__body{
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(10px);
+    transition: .3s;
 }
 
-.beach-marker_active .beach-marker__description{
+.hover-marker_active .hover-marker__body{
     opacity: 1;
     transform: translateY(0);
+    transition: .3s;
 }

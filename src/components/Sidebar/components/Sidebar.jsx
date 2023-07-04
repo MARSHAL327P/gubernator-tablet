@@ -3,7 +3,7 @@ import Search from "../../Search/components/Search";
 import {Badge} from "@material-tailwind/react";
 import FilterStore from "../../Filter/store/filter.store";
 import FixedHeader from "../../FixedHeader/FixedHeader";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import FilterBtn from "../../Filter/components/FilterBtn";
 import TabHeader, {tabHeaderVariants} from "../../Tabs/components/TabHeader";
 import {Tab} from "@headlessui/react";
@@ -26,6 +26,8 @@ const Sidebar = observer(({tabItems}) => {
     const location = useLocation();
     let [elOffset, setElOffset] = useState(0)
     let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
+    let fixedHeaderEl = useRef(null)
+    let [fixedHeaderHeight, setFixedHeaderHeight] = useState(0)
 
     useEffect(() => {
         runInAction(() => {
@@ -33,11 +35,17 @@ const Sidebar = observer(({tabItems}) => {
         })
     }, [selectedTabIndex, tabItems])
 
+    let currentClass = SelectedClassInfoStore.currentClass
+
+    useEffect(() => {
+        setFixedHeaderHeight(fixedHeaderEl.current.offsetHeight)
+    }, [currentClass, currentClass?.isLoading])
+
     return (
         <div className={"h-full bg-white transition z-20"}>
 
             <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
-                <FixedHeader elOffset={elOffset} classes={"px-3 py-7 mr-[6px] flex-col"}>
+                <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 py-7 mr-[6px] flex-col"}>
                     <div className="flex gap-4">
                         <Search/>
                         {FilterStore.numChangedParams > 0 ?
@@ -57,6 +65,9 @@ const Sidebar = observer(({tabItems}) => {
                 <div
                     onScroll={(e) => {
                         setElOffset(e.currentTarget.scrollTop)
+                    }}
+                    style={{
+                        "height": `calc(100% - ${fixedHeaderHeight}px)`
                     }}
                     className={"w-[460px] sidebar p-3 pb-7 overflow-auto transition"}>
 

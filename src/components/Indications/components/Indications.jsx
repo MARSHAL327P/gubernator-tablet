@@ -2,7 +2,6 @@ import {observer} from "mobx-react-lite";
 import {Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../store/indications.store";
 import cc from "classcat";
-import {toJS} from "mobx";
 import {Fragment} from "react";
 
 

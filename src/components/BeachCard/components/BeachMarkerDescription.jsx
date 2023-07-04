@@ -1,17 +1,13 @@
 import {observer} from "mobx-react-lite";
-import cc from "classcat";
-import {Card, CardBody, CardFooter, CardHeader, Chip} from "@material-tailwind/react";
-import BathingComfort from "../../BeachCard/components/BathingComfort";
+import {Card, CardBody, CardHeader} from "@material-tailwind/react";
+import BathingComfort from "./BathingComfort";
 import MyCardHeader from "../../Card/components/CardHeader";
-import LazyLoad from "react-lazy-load";
-import Comfort from "../../BeachCard/components/Comfort";
-import BeachCardProps from "../../BeachCard/components/BeachCardProps";
 import IndicationsStore from "../../Indications/store/indications.store";
 import Indications from "../../Indications/components/Indications";
 
 const BeachMarkerDescription = observer(({beach}) => {
     return (
-        <Card className="absolute bottom-[70px] transition beach-marker__description w-[390px] overflow-hidden">
+        <Card className="absolute bottom-[70px] transition hover-marker__body w-[390px] overflow-hidden">
             <CardHeader
                 floated={false}
                 shadow={false}

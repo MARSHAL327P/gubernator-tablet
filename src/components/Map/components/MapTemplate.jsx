@@ -6,13 +6,10 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import heatMapData from "./heatMapData";
-import axios from "axios";
 import AdditionalLayerBtns from "./AdditionalLayerBtns";
-import {Alert, Button} from "@material-tailwind/react";
+import {Alert} from "@material-tailwind/react";
 import {ReactComponent as LockIcon} from '../../../assets/icons/Lock.svg'
 import {Transition} from "@headlessui/react";
-import FilterStore from "../../Filter/store/filter.store";
 
 
 const MapTemplate = observer((callback, deps) => {

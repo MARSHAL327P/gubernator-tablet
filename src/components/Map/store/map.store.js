@@ -26,6 +26,7 @@ class MapStore {
         // },
     }
     zoomIsBlocked = false
+    markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
 
     zoomToItem(coord, zoom = 17){
         if( this.zoomIsBlocked )

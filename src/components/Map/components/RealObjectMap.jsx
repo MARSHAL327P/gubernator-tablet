@@ -28,6 +28,7 @@ const RealObjectMap = observer(() => {
                 component={
                     <RealObjectPlacemarker
                         data={mapIndication + IndicationsStore.indications[indicationName].units}
+                        realObject={realObject}
                         type={realObject.type}
                     />
                 }
