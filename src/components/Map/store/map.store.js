@@ -58,7 +58,6 @@ class MapStore {
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current)
         } else if( layerData.selected ){
             runInAction(() => {
-                console.log(toJS(this.selectedAdditionalLayer))
                 this.selectedAdditionalLayer.isLoading = true
             })
             layerData.fetchData()
@@ -107,6 +106,12 @@ class MapStore {
                     0.7: 'rgba(234, 72, 58, 0.9)',
                     1.0: 'rgba(162, 36, 25, 1)'
                 }
+                // gradient: {
+                //     0.1:  'rgba(162, 36, 25, 1)'
+                //     0.2: 'rgba(234, 72, 58, 0.9)',
+                //     0.7: 'rgba(255, 255, 0, 0.8)',
+                //     1.0:'rgba(128, 255, 0, 0.7)',
+                // }
             });
 
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current);

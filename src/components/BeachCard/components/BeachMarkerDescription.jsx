@@ -8,18 +8,18 @@ import Indications from "../../Indications/components/Indications";
 const BeachMarkerDescription = observer(({beach}) => {
     return (
         <Card className="absolute bottom-[70px] transition hover-marker__body w-[390px] overflow-hidden">
-            <CardHeader
-                floated={false}
-                shadow={false}
-                color="transparent"
-                className="m-0 rounded-none"
-            >
-                <img
-                    className={"w-full"}
-                    src={beach.img[0]}
-                    alt=""
-                />
-            </CardHeader>
+            {/*<CardHeader*/}
+            {/*    floated={false}*/}
+            {/*    shadow={false}*/}
+            {/*    color="transparent"*/}
+            {/*    className="m-0 rounded-none"*/}
+            {/*>*/}
+            {/*    <img*/}
+            {/*        className={"w-full"}*/}
+            {/*        src={beach.img[0]}*/}
+            {/*        alt=""*/}
+            {/*    />*/}
+            {/*</CardHeader>*/}
             <CardBody>
                 <MyCardHeader classes={""} name={beach.name} rating={beach.rating} size={"md"}/>
                 <BathingComfort classes={"rounded-xl shadow-lg mt-2"} bathingComfort={beach.bathingComfort}/>
