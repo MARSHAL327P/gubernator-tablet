@@ -29,7 +29,7 @@ const AdditionalLayerBtns = observer(() => {
                             }}
                         >
                             {
-                                MapStore.selectedAdditionalLayer?.isLoading ?
+                                additionalLayer.isLoading ?
                                     <Spinner className={"spinner_white"} /> :
                                     <Icon className={cc({
                                         "fill-black": !isSelected,

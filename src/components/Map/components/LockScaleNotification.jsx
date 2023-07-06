@@ -20,6 +20,7 @@ const LockScaleNotification = observer(({classes}) => {
             <Alert
                 className={"alert w-fit bg-white text-black shadow-xl"}
             >
+                {/*<Lottie className={"w-14 h-14"} animationData={Lock}/>*/}
                 <LockIcon className={"fill-black"}/>
                 Изменение масштаба заблокировано
             </Alert>

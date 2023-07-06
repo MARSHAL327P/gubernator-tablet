@@ -25,7 +25,7 @@ module.exports = withMT({
     },
     transitionDuration: {
       DEFAULT: '300ms',
-    }
+    },
   },
   plugins: [],
 })

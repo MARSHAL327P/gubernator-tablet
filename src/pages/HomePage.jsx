@@ -20,7 +20,6 @@ const HomePage = observer(({tabItems}) => {
                 >
                     <Filter/>
                 </Transition>
-
             </div>
             {/*<AdminBtn/>*/}
         </>

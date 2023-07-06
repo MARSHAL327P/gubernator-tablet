@@ -9,7 +9,6 @@ import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 const BeachMap = observer(() => {
     let navigate = useNavigate()
 
-
     return SelectedClassInfoStore.filteredCards.map((beach, idx) => {
         let polygonColor = BeachLocalStore.bathingComfortMapColors(beach).polygon
 

@@ -4,8 +4,6 @@ class DashboardStore {
     isOpen = true
 
     isDashboard(){
-        console.log(window.location.pathname)
-        console.log(window.location.pathname !== "/" && window.location.pathname !== "/object")
         return window.location.pathname !== "/" && window.location.pathname !== "/object"
     }
 

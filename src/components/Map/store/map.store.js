@@ -16,14 +16,15 @@ class MapStore {
             indicationData: IndicationsStore.indications.temperature,
             isLoading: false
         },
-        // t_surf: {
-        //     fetchData: this.showHeatmap.bind(this),
-        //     data: null,
-        //     heatmapObject: null,
-        //     apiUrl: "http://185.180.230.129:8081/api/layers/temp",
-        //     selected: false,
-        //     indicationData: IndicationsStore.indications.t_surf
-        // },
+        t_surf: {
+            fetchData: this.showHeatmap.bind(this),
+            data: null,
+            heatmapObject: null,
+            apiUrl: "http://185.180.230.129:8081/api/layers/water",
+            selected: false,
+            indicationData: IndicationsStore.indications.t_surf,
+            isLoading: false
+        },
     }
     zoomIsBlocked = false
     markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
@@ -105,6 +106,12 @@ class MapStore {
                     0.7: 'rgba(234, 72, 58, 0.9)',
                     1.0: 'rgba(162, 36, 25, 1)'
                 }
+                // gradient: {
+                //     0.1:  'rgba(162, 36, 25, 1)'
+                //     0.2: 'rgba(234, 72, 58, 0.9)',
+                //     0.7: 'rgba(255, 255, 0, 0.8)',
+                //     1.0:'rgba(128, 255, 0, 0.7)',
+                // }
             });
 
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current);

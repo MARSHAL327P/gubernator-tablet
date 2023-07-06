@@ -51,7 +51,7 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
                                 {DashboardStore.isOpen ? "Скрыть" : "Раскрыть"}
                             </Button>
                             <AdditionalLayerBtns/>
-                            <LockScaleNotification classes={"bottom-20"}/>
+                            <LockScaleNotification classes={"!bottom-20"}/>
                             <BathingComfortGradeBlock/>
                         </div>
                     }
