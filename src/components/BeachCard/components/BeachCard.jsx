@@ -32,9 +32,11 @@ const BeachCard = observer(({card}) => {
                         IndicationsStore.indications.t_surf,
                         IndicationsStore.indications.temperature,
                         IndicationsStore.indications.windSpeed,
+                        IndicationsStore.indications.Honf,
                     ]}
                     fixedValue={true}
                     classes={"justify-between"}
+                    oneLine={true}
                 />
                 <div className="flex justify-between gap-2 mt-5">
                     <Tooltip content={"На карте"}>
