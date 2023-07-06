@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable, runInAction} from "mobx";
+import {makeAutoObservable, observable, runInAction, toJS} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 
@@ -16,14 +16,15 @@ class MapStore {
             indicationData: IndicationsStore.indications.temperature,
             isLoading: false
         },
-        // t_surf: {
-        //     fetchData: this.showHeatmap.bind(this),
-        //     data: null,
-        //     heatmapObject: null,
-        //     apiUrl: "http://185.180.230.129:8081/api/layers/temp",
-        //     selected: false,
-        //     indicationData: IndicationsStore.indications.t_surf
-        // },
+        t_surf: {
+            fetchData: this.showHeatmap.bind(this),
+            data: null,
+            heatmapObject: null,
+            apiUrl: "http://185.180.230.129:8081/api/layers/water",
+            selected: false,
+            indicationData: IndicationsStore.indications.t_surf,
+            isLoading: false
+        },
     }
     zoomIsBlocked = false
     markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
@@ -57,6 +58,7 @@ class MapStore {
             this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current)
         } else if( layerData.selected ){
             runInAction(() => {
+                console.log(toJS(this.selectedAdditionalLayer))
                 this.selectedAdditionalLayer.isLoading = true
             })
             layerData.fetchData()

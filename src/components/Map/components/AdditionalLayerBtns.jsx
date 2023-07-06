@@ -6,6 +6,8 @@ import MapStore from "../store/map.store";
 const AdditionalLayerBtns = observer(() => {
     if( !MapStore.ymaps ) return
 
+    console.log(MapStore.selectedAdditionalLayer)
+
     return (
         <div className={"flex gap-5 absolute bottom-5 right-5 z-10"}>
             {
@@ -29,7 +31,7 @@ const AdditionalLayerBtns = observer(() => {
                             }}
                         >
                             {
-                                MapStore.selectedAdditionalLayer?.isLoading ?
+                                additionalLayer.isLoading ?
                                     <Spinner className={"spinner_white"} /> :
                                     <Icon className={cc({
                                         "fill-black": !isSelected,
