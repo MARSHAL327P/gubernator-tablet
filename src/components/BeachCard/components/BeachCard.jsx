@@ -24,7 +24,7 @@ const BeachCard = observer(({card}) => {
             <CardHeader updateTime={card.updateTime} rating={card.rating} name={card.name}
                         problems={card.beachProblems}/>
             <CarouselBeachCard imgs={card.img} cardId={card.id}/>
-            <BathingComfort bathingComfort={card.bathingComfort}/>
+            <BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
             <div className="px-7 py-5">
                 <Indications
                     data={card.indications}

@@ -5,7 +5,6 @@ import {action} from "mobx";
 import cc from "classcat";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import Ripple from "../../RedefinedTags/Ripple/Ripple";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
     switch (inputParams.type) {

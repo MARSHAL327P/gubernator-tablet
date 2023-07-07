@@ -43,7 +43,7 @@ export default class BeachCardStore {
             marker: "fill-warning"
         }
 
-        if( this.bathingComfort.includes("HIGH_WAVE") ){
+        if( this.bathingComfort.includes("HIGH_WAVE") || !this.isOpen ){
             result = {
                 polygon: "#FF4C28",
                 marker: "fill-danger"

@@ -22,7 +22,7 @@ const BeachMarkerDescription = observer(({beach}) => {
             {/*</CardHeader>*/}
             <CardBody>
                 <MyCardHeader classes={""} name={beach.name} rating={beach.rating} size={"md"}/>
-                <BathingComfort classes={"rounded-xl shadow-lg mt-2"} bathingComfort={beach.bathingComfort}/>
+                <BathingComfort rounded={true} classes={"mt-2"} bathingComfort={beach.bathingComfort} isOpen={beach.isOpen}/>
                 <Indications
                     classes={"mt-4 justify-between"}
                     data={beach.indications}
