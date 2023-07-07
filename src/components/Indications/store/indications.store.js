@@ -5,6 +5,7 @@ import {ReactComponent as Wind} from "../../../assets/icons/Wind.svg";
 import {ReactComponent as Humidity} from "../../../assets/icons/Humidity.svg";
 import {ReactComponent as Pressure} from "../../../assets/icons/Pressure.svg";
 import {ReactComponent as Wave} from "../../../assets/icons/Wave.svg";
+import {ReactComponent as Blob} from "../../../assets/icons/Blob.svg";
 
 class IndicationsStore {
     indications = {
@@ -61,6 +62,20 @@ class IndicationsStore {
             background: "bg-primary/20",
             icon: Wave,
             units: " м",
+        },
+        turbidity: {
+            id: 7,
+            indicationName: "turbidity",
+            name: "Мутность",
+            color: "fill-success",
+            background: "bg-success/20",
+            icon: Blob,
+            units: "",
+            type: "string",
+            alias: {
+                clear: "Чисто",
+                mudity: "Мутно",
+            }
         }
     }
 

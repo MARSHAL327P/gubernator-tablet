@@ -33,6 +33,7 @@ const BeachCard = observer(({card}) => {
                         IndicationsStore.indications.temperature,
                         IndicationsStore.indications.windSpeed,
                         IndicationsStore.indications.Honf,
+                        IndicationsStore.indications.turbidity,
                     ]}
                     fixedValue={true}
                     classes={"justify-between"}

@@ -4,8 +4,7 @@ import {Accordion, AccordionBody, AccordionHeader, List, ListItem} from "@materi
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import cc from "classcat";
 import FilterInputSection from "./FilterInputSection";
-import {runInAction, action, toJS} from "mobx";
-import RealObjectStore from "../../RealObjects/store/realObject.store";
+import {action} from "mobx";
 
 const FilterGroup = observer(() => {
     let selectedFastFilter = SelectedClassInfoStore.currentClass.fastFilter.selected

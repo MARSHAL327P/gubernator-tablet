@@ -31,6 +31,7 @@ const BeachMarkerDescription = observer(({beach}) => {
                         IndicationsStore.indications.temperature,
                         IndicationsStore.indications.windSpeed,
                         IndicationsStore.indications.Honf,
+                        IndicationsStore.indications.turbidity,
                     ]}
                     fixedValue={true}
                     noTooltip={true}

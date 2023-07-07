@@ -7,7 +7,6 @@ import FilterStore from "../store/filter.store";
 import {FilterInputs} from "./FilterInputs";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import {action} from "mobx";
-import {useEffect} from "react";
 
 const FilterInputSection = observer((
     {
