@@ -10,6 +10,7 @@ import AdditionalLayerBtns from "./AdditionalLayerBtns";
 import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
 import DashboardStore from "../../Dashboard/store/dashboard.store";
 import LockScaleNotification from "./LockScaleNotification";
+import HeatmapGradeBlock from "./HeatmapGradeBlock";
 
 
 const MapTemplate = observer(() => {
@@ -81,6 +82,7 @@ const MapTemplate = observer(() => {
                     <AdditionalLayerBtns/>
                     <LockScaleNotification/>
                     <BathingComfortGradeBlock/>
+                    <HeatmapGradeBlock/>
                 </>
             }
 

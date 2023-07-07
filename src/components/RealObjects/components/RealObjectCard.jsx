@@ -18,7 +18,7 @@ const RealObjectCard = observer(({card}) => {
 
     return (
         <>
-            <CardHeader updateTime={card.updated_at} name={card.name} problems={card.beachProblems} />
+            <CardHeader updateTime={card.props_updated_at} name={card.name} problems={card.beachProblems} />
             <div className="px-7 py-5">
                 <Indications
                     data={card.props}

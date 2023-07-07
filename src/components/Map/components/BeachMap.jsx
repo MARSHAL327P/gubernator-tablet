@@ -4,13 +4,12 @@ import {Polygon} from "@pbe/react-yandex-maps";
 import {useNavigate} from "react-router-dom";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import BeachPlacemarker from "../../BeachCard/components/BeachPlacemarker";
-import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 
 const BeachMap = observer(() => {
     let navigate = useNavigate()
 
     return SelectedClassInfoStore.filteredCards.map((beach, idx) => {
-        let polygonColor = BeachLocalStore.bathingComfortMapColors(beach).polygon
+        let polygonColor = beach.bathingComfortMapColors.polygon
 
         return (
             <div key={beach.id}>

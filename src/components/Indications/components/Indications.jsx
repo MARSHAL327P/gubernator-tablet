@@ -25,10 +25,12 @@ const Indications = observer((
         }])}
              ref={headerEl}
              onMouseEnter={() => {
-                 headerEl.current.style.height = bodyEl.current.offsetHeight + "px"
+                 if( oneLine )
+                    headerEl.current.style.height = bodyEl.current.offsetHeight + "px"
              }}
              onMouseLeave={() => {
-                 headerEl.current.style.height = "50px"
+                 if( oneLine )
+                    headerEl.current.style.height = "50px"
              }}
         >
             <div
