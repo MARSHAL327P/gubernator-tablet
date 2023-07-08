@@ -63,22 +63,28 @@ class FilterStore {
     }
 
     fetchFilterInputs() {
+        this.activeRequest && this.activeRequest.abort();
+        let request = this.activeRequest = new AbortController();
+
         SelectedClassInfoStore.currentClass.isLoading = true
 
-        axios.post(SelectedClassInfoStore.currentClass.filterUrl, this.sentFilterInputs)
+        axios({
+            method: 'post',
+            url: SelectedClassInfoStore.currentClass.filterUrl,
+            data: this.sentFilterInputs,
+            signal: request.signal
+        })
             .then(
                 action(({data}) => {
                     this.filteredList = SelectedClassInfoStore.currentClass.list.filter(card => {
                         return data.includes(card.id)
                     })
+                    SelectedClassInfoStore.currentClass.isLoading = false
                 })
             )
-            .finally(action(() => {
-                SelectedClassInfoStore.currentClass.isLoading = false
-            }))
     }
 
-    clearFilterInputs(filterInputs){
+    clearFilterInputs(filterInputs) {
         for (const filterInputKey in filterInputs) {
             let filterInput = filterInputs[filterInputKey]
 
@@ -98,7 +104,7 @@ class FilterStore {
     clearAllFilter() {
         let filterGroup = SelectedClassInfoStore.currentClass?.filterGroup
 
-        if( filterGroup ){
+        if (filterGroup) {
             for (let filterGroupName in filterGroup) {
                 this.clearFilterInputs(filterGroup[filterGroupName].defaultFilterInputs)
             }
@@ -119,7 +125,7 @@ class FilterStore {
 
             switch (filterInput.type) {
                 case this.filterTypes.selectFromTo.type:
-                    if (filterInput.selected.from  || filterInput.selected.to )
+                    if (filterInput.selected.from || filterInput.selected.to)
                         numChangedParams++
                     break;
                 default:
@@ -135,7 +141,7 @@ class FilterStore {
         let numChangedParams = 0
         let filterGroup = SelectedClassInfoStore.currentClass?.filterGroup
 
-        if( filterGroup ){
+        if (filterGroup) {
             for (let filterGroupName in filterGroup) {
                 numChangedParams += this.calculateChangedParams(filterGroup[filterGroupName].defaultFilterInputs)
             }
