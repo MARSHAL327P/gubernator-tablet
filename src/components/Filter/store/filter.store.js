@@ -324,7 +324,7 @@ class FilterStore {
         return fastFilter
     }
 
-    constructor(data) {
+    constructor() {
         makeAutoObservable(this);
     }
 }

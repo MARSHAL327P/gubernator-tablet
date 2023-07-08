@@ -6,6 +6,7 @@ import {ReactComponent as Humidity} from "../../../assets/icons/Humidity.svg";
 import {ReactComponent as Pressure} from "../../../assets/icons/Pressure.svg";
 import {ReactComponent as Wave} from "../../../assets/icons/Wave.svg";
 import {ReactComponent as Blob} from "../../../assets/icons/Blob.svg";
+import {ReactComponent as AirQuality} from "../../../assets/icons/AirQuality.svg";
 
 class IndicationsStore {
     indications = {
@@ -17,6 +18,7 @@ class IndicationsStore {
             background: "bg-primary/20",
             icon: Water,
             units: "°",
+            unitsFull: "C°",
         },
         temperature: {
             id: 2,
@@ -26,6 +28,7 @@ class IndicationsStore {
             background: "bg-warning/20",
             icon: Temperature,
             units: "°",
+            unitsFull: "C°",
         },
         windSpeed: {
             id: 3,
@@ -76,8 +79,19 @@ class IndicationsStore {
                 clear: "Чисто",
                 mudity: "Мутно",
             }
+        },
+        aqi: {
+            id: 8,
+            indicationName: "aqi",
+            name: "Качество воздуха",
+            color: "fill-success",
+            background: "bg-success/20",
+            icon: AirQuality,
+            units: "",
+            unitsFull: "Баллов",
         }
     }
+    excludedIndications = [this.indications.aqi]
 
     constructor() {
         makeAutoObservable(this)

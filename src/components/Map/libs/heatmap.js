@@ -7,6 +7,8 @@
  * @requires heatmap.component.dataConverter
  * @requires heatmap.component.TileUrlsGenerator
  */
+
+/* eslint-disable */
 export function yandexHeatmap(ymaps){
     ymaps.modules.define('Heatmap', [
         'option.Manager',
@@ -880,3 +882,4 @@ export function yandexHeatmap(ymaps){
         provide(Canvas);
     });
 }
+/* eslint-enable */

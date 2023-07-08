@@ -18,26 +18,23 @@ class MapStore {
             0.99999: '#a22419'
         }
     }
+    defaultAdditionalLayersOptions = {
+        fetchData: this.showHeatmap.bind(this),
+        data: null,
+        heatmapObject: null,
+        apiUrl: process.env.REACT_APP_AIR_TEMP_HEATMAP,
+        selected: false,
+        indicationData: IndicationsStore.indications.temperature,
+        isLoading: false,
+        options: this.defaultHeatmapOptions,
+        gradeRange: null
+    }
     additionalLayers = {
-        temperature: {
-            fetchData: this.showHeatmap.bind(this),
-            data: null,
-            heatmapObject: null,
-            apiUrl: process.env.REACT_APP_AIR_TEMP_HEATMAP,
-            selected: false,
-            indicationData: IndicationsStore.indications.temperature,
-            isLoading: false,
-            options: this.defaultHeatmapOptions,
-            gradeRange: null
-        },
+        temperature: this.defaultAdditionalLayersOptions,
         t_surf: {
-            fetchData: this.showHeatmap.bind(this),
-            data: null,
-            heatmapObject: null,
+            ...this.defaultAdditionalLayersOptions,
             apiUrl: process.env.REACT_APP_WATER_TEMP_HEATMAP,
-            selected: false,
             indicationData: IndicationsStore.indications.t_surf,
-            isLoading: false,
             options: {
                 ...this.defaultHeatmapOptions,
                 gradient: {
@@ -47,7 +44,11 @@ class MapStore {
                     0.99999: '#80ff00b3',
                 }
             },
-            gradeRange: null
+        },
+        aqi: {
+            ...this.defaultAdditionalLayersOptions,
+            apiUrl: process.env.REACT_APP_AIR_QUALITY_HEATMAP,
+            indicationData: IndicationsStore.indications.aqi,
         },
     }
     zoomIsBlocked = false

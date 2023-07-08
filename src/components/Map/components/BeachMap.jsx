@@ -8,7 +8,7 @@ import BeachPlacemarker from "../../BeachCard/components/BeachPlacemarker";
 const BeachMap = observer(() => {
     let navigate = useNavigate()
 
-    return SelectedClassInfoStore.filteredCards.map((beach, idx) => {
+    return SelectedClassInfoStore.filteredCards.map((beach) => {
         let polygonColor = beach.bathingComfortMapColors.polygon
 
         return (

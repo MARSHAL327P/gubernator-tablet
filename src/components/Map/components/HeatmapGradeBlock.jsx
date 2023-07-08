@@ -5,21 +5,7 @@ import cc from "classcat";
 const HeatmapGradeBlock = observer(() => {
     if (!MapStore.selectedAdditionalLayer?.gradeRange) return
 
-    let gradientClass = []
     let gradientValues = Object.values(MapStore.selectedAdditionalLayer.options.gradient)
-
-    gradientValues.forEach((item, idx) => {
-        switch (idx) {
-            case 0:
-                gradientClass.push(`from-[${item}]`)
-                break;
-            case gradientValues.length - 1:
-                gradientClass.push(`to-[${item}]`)
-                break;
-            default:
-                gradientClass.push(`via-[${item}]`)
-        }
-    })
 
     return (
         <div className={cc([MapStore.blurBackgroundClasses, "py-4"])}>
@@ -29,11 +15,20 @@ const HeatmapGradeBlock = observer(() => {
                         {MapStore.selectedAdditionalLayer.gradeRange.map((rangeValue, idx) => <div
                             key={idx}>{rangeValue}</div>)}
                     </div>
-                    <div className={cc(["h-2 w-[200px] rounded-full bg-gradient-to-r", ...gradientClass])}></div>
+                    <div
+                        className={cc(["h-2 min-w-[200px] rounded-full"])}
+                        style={{
+                            background: `linear-gradient(90deg, ${gradientValues.join(", ")})`
+                        }}
+                    >
+                    </div>
                 </div>
-                <div className={"font-bold"}>
-                    °C
-                </div>
+                {
+                    MapStore.selectedAdditionalLayer.indicationData.unitsFull &&
+                    <div className={"font-bold"}>
+                        {MapStore.selectedAdditionalLayer.indicationData.unitsFull}
+                    </div>
+                }
             </div>
         </div>
     )
