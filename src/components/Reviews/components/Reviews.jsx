@@ -10,11 +10,14 @@ import ReviewForm from "./ReviewForm";
 const Reviews = observer(() => {
     if (!SelectedClassInfoStore.currentClass?.card) return
     let [ReviewStore, setReviewStore] = useState(null)
+    let beachId = SelectedClassInfoStore.currentClass.card.id
 
     useEffect(() => {
-        setReviewStore(new ReviewsStore(SelectedClassInfoStore.currentClass.card.id))
-    }, [])
+        let ReviewStore = new ReviewsStore(beachId)
 
+        setReviewStore(ReviewStore)
+        SelectedClassInfoStore.currentClass.reviews = ReviewStore
+    }, [beachId])
 
     return (
         ReviewStore &&
@@ -23,7 +26,11 @@ const Reviews = observer(() => {
                 <Typography variant={"h4"}>
                     Оставить отзыв
                 </Typography>
-                <ReviewForm/>
+                {
+                    ReviewStore.successAdded ?
+                        <div className={"bg-primary p-5 text-center text-white rounded-xl shadow-lg"}>Отзыв успешно добавлен</div> :
+                        <ReviewForm beachId={beachId}/>
+                }
             </div>
             <div className={"flex flex-col gap-5 flex-[5]"}>
                 <Typography variant={"h4"}>
@@ -32,7 +39,7 @@ const Reviews = observer(() => {
                 {
                     ReviewStore.isLoading ?
                         <Loading text={"Загрузка отзывов"}/> :
-                        <ReviewList store={ReviewStore} />
+                        <ReviewList/>
                 }
             </div>
         </div>

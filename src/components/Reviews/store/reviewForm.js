@@ -1,6 +1,8 @@
 import MobxReactForm from "mobx-react-form";
 import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
+import ReviewsStore from "./reviews.store";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const plugins = {
     dvr: dvr(validatorjs)
@@ -12,41 +14,37 @@ const fields = [
         label: "Имя",
         placeholder: "Имя",
         rules: "required|string",
-        value: ""
     },
     {
         name: "email",
         label: "Email",
         placeholder: "Email",
-        rules: "required|email|string|between:5,25",
-        value: "",
+        rules: "required|email|string",
     },
     {
         name: "review",
         label: "Отзыв",
         placeholder: "Отзыв",
-        rules: "required|string",
-        value: "",
+        rules: "string",
     },
     {
-        name: "reviewRating",
+        name: "rating",
         label: "Рейтинг",
         placeholder: "Рейтинг",
         rules: "required",
-        value: "",
-        error: "Поле Рейтинг обязательно для заполнения"
     },
 ];
 
 const hooks = {
     onSuccess(form) {
-        console.log("Form Values!", form.values());
+        SelectedClassInfoStore.currentClass.reviews.sendRequest(form.values())
     },
     onError(form) {
-        console.log("All form errors", form.errors());
+        // console.log("All form errors", form.errors());
     }
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default new MobxReactForm(
     { fields },
     {

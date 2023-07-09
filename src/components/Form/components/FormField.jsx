@@ -1,20 +1,35 @@
 import {observer} from "mobx-react-lite";
 import {Input, Rating, Typography} from "@material-tailwind/react";
 import InfoBlock from "../../InfoBlock/components/InfoBlock";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const FormField = observer(({field, info = "", type = Input, isRating = false}) => {
     let Type = type
     const [rated, setRated] = useState(0)
+    const ratingGrade = ["Ужасно", "Плохо", "Нормально", "Хорошо", "Отлично"]
+
+    useEffect(() => {
+        field.validate()
+    }, [field, rated])
 
     return (
         <div>
             {
                 isRating ?
-                    <>
-                        <Rating value={rated} onChange={(value) => setRated(value)}/>
-                        <input {...field.bind()} type="hidden" value={rated}/>
-                    </> :
+                    <div className={"flex items-center gap-2"}>
+                        <Rating className={"rating"} value={rated} onChange={(value) => {
+                            setRated(value)
+                            field.set(value)
+                        }}
+                        />
+                        {
+                            rated > 0 &&
+                            <Typography variant={"paragraph"}>
+                                {ratingGrade[rated - 1]}
+                            </Typography>
+                        }
+                        <input {...field.bind()} type={"hidden"}/>
+                    </div> :
                     <Type {...field.bind()}/>
             }
             {info && <InfoBlock text={info}/>}

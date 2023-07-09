@@ -58,6 +58,8 @@ class MapStore {
     blurBackgroundClasses = "absolute bottom-24 z-10 right-5 bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
 
     zoomToItem(coord, zoom = 17) {
+        if( !this.mapRef.current ) return
+
         if (this.zoomIsBlocked)
             zoom = 13
 

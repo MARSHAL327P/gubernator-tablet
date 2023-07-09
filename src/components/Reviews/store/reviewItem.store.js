@@ -3,12 +3,14 @@ import axios from "axios";
 
 export class ReviewItemStore {
     id = 0
-    beachId = 0
-    rating = 0
-    name = "";
+    id_object = 0
+    mark = 0
+    name = ""
     email = ""
     review = ""
-    date = null
+    created_at = null
+    updated_at = null
+    ip = ""
 
     static get(beachId) {
         return axios.get(process.env.REACT_APP_REVIEWS + "/" + beachId)
