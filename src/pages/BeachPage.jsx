@@ -10,6 +10,7 @@ import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import BeachInfo from "../components/BeachCard/components/BeachInfo";
 import MapStore from "../components/Map/store/map.store";
+import Reviews from "../components/Reviews/components/Reviews";
 
 const BeachPage = observer(() => {
     const tabItems = [
@@ -21,7 +22,7 @@ const BeachPage = observer(() => {
         },
         {
             title: "Отзывы",
-            content: "Отзывы",
+            content: <Reviews/>,
             link: "reviews",
             getParam: true,
         },

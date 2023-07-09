@@ -11,11 +11,12 @@ class MapStore {
         dissipating: false,
         opacity: 0.5,
         intensityOfMidpoint: 0.3,
-        gradient: {
-            0.1: '#80ff00b3',
-            0.2: '#ffff00cc',
-            0.7: '#ea483ae6',
-            0.99999: '#a22419'
+        gradient:	{
+            0.1: 'rgba(49,173,70,1)',
+            0.3: 'rgba(196,201,61,1)',
+            0.5: 'rgba(222,151,46)',
+            0.7: 'rgba(206,90,35)',
+            0.99999: 'rgba(190,41,25)',
         }
     }
     defaultAdditionalLayersOptions = {
@@ -38,10 +39,11 @@ class MapStore {
             options: {
                 ...this.defaultHeatmapOptions,
                 gradient: {
-                    0.1: '#a22419',
-                    0.2: '#ea483ae6',
-                    0.7: '#ffff00cc',
-                    0.99999: '#80ff00b3',
+                    0.1: 'rgb(190,41,25)',
+                    0.3: 'rgb(206,90,35)',
+                    0.5: 'rgb(222,151,46)',
+                    0.7: 'rgba(196,201,61,1)',
+                    0.99999: 'rgba(49,173,70,1)',
                 }
             },
         },
