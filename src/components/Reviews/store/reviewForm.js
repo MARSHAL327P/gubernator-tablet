@@ -1,7 +1,6 @@
 import MobxReactForm from "mobx-react-form";
 import dvr from "mobx-react-form/lib/validators/DVR";
 import validatorjs from "validatorjs";
-import ReviewsStore from "./reviews.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const plugins = {

@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Map, RulerControl, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
+import {GeolocationControl, Map, RulerControl, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../store/map.store";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
@@ -76,6 +76,7 @@ const MapTemplate = observer(() => {
         >
             <RulerControl options={{float: "right"}}/>
             <ZoomControl options={{float: "right"}}/>
+            <GeolocationControl options={{float: "right"}}/>
             {SelectedClassInfoStore.currentClass?.mapLayer}
             {
                 !DashboardStore.isDashboard() &&

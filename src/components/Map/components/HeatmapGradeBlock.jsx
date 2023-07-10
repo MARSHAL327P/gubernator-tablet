@@ -11,7 +11,7 @@ const HeatmapGradeBlock = observer(() => {
         <div className={cc([MapStore.blurBackgroundClasses, "py-4"])}>
             <div className="flex gap-4">
                 <div className={"flex flex-col gap-1"}>
-                    <div className={"flex justify-between font-bold"}>
+                    <div className={"flex justify-between font-bold gap-3"}>
                         {MapStore.selectedAdditionalLayer.gradeRange.map((rangeValue, idx) => <div
                             key={idx}>{rangeValue}</div>)}
                     </div>

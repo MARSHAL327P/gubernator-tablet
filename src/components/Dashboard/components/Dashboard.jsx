@@ -13,6 +13,7 @@ import BathingComfortGradeBlock from "../../Map/components/BathingComfortGradeBl
 import LockScaleNotification from "../../Map/components/LockScaleNotification";
 import cc from "classcat";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
+import HeatmapGradeBlock from "../../Map/components/HeatmapGradeBlock";
 
 const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();
@@ -51,6 +52,7 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
                                 {DashboardStore.isOpen ? "Скрыть" : "Раскрыть"}
                             </Button>
                             <AdditionalLayerBtns/>
+                            <HeatmapGradeBlock/>
                             <LockScaleNotification classes={"!bottom-20"}/>
                             <BathingComfortGradeBlock/>
                         </div>

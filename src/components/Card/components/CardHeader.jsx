@@ -4,14 +4,17 @@ import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {getUpdateTimeText} from "../../../Utils";
 import cc from "classcat";
+import {Link} from "react-router-dom";
 
 const CardHeader = observer(({
-                                 updateTime, problems, name,
-                                 rating = 0,
+                                 card,
                                  size = "xs",
                                  classes = "px-7 pt-4"
                              }) => {
-    let cardProblems = BeachLocalStore.beachProblemsType[problems]
+    if( !card ) return
+
+    let cardProblems = card.beachProblems && BeachLocalStore.beachProblemsType[card.beachProblems]
+    let updateTime = card.updateTime || card.props_updated_at
 
     return (
         <div className={classes}>
@@ -27,7 +30,7 @@ const CardHeader = observer(({
             <div className="flex justify-between items-center">
                 <div className={"flex gap-2 items-center"}>
                     {
-                        problems &&
+                        card.beachProblems &&
                         <Tooltip content={cardProblems.name}>
                             {cardProblems.icon}
                         </Tooltip>
@@ -36,16 +39,20 @@ const CardHeader = observer(({
                         "text-black": true,
                         "text-title": size === "xs",
                         "text-xl font-bold": size === "md"
-                    })}>{name}</span>
+                    })}>{card.name}</span>
                 </div>
 
 
                 {
-                    rating > 0 &&
-                    <div className={"flex gap-1 items-center"}>
-                        <Star className={"fill-warning"}/>
-                        <span className={"h-[20px]"}>{rating}</span>
-                    </div>
+                    card.rating > 0 &&
+                    <Link to={`http://localhost:3000/beach/${card.code}?tab=reviews`}>
+                        <Tooltip content={"Отзывы"}>
+                            <div className={"flex gap-1 items-center"}>
+                                <Star className={"fill-warning"}/>
+                                <span className={"h-[20px]"}>{card.rating}</span>
+                            </div>
+                        </Tooltip>
+                    </Link>
                 }
 
             </div>

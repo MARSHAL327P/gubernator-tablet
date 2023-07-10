@@ -51,6 +51,17 @@ class MapStore {
             ...this.defaultAdditionalLayersOptions,
             apiUrl: process.env.REACT_APP_AIR_QUALITY_HEATMAP,
             indicationData: IndicationsStore.indications.aqi,
+            options: {
+                ...this.defaultHeatmapOptions,
+                gradient:	{
+                    0.1: '#36E166',
+                    0.3: '#E8EC20',
+                    0.5: '#ECBF20',
+                    0.7: '#DF2828',
+                    0.8: '#C936E1',
+                    0.99999: '#6236E1',
+                }
+            },
         },
     }
     zoomIsBlocked = false

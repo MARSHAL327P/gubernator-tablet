@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, observable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 import {ReviewItemStore} from "./reviewItem.store";
 import axios from "axios";
 
