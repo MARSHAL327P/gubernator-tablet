@@ -21,10 +21,9 @@ const BeachCard = observer(({card}) => {
 
     return (
         <>
-            <CardHeader updateTime={card.updateTime} rating={card.rating} name={card.name}
-                        problems={card.beachProblems}/>
+            <CardHeader card={card}/>
             <CarouselBeachCard imgs={card.img} cardId={card.id}/>
-            <BathingComfort bathingComfort={card.bathingComfort}/>
+            <BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
             <div className="px-7 py-5">
                 <Indications
                     data={card.indications}
@@ -33,6 +32,7 @@ const BeachCard = observer(({card}) => {
                         IndicationsStore.indications.temperature,
                         IndicationsStore.indications.windSpeed,
                         IndicationsStore.indications.Honf,
+                        IndicationsStore.indications.turbidity,
                     ]}
                     fixedValue={true}
                     classes={"justify-between"}
@@ -40,13 +40,17 @@ const BeachCard = observer(({card}) => {
                 />
                 <div className="flex justify-between gap-2 mt-5">
                     <Tooltip content={"На карте"}>
-                        <Button onClick={() => {MapStore.zoomToItem(card.coord)}} color={"white"}
+                        <Button onClick={() => {
+                            MapStore.zoomToItem(card.coord)
+                        }} color={"white"}
                                 className={styles.btn}>
                             <Map className={styles.btnIcon}/>
                         </Button>
                     </Tooltip>
-                    <Tooltip content={"Маршрут"}>
-                        <Button color={"white"} className={styles.btn}>
+                    <Tooltip content={"Маршрут (Строится в яндекс картах)"}>
+                        <Button className={styles.btn} color={"white"} onClick={() => {
+                            window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=44.617496%2C33.525926~${card.coord.join(",")}&rtt=auto&ruri=~`, "_blank");
+                        }}>
                             <Route className={styles.btnIcon}/>
                         </Button>
                     </Tooltip>
@@ -58,7 +62,7 @@ const BeachCard = observer(({card}) => {
                     </Link>
                 </div>
             </div>
-            <Comfort cardProps={card.props} />
+            <Comfort cardProps={card.props}/>
         </>
     )
 })

@@ -5,7 +5,6 @@ import {action} from "mobx";
 import cc from "classcat";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import Ripple from "../../RedefinedTags/Ripple/Ripple";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
     switch (inputParams.type) {
@@ -49,11 +48,6 @@ const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
                 onInput: action((e) => {
                     FilterStore.setFilterInputs(inputName, inputParams, e, filterGroupName)
                 }),
-                className: "focus:!border-t-blue-500 focus:!border-blue-500 ring-4 ring-transparent focus:ring-blue-500/20 " +
-                    "!border !border-blue-gray-50 bg-white shadow-lg shadow-blue-gray-900/5 placeholder:text-blue-gray-200 text-blue-gray-500",
-                labelProps: {
-                    className: "hidden"
-                },
                 containerProps: {className: "min-w-[100px]"}
             }
 

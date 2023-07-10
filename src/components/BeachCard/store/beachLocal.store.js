@@ -84,11 +84,11 @@ class BeachLocalStore {
             name: "Покрытие пляжа",
             ...FilterStore.filterTypes.checkbox
         },
-        workTime: {
-            name: "Режим работы",
-            ...FilterStore.filterTypes.checkbox,
-            variants: ["Круглосуточно", "Не круглосуточно"],
-        },
+        // workTime: {
+        //     name: "Режим работы",
+        //     ...FilterStore.filterTypes.checkbox,
+        //     variants: ["Круглосуточно", "Не круглосуточно"],
+        // },
         temperature: {
             name: "Температура воздуха",
             ...FilterStore.filterTypes.selectFromTo
@@ -121,27 +121,6 @@ class BeachLocalStore {
 
     get card(){
         return this.list && this.list.find((card) => card.code === this.code)
-    }
-
-    bathingComfortMapColors(beach){
-        let result = {
-            polygon: "#FCC33F",
-            marker: "fill-warning"
-        }
-
-        if( beach.bathingComfort.includes("HIGH_WAVE") ){
-            result = {
-                polygon: "#FF4C28",
-                marker: "fill-danger"
-            }
-        } else if( beach.bathingComfort.includes("GOOD") ){
-            result = {
-                polygon: "#87E827",
-                marker: "fill-success"
-            }
-        }
-
-        return result
     }
 
     fetchInfo(){

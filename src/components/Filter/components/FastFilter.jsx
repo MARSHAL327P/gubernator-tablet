@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FilterStore from "../store/filter.store";
-import {toJS, action} from "mobx";
+import {action} from "mobx";
 import {Checkbox, List, ListItem, ListItemPrefix, Typography} from "@material-tailwind/react";
 
 const FastFilter = observer(() => {

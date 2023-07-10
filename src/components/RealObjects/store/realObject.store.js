@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable} from "mobx";
+import {makeAutoObservable} from "mobx";
 import { RealObjectCardStore } from "./realObjectCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
@@ -45,6 +45,18 @@ class RealObjectStore {
                     name: "Средняя высота 10% наибольших волн (м)",
                     ...FilterStore.filterTypes.selectFromTo
                 },
+                t_surf: {
+                    name: "Температура поверхности моря",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                t_sub_surf: {
+                    name: "Температура моря на глубине 3 м",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                turbidity_mg: {
+                    name: "Мутность, мг/л",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
             }
         },
         METEO_STATION: {
@@ -61,6 +73,26 @@ class RealObjectStore {
                 },
                 windSpeed: {
                     name: "Скорость ветра",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                temperature: {
+                    name: "Температура воздуха",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                rainfall: {
+                    name: "Уровень осадков",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                uvIndex: {
+                    name: "УФ излучение",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                humidity: {
+                    name: "Скорость ветра",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                solarRadiation: {
+                    name: "Солнечная радиация",
                     ...FilterStore.filterTypes.selectFromTo
                 },
             }

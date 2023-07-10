@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable, toJS} from "mobx";
+import {makeAutoObservable} from "mobx";
 
 class AirQualityStore {
     totalRating = 0

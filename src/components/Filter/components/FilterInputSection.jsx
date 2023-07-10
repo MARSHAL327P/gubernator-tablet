@@ -7,7 +7,6 @@ import FilterStore from "../store/filter.store";
 import {FilterInputs} from "./FilterInputs";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import {action} from "mobx";
-import {useEffect} from "react";
 
 const FilterInputSection = observer((
     {
@@ -51,7 +50,7 @@ const FilterInputSection = observer((
                                     onClick={action(() => {
                                         inputParams.open = !inputParams.open
                                     })}
-                                    className={"border-b-0 p-3"}
+                                    className={"border-b-0 p-3 text-base"}
                                 >
                                     <div className="flex gap-2">
                                         {icons[inputName]}

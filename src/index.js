@@ -13,6 +13,13 @@ const defaultBtnParams = {
     active: "",
     shadow: "shadow-none",
 }
+const defaultInputStyles = {
+    className: "focus:!border-t-blue-500 focus:!border-blue-500 ring-4 ring-transparent focus:ring-blue-500/20 " +
+        "!border !border-blue-gray-50 bg-white shadow-lg shadow-blue-gray-900/5 placeholder:text-blue-gray-200 text-blue-gray-500",
+    labelProps: {
+        className: "hidden"
+    },
+}
 
 const defaultBtnStyles = {
     styles: {
@@ -49,6 +56,10 @@ const theme = {
                 },
             },
         },
+        defaultProps: defaultInputStyles
+    },
+    textarea: {
+        defaultProps: defaultInputStyles
     },
     button: defaultBtnStyles,
     iconButton: defaultBtnStyles,

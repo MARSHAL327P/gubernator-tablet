@@ -4,10 +4,9 @@ import BeachMarkerDescription from "./BeachMarkerDescription";
 import {ReactComponent as MarkerIcon} from "../../../assets/icons/Marker.svg";
 import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoint.svg";
 import MapStore from "../../Map/store/map.store";
-import BeachLocalStore from "../store/beachLocal.store";
 
 const BeachPlacemarker = observer(({beach}) => {
-    let markerColor = BeachLocalStore.bathingComfortMapColors(beach).marker
+    let markerColor = beach.bathingComfortMapColors.marker
 
     return (
         <div className={"relative inline-flex hover-marker"}>

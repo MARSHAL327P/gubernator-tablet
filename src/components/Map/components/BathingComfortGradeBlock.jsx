@@ -1,11 +1,11 @@
 import {observer} from "mobx-react-lite";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
-// import {ReactComponent as MarkerCircleIcon} from '../../../assets/icons/MarkerCircle.svg'
 import {ReactComponent as MarkerSmile} from '../../../assets/icons/MarkerSmile.svg'
 import {ReactComponent as MarkerNeutral} from '../../../assets/icons/MarkerNeutral.svg'
 import {ReactComponent as MarkerSad} from '../../../assets/icons/MarkerSad.svg'
 import cc from "classcat";
+import MapStore from "../store/map.store";
 
 const BathingComfortGradeBlock = observer(({classes}) => {
     const bathingComfortGrades = [
@@ -28,7 +28,8 @@ const BathingComfortGradeBlock = observer(({classes}) => {
 
     return (
         SelectedClassInfoStore.currentClass === BeachLocalStore &&
-        <div className={cc(["absolute bottom-24 z-10 right-5 bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white w-72", classes])}>
+        !MapStore.selectedAdditionalLayer &&
+        <div className={cc([MapStore.blurBackgroundClasses, classes])}>
             <div className={"text-xl font-bold mb-4"}>
                 Комфортность купания
             </div>

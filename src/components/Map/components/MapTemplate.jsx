@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Map, RulerControl, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
+import {GeolocationControl, Map, RulerControl, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../store/map.store";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
@@ -10,6 +10,7 @@ import AdditionalLayerBtns from "./AdditionalLayerBtns";
 import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
 import DashboardStore from "../../Dashboard/store/dashboard.store";
 import LockScaleNotification from "./LockScaleNotification";
+import HeatmapGradeBlock from "./HeatmapGradeBlock";
 
 
 const MapTemplate = observer(() => {
@@ -59,6 +60,7 @@ const MapTemplate = observer(() => {
 
     useEffect(() => {
         setMapHeight(height - (DashboardStore.isDashboard() && DashboardStore.isOpen ? 500 : 0))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height, window.location.pathname, DashboardStore.isOpen])
 
 
@@ -74,6 +76,7 @@ const MapTemplate = observer(() => {
         >
             <RulerControl options={{float: "right"}}/>
             <ZoomControl options={{float: "right"}}/>
+            <GeolocationControl options={{float: "right"}}/>
             {SelectedClassInfoStore.currentClass?.mapLayer}
             {
                 !DashboardStore.isDashboard() &&
@@ -81,6 +84,7 @@ const MapTemplate = observer(() => {
                     <AdditionalLayerBtns/>
                     <LockScaleNotification/>
                     <BathingComfortGradeBlock/>
+                    <HeatmapGradeBlock/>
                 </>
             }
 

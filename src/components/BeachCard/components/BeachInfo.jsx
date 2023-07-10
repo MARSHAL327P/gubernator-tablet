@@ -71,7 +71,7 @@ const BeachInfo = observer(() => {
                             Комфортность купания
                         </div>
                         <div className={"flex flex-col gap-4"}>
-                            <BathingComfort classes={"rounded-xl shadow-lg"} bathingComfort={card.bathingComfort}/>
+                            <BathingComfort rounded={true} bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
                             <div className={styles.bathingComfort}>
                                 <Indications
                                     data={card.indications}

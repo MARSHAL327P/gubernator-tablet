@@ -31,11 +31,9 @@ class SelectedClassInfoStore{
             .then(
                 action(data => {
                     currentClass.list = data ?? []
+                    currentClass.isLoading = false
                 })
             )
-            .finally(action(() => {
-                currentClass.isLoading = false
-            }));
     }
 
     constructor() {

@@ -37,6 +37,27 @@ export default class BeachCardStore {
             })
     }
 
+    get bathingComfortMapColors(){
+        let result = {
+            polygon: "#FCC33F",
+            marker: "fill-warning"
+        }
+
+        if( this.bathingComfort.includes("HIGH_WAVE") || !this.isOpen ){
+            result = {
+                polygon: "#FF4C28",
+                marker: "fill-danger"
+            }
+        } else if( this.bathingComfort.includes("GOOD") ){
+            result = {
+                polygon: "#87E827",
+                marker: "fill-success"
+            }
+        }
+
+        return result
+    }
+
     constructor(data) {
         makeAutoObservable(this);
 
