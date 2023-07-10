@@ -12,6 +12,7 @@ import IndicationsStore from "../../Indications/store/indications.store";
 import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
 import Comfort from "./Comfort";
+import BeachCardProps from "./BeachCardProps";
 
 const BeachCard = observer(({card}) => {
     const styles = {
@@ -24,7 +25,10 @@ const BeachCard = observer(({card}) => {
             <CardHeader card={card}/>
             <CarouselBeachCard imgs={card.img} cardId={card.id}/>
             <BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
-            <div className="px-7 py-5">
+            <div className="px-7 py-5 flex flex-col gap-4">
+                <div className={"flex gap-1"}>
+                    <BeachCardProps cardProps={card.props} />
+                </div>
                 <Indications
                     data={card.indications}
                     indications={[
@@ -38,7 +42,7 @@ const BeachCard = observer(({card}) => {
                     classes={"justify-between"}
                     oneLine={true}
                 />
-                <div className="flex justify-between gap-2 mt-5">
+                <div className="flex justify-between gap-2">
                     <Tooltip content={"На карте"}>
                         <Button onClick={() => {
                             MapStore.zoomToItem(card.coord)
@@ -62,7 +66,8 @@ const BeachCard = observer(({card}) => {
                     </Link>
                 </div>
             </div>
-            <Comfort cardProps={card.props}/>
+
+            {/*<Comfort cardProps={card.props}/>*/}
         </>
     )
 })

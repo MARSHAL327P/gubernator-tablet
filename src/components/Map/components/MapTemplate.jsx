@@ -6,11 +6,8 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import AdditionalLayerBtns from "./AdditionalLayerBtns";
-import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
 import DashboardStore from "../../Dashboard/store/dashboard.store";
-import LockScaleNotification from "./LockScaleNotification";
-import HeatmapGradeBlock from "./HeatmapGradeBlock";
+import MapControls from "./MapControls";
 
 
 const MapTemplate = observer(() => {
@@ -80,12 +77,7 @@ const MapTemplate = observer(() => {
             {SelectedClassInfoStore.currentClass?.mapLayer}
             {
                 !DashboardStore.isDashboard() &&
-                <>
-                    <AdditionalLayerBtns/>
-                    <LockScaleNotification/>
-                    <BathingComfortGradeBlock/>
-                    <HeatmapGradeBlock/>
-                </>
+                <MapControls/>
             }
 
         </Map>

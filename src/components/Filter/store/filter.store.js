@@ -82,6 +82,9 @@ class FilterStore {
                     SelectedClassInfoStore.currentClass.isLoading = false
                 })
             )
+            .catch((data) => {
+                console.log(data)
+            })
     }
 
     clearFilterInputs(filterInputs) {

@@ -52,7 +52,7 @@ const BeachInfo = observer(() => {
                         {card.description}
                     </div>
                     <div className="flex gap-1">
-                        <BeachCardProps cardProps={card.props}/>
+                        <BeachCardProps cardProps={card.props} classes={"bg-primary text-white"}/>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-7">
