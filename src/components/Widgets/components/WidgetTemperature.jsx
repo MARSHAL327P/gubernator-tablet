@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import cc from "classcat";
 
-const WidgetTemperature = observer(({color}) => {
+const WidgetTemperature = observer(({data, indication}) => {
     const tempParams = [
         {
             name: "Вчера было",
@@ -15,8 +15,8 @@ const WidgetTemperature = observer(({color}) => {
 
     return (
         <>
-            <div className={cc([color.text, "text-center font-bold text-6xl mb-3"])}>
-                {"18.5°"}
+            <div className={cc([indication.text, "text-center font-bold text-6xl mb-3"])}>
+                {data}{indication.units}
             </div>
             <div className={"flex"}>
                 {tempParams.map((item, idx) => {

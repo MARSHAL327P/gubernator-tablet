@@ -7,14 +7,15 @@ class MapStore {
     mapRef = null
     queryParam = null
     defaultHeatmapOptions = {
-        radius: 70,
-        dissipating: false,
-        opacity: 0.5,
-        intensityOfMidpoint: 0.3,
+        radius: 120,
+        dissipating: true,
+        opacity: 0.7,
+        intensityOfMidpoint: 0.01,
         gradient:	{
             0.1: 'rgba(49,173,70,1)',
-            0.3: 'rgba(196,201,61,1)',
-            0.5: 'rgba(222,151,46)',
+            0.15: 'rgba(196,201,61,1)',
+            0.3: 'rgba(222,151,46)',
+            0.5: 'rgb(222,140,46)',
             0.7: 'rgba(206,90,35)',
             0.99999: 'rgba(190,41,25)',
         }
@@ -105,7 +106,7 @@ class MapStore {
         }
 
         if (this.selectedAdditionalLayer) {
-            this.blockZoom()
+            // this.blockZoom()
         } else {
             this.unBlockZoom()
         }

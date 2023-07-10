@@ -42,11 +42,7 @@ const BeachPage = observer(() => {
         {
             title: "Виджеты",
             content: <WidgetTemplate
-                widgets={[
-                    WidgetTemplateStore.widgets.TEMPERATURE,
-                    WidgetTemplateStore.widgets.HUMIDITY,
-                    WidgetTemplateStore.widgets.PRESSURE,
-                ]}
+                data={SelectedClassInfoStore.currentClass?.card?.indications}
                 hasCharts={false}
             />,
             link: "widgets",

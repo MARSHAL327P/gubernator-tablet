@@ -3,7 +3,7 @@ import { useGauge } from "use-gauge";
 import { Fragment } from 'react'
 import cc from "classcat";
 
-const PressureIndicator = observer(({value, color}) => {
+const PressureIndicator = observer(({value, indication}) => {
     const gauge = useGauge({
         domain: [680, 780],
         startAngle: 50,
@@ -57,10 +57,12 @@ const PressureIndicator = observer(({value, color}) => {
                 </g>
             </svg>
             <div className={`absolute bottom-0 left-0 w-full text-center`}>
-                <div className={cc([color.text, "text-2xl font-bold"])}>
+                <div className={cc([indication.text, "text-2xl font-bold"])}>
                     {value}
                 </div>
-                <div>мм рт. ст</div>
+                <div>
+                    {indication.units.trim()}
+                </div>
             </div>
         </div>
     );
