@@ -16,14 +16,14 @@ const ReviewList = observer(() => {
                     {
                         reviews.reviewList.map(review => {
                             return (
-                                <div key={review.id} className={"flex flex-col gap-2 shadow-lg shadow-blue-gray-900/5 p-8 rounded-xl border border-blue-gray-50"}>
+                                <div key={review.id} className={"flex flex-col gap-2 bg-white shadow-lg shadow-blue-gray-900/5 p-8 rounded-xl border border-blue-gray-50"}>
                                     <div>
                                         {review.name}
                                     </div>
                                     <div className={"text-xs text-gray-500"}>
                                         {getUpdateTimeText(review.created_at)}
                                     </div>
-                                    <Rating value={review.mark} readonly />
+                                    <Rating value={review.rating} readonly />
                                     <p>
                                         {review.review}
                                     </p>

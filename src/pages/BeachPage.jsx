@@ -11,6 +11,7 @@ import {runInAction} from "mobx";
 import BeachInfo from "../components/BeachCard/components/BeachInfo";
 import MapStore from "../components/Map/store/map.store";
 import Reviews from "../components/Reviews/components/Reviews";
+import WaterQuality from "../components/WaterQuality/components/WaterQuality";
 
 const BeachPage = observer(() => {
     const tabItems = [
@@ -30,6 +31,12 @@ const BeachPage = observer(() => {
             title: "Качество воздуха",
             content: <AirQuality />,
             link: "aqi",
+            getParam: true,
+        },
+        {
+            title: "Качество воды",
+            content: <WaterQuality />,
+            link: "wqi",
             getParam: true,
         },
         {
