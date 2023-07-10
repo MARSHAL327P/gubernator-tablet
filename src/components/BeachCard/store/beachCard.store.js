@@ -30,6 +30,10 @@ export default class BeachCardStore {
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 return data.map(item => {
+                    item.indications.solarRadiation = {
+                        "todayMax": 120,
+                        "value": 70
+                    }
                     item.airQuality = new AirQualityStore(item.airQuality)
 
                     return new BeachCardStore(item)
@@ -37,18 +41,18 @@ export default class BeachCardStore {
             })
     }
 
-    get bathingComfortMapColors(){
+    get bathingComfortMapColors() {
         let result = {
             polygon: "#FCC33F",
             marker: "fill-warning"
         }
 
-        if( this.bathingComfort.includes("HIGH_WAVE") || !this.isOpen ){
+        if (this.bathingComfort.includes("HIGH_WAVE") || !this.isOpen) {
             result = {
                 polygon: "#FF4C28",
                 marker: "fill-danger"
             }
-        } else if( this.bathingComfort.includes("GOOD") ){
+        } else if (this.bathingComfort.includes("GOOD")) {
             result = {
                 polygon: "#87E827",
                 marker: "fill-success"

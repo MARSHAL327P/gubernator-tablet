@@ -28,11 +28,13 @@ const WidgetTemplate = observer((
     return (
         <div className={"flex gap-10"}>
             {indications.map(indication => {
-                let hasIndications = data[indication.indicationName] !== undefined && data[indication.indicationName] !== null
+                let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
                 let Icon = indication.icon
                 let Widget = indication.widget
+                console.log(indication.indicationName)
+                console.log(indicationValue)
 
-                return hasIndications && Widget && (
+                return indicationValue && Widget && (
                     <div
                         className="min-w-[380px] h-[380px] p-6 shadow-lg rounded-xl bg-white flex flex-col justify-between"
                         key={indication.id}
@@ -57,7 +59,7 @@ const WidgetTemplate = observer((
                             </div>
                         </div>
                         <div className={"self-center"}>
-                            <Widget data={data[indication.indicationName]} indication={indication}/>
+                            <Widget data={indicationValue} indication={indication}/>
                         </div>
                         <div></div>
                     </div>

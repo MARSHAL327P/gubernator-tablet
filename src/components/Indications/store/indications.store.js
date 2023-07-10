@@ -11,6 +11,7 @@ import {ReactComponent as Sun} from "../../../assets/icons/Sun.svg";
 import WidgetTemperature from "../../Widgets/components/WidgetTemperature";
 import WidgetHumidity from "../../Widgets/components/WidgetHumidity";
 import WidgetPressure from "../../Widgets/components/WidgetPressure";
+import WidgetSolarRadiation from "../../Widgets/components/WidgetSolarRadiation";
 
 class IndicationsStore {
     defaultIndications = {
@@ -91,6 +92,7 @@ class IndicationsStore {
             text: "text-warning",
             icon: Sun,
             units: " Вт/м2",
+            widget: WidgetSolarRadiation
         }
     }
 
