@@ -7,7 +7,7 @@ const Search = observer(() => {
     return (
         <div className={"relative w-full"}>
             <input className={"text-gray-500 transition bg-gray-200 rounded-xl py-3 px-5 flex " +
-                "justify-between w-full"}
+                "justify-between w-full focus:bg-white focus:shadow-lg outline-none"}
                    type="text"
                    placeholder={"Поиск..."}
                    value={sidebarStore.searchQuery}

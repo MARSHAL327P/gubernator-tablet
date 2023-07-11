@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import BaseWidgetTemplate from "./BaseWidgetTemplate";
 import parse from "html-react-parser";
 
-const WidgetSolarRadiation = observer(({ data, indication }) => {
+const SolarRadiationWidget = observer(({ data, indication }) => {
     const params = [
         {
             name: "Сегодняшний пик",
@@ -13,4 +13,4 @@ const WidgetSolarRadiation = observer(({ data, indication }) => {
     return <BaseWidgetTemplate data={data.value} indication={indication} params={params}/>
 })
 
-export default WidgetSolarRadiation
+export default SolarRadiationWidget

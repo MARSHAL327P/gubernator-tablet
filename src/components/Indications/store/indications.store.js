@@ -9,10 +9,10 @@ import {ReactComponent as Blob} from "../../../assets/icons/Blob.svg";
 import {ReactComponent as AirQuality} from "../../../assets/icons/AirQuality.svg";
 import {ReactComponent as Sun} from "../../../assets/icons/Sun.svg";
 import {ReactComponent as Excitement} from "../../../assets/icons/Excitement.svg";
-import WidgetTemperature from "../../Widgets/components/WidgetTemperature";
-import WidgetHumidity from "../../Widgets/components/WidgetHumidity";
-import WidgetPressure from "../../Widgets/components/WidgetPressure";
-import WidgetSolarRadiation from "../../Widgets/components/WidgetSolarRadiation";
+import TemperatureWidget from "../../Widgets/components/TemperatureWidget";
+import HumidityWidget from "../../Widgets/components/HumidityWidget";
+import PressureWidget from "../../Widgets/components/PressureWidget";
+import SolarRadiationWidget from "../../Widgets/components/SolarRadiationWidget";
 import parse from 'html-react-parser';
 import WindWidget from "../../Widgets/components/WindWidget";
 
@@ -44,7 +44,7 @@ class IndicationsStore {
             icon: Temperature,
             units: "°",
             unitsFull: "C°",
-            widget: WidgetTemperature
+            widget: TemperatureWidget
         },
         wind: {
             name: "Ветер",
@@ -63,7 +63,7 @@ class IndicationsStore {
             text: "text-info",
             icon: Humidity,
             units: "%",
-            widget: WidgetHumidity
+            widget: HumidityWidget
         },
         pressure: {
             name: "Давление",
@@ -72,7 +72,7 @@ class IndicationsStore {
             text: "text-success",
             icon: Pressure,
             units: " мм.рт.ст",
-            widget: WidgetPressure
+            widget: PressureWidget
         },
         Honf: {
             name: "Средняя высота 10% наибольших волн (м)",
@@ -108,7 +108,7 @@ class IndicationsStore {
             text: "text-warning",
             icon: Sun,
             units: parse(" Вт/м<sup>2</sup>"),
-            widget: WidgetSolarRadiation
+            widget: SolarRadiationWidget
         },
         excitement: {
             name: "Волнение моря",
