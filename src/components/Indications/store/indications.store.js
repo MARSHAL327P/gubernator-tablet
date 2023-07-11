@@ -15,6 +15,8 @@ import PressureWidget from "../../Widgets/components/PressureWidget";
 import SolarRadiationWidget from "../../Widgets/components/SolarRadiationWidget";
 import parse from 'html-react-parser';
 import WindWidget from "../../Widgets/components/WindWidget";
+import TempSurfWidget from "../../Widgets/components/TempSurfWidget";
+import HonfWidget from "../../Widgets/components/HonfWidget";
 
 class IndicationsStore {
     windAngleNames = [
@@ -32,9 +34,11 @@ class IndicationsStore {
             name: "Температура воды",
             color: "fill-primary",
             background: "bg-primary/20",
+            text: "text-primary",
             icon: Water,
             units: "°",
             unitsFull: "C°",
+            widget: TempSurfWidget
         },
         temperature: {
             name: "Температура воздуха",
@@ -78,8 +82,10 @@ class IndicationsStore {
             name: "Средняя высота 10% наибольших волн (м)",
             color: "fill-primary",
             background: "bg-primary/20",
+            text: "text-primary",
             icon: Wave,
             units: " м",
+            widget: HonfWidget
         },
         turbidity: {
             name: "Мутность",

@@ -3,6 +3,7 @@ import {ReactComponent as Chart} from "../../../assets/icons/Chart.svg";
 import {ReactComponent as Share} from "../../../assets/icons/Share.svg";
 import {Button, Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../../Indications/store/indications.store";
+import cc from "classcat";
 
 const WidgetTemplate = observer((
     {
@@ -33,12 +34,12 @@ const WidgetTemplate = observer((
 
                 return indicationValue && Widget && (
                     <div
-                        className="min-w-[380px] h-[380px] p-6 shadow-lg rounded-xl bg-white grid content-between"
+                        className="w-[380px] h-[380px] p-6 shadow-lg rounded-xl bg-white grid content-between"
                         key={indication.id}
                     >
-                        <div className={"flex justify-between"}>
+                        <div className={"flex gap-2 justify-between"}>
                             <div className={"flex gap-2 items-center"}>
-                                <Icon className={indication.color}/>
+                                <Icon className={cc([indication.color, "w-8 h-8"])}/>
                                 <span>{indication.name}</span>
                             </div>
                             <div className={"flex gap-2"}>

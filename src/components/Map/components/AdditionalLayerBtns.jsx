@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Button, Spinner} from "@material-tailwind/react";
+import {Button, Spinner, Tooltip} from "@material-tailwind/react";
 import cc from "classcat";
 import MapStore from "../store/map.store";
 
@@ -15,30 +15,26 @@ const AdditionalLayerBtns = observer(() => {
                     let isSelected = MapStore.additionalLayers[indication.indicationName].selected
 
                     return (
-                        <Button
-                            key={indication.id}
-                            color={isSelected ? "blue" : "white"}
-                            variant={"filled"}
-                            className={
-                                cc({
-                                    "outline-none whitespace-nowrap": true,
-                                })
-                            }
-                            onClick={() => {
-                                MapStore.selectAdditionalLayer(indication.indicationName)
-                            }}
-                        >
-                            {
-                                additionalLayer.isLoading ?
-                                    <Spinner className={"spinner_white"}/> :
-                                    <Icon className={cc({
-                                        "fill-black": !isSelected,
-                                        "fill-white": isSelected,
-                                    })}/>
-                            }
+                        <Tooltip key={indication.id} content={indication.name}>
+                            <Button
+                                color={isSelected ? "blue" : "white"}
+                                variant={"filled"}
+                                className={"outline-none whitespace-nowrap w-14 h-14 p-4"}
+                                onClick={() => {
+                                    MapStore.selectAdditionalLayer(indication.indicationName)
+                                }}
+                            >
+                                {
+                                    additionalLayer.isLoading ?
+                                        <Spinner className={"spinner_white"}/> :
+                                        <Icon className={cc({
+                                            "fill-black": !isSelected,
+                                            "fill-white": isSelected,
+                                        })}/>
+                                }
+                            </Button>
+                        </Tooltip>
 
-                            {indication.name}
-                        </Button>
                     )
                 })
             }
