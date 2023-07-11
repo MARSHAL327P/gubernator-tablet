@@ -10,9 +10,6 @@ export default class BeachCardStore {
     rating = 0
     bathingComfort = ""
     beachProblems = ""
-    // t_surf = 0
-    // temperature = 0
-    // windSpeed = 0
     coord = [0, 0]
     beachType = ""
     beachCoverage = ""
@@ -34,6 +31,14 @@ export default class BeachCardStore {
                         "todayMax": 120,
                         "value": 70
                     }
+                    item.indications.wind = {
+                        "direction": 276,
+                        "todayMax": 5.7,
+                        "value": 2.4 // скорость ветра
+                    }
+
+                    delete item.indications.windSpeed
+
                     item.airQuality = new AirQualityStore(item.airQuality)
 
                     return new BeachCardStore(item)

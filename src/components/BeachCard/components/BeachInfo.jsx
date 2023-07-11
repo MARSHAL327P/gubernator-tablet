@@ -7,6 +7,7 @@ import {Fancybox} from "@fancyapps/ui";
 import MasonryGallery from "../../MasonryGallery/components/MasonryGallery";
 import BathingComfort from "./BathingComfort";
 import IndicationsStore from "../../Indications/store/indications.store";
+import parse from "html-react-parser";
 
 const BeachInfo = observer(() => {
     let card = SelectedClassInfoStore.currentClass.card
@@ -33,11 +34,25 @@ const BeachInfo = observer(() => {
             text: "теплая"
         }
     ]
-
     let temperatureText =
         temperatureTextValues
             .find((item) => item.lessThan > card.indications.t_surf)
             .text
+
+    let bathingComfortIndications = [
+        {
+            indication: IndicationsStore.indications.Honf,
+            text: parse(`Средняя высота 10% значительных волн <span class="font-bold">${card.indications.Honf} м.</span>`)
+        },
+        {
+            indication: IndicationsStore.indications.t_surf,
+            text: parse(`Вода <span class="font-bold">${temperatureText}</span>`)
+        },
+        {
+            indication: IndicationsStore.indications.turbidity,
+            text: parse(`Мутность воды: <span class='font-bold'>${IndicationsStore.indications.turbidity.alias[card.indications.turbidity]}</span>`)
+        }
+    ]
 
     Fancybox.bind("[data-fancybox]");
 
@@ -72,25 +87,21 @@ const BeachInfo = observer(() => {
                         </div>
                         <div className={"flex flex-col gap-4"}>
                             <BathingComfort rounded={true} bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
-                            <div className={styles.bathingComfort}>
-                                <Indications
-                                    data={card.indications}
-                                    indications={[IndicationsStore.indications.Honf]}
-                                />
-                                <span>
-                                    Средняя высота 10% значительных волн <span className={"font-bold"}>{card.indications.Honf} м.</span>
-                                </span>
-                            </div>
-                            <div className={styles.bathingComfort}>
-                                <Indications
-                                    data={card.indications}
-                                    indications={[IndicationsStore.indications.t_surf]}
-                                />
-                                <span>
-                                    Вода <span className={"font-bold"}>{temperatureText}</span>
-                                </span>
-
-                            </div>
+                            {
+                                bathingComfortIndications.map(item => {
+                                    return (
+                                        <div className={styles.bathingComfort}>
+                                            <Indications
+                                                data={card.indications}
+                                                indications={[item.indication]}
+                                            />
+                                            <div>
+                                                {item.text}
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </div>

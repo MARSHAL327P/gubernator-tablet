@@ -45,7 +45,7 @@ const CardHeader = observer(({
 
                 {
                     card.rating > 0 &&
-                    <Link to={`http://localhost:3000/beach/${card.code}?tab=reviews`}>
+                    <Link to={`/beach/${card.code}?tab=reviews`}>
                         <Tooltip content={"Отзывы"}>
                             <div className={"flex gap-1 items-center"}>
                                 <Star className={"fill-warning"}/>

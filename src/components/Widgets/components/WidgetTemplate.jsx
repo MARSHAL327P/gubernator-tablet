@@ -26,13 +26,11 @@ const WidgetTemplate = observer((
         })
 
     return (
-        <div className={"flex gap-10"}>
+        <div className={"flex gap-10 mx-auto w-fit"}>
             {indications.map(indication => {
                 let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
                 let Icon = indication.icon
                 let Widget = indication.widget
-                console.log(indication.indicationName)
-                console.log(indicationValue)
 
                 return indicationValue && Widget && (
                     <div

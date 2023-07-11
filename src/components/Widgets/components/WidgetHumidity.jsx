@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import cc from "classcat";
 import BaseWidgetTemplate from "./BaseWidgetTemplate";
 
 const WidgetHumidity = observer(({ data, indication }) => {

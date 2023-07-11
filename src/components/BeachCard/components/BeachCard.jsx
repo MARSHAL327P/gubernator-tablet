@@ -11,7 +11,6 @@ import Indications from "../../Indications/components/Indications";
 import IndicationsStore from "../../Indications/store/indications.store";
 import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
-import Comfort from "./Comfort";
 import BeachCardProps from "./BeachCardProps";
 
 const BeachCard = observer(({card}) => {
@@ -31,13 +30,6 @@ const BeachCard = observer(({card}) => {
                 </div>
                 <Indications
                     data={card.indications}
-                    indications={[
-                        IndicationsStore.indications.t_surf,
-                        IndicationsStore.indications.temperature,
-                        IndicationsStore.indications.windSpeed,
-                        IndicationsStore.indications.Honf,
-                        IndicationsStore.indications.turbidity,
-                    ]}
                     fixedValue={true}
                     classes={"justify-between"}
                     oneLine={true}

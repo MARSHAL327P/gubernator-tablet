@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import Dashboard from "../components/Dashboard/components/Dashboard";
 import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
-import WidgetTemplateStore from "../components/Widgets/store/widget.store";
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";

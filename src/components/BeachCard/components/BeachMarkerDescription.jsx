@@ -29,7 +29,7 @@ const BeachMarkerDescription = observer(({beach}) => {
                     indications={[
                         IndicationsStore.indications.t_surf,
                         IndicationsStore.indications.temperature,
-                        IndicationsStore.indications.windSpeed,
+                        IndicationsStore.indications.wind,
                         IndicationsStore.indications.Honf,
                         IndicationsStore.indications.turbidity,
                     ]}

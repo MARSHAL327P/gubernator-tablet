@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
-import cc from "classcat";
 import BaseWidgetTemplate from "./BaseWidgetTemplate";
 
 const WidgetSolarRadiation = observer(({ data, indication }) => {
+    console.log(indication.units)
     const params = [
         {
             name: "Сегодняшний пик",

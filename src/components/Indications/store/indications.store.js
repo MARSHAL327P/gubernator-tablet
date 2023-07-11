@@ -12,8 +12,27 @@ import WidgetTemperature from "../../Widgets/components/WidgetTemperature";
 import WidgetHumidity from "../../Widgets/components/WidgetHumidity";
 import WidgetPressure from "../../Widgets/components/WidgetPressure";
 import WidgetSolarRadiation from "../../Widgets/components/WidgetSolarRadiation";
+import parse from 'html-react-parser';
 
 class IndicationsStore {
+    windAngleNames = [
+        "C",
+        "ССВ",
+        "СВ",
+        "ВСВ",
+        "В",
+        "ВЮВ",
+        "ЮВ",
+        "ЮЮВ",
+        "Ю",
+        "ЮЮЗ",
+        "ЮЗ",
+        "ЗЮЗ",
+        "З",
+        "ЗСЗ",
+        "СЗ",
+        "ССЗ",
+    ];
     defaultIndications = {
         t_surf: {
             name: "Температура воды",
@@ -33,8 +52,8 @@ class IndicationsStore {
             unitsFull: "C°",
             widget: WidgetTemperature
         },
-        windSpeed: {
-            name: "Скорость ветра",
+        wind: {
+            name: "Ветер",
             color: "fill-danger",
             background: "bg-danger/20",
             icon: Wind,
@@ -91,7 +110,7 @@ class IndicationsStore {
             background: "bg-warning/20",
             text: "text-warning",
             icon: Sun,
-            units: " Вт/м2",
+            units: parse(" Вт/м<sup>2</sup>"),
             widget: WidgetSolarRadiation
         }
     }
@@ -108,6 +127,14 @@ class IndicationsStore {
         })
 
         return indications
+    }
+
+    getWindDirectionName(angle) {
+        if (angle < 0) angle = 360 - (Math.abs(angle) % 360);
+        else angle = angle % 360;
+
+        let w = parseInt(angle / 22.5);
+        return this.windAngleNames[w];
     }
 
     constructor() {
