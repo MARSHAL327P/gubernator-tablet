@@ -45,7 +45,7 @@ const BeachCard = observer(({card}) => {
                     </Tooltip>
                     <Tooltip content={"Маршрут (Строится в яндекс картах)"}>
                         <Button className={styles.btn} color={"white"} onClick={() => {
-                            window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=44.617496%2C33.525926~${card.coord.join(",")}&rtt=auto&ruri=~`, "_blank");
+                            MapStore.generateRoute(card.coord)
                         }}>
                             <Route className={styles.btnIcon}/>
                         </Button>

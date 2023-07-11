@@ -11,7 +11,7 @@ class MapStore {
         dissipating: true,
         opacity: 0.7,
         intensityOfMidpoint: 0.01,
-        gradient:	{
+        gradient: {
             0.1: 'rgba(49,173,70,1)',
             0.15: 'rgba(196,201,61,1)',
             0.3: 'rgba(222,151,46)',
@@ -54,7 +54,7 @@ class MapStore {
             indicationData: IndicationsStore.indications.aqi,
             options: {
                 ...this.defaultHeatmapOptions,
-                gradient:	{
+                gradient: {
                     0.1: '#36E166',
                     0.3: '#E8EC20',
                     0.5: '#ECBF20',
@@ -86,7 +86,7 @@ class MapStore {
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
 
     zoomToItem(coord, zoom = 17) {
-        if( !this.mapRef.current ) return
+        if (!this.mapRef.current) return
 
         if (this.zoomIsBlocked)
             zoom = 13
@@ -167,6 +167,39 @@ class MapStore {
     unBlockZoom() {
         this.mapRef.current.behaviors.enable("scrollZoom")
         this.zoomIsBlocked = false
+    }
+
+    saveGeoLocation(coords) {
+        if (!this.ymaps || !this.mapRef.current || this.isSameLocation(coords) ) return
+
+        localStorage.setItem("location", coords)
+        this.setGeoLocationMarker(coords)
+    }
+
+    get geoLocation() {
+        return localStorage.getItem("location") &&
+            localStorage
+                .getItem("location")
+                .split(",")
+                .map(item => parseFloat(item))
+    }
+
+    setGeoLocationMarker(coords){
+        this.mapRef.current.geoObjects.add(new this.ymaps.Placemark(coords, {},
+            {
+                preset: 'islands#blueCircleDotIconWithCaption',
+                iconCaptionMaxWidth: '50'
+            }));
+    }
+
+    isSameLocation(coords){
+        return this.geoLocation && this.geoLocation[0] === coords[0] && this.geoLocation[1] === coords[1]
+    }
+
+    generateRoute(coordTo){
+        let geoLocation = (this.geoLocation && this.geoLocation.join(",")) || ""
+
+        window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.join(",")}&rtt=auto&ruri=~`, "_blank");
     }
 
     constructor() {
