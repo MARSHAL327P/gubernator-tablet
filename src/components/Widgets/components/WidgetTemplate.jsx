@@ -1,7 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {ReactComponent as Chart} from "../../../assets/icons/Chart.svg";
 import {ReactComponent as Share} from "../../../assets/icons/Share.svg";
-// import Button from "../../RedefinedTags/Button/Button";
 import {Button, Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../../Indications/store/indications.store";
 
@@ -26,7 +25,7 @@ const WidgetTemplate = observer((
         })
 
     return (
-        <div className={"flex gap-10 mx-auto w-fit"}>
+        <div className={"flex gap-10 mx-auto w-fit flex-wrap"}>
             {indications.map(indication => {
                 let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
                 let Icon = indication.icon
@@ -34,7 +33,7 @@ const WidgetTemplate = observer((
 
                 return indicationValue && Widget && (
                     <div
-                        className="min-w-[380px] h-[380px] p-6 shadow-lg rounded-xl bg-white flex flex-col justify-between"
+                        className="min-w-[380px] h-[380px] p-6 shadow-lg rounded-xl bg-white grid content-between"
                         key={indication.id}
                     >
                         <div className={"flex justify-between"}>
@@ -56,10 +55,7 @@ const WidgetTemplate = observer((
                                 })}
                             </div>
                         </div>
-                        <div className={"self-center"}>
-                            <Widget data={indicationValue} indication={indication}/>
-                        </div>
-                        <div></div>
+                        <Widget data={data[indication.indicationName]} indication={indication}/>
                     </div>
                 )
             })}

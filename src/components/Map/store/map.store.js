@@ -64,6 +64,22 @@ class MapStore {
                 }
             },
         },
+        excitement: {
+            ...this.defaultAdditionalLayersOptions,
+            apiUrl: process.env.REACT_APP_EXCITEMENT_HEATMAP,
+            indicationData: IndicationsStore.indications.excitement,
+            options: {
+                ...this.defaultHeatmapOptions,
+                // gradient:	{
+                //     0.1: '#36E166',
+                //     0.3: '#E8EC20',
+                //     0.5: '#ECBF20',
+                //     0.7: '#DF2828',
+                //     0.8: '#C936E1',
+                //     0.99999: '#6236E1',
+                // }
+            },
+        },
     }
     zoomIsBlocked = false
     markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"

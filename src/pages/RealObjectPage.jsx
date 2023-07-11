@@ -13,13 +13,7 @@ const RealObjectPage = observer(() => {
     const tabItems = [
         {
             title: "Виджеты",
-            content: <WidgetTemplate
-                widgets={[
-                    WidgetTemplateStore.widgets.TEMPERATURE,
-                    WidgetTemplateStore.widgets.HUMIDITY,
-                    WidgetTemplateStore.widgets.PRESSURE,
-                ]}
-            />,
+            content: <WidgetTemplate data={SelectedClassInfoStore.currentClass?.card?.props} />,
             link: "widgets",
             getParam: true,
         },

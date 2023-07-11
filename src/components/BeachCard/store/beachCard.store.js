@@ -23,6 +23,10 @@ export default class BeachCardStore {
     description = ""
     indications = {}
 
+    static getRandomFloat(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
     static get() {
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
@@ -32,7 +36,7 @@ export default class BeachCardStore {
                         "value": 70
                     }
                     item.indications.wind = {
-                        "direction": 276,
+                        "direction": this.getRandomFloat(0, 360),
                         "todayMax": 5.7,
                         "value": 2.4 // скорость ветра
                     }

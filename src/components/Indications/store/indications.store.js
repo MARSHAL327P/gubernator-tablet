@@ -8,30 +8,24 @@ import {ReactComponent as Wave} from "../../../assets/icons/Wave.svg";
 import {ReactComponent as Blob} from "../../../assets/icons/Blob.svg";
 import {ReactComponent as AirQuality} from "../../../assets/icons/AirQuality.svg";
 import {ReactComponent as Sun} from "../../../assets/icons/Sun.svg";
+import {ReactComponent as Excitement} from "../../../assets/icons/Excitement.svg";
 import WidgetTemperature from "../../Widgets/components/WidgetTemperature";
 import WidgetHumidity from "../../Widgets/components/WidgetHumidity";
 import WidgetPressure from "../../Widgets/components/WidgetPressure";
 import WidgetSolarRadiation from "../../Widgets/components/WidgetSolarRadiation";
 import parse from 'html-react-parser';
+import WindWidget from "../../Widgets/components/WindWidget";
 
 class IndicationsStore {
     windAngleNames = [
-        "C",
-        "ССВ",
-        "СВ",
-        "ВСВ",
-        "В",
-        "ВЮВ",
-        "ЮВ",
-        "ЮЮВ",
-        "Ю",
-        "ЮЮЗ",
-        "ЮЗ",
-        "ЗЮЗ",
-        "З",
-        "ЗСЗ",
-        "СЗ",
-        "ССЗ",
+        "Cеверный",
+        "Северо-Восточный",
+        "Восточный",
+        "Юго-Восточный",
+        "Южный",
+        "Юго-Западный",
+        "Западный",
+        "Северо-Западный",
     ];
     defaultIndications = {
         t_surf: {
@@ -56,8 +50,11 @@ class IndicationsStore {
             name: "Ветер",
             color: "fill-danger",
             background: "bg-danger/20",
+            text: "text-danger",
+            stroke: "stroke-danger",
             icon: Wind,
             units: " м/с",
+            widget: WindWidget
         },
         humidity: {
             name: "Влажность",
@@ -112,6 +109,14 @@ class IndicationsStore {
             icon: Sun,
             units: parse(" Вт/м<sup>2</sup>"),
             widget: WidgetSolarRadiation
+        },
+        excitement: {
+            name: "Волнение моря",
+            color: "fill-info",
+            background: "bg-info/20",
+            icon: Excitement,
+            units: "",
+            unitsFull: "Волна (м)",
         }
     }
 
@@ -133,7 +138,7 @@ class IndicationsStore {
         if (angle < 0) angle = 360 - (Math.abs(angle) % 360);
         else angle = angle % 360;
 
-        let w = parseInt(angle / 22.5);
+        let w = parseInt(angle / 45);
         return this.windAngleNames[w];
     }
 

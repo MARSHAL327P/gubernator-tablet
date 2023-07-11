@@ -25,12 +25,12 @@ const Indications = observer((
         }])}
              ref={headerEl}
              onMouseEnter={() => {
-                 if( oneLine )
-                    headerEl.current.style.height = bodyEl.current.offsetHeight + "px"
+                 if (oneLine)
+                     headerEl.current.style.height = bodyEl.current.offsetHeight + "px"
              }}
              onMouseLeave={() => {
-                 if( oneLine )
-                    headerEl.current.style.height = "50px"
+                 if (oneLine)
+                     headerEl.current.style.height = "50px"
              }}
         >
             <div
@@ -38,7 +38,7 @@ const Indications = observer((
                 className={cc(["flex flex-wrap  gap-2 items-center"])}>
                 {
                     indications.map((indication) => {
-                        if( !indication ) return false
+                        if (!indication) return false
 
                         let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
                         let Icon = indication.icon
@@ -51,7 +51,7 @@ const Indications = observer((
                             ...tooltipProps
                         }
 
-                        if( indication.alias )
+                        if (indication.alias)
                             indicationValue = indication.alias[indicationValue]
 
                         return (
@@ -62,9 +62,13 @@ const Indications = observer((
                                     indication.background
                                 ])}>
                                     <Icon className={indication.color}/>
-                                    <span>{fixedValue && indication.type !== "string" ?
-                                        indicationValue.toFixed(1) :
-                                        indicationValue}{indication.units}</span>
+                                    <span>
+                                        {
+                                            fixedValue && indication.type !== "string" ?
+                                                indicationValue.toFixed(1) :
+                                                indicationValue
+                                        }{indication.units}
+                                    </span>
                                 </div>
                             </TooltipComponent>
                         )

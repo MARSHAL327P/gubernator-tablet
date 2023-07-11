@@ -88,9 +88,9 @@ const BeachInfo = observer(() => {
                         <div className={"flex flex-col gap-4"}>
                             <BathingComfort rounded={true} bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
                             {
-                                bathingComfortIndications.map(item => {
+                                bathingComfortIndications.map((item, idx) => {
                                     return (
-                                        <div className={styles.bathingComfort}>
+                                        <div key={idx} className={styles.bathingComfort}>
                                             <Indications
                                                 data={card.indications}
                                                 indications={[item.indication]}
