@@ -11,7 +11,7 @@ import Indications from "../../Indications/components/Indications";
 import IndicationsStore from "../../Indications/store/indications.store";
 import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
-import Comfort from "./Comfort";
+import BeachCardProps from "./BeachCardProps";
 
 const BeachCard = observer(({card}) => {
     const styles = {
@@ -24,21 +24,17 @@ const BeachCard = observer(({card}) => {
             <CardHeader card={card}/>
             <CarouselBeachCard imgs={card.img} cardId={card.id}/>
             <BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
-            <div className="px-7 py-5">
+            <div className="px-7 py-5 flex flex-col gap-4">
+                <div className={"flex gap-1"}>
+                    <BeachCardProps cardProps={card.props} />
+                </div>
                 <Indications
                     data={card.indications}
-                    indications={[
-                        IndicationsStore.indications.t_surf,
-                        IndicationsStore.indications.temperature,
-                        IndicationsStore.indications.windSpeed,
-                        IndicationsStore.indications.Honf,
-                        IndicationsStore.indications.turbidity,
-                    ]}
                     fixedValue={true}
                     classes={"justify-between"}
                     oneLine={true}
                 />
-                <div className="flex justify-between gap-2 mt-5">
+                <div className="flex justify-between gap-2">
                     <Tooltip content={"На карте"}>
                         <Button onClick={() => {
                             MapStore.zoomToItem(card.coord)
@@ -49,7 +45,7 @@ const BeachCard = observer(({card}) => {
                     </Tooltip>
                     <Tooltip content={"Маршрут (Строится в яндекс картах)"}>
                         <Button className={styles.btn} color={"white"} onClick={() => {
-                            window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=44.617496%2C33.525926~${card.coord.join(",")}&rtt=auto&ruri=~`, "_blank");
+                            MapStore.generateRoute(card.coord)
                         }}>
                             <Route className={styles.btnIcon}/>
                         </Button>
@@ -62,7 +58,8 @@ const BeachCard = observer(({card}) => {
                     </Link>
                 </div>
             </div>
-            <Comfort cardProps={card.props}/>
+
+            {/*<Comfort cardProps={card.props}/>*/}
         </>
     )
 })

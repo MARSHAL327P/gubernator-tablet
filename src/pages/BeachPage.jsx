@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import Dashboard from "../components/Dashboard/components/Dashboard";
 import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
-import WidgetTemplateStore from "../components/Widgets/store/widget.store";
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
@@ -11,6 +10,7 @@ import {runInAction} from "mobx";
 import BeachInfo from "../components/BeachCard/components/BeachInfo";
 import MapStore from "../components/Map/store/map.store";
 import Reviews from "../components/Reviews/components/Reviews";
+import WaterQuality from "../components/WaterQuality/components/WaterQuality";
 
 const BeachPage = observer(() => {
     const tabItems = [
@@ -33,13 +33,15 @@ const BeachPage = observer(() => {
             getParam: true,
         },
         {
+            title: "Качество воды",
+            content: <WaterQuality />,
+            link: "wqi",
+            getParam: true,
+        },
+        {
             title: "Виджеты",
             content: <WidgetTemplate
-                widgets={[
-                    WidgetTemplateStore.widgets.TEMPERATURE,
-                    WidgetTemplateStore.widgets.HUMIDITY,
-                    WidgetTemplateStore.widgets.PRESSURE,
-                ]}
+                data={SelectedClassInfoStore.currentClass?.card?.indications}
                 hasCharts={false}
             />,
             link: "widgets",

@@ -25,12 +25,12 @@ const Indications = observer((
         }])}
              ref={headerEl}
              onMouseEnter={() => {
-                 if( oneLine )
-                    headerEl.current.style.height = bodyEl.current.offsetHeight + "px"
+                 if (oneLine)
+                     headerEl.current.style.height = bodyEl.current.offsetHeight + "px"
              }}
              onMouseLeave={() => {
-                 if( oneLine )
-                    headerEl.current.style.height = "50px"
+                 if (oneLine)
+                     headerEl.current.style.height = "50px"
              }}
         >
             <div
@@ -38,9 +38,10 @@ const Indications = observer((
                 className={cc(["flex flex-wrap  gap-2 items-center"])}>
                 {
                     indications.map((indication) => {
-                        let hasIndications = data[indication.indicationName] !== undefined && data[indication.indicationName] !== null
+                        if (!indication) return false
+
+                        let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
                         let Icon = indication.icon
-                        let indicationValue = data[indication.indicationName]
                         let tooltipProps = !noTooltip && {
                             content: indication.name,
                             placement: "bottom",
@@ -50,20 +51,24 @@ const Indications = observer((
                             ...tooltipProps
                         }
 
-                        if( indication.alias )
+                        if (indication.alias)
                             indicationValue = indication.alias[indicationValue]
 
                         return (
-                            hasIndications &&
+                            indicationValue &&
                             <TooltipComponent {...defaultProps}>
                                 <div className={cc([
                                     "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12",
                                     indication.background
                                 ])}>
                                     <Icon className={indication.color}/>
-                                    <span>{fixedValue && indication.type !== "string" ?
-                                        indicationValue.toFixed(1) :
-                                        indicationValue}{indication.units}</span>
+                                    <span>
+                                        {
+                                            fixedValue && indication.type !== "string" ?
+                                                indicationValue.toFixed(1) :
+                                                indicationValue
+                                        }{indication.units}
+                                    </span>
                                 </div>
                             </TooltipComponent>
                         )

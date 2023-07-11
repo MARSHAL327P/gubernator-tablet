@@ -16,7 +16,7 @@ const RealObjectPlacemarker = observer(({data, realObject}) => {
                 </div>
                 {data}
             </div>
-            <div className={cc([MapStore.markerTextClasses, "hover-marker__body left-[-35px] top-[30px]"])}>
+            <div className={cc([MapStore.markerTextClasses, "hover-marker__body left-[-35px] top-[0] mt-[30px]"])}>
                 {realObject.name}
             </div>
         </div>

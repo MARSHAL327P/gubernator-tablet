@@ -7,14 +7,15 @@ class MapStore {
     mapRef = null
     queryParam = null
     defaultHeatmapOptions = {
-        radius: 70,
-        dissipating: false,
-        opacity: 0.5,
-        intensityOfMidpoint: 0.3,
-        gradient:	{
+        radius: 120,
+        dissipating: true,
+        opacity: 0.7,
+        intensityOfMidpoint: 0.01,
+        gradient: {
             0.1: 'rgba(49,173,70,1)',
-            0.3: 'rgba(196,201,61,1)',
-            0.5: 'rgba(222,151,46)',
+            0.15: 'rgba(196,201,61,1)',
+            0.3: 'rgba(222,151,46)',
+            0.5: 'rgb(222,140,46)',
             0.7: 'rgba(206,90,35)',
             0.99999: 'rgba(190,41,25)',
         }
@@ -53,7 +54,7 @@ class MapStore {
             indicationData: IndicationsStore.indications.aqi,
             options: {
                 ...this.defaultHeatmapOptions,
-                gradient:	{
+                gradient: {
                     0.1: '#36E166',
                     0.3: '#E8EC20',
                     0.5: '#ECBF20',
@@ -63,13 +64,29 @@ class MapStore {
                 }
             },
         },
+        excitement: {
+            ...this.defaultAdditionalLayersOptions,
+            apiUrl: process.env.REACT_APP_EXCITEMENT_HEATMAP,
+            indicationData: IndicationsStore.indications.excitement,
+            options: {
+                ...this.defaultHeatmapOptions,
+                // gradient:	{
+                //     0.1: '#36E166',
+                //     0.3: '#E8EC20',
+                //     0.5: '#ECBF20',
+                //     0.7: '#DF2828',
+                //     0.8: '#C936E1',
+                //     0.99999: '#6236E1',
+                // }
+            },
+        },
     }
     zoomIsBlocked = false
     markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
-    blurBackgroundClasses = "absolute bottom-24 z-10 right-5 bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
+    blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
 
     zoomToItem(coord, zoom = 17) {
-        if( !this.mapRef.current ) return
+        if (!this.mapRef.current) return
 
         if (this.zoomIsBlocked)
             zoom = 13
@@ -105,7 +122,7 @@ class MapStore {
         }
 
         if (this.selectedAdditionalLayer) {
-            this.blockZoom()
+            // this.blockZoom()
         } else {
             this.unBlockZoom()
         }
@@ -150,6 +167,39 @@ class MapStore {
     unBlockZoom() {
         this.mapRef.current.behaviors.enable("scrollZoom")
         this.zoomIsBlocked = false
+    }
+
+    saveGeoLocation(coords) {
+        if (!this.ymaps || !this.mapRef.current || this.isSameLocation(coords) ) return
+
+        localStorage.setItem("location", coords)
+        this.setGeoLocationMarker(coords)
+    }
+
+    get geoLocation() {
+        return localStorage.getItem("location") &&
+            localStorage
+                .getItem("location")
+                .split(",")
+                .map(item => parseFloat(item))
+    }
+
+    setGeoLocationMarker(coords){
+        this.mapRef.current.geoObjects.add(new this.ymaps.Placemark(coords, {},
+            {
+                preset: 'islands#blueCircleDotIconWithCaption',
+                iconCaptionMaxWidth: '50'
+            }));
+    }
+
+    isSameLocation(coords){
+        return this.geoLocation && this.geoLocation[0] === coords[0] && this.geoLocation[1] === coords[1]
+    }
+
+    generateRoute(coordTo){
+        let geoLocation = (this.geoLocation && this.geoLocation.join(",")) || ""
+
+        window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.join(",")}&rtt=auto&ruri=~`, "_blank");
     }
 
     constructor() {

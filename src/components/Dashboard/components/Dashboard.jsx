@@ -7,13 +7,10 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 import DashboardStore from "../store/dashboard.store";
-import AdditionalLayerBtns from "../../Map/components/AdditionalLayerBtns";
 import {Button} from "@material-tailwind/react";
-import BathingComfortGradeBlock from "../../Map/components/BathingComfortGradeBlock";
-import LockScaleNotification from "../../Map/components/LockScaleNotification";
 import cc from "classcat";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import HeatmapGradeBlock from "../../Map/components/HeatmapGradeBlock";
+import MapControls from "../../Map/components/MapControls";
 
 const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();
@@ -51,18 +48,13 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
                                 />
                                 {DashboardStore.isOpen ? "Скрыть" : "Раскрыть"}
                             </Button>
-                            <AdditionalLayerBtns/>
-                            <HeatmapGradeBlock/>
-                            <LockScaleNotification classes={"!bottom-20"}/>
-                            <BathingComfortGradeBlock/>
+                            <MapControls/>
                         </div>
                     }
                 </div>
 
 
             </Tab.Panels>
-
-
         </Tab.Group>
 
     )

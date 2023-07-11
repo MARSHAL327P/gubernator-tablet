@@ -11,7 +11,7 @@ const RealObjectMap = observer(() => {
 
     return !RealObjectStore.isLoading && SelectedClassInfoStore.filteredCards.map((realObject, index) => {
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
-        let mapIndication = realObject.props[indicationName]
+        let mapIndication = realObject.props[indicationName].value || realObject.props[indicationName]
 
         return (
             <ActivePlacemark

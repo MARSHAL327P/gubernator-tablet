@@ -10,9 +10,6 @@ export default class BeachCardStore {
     rating = 0
     bathingComfort = ""
     beachProblems = ""
-    // t_surf = 0
-    // temperature = 0
-    // windSpeed = 0
     coord = [0, 0]
     beachType = ""
     beachCoverage = ""
@@ -37,18 +34,18 @@ export default class BeachCardStore {
             })
     }
 
-    get bathingComfortMapColors(){
+    get bathingComfortMapColors() {
         let result = {
             polygon: "#FCC33F",
             marker: "fill-warning"
         }
 
-        if( this.bathingComfort.includes("HIGH_WAVE") || !this.isOpen ){
+        if (this.bathingComfort.includes("HIGH_WAVE") || !this.isOpen) {
             result = {
                 polygon: "#FF4C28",
                 marker: "fill-danger"
             }
-        } else if( this.bathingComfort.includes("GOOD") ){
+        } else if (this.bathingComfort.includes("GOOD")) {
             result = {
                 polygon: "#87E827",
                 marker: "fill-success"

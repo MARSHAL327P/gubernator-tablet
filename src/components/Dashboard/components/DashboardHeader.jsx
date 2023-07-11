@@ -10,7 +10,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 const DashboardHeader = observer(({homeLink, tabItems}) => {
     let card = SelectedClassInfoStore.currentClass?.card
-    let updateTimeField = card && (card.updateTimeText || card.updated_at || card.updateTime)
+    let updateTimeField = card && (card.props_updated_at || card.updateTimeText || card.updated_at || card.updateTime)
 
     return (
         <>
