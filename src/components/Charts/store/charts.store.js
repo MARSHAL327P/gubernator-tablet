@@ -13,7 +13,7 @@ class ChartsStore {
         }
     ]
     isLoading = false
-    chartData = IndicationsStore.indications
+    indicationWithChartData = IndicationsStore.indications
 
     fetchData(realObjectIndicationData){
         let requests = []
@@ -25,7 +25,7 @@ class ChartsStore {
                 return false
 
             fetchedIndicationNames.push(indicationName)
-            let url = `http://dss-sevsu.ru:8081/api/graphics/${SelectedClassInfoStore.currentClass.card.id}/${indication.oldName}`
+            let url = `${process.env.REACT_APP_CHARTS}/${SelectedClassInfoStore.currentClass.card.id}/${indication.oldName}`
             let dateRange = {
                 start: format(this.selectedDateRanges[0].startDate, "yyyy-MM-dd"),
                 end: format(this.selectedDateRanges[0].endDate, "yyyy-MM-dd"),
@@ -40,9 +40,14 @@ class ChartsStore {
             .then((data) => {
                 data.forEach((item, idx) => {
                     let indicationName = fetchedIndicationNames[idx]
+                    let indicationData = this.indicationWithChartData[indicationName]
 
-                    this.chartData[indicationName].chartData = []
-                    this.chartData[indicationName].chartData = item.data
+                    indicationData.chartData = []
+                    indicationData.chartData =
+                        item.data.map(chartItem => ({
+                            date: format(new Date(chartItem.date), "dd.MM.yyyy HH:mm"),
+                            [indicationData.name]: chartItem.value
+                        }))
                 })
 
                 this.isLoading = false
