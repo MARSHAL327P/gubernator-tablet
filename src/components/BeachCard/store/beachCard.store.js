@@ -29,29 +29,8 @@ export default class BeachCardStore {
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 return data.map(item => {
-                    item.waterQuality = {
-                        "indications": {
-                            "petroleumHydrocarbons": {
-                                "value": 0.01,
-                                "rating": "CLEAR"
-                            },
-                            "phenols": {
-                                "value": 0.001,
-                                "rating": "CLEAR"
-                            },
-                            "SPAW": {
-                                "value": 0.9,
-                                "rating": "MUDDY"
-                            },
-                            "metals": {
-                                "value": 0.0001,
-                                "rating": "CLEAR"
-                            },
-                        },
-                        "totalRating": "MUDDY",
-                        "updateTime": "2023-05-22T09:47:06"
-                    }
-                    item.waterQuality = new WaterQualityStore(item.waterQuality)
+                    if( item.waterQuality )
+                        item.waterQuality = new WaterQualityStore(item.waterQuality)
                     item.airQuality = new AirQualityStore(item.airQuality)
 
                     return new BeachCardStore(item)

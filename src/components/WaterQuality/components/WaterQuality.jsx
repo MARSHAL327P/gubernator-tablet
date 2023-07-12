@@ -6,6 +6,8 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {action} from "mobx";
 
 const WaterQuality = observer(({waterQualityData = SelectedClassInfoStore.currentClass.card.waterQuality}) => {
+    if( !waterQualityData ) return
+
     return (
         <div className={"w-[900px] mx-auto grid justify-items-center gap-8"}>
             <div className={cc([waterQualityData.totalRating.color, "text-2xl py-5 px-8 rounded-xl font-bold text-white w-fit"])}>

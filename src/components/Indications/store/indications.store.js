@@ -31,6 +31,7 @@ class IndicationsStore {
     ];
     defaultIndications = {
         t_surf: {
+            oldName: "t",
             name: "Температура воды",
             color: "fill-primary",
             background: "bg-primary/20",

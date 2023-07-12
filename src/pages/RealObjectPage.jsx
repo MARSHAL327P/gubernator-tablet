@@ -1,13 +1,13 @@
 import {observer} from "mobx-react-lite";
 import Dashboard from "../components/Dashboard/components/Dashboard";
 import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
-import WidgetTemplateStore from "../components/Widgets/store/widget.store";
 import {useParams} from "react-router-dom";
 import RealObjectStore from "../components/RealObjects/store/realObject.store";
 import {useEffect} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import MapStore from "../components/Map/store/map.store";
+import Charts from "../components/Charts/components/Charts";
 
 const RealObjectPage = observer(() => {
     const tabItems = [
@@ -19,7 +19,7 @@ const RealObjectPage = observer(() => {
         },
         {
             title: "Графики",
-            content: "Графики",
+            content: <Charts/>,
             link: "charts",
             getParam: true,
         },
