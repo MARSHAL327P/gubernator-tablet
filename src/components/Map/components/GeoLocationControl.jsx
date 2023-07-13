@@ -3,8 +3,7 @@ import {Button, Tooltip} from "@material-tailwind/react";
 import {ReactComponent as GeoLocation} from "../../../assets/icons/GeoLocation.svg";
 import {useGeolocated} from "react-geolocated";
 import MapStore from "../store/map.store";
-import {useEffect, useState} from "react";
-import DashboardStore from "../../Dashboard/store/dashboard.store";
+import {useEffect} from "react";
 import cc from "classcat";
 
 const GeoLocationControl = observer(() => {

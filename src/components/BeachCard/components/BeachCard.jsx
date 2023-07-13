@@ -8,7 +8,6 @@ import 'dayjs/plugin/updateLocale';
 import {Link} from "react-router-dom";
 import CardHeader from "../../Card/components/CardHeader";
 import Indications from "../../Indications/components/Indications";
-import IndicationsStore from "../../Indications/store/indications.store";
 import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
 import BeachCardProps from "./BeachCardProps";

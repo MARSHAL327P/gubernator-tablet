@@ -46,7 +46,7 @@ const FilterGroup = observer(() => {
                                         <div className={cc(["flex items-center gap-2"])}>
                                             <div
                                                 className={cc(["flex items-center rounded-full p-2", filterGroup.bgColor])}>
-                                                <Icon className={"w-4 h-4"}/>
+                                                <Icon className={"w-4 h-4 fill-white"}/>
                                             </div>
 
                                             {filterGroup.name}

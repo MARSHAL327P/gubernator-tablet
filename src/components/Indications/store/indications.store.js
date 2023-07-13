@@ -41,10 +41,12 @@ class IndicationsStore {
             widget: TempSurfWidget
         },
         temperature: {
+            oldName: "t",
             name: "Температура воздуха",
             color: "fill-warning",
             background: "bg-warning/20",
             text: "text-warning",
+            hexColor: "#FCC33F",
             icon: Temperature,
             units: "°",
             unitsFull: "C°",
@@ -61,6 +63,7 @@ class IndicationsStore {
             widget: WindWidget
         },
         humidity: {
+            // oldName: "HM",
             name: "Влажность",
             color: "fill-info",
             background: "bg-info/20",

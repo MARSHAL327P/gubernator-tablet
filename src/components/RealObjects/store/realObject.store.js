@@ -3,6 +3,7 @@ import { RealObjectCardStore } from "./realObjectCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
 import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
+import {ReactComponent as Wastewater} from "../../../assets/icons/Wastewater.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
 import RealObjectMap from "../../Map/components/RealObjectMap";
 import RealObjectCard from "../components/RealObjectCard";
@@ -31,6 +32,16 @@ class RealObjectStore {
         Hmax: 0,
         Tmean: 0,
         Tsignf: 0,
+    }
+    wasteWater = {
+        petroleumHydrocarbons: 0,
+        phenols: 0,
+        SPAW: 0,
+        cu: 0,
+        mn: 0,
+        hg: 0,
+        fe: 0,
+        zn: 0
     }
     realObjectTypes = {
         BUOY: {
@@ -97,10 +108,20 @@ class RealObjectStore {
                 },
             }
         },
-        // WASTEWATER: {
-        //     name: "Сточные воды",
-        //     props: {}
-        // },
+        WASTEWATER: {
+            name: "Сточные воды",
+            props: this.wasteWater,
+            mapIndication: IndicationsStore.indications.temperature.indicationName,
+            bgColor: "bg-info",
+            icon: Wastewater,
+            filterOpen: true,
+            defaultFilterInputs: {
+                fe: {
+                    name: "Железо",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+            }
+        },
     }
 
     isLoading = false
@@ -122,7 +143,8 @@ class RealObjectStore {
         },
         alias: {
             METEO_STATION: this.realObjectTypes.METEO_STATION.name,
-            BUOY: this.realObjectTypes.BUOY.name
+            BUOY: this.realObjectTypes.BUOY.name,
+            WASTEWATER: this.realObjectTypes.WASTEWATER.name
         },
         selected: [],
     }
