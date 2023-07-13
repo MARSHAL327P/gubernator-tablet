@@ -17,6 +17,7 @@ import parse from 'html-react-parser';
 import WindWidget from "../../Widgets/components/WindWidget";
 import TempSurfWidget from "../../Widgets/components/TempSurfWidget";
 import HonfWidget from "../../Widgets/components/HonfWidget";
+import DefaultWidget from "../../Widgets/components/DefaultWidget";
 
 class IndicationsStore {
     windAngleNames = [
@@ -127,6 +128,22 @@ class IndicationsStore {
             icon: Excitement,
             units: "",
             unitsFull: "Волна (м)",
+        },
+        fe: {
+            name: "Железо",
+            widget: DefaultWidget
+        },
+        hg: {
+            name: "Ртуть",
+            widget: DefaultWidget
+        },
+        petroleumHydrocarbons: {
+            name: "Нефтяные углеводороды",
+            widget: DefaultWidget
+        },
+        cu: {
+            name: "Медь",
+            widget: DefaultWidget
         }
     }
 

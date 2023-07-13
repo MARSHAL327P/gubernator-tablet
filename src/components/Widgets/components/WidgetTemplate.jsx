@@ -39,8 +39,8 @@ const WidgetTemplate = observer((
                     >
                         <div className={"flex gap-2 justify-between"}>
                             <div className={"flex gap-2 items-center"}>
-                                <Icon className={cc([indication.color, "w-8 h-8"])}/>
-                                <span>{indication.name}</span>
+                                {indication.icon && <Icon className={cc([indication.color, "w-8 h-8"])}/>}
+                                <span>{indication.name || indication.indicationName}</span>
                             </div>
                             <div className={"flex gap-2"}>
                                 {buttons.map((btn, idx) => {
