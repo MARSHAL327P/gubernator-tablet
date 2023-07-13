@@ -63,14 +63,15 @@ class IndicationsStore {
             widget: WindWidget
         },
         humidity: {
-            // oldName: "HM",
+            oldName: "HM",
             name: "Влажность",
             color: "fill-info",
             background: "bg-info/20",
             text: "text-info",
             icon: Humidity,
             units: "%",
-            widget: HumidityWidget
+            widget: HumidityWidget,
+            chartDomain: [0, 100]
         },
         pressure: {
             name: "Давление",
