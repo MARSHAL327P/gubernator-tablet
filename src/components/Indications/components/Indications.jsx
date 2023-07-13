@@ -20,16 +20,18 @@ const Indications = observer((
     let bodyEl = useRef(null)
     let cardIndications = Object.keys(data)
     let indicationNames = indications.map(indication => indication.indicationName)
+    let hasNewIndications = Object.values(IndicationsStore.indications).filter(indication => !indicationNames.includes(indication.indicationName))
 
-    cardIndications.forEach(item => {
-        if( !indicationNames.includes(item) )
-            indications.push({
-                id: indications.length,
-                background: "bg-gray-400",
-                indicationName: item,
-                name: item
-            })
-    })
+    if( hasNewIndications.length === 0 )
+        cardIndications.forEach(item => {
+            if( !indicationNames.includes(item) )
+                indications.push({
+                    id: indications.length,
+                    background: "bg-gray-400",
+                    indicationName: item,
+                    name: item
+                })
+        })
 
     return (
         <div className={cc([classes, {
