@@ -3,6 +3,7 @@ import {Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../store/indications.store";
 import cc from "classcat";
 import {Fragment, useRef} from "react";
+import {toJS} from "mobx";
 
 
 const Indications = observer((
@@ -18,6 +19,18 @@ const Indications = observer((
     let TooltipComponent = noTooltip ? Fragment : Tooltip
     let headerEl = useRef(null)
     let bodyEl = useRef(null)
+    let cardIndications = Object.keys(data)
+    let indicationNames = indications.map(indication => indication.indicationName)
+
+    cardIndications.forEach(item => {
+        if( !indicationNames.includes(item) )
+            indications.push({
+                id: indications.length,
+                background: "bg-gray-400",
+                indicationName: item,
+                name: item
+            })
+    })
 
     return (
         <div className={cc([classes, {
@@ -46,7 +59,7 @@ const Indications = observer((
                             content: indication.name,
                             placement: "bottom",
                         }
-                        let defaultProps = {
+                        let defaultComponentProps = {
                             key: indication.id,
                             ...tooltipProps
                         }
@@ -56,12 +69,12 @@ const Indications = observer((
 
                         return (
                             indicationValue &&
-                            <TooltipComponent {...defaultProps}>
+                            <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
                                     "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12",
                                     indication.background
                                 ])}>
-                                    <Icon className={indication.color}/>
+                                    {indication.icon && <Icon className={indication.color}/>}
                                     <span>
                                         {
                                             fixedValue && indication.type !== "string" ?
