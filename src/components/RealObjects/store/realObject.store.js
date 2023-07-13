@@ -120,6 +120,18 @@ class RealObjectStore {
                     name: "Железо",
                     ...FilterStore.filterTypes.selectFromTo
                 },
+                hg: {
+                    name: "Ртуть",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                petroleumHydrocarbons: {
+                    name: "Нефтяные углеводороды",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
+                phenols: {
+                    name: "Фенолы",
+                    ...FilterStore.filterTypes.selectFromTo
+                },
             }
         },
     }

@@ -10,7 +10,7 @@ const FastFilter = observer(() => {
     let fastFilter = SelectedClassInfoStore.currentClass.fastFilter
 
     return (
-        <List className="flex-row gap-3">
+        <List className="flex-row flex-wrap gap-0">
             {
                 Object.entries(FilterStore.fastFilter.fields).map(([fieldName, fieldValues]) => {
                     return fieldValues.map(fastFilterItem => {
