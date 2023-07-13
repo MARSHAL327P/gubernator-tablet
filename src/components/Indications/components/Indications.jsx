@@ -3,7 +3,6 @@ import {Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../store/indications.store";
 import cc from "classcat";
 import {Fragment, useRef} from "react";
-import {toJS} from "mobx";
 
 
 const Indications = observer((
@@ -56,7 +55,7 @@ const Indications = observer((
                         let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
                         let Icon = indication.icon
                         let tooltipProps = !noTooltip && {
-                            content: indication.name,
+                            content: indication.name || indication.indicationName,
                             placement: "bottom",
                         }
                         let defaultComponentProps = {
@@ -72,9 +71,9 @@ const Indications = observer((
                             <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
                                     "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12",
-                                    indication.background
+                                    indication.background || "bg-gray-400"
                                 ])}>
-                                    {indication.icon && <Icon className={indication.color}/>}
+                                    {indication.icon && <Icon className={indication.color || "fill-white"}/>}
                                     <span>
                                         {
                                             fixedValue && indication.type !== "string" ?
