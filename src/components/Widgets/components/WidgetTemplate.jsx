@@ -42,19 +42,19 @@ const WidgetTemplate = observer((
                                 {indication.icon && <Icon className={cc([indication.color, "w-8 h-8"])}/>}
                                 <span>{indication.name || indication.indicationName}</span>
                             </div>
-                            <div className={"flex gap-2"}>
-                                {buttons.map((btn, idx) => {
-                                    let Icon = btn.icon
+                            {/*<div className={"flex gap-2"}>*/}
+                            {/*    {buttons.map((btn, idx) => {*/}
+                            {/*        let Icon = btn.icon*/}
 
-                                    return (
-                                        <Tooltip key={idx} content={btn.name}>
-                                            <Button className={"p-3 rounded-full w-[40px] h-[40px]"} size={"sm"}>
-                                                <Icon className={"fill-white"}/>
-                                            </Button>
-                                        </Tooltip>
-                                    )
-                                })}
-                            </div>
+                            {/*        return (*/}
+                            {/*            <Tooltip key={idx} content={btn.name}>*/}
+                            {/*                <Button className={"p-3 rounded-full w-[40px] h-[40px]"} size={"sm"}>*/}
+                            {/*                    <Icon className={"fill-white"}/>*/}
+                            {/*                </Button>*/}
+                            {/*            </Tooltip>*/}
+                            {/*        )*/}
+                            {/*    })}*/}
+                            {/*</div>*/}
                         </div>
                         <Widget data={data[indication.indicationName]} indication={indication}/>
                     </div>

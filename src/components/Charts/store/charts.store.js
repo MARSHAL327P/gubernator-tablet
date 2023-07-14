@@ -13,16 +13,20 @@ class ChartsStore {
         }
     ]
     isLoading = false
-    indicationWithChartData = IndicationsStore.indications
+    indicationWithChartData = {}
 
     fetchData(realObjectIndicationData){
         let requests = []
         let fetchedIndicationNames = []
+        let chartIndications = {}
 
-        Object.entries(IndicationsStore.indications).forEach(([indicationName, indication]) => {
-            // console.log(indication.oldName && !realObjectIndicationData.includes(indicationName))
-            if( !indication.oldName  )
+        realObjectIndicationData.forEach((indicationName) => {
+            let indication = IndicationsStore.indications[indicationName]
+
+            if( !(indication && indication.oldName) )
                 return false
+
+            chartIndications[indicationName] = indication
 
             fetchedIndicationNames.push(indicationName)
             let url = `${process.env.REACT_APP_CHARTS}/${SelectedClassInfoStore.currentClass.card.id}/${indication.oldName}`
@@ -38,6 +42,8 @@ class ChartsStore {
 
         Promise.all(requests)
             .then((data) => {
+                this.indicationWithChartData = chartIndications
+
                 data.forEach((item, idx) => {
                     let indicationName = fetchedIndicationNames[idx]
                     let indicationData = this.indicationWithChartData[indicationName]

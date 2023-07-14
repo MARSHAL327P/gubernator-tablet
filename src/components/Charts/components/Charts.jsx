@@ -47,13 +47,15 @@ const Charts = observer(() => {
                 {
                     ChartsStore.isLoading ?
                         <Loading text={"Загрузка графиков"}/> :
+                        Object.entries(ChartsStore.indicationWithChartData).length > 0 ?
                         Object.entries(ChartsStore.indicationWithChartData).map(([indicationName, indication]) => {
                             if( !indication.chart?.data ) return false
 
                             return (
                                 <ChartItem indication={indication} key={indicationName}/>
                             )
-                        })
+                        }) :
+                            <Typography variant={"h3"}>Нет графиков</Typography>
                 }
             </div>
         </div>
