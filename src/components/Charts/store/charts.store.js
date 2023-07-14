@@ -50,9 +50,8 @@ class ChartsStore {
                     let indicationData = this.indicationWithChartData[indicationName]
                     let dateFormat = "HH:mm"
 
-                    if( differenceInDays(this.selectedDateRanges[0].endDate, this.selectedDateRanges[0].startDate) > 1 ){
+                    if( differenceInDays(this.selectedDateRanges[0].endDate, this.selectedDateRanges[0].startDate) > 1 )
                         dateFormat = "dd.MM.yyyy"
-                    }
 
                     indicationData.chart = {
                         data: [],
@@ -60,10 +59,11 @@ class ChartsStore {
                     }
                     indicationData.chart.data =
                         item.data.map(chartItem => {
-                            let date = format(new Date(chartItem.date), dateFormat)
-
                             return {
-                                date: date,
+                                dateFull: format(new Date(chartItem.date), "dd.MM.yyyy HH:mm"),
+                                dateX: format(new Date(chartItem.date), dateFormat),
+                                indicationUnits: indicationData.units,
+                                indicationName: indicationData.name,
                                 [indicationData.name]: chartItem.value
                             }
                         })

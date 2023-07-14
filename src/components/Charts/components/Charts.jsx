@@ -11,6 +11,7 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import Loading from "../../Loading/components/Loading";
 import ChartItem from "./ChartItem";
 import {useLocation} from "react-router-dom";
+import CustomRangeLabels from "../../RedefinedTags/Date/CustomRangeLabels";
 
 
 const Charts = observer(() => {
@@ -43,6 +44,7 @@ const Charts = observer(() => {
                             ChartsStore.fetchData(Object.keys(SelectedClassInfoStore.currentClass.card.props))
                         })
                     }
+                    renderStaticRangeLabel={<CustomRangeLabels/>}
                     showSelectionPreview={true}
                     moveRangeOnFirstSelection={false}
                     ranges={ChartsStore.selectedDateRanges}

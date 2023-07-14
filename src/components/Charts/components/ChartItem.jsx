@@ -1,8 +1,26 @@
 import {observer} from "mobx-react-lite";
 import {CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {Typography} from "@material-tailwind/react";
-import cc from "classcat";
 import {runInAction} from "mobx";
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        let initialData = payload[0].payload
+
+        return (
+            <div className="p-3 rounded-xl shadow-lg border border-gray-300 bg-white">
+                <p>
+                    {initialData.dateFull}
+                </p>
+                <p className={"text-primary"}>
+                    {initialData.indicationName}: {payload[0].value}{initialData.indicationUnits}
+                </p>
+            </div>
+        );
+    }
+
+    return null;
+};
 
 const ChartItem = observer(({indication}) => {
     let Icon = indication.icon
@@ -29,11 +47,11 @@ const ChartItem = observer(({indication}) => {
                             syncId="sync_charts"
                         >
                             <CartesianGrid strokeDasharray="3 3"/>
-                            <XAxis minTickGap={20} axisLine={false} dataKey="date" tickMargin={10} />
+                            <XAxis minTickGap={20} axisLine={false} dataKey="dateX" tickMargin={10} />
                             <YAxis tickLine={false} tickCount={12}
                                    domain={!indication.chart.hide && indication.chartDomain}
                                    axisLine={false}/>
-                            <Tooltip/>
+                            <Tooltip content={<CustomTooltip/>}/>
                             <Legend verticalAlign="top" height={36} onClick={(legend, e) => {
                                 runInAction(() => {
                                     indication.chart.hide = !indication.chart.hide

@@ -75,6 +75,7 @@ class IndicationsStore {
             chartDomain: [0, 100]
         },
         pressure: {
+            oldName: "PR",
             name: "Давление",
             color: "fill-success",
             background: "bg-success/20",
@@ -84,6 +85,7 @@ class IndicationsStore {
             widget: PressureWidget
         },
         Honf: {
+            oldName: "honf",
             name: "Средняя высота 10% наибольших волн (м)",
             color: "fill-primary",
             background: "bg-primary/20",
@@ -130,7 +132,9 @@ class IndicationsStore {
             unitsFull: "Волна (м)",
         },
         fe: {
+            oldName: "fe",
             name: "Железо",
+            units: parse(" мг/дм<sup>3</sup>"),
             widget: DefaultWidget
         },
         hg: {
