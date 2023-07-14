@@ -42,7 +42,7 @@ const Sidebar = observer(({tabItems}) => {
     }, [currentClass, currentClass?.isLoading])
 
     return (
-        <div className={"h-full bg-white transition z-20 w-[460px]"}>
+        <div className={"h-full bg-white transition z-20 md:w-[460px] w-full relative"}>
 
             <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
                 <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 py-7 mr-[6px] flex-col"}>
@@ -83,7 +83,6 @@ const Sidebar = observer(({tabItems}) => {
                     </Tab.Panels>
                 </div>
             </Tab.Group>
-
         </div>
 
     )

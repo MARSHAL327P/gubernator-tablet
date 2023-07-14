@@ -42,8 +42,11 @@ class ChartsStore {
                     let indicationName = fetchedIndicationNames[idx]
                     let indicationData = this.indicationWithChartData[indicationName]
 
-                    indicationData.chartData = []
-                    indicationData.chartData =
+                    indicationData.chart = {
+                        data: [],
+                        hide: false
+                    }
+                    indicationData.chart.data =
                         item.data.map(chartItem => ({
                             date: format(new Date(chartItem.date), "dd.MM.yyyy HH:mm"),
                             [indicationData.name]: chartItem.value

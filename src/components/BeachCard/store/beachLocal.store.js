@@ -97,13 +97,13 @@ class BeachLocalStore {
             name: "Температура воды",
             ...FilterStore.filterTypes.selectFromTo
         },
-        props: {
-            name: "Дополнительные параметры",
-            ...FilterStore.filterTypes.checkbox
-        },
         wind: {
             name: "Скорость ветра",
             ...FilterStore.filterTypes.selectFromTo
+        },
+        props: {
+            name: "Удобства",
+            ...FilterStore.filterTypes.checkbox
         },
     }
 

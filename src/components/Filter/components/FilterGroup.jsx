@@ -7,7 +7,7 @@ import FilterInputSection from "./FilterInputSection";
 import {action} from "mobx";
 
 const FilterGroup = observer(() => {
-    let selectedFastFilter = SelectedClassInfoStore.currentClass.fastFilter?.selected
+    let selectedFastFilter = SelectedClassInfoStore.currentClass?.fastFilter?.selected
 
     return SelectedClassInfoStore.currentClass?.filterGroup ?
         (

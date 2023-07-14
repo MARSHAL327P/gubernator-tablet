@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import cc from "classcat";
 
-const BaseWidgetTemplate = observer(({data, indication, params}) => {
+const BaseWidgetTemplate = observer(({data, indication, params = []}) => {
     return (
         <>
             <div>
