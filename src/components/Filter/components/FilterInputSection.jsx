@@ -6,7 +6,7 @@ import cc from "classcat";
 import FilterStore from "../store/filter.store";
 import {FilterInputs} from "./FilterInputs";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
-import {action} from "mobx";
+import {action, toJS} from "mobx";
 
 const FilterInputSection = observer((
     {
@@ -17,6 +17,8 @@ const FilterInputSection = observer((
     const icons = {
         rating: <Star className={"fill-warning mt-[2px]"}/>
     }
+
+    // console.log(toJS(filterInputs))
 
     // useEffect(() => {
     //     SelectedClassInfoStore.currentClass.filterInputs = FilterStore.generateFilterInputs

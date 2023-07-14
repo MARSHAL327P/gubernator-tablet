@@ -3,11 +3,12 @@ import RealObjectStore from "../../RealObjects/store/realObject.store";
 import ActivePlacemark from "../../ActivePlacemark/ActivePlacemark";
 import RealObjectPlacemarker from "../../RealObjects/components/RealObjectPlacemarker";
 import IndicationsStore from "../../Indications/store/indications.store";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const RealObjectMap = observer(() => {
     let navigate = useNavigate()
+    const [queryParameters] = useSearchParams()
 
     return !RealObjectStore.isLoading && SelectedClassInfoStore.filteredCards.map((realObject, index) => {
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
@@ -23,7 +24,7 @@ const RealObjectMap = observer(() => {
                     iconContentOffset: [30, 30],
                 }}
                 onClick={(e) => {
-                    navigate(realObject.link)
+                    navigate(realObject.link + "?" + queryParameters.toString())
                 }}
                 component={
                     <RealObjectPlacemarker
