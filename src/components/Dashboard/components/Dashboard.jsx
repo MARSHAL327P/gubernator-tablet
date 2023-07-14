@@ -16,6 +16,7 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();
     let card = SelectedClassInfoStore.currentClass?.card
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
+    // tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card.waterQuality))
 
 
     return (<Tab.Group defaultIndex={selectedTabIndex}>
