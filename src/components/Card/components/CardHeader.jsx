@@ -44,12 +44,12 @@ const CardHeader = observer(({
 
 
                 {
-                    card.rating > 0 &&
+                    card.rating !== undefined &&
                     <Link to={`/beach/${card.code}?tab=reviews`}>
                         <Tooltip content={"Отзывы"}>
                             <div className={"flex gap-1 items-center"}>
                                 <Star className={"fill-warning"}/>
-                                <span className={"h-[20px]"}>{card.rating}</span>
+                                {card.rating > 0 && <span className={"h-[20px]"}>{card.rating.toFixed(1)}</span>}
                             </div>
                         </Tooltip>
                     </Link>
