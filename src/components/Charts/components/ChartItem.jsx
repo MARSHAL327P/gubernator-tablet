@@ -29,7 +29,7 @@ const ChartItem = observer(({indication}) => {
                             syncId="sync_charts"
                         >
                             <CartesianGrid strokeDasharray="3 3"/>
-                            <XAxis axisLine={false} dataKey="date"/>
+                            <XAxis minTickGap={20} axisLine={false} dataKey="date" tickMargin={10} />
                             <YAxis tickLine={false} tickCount={12}
                                    domain={!indication.chart.hide && indication.chartDomain}
                                    axisLine={false}/>
