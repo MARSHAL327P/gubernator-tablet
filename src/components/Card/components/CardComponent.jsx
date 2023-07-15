@@ -11,7 +11,7 @@ const CardComponent = observer(() => {
                     Показано {SelectedClassInfoStore.filteredCards.length} из {SelectedClassInfoStore.currentClass.list.length}
                 </div>
             }
-            <div className={"flex flex-col gap-10"}>
+            <div className={"grid grid-cols-card gap-10 lg:gap-5"}>
                 {
                     SelectedClassInfoStore.filteredCards.map((card) => {
                         let Component = SelectedClassInfoStore.currentClass.component

@@ -131,3 +131,9 @@ body{
 .recharts-legend-item:hover{
     cursor: pointer;
 }
+
+@media (max-width: 1024px) {
+    body{
+        overflow: hidden;
+    }
+}
