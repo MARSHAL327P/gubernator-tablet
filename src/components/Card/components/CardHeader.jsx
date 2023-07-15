@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Tooltip} from "@material-tailwind/react";
+import {Tooltip, Typography} from "@material-tailwind/react";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {getUpdateTimeText} from "../../../Utils";
@@ -35,21 +35,24 @@ const CardHeader = observer(({
                             {cardProblems.icon}
                         </Tooltip>
                     }
-                    <span className={cc({
-                        "text-black": true,
-                        "text-title": size === "xs",
-                        "text-xl font-bold": size === "md"
-                    })}>{card.name}</span>
+                    <Typography variant={"h4"}>
+                        {card.name}
+                    </Typography>
+                    {/*<span className={cc({*/}
+                    {/*    "text-black": true,*/}
+                    {/*    "text-title": size === "xs",*/}
+                    {/*    "text-xl font-bold": size === "md"*/}
+                    {/*})}>{card.name}</span>*/}
                 </div>
 
 
                 {
-                    card.rating > 0 &&
+                    card.rating !== undefined &&
                     <Link to={`/beach/${card.code}?tab=reviews`}>
                         <Tooltip content={"Отзывы"}>
                             <div className={"flex gap-1 items-center"}>
                                 <Star className={"fill-warning"}/>
-                                <span className={"h-[20px]"}>{card.rating}</span>
+                                {card.rating > 0 && <span className={"h-[20px]"}>{card.rating.toFixed(1)}</span>}
                             </div>
                         </Tooltip>
                     </Link>

@@ -14,9 +14,53 @@ class ChartsStore {
         }
     ]
     isLoading = false
+    loadingError = false
     indicationWithChartData = {}
+    dateRangesPreset = [
+        {
+            label: 'Сегодня',
+            range: [new Date(), new Date()],
+            selected: false,
+        },
+        {
+            label: 'Последние 2 дня',
+            range: [addDays(new Date(), -1), new Date()],
+            selected: true,
+        },
+        {
+            label: 'Последние 7 дней',
+            range: [addDays(new Date(), -6), new Date()],
+            selected: false,
+        },
+        {
+            label: 'Последние 14 дней',
+            range: [addDays(new Date(), -13), new Date()],
+            selected: false,
+        },
+        {
+            label: 'Последние 30 дней',
+            range: [addDays(new Date(), -29), new Date()],
+            selected: false,
+        },
+    ]
 
-    fetchData(realObjectIndicationData){
+    get dateRanges() {
+        return this.dateRangesPreset.map(item => ({
+            label: item.label,
+            hasCustomRendering: true,
+            range: () => ({
+                startDate: item.range[0],
+                endDate: item.range[1]
+            }),
+            isSelected() {
+                return item.selected || false;
+            }
+        }))
+    }
+
+    fetchData(realObjectIndicationData) {
+        if (this.isLoading === true) return
+
         let requests = []
         let fetchedIndicationNames = []
         let chartIndications = {}
@@ -24,7 +68,7 @@ class ChartsStore {
         realObjectIndicationData.forEach((indicationName) => {
             let indication = IndicationsStore.indications[indicationName]
 
-            if( !(indication && indication.oldName) )
+            if (!(indication && indication.oldName))
                 return false
 
             chartIndications[indicationName] = indication
@@ -36,7 +80,7 @@ class ChartsStore {
                 end: format(this.selectedDateRanges[0].endDate, "yyyy-MM-dd"),
             }
 
-            requests.push(axios.get(url, { params: dateRange }))
+            requests.push(axios.get(url, {params: dateRange}))
         })
 
         this.isLoading = true
@@ -50,7 +94,7 @@ class ChartsStore {
                     let indicationData = this.indicationWithChartData[indicationName]
                     let dateFormat = "HH:mm"
 
-                    if( differenceInDays(this.selectedDateRanges[0].endDate, this.selectedDateRanges[0].startDate) > 1 )
+                    if (differenceInDays(this.selectedDateRanges[0].endDate, this.selectedDateRanges[0].startDate) > 1)
                         dateFormat = "dd.MM.yyyy"
 
                     indicationData.chart = {
@@ -70,7 +114,12 @@ class ChartsStore {
                 })
 
                 this.isLoading = false
-        })
+            })
+            .catch((reason) => {
+                this.isLoading = false
+                this.loadingError = true
+                console.error(reason)
+            })
     }
 
     constructor() {

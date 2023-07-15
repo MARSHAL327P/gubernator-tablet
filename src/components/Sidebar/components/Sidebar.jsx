@@ -14,6 +14,7 @@ import SidebarStore from "../store/sidebar.store";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FastFilter from "../../Filter/components/FastFilter";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {
@@ -24,6 +25,7 @@ const Sidebar = observer(({tabItems}) => {
     }
 
     const location = useLocation();
+    let [width, height] = useWindowSize()
     let [elOffset, setElOffset] = useState(0)
     let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
     let fixedHeaderEl = useRef(null)
@@ -38,14 +40,15 @@ const Sidebar = observer(({tabItems}) => {
     let currentClass = SelectedClassInfoStore.currentClass
 
     useEffect(() => {
-        setFixedHeaderHeight(fixedHeaderEl.current.offsetHeight)
-    }, [currentClass, currentClass?.isLoading])
+        setFixedHeaderHeight(fixedHeaderEl.current.offsetHeight + (width > 1024 ? 0 : 40))
+    }, [currentClass, currentClass?.isLoading, width])
 
     return (
-        <div className={"h-full bg-white transition z-20 md:w-[460px] w-full relative"}>
+        <div className={"h-full bg-white transition z-20 w-[460px] lg:w-full relative"}>
 
             <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
-                <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 py-7 mr-[6px] flex-col"}>
+                <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 pb-3 pt-7 lg:pt-3 mr-[6px] flex-col"}>
+                    <div className={"bg-gray-500 rounded-full w-[100px] h-1 hidden lg:block mx-auto"}></div>
                     <div className="flex gap-4">
                         <Search/>
                         {FilterStore.numChangedParams > 0 ?

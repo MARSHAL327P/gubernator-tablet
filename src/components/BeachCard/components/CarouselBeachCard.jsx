@@ -29,7 +29,7 @@ const CarouselBeachCard = observer(({imgs, cardId}) => {
     return (
         <>
             <Carousel
-                className="mt-2 h-[220px] overflow-hidden"
+                className="mt-2 h-[220px] lg:h-[160px] overflow-hidden"
                 navigation={carouselNavigation}
                 prevArrow={({handlePrev}) => (
                     <IconButton

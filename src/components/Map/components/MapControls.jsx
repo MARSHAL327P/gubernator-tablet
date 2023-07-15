@@ -16,7 +16,7 @@ const MapControls = observer((
     }
 ) => {
     return (
-        <div className={"absolute bottom-5 right-5 z-10 grid gap-5 justify-items-end"}>
+        <div className={"absolute bottom-5 lg:bottom-40 right-5 z-10 grid gap-5 justify-items-end"}>
             {
                 components.map((component, idx) => <Fragment key={idx}>{component}</Fragment>)
             }

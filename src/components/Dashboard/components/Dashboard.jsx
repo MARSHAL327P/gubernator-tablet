@@ -16,9 +16,10 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();
     let card = SelectedClassInfoStore.currentClass?.card
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
+    tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
 
-
-    return (<Tab.Group defaultIndex={selectedTabIndex}>
+    return (
+        <Tab.Group defaultIndex={selectedTabIndex}>
             <div
                 className="border-b border-white fixed z-50 top-0 backdrop-blur bg-white/50 flex justify-between items-center px-7 py-4 w-full"
             >
@@ -52,11 +53,8 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
                         </div>
                     }
                 </div>
-
-
             </Tab.Panels>
         </Tab.Group>
-
     )
 })
 
