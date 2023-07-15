@@ -24,6 +24,18 @@ module.exports = withMT({
             },
             gridTemplateColumns: {
                 'card': 'repeat(auto-fill, minmax(340px, 1fr))',
+            },
+            keyframes: {
+                translateY: {
+                    '0%': {
+                        opacity: 0,
+                        transform: 'translateY(-20px)'
+                    },
+                    '100%': {
+                        opacity: 1,
+                        transform: 'translateY(0)'
+                    },
+                }
             }
         },
         transitionDuration: {

@@ -7,8 +7,8 @@ import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import DashboardStore from "../../Dashboard/store/dashboard.store";
-import MapControls from "./MapControls";
-import GeoLocationControl from "./GeoLocationControl";
+import MapControls from "./MapControls/MapControls";
+import GeoLocationControl from "./MapControls/GeoLocationControl";
 
 
 const MapTemplate = observer(() => {

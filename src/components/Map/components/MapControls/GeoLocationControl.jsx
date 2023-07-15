@@ -1,8 +1,8 @@
 import {observer} from "mobx-react-lite";
 import {Button, Tooltip} from "@material-tailwind/react";
-import {ReactComponent as GeoLocation} from "../../../assets/icons/GeoLocation.svg";
+import {ReactComponent as GeoLocation} from "../../../../assets/icons/GeoLocation.svg";
 import {useGeolocated} from "react-geolocated";
-import MapStore from "../store/map.store";
+import MapStore from "../../store/map.store";
 import {useEffect} from "react";
 import cc from "classcat";
 

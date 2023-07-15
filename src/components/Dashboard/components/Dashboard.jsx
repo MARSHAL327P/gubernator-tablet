@@ -10,7 +10,7 @@ import DashboardStore from "../store/dashboard.store";
 import {Button} from "@material-tailwind/react";
 import cc from "classcat";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
-import MapControls from "../../Map/components/MapControls";
+import MapControls from "../../Map/components/MapControls/MapControls";
 
 const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();

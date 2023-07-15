@@ -1,9 +1,9 @@
 import {observer} from "mobx-react-lite";
-import ActivePlacemark from "../../ActivePlacemark/ActivePlacemark";
+import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
 import {Polygon} from "@pbe/react-yandex-maps";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import BeachPlacemarker from "../../BeachCard/components/BeachPlacemarker";
+import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
+import BeachPlacemarker from "../../../BeachCard/components/BeachPlacemarker";
 
 const BeachMap = observer(() => {
     let navigate = useNavigate()

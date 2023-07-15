@@ -1,11 +1,12 @@
 import {observer} from "mobx-react-lite";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
-import {ReactComponent as MarkerSmile} from '../../../assets/icons/MarkerSmile.svg'
-import {ReactComponent as MarkerNeutral} from '../../../assets/icons/MarkerNeutral.svg'
-import {ReactComponent as MarkerSad} from '../../../assets/icons/MarkerSad.svg'
+import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
+import BeachLocalStore from "../../../BeachCard/store/beachLocal.store";
+import {ReactComponent as MarkerSmile} from '../../../../assets/icons/MarkerSmile.svg'
+import {ReactComponent as MarkerNeutral} from '../../../../assets/icons/MarkerNeutral.svg'
+import {ReactComponent as MarkerSad} from '../../../../assets/icons/MarkerSad.svg'
 import cc from "classcat";
-import MapStore from "../store/map.store";
+import MapStore from "../../store/map.store";
+import {Typography} from "@material-tailwind/react";
 
 const BathingComfortGradeBlock = observer(({classes}) => {
     const bathingComfortGrades = [
@@ -29,18 +30,18 @@ const BathingComfortGradeBlock = observer(({classes}) => {
     return (
         SelectedClassInfoStore.currentClass === BeachLocalStore &&
         !MapStore.selectedAdditionalLayer &&
-        <div className={cc([MapStore.blurBackgroundClasses, classes])}>
-            <div className={"text-xl font-bold mb-4"}>
+        <div className={cc([MapStore.blurBackgroundClasses, classes, "py-4 px-5"])}>
+            <Typography as={"div"} variant={"h6"} className={"mb-4"}>
                 Комфортность купания
-            </div>
+            </Typography>
             <div className={"flex flex-col gap-2"}>
                 {
                     bathingComfortGrades.map((bathingComfort, idx) => {
                         let Icon = bathingComfort.icon
 
                         return (
-                            <div key={idx} className={"flex gap-2 items-center"}>
-                                <Icon className={cc([bathingComfort.color, "w-8 h-8"])}/>
+                            <div key={idx} className={"flex gap-2 items-center text-sm"}>
+                                <Icon className={cc([bathingComfort.color, "w-7 h-7"])}/>
                                 {bathingComfort.title}
                             </div>
                         )

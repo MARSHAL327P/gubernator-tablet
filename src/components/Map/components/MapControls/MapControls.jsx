@@ -2,7 +2,7 @@ import {observer} from "mobx-react-lite";
 import AdditionalLayerBtns from "./AdditionalLayerBtns";
 import LockScaleNotification from "./LockScaleNotification";
 import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
-import HeatmapGradeBlock from "./HeatmapGradeBlock";
+import HeatmapGradeBlock from "../Layers/HeatmapGradeBlock";
 import {Fragment} from "react";
 
 const MapControls = observer((

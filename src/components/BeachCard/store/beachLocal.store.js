@@ -5,7 +5,7 @@ import { ReactComponent as Wave } from "../../../assets/icons/Wave.svg";
 import { ReactComponent as Water } from "../../../assets/icons/Water.svg";
 import BeachCardStore from "./beachCard.store";
 import FilterStore from "../../Filter/store/filter.store";
-import BeachMap from "../../Map/components/BeachMap";
+import BeachMap from "../../Map/components/Placemarkers/BeachMap";
 import BeachCard from "../components/BeachCard";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 

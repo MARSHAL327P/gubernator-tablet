@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
-import MapStore from "../store/map.store";
+import MapStore from "../../store/map.store";
 import {Alert} from "@material-tailwind/react";
-import {ReactComponent as LockIcon} from '../../../assets/icons/Lock.svg'
+import {ReactComponent as LockIcon} from '../../../../assets/icons/Lock.svg'
 
 const LockScaleNotification = observer(({classes}) => {
     return (

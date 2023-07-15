@@ -15,10 +15,12 @@ const FilterBtn = observer(() => {
     if (!SelectedClassInfoStore.filteredCards || SelectedClassInfoStore.currentClass?.isLoading)
         tooltip = "Фильтр недоступен"
     let Component = width <= 1024 ? Fragment : Tooltip
+    let componentProps = width <= 1024 ? {} : {
+        content: tooltip
+    }
 
     return (
-        <Component
-            content={tooltip}>
+        <Component {...componentProps}>
             <Button
                 className={"flex items-center px-4 max-h-[48px]"}
                 onClick={action(() => {

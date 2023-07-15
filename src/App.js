@@ -8,6 +8,7 @@ import MapTemplate from "./components/Map/components/MapTemplate";
 import BeachLocalStore from "./components/BeachCard/store/beachLocal.store";
 import RealObjectStore from "./components/RealObjects/store/realObject.store";
 import RealObjectPage from "./pages/RealObjectPage";
+import {Toaster} from "react-hot-toast";
 
 function App() {
     // const location = useLocation()
@@ -66,6 +67,7 @@ function App() {
                 </Route>
             </Routes>
             {/*</div>*/}
+            <Toaster position={"bottom-center"} />
         </YMaps>
     );
 }

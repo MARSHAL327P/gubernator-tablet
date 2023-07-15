@@ -2,6 +2,7 @@ import {action, makeAutoObservable, runInAction} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import toast from "react-hot-toast";
 
 class FilterStore {
     isOpen = false
@@ -68,7 +69,7 @@ class FilterStore {
 
         SelectedClassInfoStore.currentClass.isLoading = true
 
-        axios({
+        return axios({
             method: 'post',
             url: SelectedClassInfoStore.currentClass.filterUrl,
             data: this.sentFilterInputs,
@@ -80,6 +81,7 @@ class FilterStore {
                         return data.includes(card.id)
                     })
                     SelectedClassInfoStore.currentClass.isLoading = false
+                    console.log(SelectedClassInfoStore.filteredCards.length)
                 })
             )
             .catch((data) => {
@@ -115,9 +117,9 @@ class FilterStore {
             this.clearFilterInputs(SelectedClassInfoStore.filterInputs)
         }
 
-
-        this.sentFilterInputs = {}
-        this.fetchFilterInputs()
+        this.filteredList = null
+        // this.sentFilterInputs = {}
+        // this.fetchFilterInputs()
     }
 
     calculateChangedParams(filterInputs) {
@@ -279,7 +281,16 @@ class FilterStore {
             this.sentFilterInputs[inputName] = sentInputParams
         }
 
-        this.fetchFilterInputs()
+        if( window.outerWidth > 1024 ){
+            this.fetchFilterInputs()
+        } else {
+            toast.promise(this.fetchFilterInputs(), {
+                loading: "Отправка...",
+                success: action(() => {
+                    return `Найдено ${SelectedClassInfoStore.filteredCards.length} из ${SelectedClassInfoStore.currentClass.list.length}`
+                })
+            })
+        }
     }
 
     getInputAttr(inputName, item) {

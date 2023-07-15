@@ -11,6 +11,8 @@ import Indications from "../../Indications/components/Indications";
 import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
 import BeachCardProps from "./BeachCardProps";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
+import {runInAction} from "mobx";
 
 const BeachCard = observer(({card}) => {
     const styles = {
@@ -36,6 +38,7 @@ const BeachCard = observer(({card}) => {
                 <div className="flex justify-between gap-2">
                     <Tooltip content={"На карте"}>
                         <Button onClick={() => {
+                            SidebarStore.toggleMobileHideCards(true)
                             MapStore.zoomToItem(card.coord)
                         }} color={"white"}
                                 className={styles.btn}>

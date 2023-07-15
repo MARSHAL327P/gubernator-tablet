@@ -5,7 +5,7 @@ import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
 import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import {ReactComponent as Wastewater} from "../../../assets/icons/Wastewater.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
-import RealObjectMap from "../../Map/components/RealObjectMap";
+import RealObjectMap from "../../Map/components/Placemarkers/RealObjectMap";
 import RealObjectCard from "../components/RealObjectCard";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 

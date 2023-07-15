@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import MapStore from "../store/map.store";
+import MapStore from "../../store/map.store";
 import cc from "classcat";
 
 const HeatmapGradeBlock = observer(() => {
