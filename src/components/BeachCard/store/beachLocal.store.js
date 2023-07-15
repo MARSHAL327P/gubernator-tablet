@@ -118,6 +118,7 @@ class BeachLocalStore {
     mapLayer = <BeachMap/>
     excludedFilters = ["rating", "price", "workTime"]
     filterInputs = {}
+    filteredList = null
     filterUrl = process.env.REACT_APP_BEACHES_FILTER
 
     get card(){

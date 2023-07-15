@@ -1,16 +1,14 @@
 import {observer} from "mobx-react-lite";
 import {
-    Button,
     IconButton,
     SpeedDial, SpeedDialAction,
     SpeedDialContent,
     SpeedDialHandler,
     Spinner,
-    Tooltip, Typography
+    Typography
 } from "@material-tailwind/react";
 import cc from "classcat";
 import MapStore from "../../store/map.store";
-import useWindowSize from "../../../../hooks/useWindowSize";
 import {ReactComponent as Layer} from '../../../../assets/icons/Layer.svg'
 import {useState} from "react";
 import {XMarkIcon} from "@heroicons/react/24/solid";
@@ -31,8 +29,8 @@ const MobileAdditionalLayerBtns = observer(() => {
                         isLoading.length > 0 ?
                             <Spinner/> :
                             open ?
-                                <XMarkIcon className={"w-5 h-5 fill-primary"}/> :
-                                <Layer className="h-5 w-5 fill-primary transition-transform"/>
+                                <XMarkIcon className={"w-5 h-5"}/> :
+                                <Layer className="h-5 w-5 transition-transform"/>
                     }
                 </IconButton>
             </SpeedDialHandler>

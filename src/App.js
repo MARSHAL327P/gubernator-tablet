@@ -9,6 +9,7 @@ import BeachLocalStore from "./components/BeachCard/store/beachLocal.store";
 import RealObjectStore from "./components/RealObjects/store/realObject.store";
 import RealObjectPage from "./pages/RealObjectPage";
 import {Toaster} from "react-hot-toast";
+import SidebarStore from "./components/Sidebar/store/sidebar.store";
 
 function App() {
     // const location = useLocation()
@@ -23,12 +24,22 @@ function App() {
         {
             title: "Пляжи",
             data: BeachLocalStore,
+            selected: true,
             link: "/",
+            onClick: (isSelected) => {
+                if (isSelected)
+                    SidebarStore.toggleMobileHideCards(false)
+            }
         },
         {
             title: "Объекты",
             data: RealObjectStore,
+            selected: false,
             link: "/object",
+            onClick: (isSelected) => {
+                if (isSelected)
+                    SidebarStore.toggleMobileHideCards(false)
+            }
         },
         // {
         //     title: "Архитектура",
@@ -67,7 +78,7 @@ function App() {
                 </Route>
             </Routes>
             {/*</div>*/}
-            <Toaster position={"bottom-center"} />
+            <Toaster position={"bottom-center"}/>
         </YMaps>
     );
 }

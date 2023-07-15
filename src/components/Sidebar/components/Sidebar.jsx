@@ -25,7 +25,7 @@ const Sidebar = observer(({tabItems}) => {
     }
 
     const location = useLocation();
-    let [width, height] = useWindowSize()
+    let [width] = useWindowSize()
     let [elOffset, setElOffset] = useState(0)
     let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
     let fixedHeaderEl = useRef(null)

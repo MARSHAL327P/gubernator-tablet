@@ -10,7 +10,7 @@ import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 const FilterBtn = observer(() => {
     const iconStyles = "fill-white w-7 h-7"
-    let [width, height] = useWindowSize()
+    let [width] = useWindowSize()
     let tooltip = FilterStore.isOpen ? "Закрыть фильтр" : "Открыть фильтр"
     if (!SelectedClassInfoStore.filteredCards || SelectedClassInfoStore.currentClass?.isLoading)
         tooltip = "Фильтр недоступен"

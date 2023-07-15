@@ -149,6 +149,7 @@ class RealObjectStore {
     filterGroup = this.realObjectTypes
     excludedFilters = []
     filterInputs = {}
+    filteredList = null
     filterUrl = process.env.REACT_APP_REAL_OBJECTS_FILTER
     fastFilter = {
         fields: {

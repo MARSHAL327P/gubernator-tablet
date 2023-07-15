@@ -11,7 +11,7 @@ import MobileAdditionalLayerBtns from "./MobileAdditionalLayerBtns";
 
 const AdditionalLayerBtns = observer(() => {
     if (!MapStore.ymaps) return
-    let [width, height] = useWindowSize()
+    let [width] = useWindowSize()
 
     return (
         width > 1024 ?

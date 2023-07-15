@@ -21,13 +21,14 @@ const Indications = observer((
     let cardIndications = Object.keys(data)
     let indicationNames = indications.map(indication => indication.indicationName)
     let hasNewIndications = Object.values(IndicationsStore.indications).filter(indication => !indicationNames.includes(indication.indicationName))
+    let defaultBackgroundColor = "bg-gray-300"
 
     if( hasNewIndications.length === 0 )
         cardIndications.forEach(item => {
             if( !indicationNames.includes(item) )
                 indications.push({
                     id: indications.length,
-                    background: "bg-gray-400",
+                    background: defaultBackgroundColor,
                     indicationName: item,
                     name: item
                 })
@@ -73,7 +74,7 @@ const Indications = observer((
                             <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
                                     "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12",
-                                    indication.background || "bg-gray-400"
+                                    indication.background || defaultBackgroundColor
                                 ])}>
                                     {indication.icon && <Icon className={indication.color || "fill-white"}/>}
                                     <span>

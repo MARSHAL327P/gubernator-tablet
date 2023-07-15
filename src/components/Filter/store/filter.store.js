@@ -37,11 +37,10 @@ class FilterStore {
         },
     }
     sentFilterInputs = {}
-    filteredList = null
 
     filteredCards() {
         let fastFilter = SelectedClassInfoStore.currentClass.fastFilter
-        let filteredList = this.filteredList || SelectedClassInfoStore.currentClass.list
+        let filteredList = SelectedClassInfoStore.currentClass.filteredList || SelectedClassInfoStore.currentClass.list
 
         if (SidebarStore.searchQuery.trim() !== "") {
             filteredList = filteredList.filter((card) => {
@@ -77,11 +76,10 @@ class FilterStore {
         })
             .then(
                 action(({data}) => {
-                    this.filteredList = SelectedClassInfoStore.currentClass.list.filter(card => {
+                    SelectedClassInfoStore.currentClass.filteredList = SelectedClassInfoStore.currentClass.list.filter(card => {
                         return data.includes(card.id)
                     })
                     SelectedClassInfoStore.currentClass.isLoading = false
-                    console.log(SelectedClassInfoStore.filteredCards.length)
                 })
             )
             .catch((data) => {
@@ -117,7 +115,7 @@ class FilterStore {
             this.clearFilterInputs(SelectedClassInfoStore.filterInputs)
         }
 
-        this.filteredList = null
+        SelectedClassInfoStore.currentClass.filteredList = null
         // this.sentFilterInputs = {}
         // this.fetchFilterInputs()
     }

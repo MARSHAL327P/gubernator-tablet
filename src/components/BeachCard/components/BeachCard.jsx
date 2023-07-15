@@ -12,7 +12,6 @@ import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
 import BeachCardProps from "./BeachCardProps";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
-import {runInAction} from "mobx";
 
 const BeachCard = observer(({card}) => {
     const styles = {
