@@ -108,6 +108,7 @@ class BeachLocalStore {
     }
 
     isLoading = false
+    isFetched = false
     list = []
     code = ""
     title = "Пляж"

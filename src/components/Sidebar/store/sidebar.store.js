@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import FilterStore from "../../Filter/store/filter.store";
 
 class SidebarStore {
     searchQuery = ""
@@ -34,8 +35,11 @@ class SidebarStore {
         if (isUpSwipe)
             this.mobileHideCards = false
 
-        if( isDownSwipe )
+        if( isDownSwipe ){
             this.mobileHideCards = true
+            FilterStore.isOpen = false
+        }
+
 
         setTimeout(() => {
             this.sidebarWrapper.current.style.transition = "0s"

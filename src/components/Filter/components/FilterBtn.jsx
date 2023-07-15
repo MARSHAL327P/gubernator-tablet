@@ -4,21 +4,31 @@ import {Button, Tooltip} from "@material-tailwind/react";
 import {action} from "mobx";
 import {AdjustmentsVerticalIcon, XMarkIcon} from "@heroicons/react/24/solid";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import useWindowSize from "../../../hooks/useWindowSize";
+import {Fragment} from "react";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 const FilterBtn = observer(() => {
     const iconStyles = "fill-white w-7 h-7"
+    let [width, height] = useWindowSize()
     let tooltip = FilterStore.isOpen ? "Закрыть фильтр" : "Открыть фильтр"
-    if( !SelectedClassInfoStore.filteredCards || SelectedClassInfoStore.currentClass?.isLoading )
+    if (!SelectedClassInfoStore.filteredCards || SelectedClassInfoStore.currentClass?.isLoading)
         tooltip = "Фильтр недоступен"
+    let Component = width <= 1024 ? Fragment : Tooltip
 
     return (
-        <Tooltip
+        <Component
             content={tooltip}>
             <Button
                 className={"flex items-center px-4 max-h-[48px]"}
                 onClick={action(() => {
-                    if (SelectedClassInfoStore.filteredCards !== null && !SelectedClassInfoStore.currentClass.isLoading)
+                    if (SelectedClassInfoStore.filteredCards !== null && !SelectedClassInfoStore.currentClass.isLoading) {
+                        if (width <= 1024 && SidebarStore.mobileHideCards)
+                            SidebarStore.mobileHideCards = true
+
                         FilterStore.isOpen = !FilterStore.isOpen
+                    }
+
                 })}
             >
                 {
@@ -27,7 +37,7 @@ const FilterBtn = observer(() => {
                         <AdjustmentsVerticalIcon className={iconStyles}/>
                 }
             </Button>
-        </Tooltip>
+        </Component>
     )
 })
 

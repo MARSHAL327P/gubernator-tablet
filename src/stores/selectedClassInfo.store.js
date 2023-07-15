@@ -32,6 +32,7 @@ class SelectedClassInfoStore{
                 action(data => {
                     currentClass.list = data ?? []
                     currentClass.isLoading = false
+                    currentClass.isFetched = true
                 })
             )
     }

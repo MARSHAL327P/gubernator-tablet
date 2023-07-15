@@ -11,6 +11,9 @@ const RealObjectMap = observer(() => {
     const [queryParameters] = useSearchParams()
 
     return !RealObjectStore.isLoading && SelectedClassInfoStore.filteredCards.map((realObject, index) => {
+        console.log(realObject)
+        console.log(realObject.type)
+        console.log(RealObjectStore.realObjectTypes[realObject.type])
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
         let mapIndication = realObject.props[indicationName]?.value || realObject.props[indicationName]
 

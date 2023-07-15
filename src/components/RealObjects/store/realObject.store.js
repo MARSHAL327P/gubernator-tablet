@@ -137,6 +137,7 @@ class RealObjectStore {
     }
 
     isLoading = false
+    isFetched = false
     list = []
     id = 0
     type = ""

@@ -4,10 +4,10 @@ import {Accordion, AccordionBody, AccordionHeader, List, ListItem} from "@materi
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import cc from "classcat";
 import FilterInputSection from "./FilterInputSection";
-import {action, toJS} from "mobx";
+import {action} from "mobx";
 
 const FilterGroup = observer(() => {
-    if( !SelectedClassInfoStore.currentClass || !SelectedClassInfoStore.filteredCards || SelectedClassInfoStore.currentClass?.isLoading ) return
+    if( !SelectedClassInfoStore.currentClass || !SelectedClassInfoStore.filteredCards || !SelectedClassInfoStore.currentClass?.isFetched ) return
 
     let selectedFastFilter = SelectedClassInfoStore.currentClass.fastFilter?.selected
 
@@ -23,8 +23,6 @@ const FilterGroup = observer(() => {
 
                         if (Object.keys(filterGroup.defaultFilterInputs).length <= 0)
                             return false
-
-                        console.log(toJS(filterGroup.defaultFilterInputs))
 
                         return (
                             <Accordion

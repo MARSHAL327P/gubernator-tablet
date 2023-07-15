@@ -20,7 +20,7 @@ const HomePage = observer(({tabItems}) => {
     return (
         <>
             <div ref={sidebarWrapper}
-                 className={cc(["flex drop-shadow-xl h-full transition lg:duration-0 lg:w-full absolute top-0 left-0 z-20", {
+                 className={cc(["flex drop-shadow-xl h-full transition lg:duration-0 lg:w-screen lg:overflow-hidden absolute top-0 left-0 z-20", {
                      "translate-x-0 lg:translate-y-[calc(100%-148px)]": !FilterStore.isOpen && !hideSidebar && SidebarStore.mobileHideCards,
                      "lg:translate-y-[30px]": !SidebarStore.mobileHideCards,
                      "-translate-x-full": !FilterStore.isOpen && hideSidebar,
@@ -28,9 +28,9 @@ const HomePage = observer(({tabItems}) => {
                  }])}
             >
                 <Sidebar tabItems={tabItems}/>
-                <div className={cc(["transition flex absolute h-full", {
-                    "translate-x-0": !FilterStore.isOpen,
-                    "translate-x-[calc(100%-21px)]": FilterStore.isOpen,
+                <div className={cc(["transition flex absolute h-full lg:z-20 lg:w-full", {
+                    "translate-x-0 lg:translate-x-full": !FilterStore.isOpen,
+                    "translate-x-[calc(100%-21px)] lg:translate-x-0": FilterStore.isOpen,
                 }])}>
                     <Filter/>
                     <Tooltip content={hideSidebar ? "Открыть боковую панель" : "Скрыть боковую панель"}>
