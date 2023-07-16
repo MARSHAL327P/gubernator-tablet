@@ -24,6 +24,8 @@ module.exports = withMT({
             },
             gridTemplateColumns: {
                 'card': 'repeat(auto-fill, minmax(340px, 1fr))',
+                'review': '2fr 5fr',
+                'widgets': 'repeat(auto-fill, minmax(350px, 1fr))',
             },
             keyframes: {
                 translateY: {

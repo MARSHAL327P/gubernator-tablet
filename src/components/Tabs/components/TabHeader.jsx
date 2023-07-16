@@ -28,8 +28,8 @@ function TabItem(variant, size, tab) {
                     className={
                         cc({
                             "outline-none whitespace-nowrap": true,
-                            "text-lg font-semibold px-7": size === "md",
-                            "shadow-lg": selected && variant.name === tabHeaderVariants.DEFAULT.name,
+                            "font-semibold px-7": size === "md",
+                            // "shadow-lg": selected && variant.name === tabHeaderVariants.DEFAULT.name,
                             "text-sm w-full": size === "sm"
                         })
                     }

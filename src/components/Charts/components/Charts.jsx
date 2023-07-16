@@ -107,7 +107,7 @@ const Charts = observer(() => {
         }, {"date": "2023-07-05T20:00:02", "value": 24}, {"date": "2023-07-05T20:30:02", "value": 23.87}]
 
     return (
-        <div className={"flex gap-7 relative"}>
+        <div className={"flex xl:flex-wrap justify-center gap-7 relative"}>
             <div className="bg-white p-6 rounded-xl shadow-lg w-[550px] h-fit">
                 <Typography variant={"h4"} className={"mb-5"}>
                     Выбор даты

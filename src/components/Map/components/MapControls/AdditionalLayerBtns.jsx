@@ -6,15 +6,13 @@ import {
 } from "@material-tailwind/react";
 import cc from "classcat";
 import MapStore from "../../store/map.store";
-import useWindowSize from "../../../../hooks/useWindowSize";
 import MobileAdditionalLayerBtns from "./MobileAdditionalLayerBtns";
 
 const AdditionalLayerBtns = observer(() => {
     if (!MapStore.ymaps) return
-    let [width] = useWindowSize()
 
     return (
-        width > 1024 ?
+        window.outerWidth > 1024 ?
             <div className={"flex gap-5"}>
                 {
                     Object.values(MapStore.additionalLayers).map((additionalLayer) => {

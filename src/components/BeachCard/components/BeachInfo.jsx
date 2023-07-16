@@ -57,8 +57,8 @@ const BeachInfo = observer(() => {
     Fancybox.bind("[data-fancybox]");
 
     return (
-        <div className={"flex gap-7"}>
-            <div className={"flex flex-col gap-7 w-[50%]"}>
+        <div className={"flex gap-7 flex-wrap"}>
+            <div className={"flex flex-col gap-7 flex-1 lg:flex-auto lg:w-full"}>
                 <div className={styles.block}>
                     <div className={styles.title}>
                         Описание
@@ -70,7 +70,7 @@ const BeachInfo = observer(() => {
                         <BeachCardProps cardProps={card.props} classes={"bg-primary text-white"}/>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-7">
+                <div className="grid grid-cols-2 md:grid-cols-1 gap-7">
                     <div className={styles.block}>
                         <div className={styles.title}>
                             Текущие показатели
@@ -106,7 +106,7 @@ const BeachInfo = observer(() => {
                     </div>
                 </div>
             </div>
-            <div className={cc([styles.block, "w-[50%]"])}>
+            <div className={cc([styles.block, "flex-1"])}>
                 <div className={styles.title}>
                     Фотографии
                 </div>

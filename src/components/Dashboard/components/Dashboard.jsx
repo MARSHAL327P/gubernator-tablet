@@ -11,9 +11,12 @@ import {Button} from "@material-tailwind/react";
 import cc from "classcat";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import MapControls from "../../Map/components/MapControls/MapControls";
+import DrawerDashboard from "./DrawerDashboard";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();
+    const [width] = useWindowSize()
     let card = SelectedClassInfoStore.currentClass?.card
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
     tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
@@ -33,27 +36,28 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
                             tabItems.map((tab) => <Tab.Panel key={tab.title}>{tab.content}</Tab.Panel>) :
                             <Skeleton count={5}/>
                     }
-                    {
-                        DashboardStore.isDashboard() &&
-                        <div className={"absolute -top-20 right-0 w-full"}>
-                            <Button
-                                color={"white"}
-                                className={"relative shadow-lg bottom-5 mx-auto z-20 px-4 rounded-xl w-fit"}
-                                onClick={DashboardStore.toggleOpen.bind(DashboardStore)}
-                            >
-                                <ChevronDownIcon
-                                    strokeWidth={2.5}
-                                    className={cc(["h-5 w-5 transition-transform", {
-                                        "rotate-180": !DashboardStore.isOpen
-                                    }])}
-                                />
-                                {DashboardStore.isOpen ? "Скрыть" : "Раскрыть"}
-                            </Button>
-                            <MapControls/>
-                        </div>
-                    }
+                    <div className={"absolute -top-20 right-0 w-full"}>
+                        <Button
+                            color={"white"}
+                            className={"relative shadow-lg bottom-5 mx-auto z-20 px-4 rounded-xl w-fit"}
+                            onClick={DashboardStore.toggleOpen.bind(DashboardStore)}
+                        >
+                            <ChevronDownIcon
+                                strokeWidth={2.5}
+                                className={cc(["h-5 w-5 transition-transform", {
+                                    "rotate-180": !DashboardStore.isOpen
+                                }])}
+                            />
+                            {DashboardStore.isOpen ? "Скрыть" : "Раскрыть"}
+                        </Button>
+                        <MapControls/>
+                    </div>
                 </div>
             </Tab.Panels>
+            {
+                width <= 1024 && <DrawerDashboard tabItems={tabItems}/>
+            }
+
         </Tab.Group>
     )
 })

@@ -57,7 +57,8 @@ const MapTemplate = observer(() => {
     })
 
     useEffect(() => {
-        setMapHeight(height - (DashboardStore.isDashboard() && DashboardStore.isOpen ? 436 : 0))
+        let dashboardOffset = width > 1024 ? 436 : 300
+        setMapHeight(window.innerHeight - (DashboardStore.isDashboard() && DashboardStore.isOpen ? dashboardOffset : 0))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height, window.location.pathname, DashboardStore.isOpen])
 
