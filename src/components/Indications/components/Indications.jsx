@@ -76,8 +76,8 @@ const Indications = observer((
                                     "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12 sm:px-3",
                                     indication.background || defaultBackgroundColor
                                 ])}>
-                                    {indication.icon && <Icon className={cc([indication.color || "fill-white", "w-6 h-6"])}/>}
-                                    <span className={"text-sm"}>
+                                    {indication.icon && <Icon className={cc([indication.color || "fill-white", "sm:w-6 sm:h-6"])}/>}
+                                    <span className={"sm:text-sm"}>
                                         {
                                             fixedValue && indication.type !== "string" ?
                                                 indicationValue.toFixed(1) :
