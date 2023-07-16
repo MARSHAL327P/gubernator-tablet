@@ -18,6 +18,8 @@ import useWindowSize from "../../../hooks/useWindowSize";
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {
+        if( SelectedClassInfoStore.currentClass.isLoading ) return false
+
         runInAction(() => {
             SelectedClassInfoStore.initCurrentClass(tabItems[tabIndex].data)
             SidebarStore.searchQuery = ""
@@ -29,23 +31,23 @@ const Sidebar = observer(({tabItems}) => {
     let [elOffset, setElOffset] = useState(0)
     let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
     let fixedHeaderEl = useRef(null)
-    let [fixedHeaderHeight, setFixedHeaderHeight] = useState(0)
 
     useEffect(() => {
         runInAction(() => {
             SelectedClassInfoStore.initCurrentClass(tabItems[selectedTabIndex].data)
         })
-    }, [selectedTabIndex, tabItems])
+    }, [])
 
     let currentClass = SelectedClassInfoStore.currentClass
 
     useEffect(() => {
-        setFixedHeaderHeight(fixedHeaderEl.current.offsetHeight + (width > 1024 ? 0 : 40))
+        runInAction(() => {
+            SidebarStore.fixedHeaderHeight = fixedHeaderEl.current.offsetHeight + (currentClass?.fastFilter ? 60 : 0)
+        })
     }, [currentClass, currentClass?.isLoading, width])
 
     return (
         <div className={"h-full bg-white transition z-20 w-[460px] lg:w-full relative"}>
-
             <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
                 <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 pb-3 pt-7 lg:pt-3 mr-[6px] flex-col"}>
                     <div className={"bg-gray-500 rounded-full w-[100px] h-1 hidden lg:block mx-auto"}></div>
@@ -63,14 +65,16 @@ const Sidebar = observer(({tabItems}) => {
                         size={"sm"}
                         tabItems={tabItems}
                     />
-                    <FastFilter/>
+                    {
+                        width > 1024 && <FastFilter/>
+                    }
                 </FixedHeader>
                 <div
                     onScroll={(e) => {
                         setElOffset(e.currentTarget.scrollTop)
                     }}
                     style={{
-                        "height": `calc(100% - ${fixedHeaderHeight}px)`
+                        "height": `calc(100% - ${SidebarStore.fixedHeaderHeight}px)`
                     }}
                     className={"sidebar p-3 pb-7 overflow-auto transition"}>
 

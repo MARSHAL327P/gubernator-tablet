@@ -8,6 +8,7 @@ class SidebarStore {
     sidebarWrapper = null
     minSwipeDistance = 10
     mobileHideCards = true
+    fixedHeaderHeight = 0
 
     onTouchStart = (e) => {
         this.touchEnd = null
@@ -38,12 +39,6 @@ class SidebarStore {
             this.toggleMobileHideCards(true)
             FilterStore.isOpen = false
         }
-
-        // this.sidebarWrapper.current.style.transform = ``
-        // this.sidebarWrapper.current.style.transition = ".3s"
-        // setTimeout(() => {
-        //     this.sidebarWrapper.current.style.transition = "0s"
-        // }, 300)
     }
 
     toggleMobileHideCards(value){

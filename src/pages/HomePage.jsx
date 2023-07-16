@@ -8,10 +8,19 @@ import {useEffect, useRef, useState} from "react";
 import Ripple from "../components/RedefinedTags/Ripple/Ripple";
 import {Tooltip} from "@material-tailwind/react";
 import SidebarStore from "../components/Sidebar/store/sidebar.store";
+import FastFilter from "../components/Filter/components/FastFilter";
+import useWindowSize from "../hooks/useWindowSize";
 
 const HomePage = observer(({tabItems}) => {
     let [hideSidebar, setHideSidebar] = useState(false)
     let sidebarWrapper = useRef(null)
+    let [width] = useWindowSize()
+    let styles = {
+        sidebarWrapper: {
+            transform: width <= 1024 && !FilterStore.isOpen && !hideSidebar && SidebarStore.mobileHideCards && `translateY(calc(100% - ${SidebarStore.fixedHeaderHeight}px))`
+        }
+    }
+
 
     useEffect(() => {
         SidebarStore.sidebarWrapper = sidebarWrapper
@@ -19,15 +28,23 @@ const HomePage = observer(({tabItems}) => {
 
     return (
         <>
-            <div ref={sidebarWrapper}
-                 className={cc(["flex drop-shadow-xl h-full transition lg:duration-0 lg:w-screen lg:overflow-hidden absolute top-0 left-0 z-20", {
-                     "translate-x-0 lg:translate-y-[calc(100%-148px)]": !FilterStore.isOpen && !hideSidebar && SidebarStore.mobileHideCards,
-                     "lg:translate-y-[30px]": !SidebarStore.mobileHideCards,
-                     "-translate-x-full": !FilterStore.isOpen && hideSidebar,
-                     "-translate-x-[200%]": FilterStore.isOpen && hideSidebar
-                 }])}
+            <div
+                style={styles.sidebarWrapper}
+                ref={sidebarWrapper}
+                className={cc(["flex drop-shadow-xl h-full transition lg:duration-0 lg:w-screen lg:overflow-hidden absolute top-0 left-0 z-20", {
+                    "translate-x-0": !FilterStore.isOpen && !hideSidebar && SidebarStore.mobileHideCards,
+                    "lg:translate-y-[30px]": !SidebarStore.mobileHideCards,
+                    "-translate-x-full": !FilterStore.isOpen && hideSidebar,
+                    "-translate-x-[200%]": FilterStore.isOpen && hideSidebar
+                }])}
             >
-                <Sidebar tabItems={tabItems}/>
+                <div className={"w-full"}>
+                    {
+                        width <= 1024 && <FastFilter classes={"gap-3"} itemClasses={"bg-white"}/>
+                    }
+                    <Sidebar tabItems={tabItems}/>
+                </div>
+
                 <div className={cc(["transition flex absolute h-full lg:z-20 lg:w-full", {
                     "translate-x-0 lg:translate-x-full": !FilterStore.isOpen,
                     "translate-x-[calc(100%-21px)] lg:translate-x-0": FilterStore.isOpen,

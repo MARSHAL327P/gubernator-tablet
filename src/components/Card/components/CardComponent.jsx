@@ -7,7 +7,12 @@ const CardComponent = observer(() => {
     return (
         <>
             {
-                (FilterStore.numChangedParams > 0 || SidebarStore.searchQuery.trim() !== "") && <div className={"text-center font-bold mb-5"}>
+                (
+                    FilterStore.numChangedParams > 0 ||
+                    SidebarStore.searchQuery.trim() !== "" ||
+                    SelectedClassInfoStore.currentClass.fastFilter?.selected.length > 0
+                ) &&
+                <div className={"text-center font-bold mb-5"}>
                     Показано {SelectedClassInfoStore.filteredCards.length} из {SelectedClassInfoStore.currentClass.list.length}
                 </div>
             }

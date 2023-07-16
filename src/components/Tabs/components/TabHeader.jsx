@@ -22,7 +22,7 @@ function TabItem(variant, size, tab) {
 
             return (
                 <Button
-                    onClick={tab.onClick.bind(null, tab.selected)}
+                    onClick={tab.onClick ? tab.onClick.bind(null, tab.selected) : null}
                     color={selected ? "blue" : "white"}
                     variant={selected ? "filled" : variant.noSelected}
                     className={

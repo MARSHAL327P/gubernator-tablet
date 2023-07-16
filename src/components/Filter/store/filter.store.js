@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -52,11 +52,20 @@ class FilterStore {
         }
 
         if (fastFilter?.selected.length > 0) {
+            // let resultFilteredList = []
+
             for (let fieldName in fastFilter.fields) {
-                filteredList = filteredList.filter((card) => {
+                let fastFilterFilteredList = filteredList.filter((card) => {
                     return fastFilter.selected.includes(card[fieldName])
                 })
+
+                if( fastFilterFilteredList.length > 0 )
+                    filteredList = fastFilterFilteredList
+
+                // resultFilteredList = [...resultFilteredList, ...fastFilterFilteredList]
             }
+
+            // filteredList = resultFilteredList
         }
 
         return filteredList

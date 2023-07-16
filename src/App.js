@@ -10,6 +10,14 @@ import RealObjectStore from "./components/RealObjects/store/realObject.store";
 import RealObjectPage from "./pages/RealObjectPage";
 import {Toaster} from "react-hot-toast";
 import SidebarStore from "./components/Sidebar/store/sidebar.store";
+import SelectedClassInfoStore from "./stores/selectedClassInfo.store";
+
+function onTabClick(isSelected, e){
+    if( SelectedClassInfoStore.currentClass.isLoading )
+        e.preventDefault()
+    if (isSelected)
+        SidebarStore.toggleMobileHideCards(false)
+}
 
 function App() {
     // const location = useLocation()
@@ -26,20 +34,14 @@ function App() {
             data: BeachLocalStore,
             selected: true,
             link: "/",
-            onClick: (isSelected) => {
-                if (isSelected)
-                    SidebarStore.toggleMobileHideCards(false)
-            }
+            onClick: onTabClick
         },
         {
             title: "Объекты",
             data: RealObjectStore,
             selected: false,
             link: "/object",
-            onClick: (isSelected) => {
-                if (isSelected)
-                    SidebarStore.toggleMobileHideCards(false)
-            }
+            onClick: onTabClick
         },
         // {
         //     title: "Архитектура",

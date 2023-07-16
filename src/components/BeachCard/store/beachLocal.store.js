@@ -120,6 +120,15 @@ class BeachLocalStore {
     filterInputs = {}
     filteredList = null
     filterUrl = process.env.REACT_APP_BEACHES_FILTER
+    // fastFilter = {
+    //     fields: {
+    //         // beachType: [],
+    //         beachCoverage: [],
+    //     },
+    //     alias: {},
+    //     selected: [],
+    //     selectedFieldTypes: []
+    // }
 
     get card(){
         return this.list && this.list.find((card) => card.code === this.code)
