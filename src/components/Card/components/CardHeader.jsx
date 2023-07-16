@@ -5,6 +5,7 @@ import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {getUpdateTimeText} from "../../../Utils";
 import cc from "classcat";
 import {Link} from "react-router-dom";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const CardHeader = observer(({
                                  card,
@@ -13,6 +14,7 @@ const CardHeader = observer(({
                              }) => {
     if( !card ) return
 
+    const [width] = useWindowSize()
     let cardProblems = card.beachProblems && BeachLocalStore.beachProblemsType[card.beachProblems]
     let updateTime = card.updateTime || card.props_updated_at
 
@@ -35,7 +37,7 @@ const CardHeader = observer(({
                             {cardProblems.icon}
                         </Tooltip>
                     }
-                    <Typography variant={"h4"}>
+                    <Typography variant={width > 640 ? "h4" : "h5"}>
                         {card.name}
                     </Typography>
                     {/*<span className={cc({*/}

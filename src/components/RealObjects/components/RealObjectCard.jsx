@@ -31,7 +31,6 @@ const RealObjectCard = observer(({card}) => {
 
     return (
         <>
-            <CardHeader card={card} />
             <div className="px-7 py-5">
                 <Indications
                     data={card.props}

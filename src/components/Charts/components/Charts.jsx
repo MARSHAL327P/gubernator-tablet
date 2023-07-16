@@ -108,7 +108,7 @@ const Charts = observer(() => {
 
     return (
         <div className={"flex xl:flex-wrap justify-center gap-7 relative"}>
-            <div className="bg-white p-6 rounded-xl shadow-lg w-[550px] h-fit">
+            <div className="bg-white p-6 rounded-xl shadow-lg w-[550px] lg:w-full h-fit">
                 <Typography variant={"h4"} className={"mb-5"}>
                     Выбор даты
                 </Typography>

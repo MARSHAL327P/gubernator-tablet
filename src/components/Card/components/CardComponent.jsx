@@ -2,6 +2,7 @@ import {observer} from "mobx-react-lite";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FilterStore from "../../Filter/store/filter.store";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
+import CardHeader from "./CardHeader";
 
 const CardComponent = observer(() => {
     return (
@@ -26,6 +27,7 @@ const CardComponent = observer(() => {
                                 key={card.id}
                                 className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}
                             >
+                                <CardHeader card={card}/>
                                 <Component card={card}/>
                             </div>
 
