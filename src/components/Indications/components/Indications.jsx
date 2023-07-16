@@ -73,11 +73,11 @@ const Indications = observer((
                             indicationValue &&
                             <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
-                                    "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12",
+                                    "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12 sm:px-3",
                                     indication.background || defaultBackgroundColor
                                 ])}>
-                                    {indication.icon && <Icon className={indication.color || "fill-white"}/>}
-                                    <span>
+                                    {indication.icon && <Icon className={cc([indication.color || "fill-white", "w-6 h-6"])}/>}
+                                    <span className={"text-sm"}>
                                         {
                                             fixedValue && indication.type !== "string" ?
                                                 indicationValue.toFixed(1) :

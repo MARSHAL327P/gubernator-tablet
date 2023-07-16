@@ -131,3 +131,17 @@ body{
 .recharts-legend-item:hover{
     cursor: pointer;
 }
+
+@media (max-width: 640px) {
+    .rdrDateRangePickerWrapper{
+        flex-wrap: wrap;
+    }
+
+    .rdrMonth, .rdrDefinedRangesWrapper, .rdrCalendarWrapper.rdrDateRangeWrapper{
+        width: 100% !important;
+    }
+
+    .rdrStaticRangeLabel{
+        text-align: center !important;
+    }
+}

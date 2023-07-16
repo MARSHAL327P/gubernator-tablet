@@ -26,7 +26,7 @@ const WidgetTemplate = observer((
         })
 
     return (
-        <div className={"grid grid-cols-widgets gap-10 mx-auto lg:w-full"}>
+        <div className={"grid grid-cols-widgets sm:grid-cols-1 gap-10 mx-auto lg:w-full"}>
             {indications.map(indication => {
                 let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
                 let Icon = indication.icon
@@ -34,7 +34,7 @@ const WidgetTemplate = observer((
 
                 return indicationValue && Widget && (
                     <div
-                        className="min-h-[380px] p-6 shadow-lg rounded-xl bg-white grid content-between"
+                        className="min-h-[380px] sm:min-h-[300px] p-6 shadow-lg rounded-xl bg-white grid content-between"
                         key={indication.id}
                     >
                         <div className={"flex gap-2 justify-between"}>

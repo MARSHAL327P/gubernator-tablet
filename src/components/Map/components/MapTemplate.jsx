@@ -75,7 +75,7 @@ const MapTemplate = observer(() => {
         >
             <RulerControl options={{float: "right"}}/>
             <ZoomControl options={{float: "right"}}/>
-            <GeoLocationControl/>
+            {/*<GeoLocationControl/>*/}
             {SelectedClassInfoStore.currentClass?.mapLayer}
             {
                 !DashboardStore.isDashboard() &&
