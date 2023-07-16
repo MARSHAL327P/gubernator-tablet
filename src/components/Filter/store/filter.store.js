@@ -1,7 +1,8 @@
-import {action, makeAutoObservable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import toast from "react-hot-toast";
 
 class FilterStore {
     isOpen = false
@@ -36,11 +37,10 @@ class FilterStore {
         },
     }
     sentFilterInputs = {}
-    filteredList = null
 
     filteredCards() {
         let fastFilter = SelectedClassInfoStore.currentClass.fastFilter
-        let filteredList = this.filteredList || SelectedClassInfoStore.currentClass.list
+        let filteredList = SelectedClassInfoStore.currentClass.filteredList || SelectedClassInfoStore.currentClass.list
 
         if (SidebarStore.searchQuery.trim() !== "") {
             filteredList = filteredList.filter((card) => {
@@ -52,11 +52,20 @@ class FilterStore {
         }
 
         if (fastFilter?.selected.length > 0) {
+            // let resultFilteredList = []
+
             for (let fieldName in fastFilter.fields) {
-                filteredList = filteredList.filter((card) => {
+                let fastFilterFilteredList = filteredList.filter((card) => {
                     return fastFilter.selected.includes(card[fieldName])
                 })
+
+                if( fastFilterFilteredList.length > 0 )
+                    filteredList = fastFilterFilteredList
+
+                // resultFilteredList = [...resultFilteredList, ...fastFilterFilteredList]
             }
+
+            // filteredList = resultFilteredList
         }
 
         return filteredList
@@ -68,7 +77,7 @@ class FilterStore {
 
         SelectedClassInfoStore.currentClass.isLoading = true
 
-        axios({
+        return axios({
             method: 'post',
             url: SelectedClassInfoStore.currentClass.filterUrl,
             data: this.sentFilterInputs,
@@ -76,7 +85,7 @@ class FilterStore {
         })
             .then(
                 action(({data}) => {
-                    this.filteredList = SelectedClassInfoStore.currentClass.list.filter(card => {
+                    SelectedClassInfoStore.currentClass.filteredList = SelectedClassInfoStore.currentClass.list.filter(card => {
                         return data.includes(card.id)
                     })
                     SelectedClassInfoStore.currentClass.isLoading = false
@@ -115,9 +124,9 @@ class FilterStore {
             this.clearFilterInputs(SelectedClassInfoStore.filterInputs)
         }
 
-
-        this.sentFilterInputs = {}
-        this.fetchFilterInputs()
+        SelectedClassInfoStore.currentClass.filteredList = null
+        // this.sentFilterInputs = {}
+        // this.fetchFilterInputs()
     }
 
     calculateChangedParams(filterInputs) {
@@ -279,7 +288,16 @@ class FilterStore {
             this.sentFilterInputs[inputName] = sentInputParams
         }
 
-        this.fetchFilterInputs()
+        if( window.outerWidth > 1024 ){
+            this.fetchFilterInputs()
+        } else {
+            toast.promise(this.fetchFilterInputs(), {
+                loading: "Отправка...",
+                success: action(() => {
+                    return `Найдено ${SelectedClassInfoStore.filteredCards.length} из ${SelectedClassInfoStore.currentClass.list.length}`
+                })
+            })
+        }
     }
 
     getInputAttr(inputName, item) {

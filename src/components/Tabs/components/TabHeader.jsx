@@ -15,24 +15,29 @@ export const tabHeaderVariants = {
     }
 }
 
-function TabItem(variant, size, tabTitle) {
+function TabItem(variant, size, tab) {
     return <Tab as={"div"} className={"outline-none w-full"}>
-        {({selected}) => (
-            <Button
-                color={selected ? "blue" : "white"}
-                variant={selected ? "filled" : variant.noSelected}
-                className={
-                    cc({
-                        "outline-none whitespace-nowrap": true,
-                        "text-lg font-semibold px-7": size === "md",
-                        "shadow-lg": selected && variant.name === tabHeaderVariants.DEFAULT.name,
-                        "text-sm w-full": size === "sm"
-                    })
-                }
-            >
-                {tabTitle}
-            </Button>
-        )}
+        {({selected}) => {
+            tab.selected = selected
+
+            return (
+                <Button
+                    onClick={tab.onClick ? tab.onClick.bind(null, tab.selected) : null}
+                    color={selected ? "blue" : "white"}
+                    variant={selected ? "filled" : variant.noSelected}
+                    className={
+                        cc({
+                            "outline-none whitespace-nowrap": true,
+                            "font-semibold px-7": size === "md",
+                            // "shadow-lg": selected && variant.name === tabHeaderVariants.DEFAULT.name,
+                            "text-sm w-full": size === "sm"
+                        })
+                    }
+                >
+                    {tab.title}
+                </Button>
+            )
+        }}
     </Tab>
 }
 
@@ -47,9 +52,9 @@ const TabHeader = observer(({tabItems, variant = tabHeaderVariants.DEFAULT, size
                                 to={tab.getParam ? ("?tab=" + tab.link) : tab.link}
                                 className={"outline-none w-full"}
                             >
-                                {TabItem(variant, size, tab.title)}
+                                {TabItem(variant, size, tab)}
                             </Link>
-                            : TabItem(variant, size, tab.title)
+                            : TabItem(variant, size, tab)
                     )
                 }
             )}

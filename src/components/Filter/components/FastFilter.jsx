@@ -3,14 +3,15 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FilterStore from "../store/filter.store";
 import {action} from "mobx";
 import {Checkbox, List, ListItem, ListItemPrefix, Typography} from "@material-tailwind/react";
+import cc from "classcat";
 
-const FastFilter = observer(() => {
+const FastFilter = observer(({classes, itemClasses}) => {
     if (!SelectedClassInfoStore.currentClass?.fastFilter) return null
 
     let fastFilter = SelectedClassInfoStore.currentClass.fastFilter
 
     return (
-        <List className="flex-row flex-wrap gap-0">
+        <List className={cc(["flex-row flex-wrap gap-0", classes])}>
             {
                 Object.entries(FilterStore.fastFilter.fields).map(([fieldName, fieldValues]) => {
                     return fieldValues.map(fastFilterItem => {
@@ -20,7 +21,7 @@ const FastFilter = observer(() => {
                         return (
                             <ListItem
                                 key={fastFilterItem}
-                                className="p-0 w-fit"
+                                className={cc(["p-0 w-fit", itemClasses])}
                             >
                                 <label htmlFor={fastFilterItem}
                                        className="px-3 py-2 flex items-center w-full cursor-pointer">

@@ -5,7 +5,7 @@ import { ReactComponent as Wave } from "../../../assets/icons/Wave.svg";
 import { ReactComponent as Water } from "../../../assets/icons/Water.svg";
 import BeachCardStore from "./beachCard.store";
 import FilterStore from "../../Filter/store/filter.store";
-import BeachMap from "../../Map/components/BeachMap";
+import BeachMap from "../../Map/components/Placemarkers/BeachMap";
 import BeachCard from "../components/BeachCard";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
@@ -108,6 +108,7 @@ class BeachLocalStore {
     }
 
     isLoading = false
+    isFetched = false
     list = []
     code = ""
     title = "Пляж"
@@ -117,7 +118,17 @@ class BeachLocalStore {
     mapLayer = <BeachMap/>
     excludedFilters = ["rating", "price", "workTime"]
     filterInputs = {}
+    filteredList = null
     filterUrl = process.env.REACT_APP_BEACHES_FILTER
+    // fastFilter = {
+    //     fields: {
+    //         // beachType: [],
+    //         beachCoverage: [],
+    //     },
+    //     alias: {},
+    //     selected: [],
+    //     selectedFieldTypes: []
+    // }
 
     get card(){
         return this.list && this.list.find((card) => card.code === this.code)

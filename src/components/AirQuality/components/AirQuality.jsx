@@ -8,7 +8,7 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const AirQuality = observer(({ airQualityData = SelectedClassInfoStore.currentClass.card.airQuality }) => {
     return (
-        <div className={"flex w-[1300px] mx-auto gap-10"}>
+        <div className={"flex lg:flex-wrap justify-center w-8/12 lg:w-full mx-auto gap-10"}>
             <div className={"flex flex-col gap-14"}>
                 <div className={"flex gap-7 h-fit items-center"}>
                     <AirQualityIndicator value={airQualityData.totalRating}/>
@@ -25,7 +25,7 @@ const AirQuality = observer(({ airQualityData = SelectedClassInfoStore.currentCl
                     </div>
 
                     <div>
-                        <List className={"p-0 grid grid-cols-2 gap-4 text-base w-[700px]"}>
+                        <List className={"p-0 grid grid-cols-2 gap-4 text-base w-full"}>
                             {Object.entries(airQualityData.indications).map(([indicationName, indication]) => {
                                 return (
                                     <Accordion

@@ -7,8 +7,8 @@ import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import DashboardStore from "../../Dashboard/store/dashboard.store";
-import MapControls from "./MapControls";
-import GeoLocationControl from "./GeoLocationControl";
+import MapControls from "./MapControls/MapControls";
+import GeoLocationControl from "./MapControls/GeoLocationControl";
 
 
 const MapTemplate = observer(() => {
@@ -57,7 +57,8 @@ const MapTemplate = observer(() => {
     })
 
     useEffect(() => {
-        setMapHeight(height - (DashboardStore.isDashboard() && DashboardStore.isOpen ? 436 : 0))
+        let dashboardOffset = width > 1024 ? 436 : 300
+        setMapHeight(window.innerHeight - (DashboardStore.isDashboard() && DashboardStore.isOpen ? dashboardOffset : 0))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height, window.location.pathname, DashboardStore.isOpen])
 

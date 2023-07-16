@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import FilterStore from "../../Filter/store/filter.store";
 
 class SidebarStore {
     searchQuery = ""
@@ -7,6 +8,7 @@ class SidebarStore {
     sidebarWrapper = null
     minSwipeDistance = 10
     mobileHideCards = true
+    fixedHeaderHeight = 0
 
     onTouchStart = (e) => {
         this.touchEnd = null
@@ -18,8 +20,10 @@ class SidebarStore {
 
         this.touchEnd = clientYOffset
 
-        if ((window.innerHeight - clientYOffset) > 148)
+        if ((window.innerHeight - clientYOffset) > 148){
+            this.sidebarWrapper.current.style.transition = "0s"
             this.sidebarWrapper.current.style.transform = `translateY(${clientYOffset}px)`
+        }
     }
 
     onTouchEnd = () => {
@@ -28,15 +32,20 @@ class SidebarStore {
         const isUpSwipe = distance > this.minSwipeDistance
         const isDownSwipe = distance < -this.minSwipeDistance
 
+        if (isUpSwipe)
+            this.toggleMobileHideCards(false)
+
+        if( isDownSwipe ){
+            this.toggleMobileHideCards(true)
+            FilterStore.isOpen = false
+        }
+    }
+
+    toggleMobileHideCards(value){
+        this.mobileHideCards = value
+
         this.sidebarWrapper.current.style.transform = ``
         this.sidebarWrapper.current.style.transition = ".3s"
-
-        if (isUpSwipe)
-            this.mobileHideCards = false
-
-        if( isDownSwipe )
-            this.mobileHideCards = true
-
         setTimeout(() => {
             this.sidebarWrapper.current.style.transition = "0s"
         }, 300)

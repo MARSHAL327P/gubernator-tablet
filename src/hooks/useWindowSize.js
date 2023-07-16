@@ -4,7 +4,7 @@ export default function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
 
     function updateSize() {
-        setSize([window.innerWidth, window.innerHeight]);
+        setSize([window.outerWidth, window.outerHeight]);
     }
 
     useEffect(() => {

@@ -83,7 +83,16 @@ const theme = {
         defaultProps: {
             className: "spinner_primary"
         }
-    }
+    },
+    drawer: {
+        styles: {
+            base: {
+                overlay: {
+                    position: "fixed",
+                },
+            },
+        },
+    },
 }
 
 root.render(

@@ -1,15 +1,16 @@
 import {observer} from "mobx-react-lite";
-import ActivePlacemark from "../../ActivePlacemark/ActivePlacemark";
+import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
 import {Polygon} from "@pbe/react-yandex-maps";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import BeachPlacemarker from "../../BeachCard/components/BeachPlacemarker";
+import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
+import BeachPlacemarker from "../../../BeachCard/components/BeachPlacemarker";
+import BeachLocalStore from "../../../BeachCard/store/beachLocal.store";
 
 const BeachMap = observer(() => {
     let navigate = useNavigate()
     const [queryParameters] = useSearchParams()
 
-    return SelectedClassInfoStore.filteredCards.map((beach) => {
+    return !BeachLocalStore.isLoading && SelectedClassInfoStore.filteredCards.map((beach) => {
         let polygonColor = beach.bathingComfortMapColors.polygon
 
         return (

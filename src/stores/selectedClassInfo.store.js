@@ -18,6 +18,7 @@ class SelectedClassInfoStore{
             this.currentClass = currentClass
 
             if( !this.allClasses.includes(currentClass) ){
+                this.currentClass.filteredList = null
                 this.allClasses.push(currentClass)
                 this.currentClass.fetchInfo()
             }
@@ -32,6 +33,7 @@ class SelectedClassInfoStore{
                 action(data => {
                     currentClass.list = data ?? []
                     currentClass.isLoading = false
+                    currentClass.isFetched = true
                 })
             )
     }

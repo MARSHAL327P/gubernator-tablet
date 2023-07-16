@@ -11,6 +11,7 @@ import Indications from "../../Indications/components/Indications";
 import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
 import BeachCardProps from "./BeachCardProps";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 const BeachCard = observer(({card}) => {
     const styles = {
@@ -36,6 +37,7 @@ const BeachCard = observer(({card}) => {
                 <div className="flex justify-between gap-2">
                     <Tooltip content={"На карте"}>
                         <Button onClick={() => {
+                            SidebarStore.toggleMobileHideCards(true)
                             MapStore.zoomToItem(card.coord)
                         }} color={"white"}
                                 className={styles.btn}>
@@ -51,7 +53,7 @@ const BeachCard = observer(({card}) => {
                     </Tooltip>
                     <Link to={`/beach/${card.code}`}>
                         <Button fullWidth
-                                className={"w-[230px] flex items-center gap-2"}>
+                                className={"w-[230px] sm:w-[180px] sm:text-sm flex items-center gap-2"}>
                             Подробнее о пляже
                         </Button>
                     </Link>

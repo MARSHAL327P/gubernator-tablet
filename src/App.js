@@ -8,6 +8,18 @@ import MapTemplate from "./components/Map/components/MapTemplate";
 import BeachLocalStore from "./components/BeachCard/store/beachLocal.store";
 import RealObjectStore from "./components/RealObjects/store/realObject.store";
 import RealObjectPage from "./pages/RealObjectPage";
+import {Toaster} from "react-hot-toast";
+import SidebarStore from "./components/Sidebar/store/sidebar.store";
+import SelectedClassInfoStore from "./stores/selectedClassInfo.store";
+import useWindowSize from "./hooks/useWindowSize";
+import {useEffect} from "react";
+
+function onTabClick(isSelected, e){
+    if( SelectedClassInfoStore.currentClass.isLoading )
+        e.preventDefault()
+    if (isSelected)
+        SidebarStore.toggleMobileHideCards(false)
+}
 
 function App() {
     // const location = useLocation()
@@ -22,12 +34,16 @@ function App() {
         {
             title: "Пляжи",
             data: BeachLocalStore,
+            selected: true,
             link: "/",
+            onClick: onTabClick
         },
         {
             title: "Объекты",
             data: RealObjectStore,
+            selected: false,
             link: "/object",
+            onClick: onTabClick
         },
         // {
         //     title: "Архитектура",
@@ -66,6 +82,7 @@ function App() {
                 </Route>
             </Routes>
             {/*</div>*/}
+            <Toaster position={"bottom-center"}/>
         </YMaps>
     );
 }

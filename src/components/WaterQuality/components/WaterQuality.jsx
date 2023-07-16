@@ -9,7 +9,7 @@ const WaterQuality = observer(({waterQualityData = SelectedClassInfoStore.curren
     if( !waterQualityData ) return
 
     return (
-        <div className={"w-[900px] mx-auto grid justify-items-center gap-8"}>
+        <div className={"w-[900px] lg:w-full mx-auto grid justify-items-center gap-8"}>
             <div className={cc([waterQualityData.totalRating.color, "text-2xl py-5 px-8 rounded-xl font-bold text-white w-fit"])}>
                 {waterQualityData.totalRating.title}
             </div>
@@ -17,7 +17,7 @@ const WaterQuality = observer(({waterQualityData = SelectedClassInfoStore.curren
                 <Typography variant={"h5"}>
                     Загрязняющие вещества в воде
                 </Typography>
-                <List className={"p-0 grid grid-cols-2 gap-4 text-base"}>
+                <List className={"p-0 grid grid-cols-2 lg:grid-cols-1 gap-4 text-base"}>
                     {Object.entries(waterQualityData.indications).map(([indicationName, indication]) => {
                         return (
                             <Accordion

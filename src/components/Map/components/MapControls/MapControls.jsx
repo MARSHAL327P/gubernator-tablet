@@ -4,6 +4,10 @@ import LockScaleNotification from "./LockScaleNotification";
 import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
 import HeatmapGradeBlock from "./HeatmapGradeBlock";
 import {Fragment} from "react";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import cc from "classcat";
+import DashboardStore from "../../../Dashboard/store/dashboard.store";
+import BathingComfortModal from "./BathingComfortModal";
 
 const MapControls = observer((
     {
@@ -12,11 +16,15 @@ const MapControls = observer((
             <HeatmapGradeBlock/>,
             <LockScaleNotification/>,
             <AdditionalLayerBtns/>
-        ]
+        ],
+        classes = ""
     }
 ) => {
+
     return (
-        <div className={"absolute bottom-5 lg:bottom-40 right-5 z-10 grid gap-5 justify-items-end"}>
+        <div className={cc([classes, "absolute bottom-5 right-5 lg:right-2 z-30 grid gap-5 lg:gap-2 justify-items-end", {
+            "lg:bottom-[160px]": !DashboardStore.isDashboard(),
+        }])}>
             {
                 components.map((component, idx) => <Fragment key={idx}>{component}</Fragment>)
             }

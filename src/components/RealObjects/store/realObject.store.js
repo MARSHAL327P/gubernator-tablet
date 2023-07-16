@@ -5,7 +5,7 @@ import {ReactComponent as Meteo} from "../../../assets/icons/Meteo.svg";
 import {ReactComponent as Buoy} from "../../../assets/icons/Buoy.svg";
 import {ReactComponent as Wastewater} from "../../../assets/icons/Wastewater.svg";
 import IndicationsStore from "../../Indications/store/indications.store";
-import RealObjectMap from "../../Map/components/RealObjectMap";
+import RealObjectMap from "../../Map/components/Placemarkers/RealObjectMap";
 import RealObjectCard from "../components/RealObjectCard";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
@@ -137,6 +137,7 @@ class RealObjectStore {
     }
 
     isLoading = false
+    isFetched = false
     list = []
     id = 0
     type = ""
@@ -148,6 +149,7 @@ class RealObjectStore {
     filterGroup = this.realObjectTypes
     excludedFilters = []
     filterInputs = {}
+    filteredList = null
     filterUrl = process.env.REACT_APP_REAL_OBJECTS_FILTER
     fastFilter = {
         fields: {

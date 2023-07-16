@@ -1,10 +1,10 @@
 import {observer} from "mobx-react-lite";
-import RealObjectStore from "../../RealObjects/store/realObject.store";
-import ActivePlacemark from "../../ActivePlacemark/ActivePlacemark";
-import RealObjectPlacemarker from "../../RealObjects/components/RealObjectPlacemarker";
-import IndicationsStore from "../../Indications/store/indications.store";
+import RealObjectStore from "../../../RealObjects/store/realObject.store";
+import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
+import RealObjectPlacemarker from "../../../RealObjects/components/RealObjectPlacemarker";
+import IndicationsStore from "../../../Indications/store/indications.store";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
 
 const RealObjectMap = observer(() => {
     let navigate = useNavigate()

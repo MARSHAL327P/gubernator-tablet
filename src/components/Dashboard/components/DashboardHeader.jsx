@@ -1,16 +1,21 @@
 import {observer} from "mobx-react-lite";
-import {Button, Tooltip} from "@material-tailwind/react";
+import {Button, Tooltip, Typography} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
-import {HomeIcon} from "@heroicons/react/24/solid";
+import {Bars3Icon, HomeIcon} from "@heroicons/react/24/solid";
 import {getUpdateTimeText} from "../../../Utils";
 import TabHeader from "../../Tabs/components/TabHeader";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
+import useWindowSize from "../../../hooks/useWindowSize";
+import DrawerDashboard from "./DrawerDashboard";
+import {runInAction} from "mobx";
+import DashboardStore from "../store/dashboard.store";
 
 const DashboardHeader = observer(({homeLink, tabItems}) => {
     let card = SelectedClassInfoStore.currentClass?.card
     let updateTimeField = card && (card.props_updated_at || card.updateTimeText || card.updated_at || card.updateTime)
+    const [width] = useWindowSize()
 
     return (
         <>
@@ -26,9 +31,9 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
                     {
                         card ?
                             <>
-                                <div className={"text-title"}>
+                                <Typography variant={width > 1024 ? "h4" : "h5"}>
                                     {SelectedClassInfoStore.currentClass.title + ` «${card.name}»`}
-                                </div>
+                                </Typography>
                                 {
                                     updateTimeField &&
                                     <div className={"text-xs text-gray-500"}>
@@ -41,7 +46,16 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
 
                 </div>
             </div>
-            <TabHeader tabItems={tabItems}/>
+            {
+                width > 1024 ?
+                    <TabHeader tabItems={tabItems}/> :
+                    <Bars3Icon className={"w-8 h-8"} onClick={() => {
+                        runInAction(() => {
+                            DashboardStore.drawerIsOpen = true
+                        })
+                    }}/>
+            }
+
             {/*<AdminBtn color={"blue"} classes={""}/>*/}
         </>
     )
