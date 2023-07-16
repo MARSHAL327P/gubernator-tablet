@@ -10,6 +10,9 @@ import {Tooltip} from "@material-tailwind/react";
 import SidebarStore from "../components/Sidebar/store/sidebar.store";
 import FastFilter from "../components/Filter/components/FastFilter";
 import useWindowSize from "../hooks/useWindowSize";
+import DashboardStore from "../components/Dashboard/store/dashboard.store";
+import MapControls from "../components/Map/components/MapControls/MapControls";
+import BathingComfortModal from "../components/Map/components/MapControls/BathingComfortModal";
 
 const HomePage = observer(({tabItems}) => {
     let [hideSidebar, setHideSidebar] = useState(false)
@@ -17,14 +20,21 @@ const HomePage = observer(({tabItems}) => {
     let [width] = useWindowSize()
     let styles = {
         sidebarWrapper: {
-            transform: width <= 1024 && !FilterStore.isOpen && !hideSidebar && SidebarStore.mobileHideCards && `translateY(calc(100% - ${SidebarStore.fixedHeaderHeight}px))`
+            transform: width <= 1024 &&
+                !FilterStore.isOpen &&
+                !hideSidebar &&
+                SidebarStore.mobileHideCards &&
+                `translateY(calc(100% - ${SidebarStore.fixedHeaderHeight}px))`
         }
     }
-
 
     useEffect(() => {
         SidebarStore.sidebarWrapper = sidebarWrapper
     }, [sidebarWrapper])
+
+    useEffect(() => {
+        document.body.style.overflowY = width > 1024 ? "auto" : "hidden"
+    }, [width])
 
     return (
         <>
@@ -40,7 +50,12 @@ const HomePage = observer(({tabItems}) => {
             >
                 <div className={"w-full"}>
                     {
-                        width <= 1024 && <FastFilter classes={"gap-3"} itemClasses={"bg-white"}/>
+                        width <= 1024 && (
+                            <>
+                                <BathingComfortModal/>
+                                <FastFilter classes={"gap-3"} itemClasses={"bg-white"}/>
+                            </>
+                        )
                     }
                     <Sidebar tabItems={tabItems}/>
                 </div>

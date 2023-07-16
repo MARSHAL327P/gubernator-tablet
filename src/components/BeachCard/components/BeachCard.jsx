@@ -53,7 +53,7 @@ const BeachCard = observer(({card}) => {
                     </Tooltip>
                     <Link to={`/beach/${card.code}`}>
                         <Button fullWidth
-                                className={"w-[230px] flex items-center gap-2"}>
+                                className={"w-[230px] sm:w-[180px] sm:text-sm flex items-center gap-2"}>
                             Подробнее о пляже
                         </Button>
                     </Link>

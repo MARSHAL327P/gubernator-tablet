@@ -13,13 +13,18 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import MapControls from "../../Map/components/MapControls/MapControls";
 import DrawerDashboard from "./DrawerDashboard";
 import useWindowSize from "../../../hooks/useWindowSize";
+import {useEffect} from "react";
 
 const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [searchParams,] = useSearchParams();
     const [width] = useWindowSize()
     let card = SelectedClassInfoStore.currentClass?.card
-    let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
     tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
+    let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
+
+    useEffect(() => {
+        document.body.style.overflowY = "auto"
+    }, [width])
 
     return (
         <Tab.Group defaultIndex={selectedTabIndex}>

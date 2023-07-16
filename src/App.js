@@ -11,6 +11,8 @@ import RealObjectPage from "./pages/RealObjectPage";
 import {Toaster} from "react-hot-toast";
 import SidebarStore from "./components/Sidebar/store/sidebar.store";
 import SelectedClassInfoStore from "./stores/selectedClassInfo.store";
+import useWindowSize from "./hooks/useWindowSize";
+import {useEffect} from "react";
 
 function onTabClick(isSelected, e){
     if( SelectedClassInfoStore.currentClass.isLoading )

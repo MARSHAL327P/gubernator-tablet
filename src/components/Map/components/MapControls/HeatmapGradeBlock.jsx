@@ -8,7 +8,7 @@ const HeatmapGradeBlock = observer(() => {
     let gradientValues = Object.values(MapStore.selectedAdditionalLayer.options.gradient)
 
     return (
-        <div className={cc([MapStore.blurBackgroundClasses, "py-4 !relative w-fit"])}>
+        <div className={cc([MapStore.blurBackgroundClasses, "py-4 !relative w-fit lg:px-3"])}>
             <div className="flex gap-4">
                 <div className={"flex flex-col gap-1"}>
                     <div className={"flex justify-between font-bold gap-3"}>

@@ -20,7 +20,7 @@ const MobileAdditionalLayerBtns = observer(() => {
     let isLoading = additionalLayers.filter(item => item.isLoading)
 
     return (
-        <SpeedDial open={open}>
+        <SpeedDial placement={"top"} open={open}>
             <SpeedDialHandler onClick={() => {
                 setOpen(open => !open)
             }} className={"shadow-lg"}>

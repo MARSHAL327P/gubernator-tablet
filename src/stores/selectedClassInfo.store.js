@@ -6,7 +6,7 @@ class SelectedClassInfoStore{
     currentClass = null
 
     get filteredCards(){
-        return this.currentClass && this.currentClass.isFetched && !this.currentClass.isLoading ? FilterStore.filteredCards() : []
+        return this.currentClass && !this.currentClass.isLoading ? FilterStore.filteredCards() : []
     }
 
     get filterInputs() {
