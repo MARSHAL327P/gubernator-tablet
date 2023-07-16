@@ -16,4 +16,6 @@ RUN npm run build
 FROM nginx:latest AS front
 
 COPY --from=builder nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder nginx/ssl/dss-sevsu.ru.crt /etc/ssl/dss-sevsu.ru.crt
+COPY --from=builder nginx/ssl/dss-sevsu.ru.key /etc/ssl/dss-sevsu.ru.key
 COPY --chown=www-data:www-data --from=builder build/ /usr/share/nginx/html/
