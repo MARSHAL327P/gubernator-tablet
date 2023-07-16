@@ -29,3 +29,5 @@ jobs:
         context: .
         push: true
         tags: marshal327/front_guber:latest
+        cache-from: type=registry,ref=user/app:latest
+        cache-to: type=inline
