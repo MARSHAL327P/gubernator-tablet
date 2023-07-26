@@ -21,7 +21,7 @@ const Reviews = observer(() => {
 
     return (
         ReviewStore &&
-        <div className={"grid grid-cols-review lg:grid-cols-1 lg:w-full gap-24 w-[1200px] mx-auto"}>
+        <div className={"grid grid-cols-review lg:grid-cols-1 lg:w-full lg:gap-5 gap-24 w-[1200px] mx-auto"}>
             <div className={"flex flex-col gap-5"}>
                 <Typography variant={"h4"}>
                     Оставить отзыв
@@ -32,7 +32,7 @@ const Reviews = observer(() => {
                         <ReviewForm beachId={beachId}/>
                 }
             </div>
-            <div className={"flex flex-col gap-5"}>
+            <div className={"flex flex-col gap-5 lg:gap-1"}>
                 <Typography variant={"h4"}>
                     Отзывы
                 </Typography>

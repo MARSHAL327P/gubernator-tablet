@@ -53,9 +53,9 @@ const Indications = observer((
                 className={cc(["flex flex-wrap  gap-2 items-center"])}>
                 {
                     indications.map((indication) => {
-                        if (!indication) return false
+                        if (!indication || !data[indication.indicationName]) return false
 
-                        let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
+                        let indicationValue = data[indication.indicationName].value ?? data[indication.indicationName]
                         let Icon = indication.icon
                         let tooltipProps = !noTooltip && {
                             content: indication.name || indication.indicationName,

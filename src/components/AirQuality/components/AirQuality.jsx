@@ -10,7 +10,7 @@ const AirQuality = observer(({ airQualityData = SelectedClassInfoStore.currentCl
     return (
         <div className={"flex lg:flex-wrap justify-center w-8/12 lg:w-full mx-auto gap-10"}>
             <div className={"flex flex-col gap-14"}>
-                <div className={"flex gap-7 h-fit items-center"}>
+                <div className={"flex sm:flex-wrap sm:justify-center sm:text-center gap-7 h-fit items-center"}>
                     <AirQualityIndicator value={airQualityData.totalRating}/>
                     <div className={"flex flex-col gap-2"}>
                         <div className={"text-4xl font-bold"}>
@@ -25,7 +25,7 @@ const AirQuality = observer(({ airQualityData = SelectedClassInfoStore.currentCl
                     </div>
 
                     <div>
-                        <List className={"p-0 grid grid-cols-2 gap-4 text-base w-full"}>
+                        <List className={"p-0 grid grid-cols-2 sm:grid-cols-1 gap-4 text-base w-full"}>
                             {Object.entries(airQualityData.indications).map(([indicationName, indication]) => {
                                 return (
                                     <Accordion

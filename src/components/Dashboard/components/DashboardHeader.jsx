@@ -18,8 +18,8 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
     const [width] = useWindowSize()
 
     return (
-        <>
-            <div className={"flex items-center gap-5"}>
+        <div className="border-b border-white fixed z-50 top-0 backdrop-blur bg-white/50 flex justify-between items-center px-7 py-4 sm:p-3 gap-2 w-full">
+            <div className={"flex items-center gap-5 sm:gap-2"}>
                 <Tooltip placement="top-start" content="Вернуться на главную">
                     <Link to={homeLink}>
                         <Button className={"whitespace-nowrap p-3"}>
@@ -57,7 +57,7 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
             }
 
             {/*<AdminBtn color={"blue"} classes={""}/>*/}
-        </>
+        </div>
     )
 })
 
