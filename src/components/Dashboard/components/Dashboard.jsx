@@ -28,11 +28,7 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
 
     return (
         <Tab.Group defaultIndex={selectedTabIndex}>
-            <div
-                className="border-b border-white fixed z-50 top-0 backdrop-blur bg-white/50 flex justify-between items-center px-7 py-4 w-full"
-            >
-                <DashboardHeader homeLink={homeLink} tabItems={tabItems}/>
-            </div>
+            <DashboardHeader homeLink={homeLink} tabItems={tabItems}/>
 
             <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50"}>
                 <div className="relative">

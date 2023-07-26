@@ -33,6 +33,8 @@ export default class BeachCardStore {
                         item.waterQuality = new WaterQualityStore(item.waterQuality)
                     item.airQuality = new AirQualityStore(item.airQuality)
 
+                    // TODO: Убрать замену как только исправят пути для картинок
+                    item.img = item.img.map(item => item.replace("http://185.180.230.129", "https://dss-sevsu.ru"))
                     return new BeachCardStore(item)
                 });
             })
