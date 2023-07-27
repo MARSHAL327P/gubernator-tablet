@@ -13,6 +13,7 @@ import SidebarStore from "./components/Sidebar/store/sidebar.store";
 import SelectedClassInfoStore from "./stores/selectedClassInfo.store";
 import useWindowSize from "./hooks/useWindowSize";
 import {useEffect} from "react";
+import MapStore from "./components/Map/store/map.store";
 
 function onTabClick(isSelected, e){
     if( SelectedClassInfoStore.currentClass.isLoading )
@@ -55,11 +56,7 @@ function App() {
     ]
 
     return (
-        <YMaps query={{
-            load: "package.full",
-            apikey: "6701facf-e92e-4104-965a-471884673190",
-        }}
-        >
+        <>
             <MapTemplate/>
             {/*<div*/}
             {/*    className={`absolute top-0 left-0 h-full ${transitionStage}`}*/}
@@ -83,7 +80,7 @@ function App() {
             </Routes>
             {/*</div>*/}
             <Toaster position={"bottom-center"}/>
-        </YMaps>
+        </>
     );
 }
 

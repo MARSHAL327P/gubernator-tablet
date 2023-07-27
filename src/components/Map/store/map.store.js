@@ -1,10 +1,15 @@
-import {makeAutoObservable, observable, runInAction} from "mobx";
+import {action, makeAutoObservable, observable, runInAction} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
+import React from "react";
+import ReactDOM from "react-dom";
+
+/* global ymaps3 */
 
 class MapStore {
     ymaps = null
     mapRef = null
+    mapData = null
     queryParam = null
     defaultHeatmapOptions = {
         radius: 120,
@@ -84,6 +89,13 @@ class MapStore {
     zoomIsBlocked = false
     markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
+
+    async loadMap(){
+        const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
+        const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
+        this.mapData = reactify.module(ymaps3);
+        this.mapData.YMapZoomControl = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1')).YMapZoomControl;
+    }
 
     zoomToItem(coord, zoom = 17) {
         if (!this.mapRef.current) return
