@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, observable, runInAction} from "mobx";
+import {makeAutoObservable, observable, runInAction} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
@@ -11,6 +11,7 @@ class MapStore {
     mapRef = null
     mapData = null
     queryParam = null
+    location = null
     defaultHeatmapOptions = {
         radius: 120,
         dissipating: true,
@@ -90,11 +91,32 @@ class MapStore {
     markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
 
-    async loadMap(){
+    async loadMap() {
         const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
         const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
-        this.mapData = reactify.module(ymaps3);
-        this.mapData.YMapZoomControl = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1')).YMapZoomControl;
+        let additionalModules = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1'))
+        this.mapData = {
+            ...reactify.module(ymaps3),
+            YMapZoomControl: additionalModules.YMapZoomControl,
+            YMapGeolocationControl: additionalModules.YMapGeolocationControl
+        };
+    }
+
+    setLocation(navigate, location) {
+        let url = new URL(window.location)
+        let searchParams = url.searchParams
+
+        if( location ){
+            searchParams.set("ll", location.center)
+            searchParams.set("zoom", location.zoom)
+        }
+
+        this.location = {
+            center: searchParams.get("ll") ? searchParams.get("ll").split(",") : [33.526402, 44.556972],
+            zoom: searchParams.get("zoom") ?? 12,
+        }
+
+        navigate(url.pathname + "?" + searchParams.toString())
     }
 
     zoomToItem(coord, zoom = 17) {
@@ -182,7 +204,7 @@ class MapStore {
     }
 
     saveGeoLocation(coords) {
-        if (!this.ymaps || !this.mapRef.current || this.isSameLocation(coords) ) return
+        if (!this.ymaps || !this.mapRef.current || this.isSameLocation(coords)) return
 
         localStorage.setItem("location", coords)
         this.setGeoLocationMarker(coords)
@@ -196,7 +218,7 @@ class MapStore {
                 .map(item => parseFloat(item))
     }
 
-    setGeoLocationMarker(coords){
+    setGeoLocationMarker(coords) {
         this.mapRef.current.geoObjects.add(new this.ymaps.Placemark(coords, {},
             {
                 preset: 'islands#blueCircleDotIconWithCaption',
@@ -204,11 +226,11 @@ class MapStore {
             }));
     }
 
-    isSameLocation(coords){
+    isSameLocation(coords) {
         return this.geoLocation && this.geoLocation[0] === coords[0] && this.geoLocation[1] === coords[1]
     }
 
-    generateRoute(coordTo){
+    generateRoute(coordTo) {
         let geoLocation = (this.geoLocation && this.geoLocation.join(",")) || ""
 
         window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.join(",")}&rtt=auto&ruri=~`, "_blank");
