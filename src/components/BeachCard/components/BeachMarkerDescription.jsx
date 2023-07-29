@@ -1,13 +1,13 @@
 import {observer} from "mobx-react-lite";
 import {Card, CardBody} from "@material-tailwind/react";
 import BathingComfort from "./BathingComfort";
-import MyCardHeader from "../../Card/components/CardHeader";
+import CardHeader from "../../Card/components/CardHeader";
 import IndicationsStore from "../../Indications/store/indications.store";
 import Indications from "../../Indications/components/Indications";
 
 const BeachMarkerDescription = observer(({beach}) => {
     return (
-        <Card className="absolute bottom-[-70px] left-16 transition hover-marker__body w-[390px] overflow-hidden">
+        <Card className="w-[390px] overflow-hidden">
             {/*<CardHeader*/}
             {/*    floated={false}*/}
             {/*    shadow={false}*/}
@@ -21,7 +21,7 @@ const BeachMarkerDescription = observer(({beach}) => {
             {/*    />*/}
             {/*</CardHeader>*/}
             <CardBody>
-                <MyCardHeader classes={""} name={beach.name} rating={beach.rating} size={"md"}/>
+                <CardHeader classes={""} card={beach} noUpdateTime={true} size={"md"}/>
                 <BathingComfort rounded={true} classes={"mt-2"} bathingComfort={beach.bathingComfort} isOpen={beach.isOpen}/>
                 <Indications
                     classes={"mt-4 justify-between"}

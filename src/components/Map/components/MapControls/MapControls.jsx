@@ -4,10 +4,8 @@ import LockScaleNotification from "./LockScaleNotification";
 import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
 import HeatmapGradeBlock from "./HeatmapGradeBlock";
 import {Fragment} from "react";
-import useWindowSize from "../../../../hooks/useWindowSize";
 import cc from "classcat";
 import DashboardStore from "../../../Dashboard/store/dashboard.store";
-import BathingComfortModal from "./BathingComfortModal";
 import SidebarStore from "../../../Sidebar/store/sidebar.store";
 
 const MapControls = observer((

@@ -1,13 +1,9 @@
 import {observer} from "mobx-react-lite";
-import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
-import {Polygon} from "@pbe/react-yandex-maps";
-import {useNavigate, useSearchParams} from "react-router-dom";
 import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
 import BeachPlacemarker from "../../../BeachCard/components/BeachPlacemarker";
 import BeachLocalStore from "../../../BeachCard/store/beachLocal.store";
 import MapStore from "../../store/map.store";
 import React, {Fragment} from "react";
-import {toJS} from "mobx";
 
 const BeachMap = observer(() => {
     const {
@@ -29,6 +25,7 @@ const BeachMap = observer(() => {
                     style={{
                         fill: polygonColor,
                         fillOpacity: 0.8,
+                        stroke: [{ width: 0 }]
                     }}
                 />
                 <YMapMarker coordinates={beach.coord}>

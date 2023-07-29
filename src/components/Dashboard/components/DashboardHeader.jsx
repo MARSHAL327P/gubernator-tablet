@@ -1,6 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {Button, Tooltip, Typography} from "@material-tailwind/react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Bars3Icon, HomeIcon} from "@heroicons/react/24/solid";
 import {getUpdateTimeText} from "../../../Utils";
 import TabHeader from "../../Tabs/components/TabHeader";
@@ -8,7 +8,6 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 import useWindowSize from "../../../hooks/useWindowSize";
-import DrawerDashboard from "./DrawerDashboard";
 import {runInAction} from "mobx";
 import DashboardStore from "../store/dashboard.store";
 import MapStore from "../../Map/store/map.store";
