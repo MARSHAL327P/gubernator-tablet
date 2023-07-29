@@ -45,7 +45,6 @@ const BeachMap = observer(() => {
                                 isHovered={isHovered}
                                 triggers={triggers}
                                 beach={beach}
-                                idx={idx}
                             />
                     }
                 </ActivePlacemark>

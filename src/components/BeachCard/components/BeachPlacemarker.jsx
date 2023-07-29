@@ -6,7 +6,7 @@ import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoi
 import MapStore from "../../Map/store/map.store";
 import {Popover, PopoverContent, PopoverHandler} from "@material-tailwind/react";
 
-const BeachPlacemarker = observer(({beach, idx, isHovered, triggers}) => {
+const BeachPlacemarker = observer(({beach, isHovered, triggers}) => {
     let markerColor = beach.bathingComfortMapColors.marker
 
     return (

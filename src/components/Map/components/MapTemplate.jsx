@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../store/map.store";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import React from 'react';
 import DashboardStore from "../../Dashboard/store/dashboard.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -10,6 +10,7 @@ import MapControls from "./MapControls/MapControls";
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
 
+    let controlsRef = useRef(null)
     let [mapHeight, setMapHeight] = useState("100vh")
 
     useEffect(() => {
@@ -24,6 +25,7 @@ const MapTemplate = observer(() => {
         YMap,
         YMapDefaultSchemeLayer,
         YMapControls,
+        YMapZoomControl,
         YMapGeolocationControl,
         YMapDefaultFeaturesLayer,
         YMapListener,
@@ -40,17 +42,56 @@ const MapTemplate = observer(() => {
             MapStore.setLocationParams(location)
     }, []);
 
+    useEffect(() => {
+        controlsRef.current && controlsRef.current._element.addEventListener("click", (e) => {
+            if (!MapStore.mapRef) return false
+
+            let zoomRange = MapStore.mapRef.zoomRange
+            let currentZoom = parseFloat(MapStore.location.zoom)
+            let isGeoLocation = e.target.classList.contains("ymaps3x0--geolocation-control")
+            let isPlusBtn = e.target.classList.contains("ymaps3x0--zoom-control__in")
+            let isMinusBtn = e.target.classList.contains("ymaps3x0--zoom-control__out")
+
+            if (isGeoLocation)
+                setTimeout(() => {
+                    MapStore.location = {
+                        center: MapStore.mapRef.center,
+                        zoom: currentZoom
+                    }
+                    MapStore.setLocationParams(MapStore.location)
+                    MapStore.saveGeoLocation(MapStore.location.center)
+                }, 500)
+
+            if (isPlusBtn && currentZoom < zoomRange.max)
+                MapStore.location.zoom = currentZoom > zoomRange.max ? zoomRange.max : MapStore.location.zoom + 1
+
+            if (isMinusBtn && currentZoom > zoomRange.min)
+                MapStore.location.zoom = currentZoom > zoomRange.max ? zoomRange.min : MapStore.location.zoom - 1
+
+            if( !isGeoLocation )
+                MapStore.setLocationParams(MapStore.location)
+        })
+    }, [MapStore.mapRef])
+
     return MapStore.mapData && MapStore.location &&
         <div style={{
             width: "100vw",
             height: mapHeight,
             transition: "height .2s"
         }}>
-            <YMap location={MapStore.location} ref={map => MapStore.mapRef = map}>
-                <YMapListener onActionEnd={onActionEnd} />
+            <YMap
+                zoomRange={{
+                    min: 11,
+                    max: 21
+                }}
+                location={MapStore.location}
+                ref={map => MapStore.mapRef = map}
+            >
+                <YMapListener onActionEnd={onActionEnd}/>
                 <YMapDefaultSchemeLayer/>
                 <YMapDefaultFeaturesLayer/>
-                <YMapControls position="right">
+                <YMapControls position="right" ref={controlsRef}>
+                    <YMapZoomControl/>
                     <YMapGeolocationControl/>
                 </YMapControls>
                 {SelectedClassInfoStore.currentClass?.mapLayer}

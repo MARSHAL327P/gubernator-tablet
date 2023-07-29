@@ -131,7 +131,7 @@ class MapStore {
         window.history.pushState({}, "", url)
     }
 
-    zoomToItem(coord, zoom = 17) {
+    zoomToItem(coord, zoom = 16) {
         if (this.zoomIsBlocked)
             zoom = 13
 
@@ -216,36 +216,18 @@ class MapStore {
     }
 
     saveGeoLocation(coords) {
-        if (!this.ymaps || !this.mapRef.current || this.isSameLocation(coords)) return
-
-        localStorage.setItem("location", coords)
-        this.setGeoLocationMarker(coords)
+        localStorage.setItem("location", JSON.stringify(coords))
     }
 
     get geoLocation() {
         return localStorage.getItem("location") &&
-            localStorage
-                .getItem("location")
-                .split(",")
-                .map(item => parseFloat(item))
-    }
-
-    setGeoLocationMarker(coords) {
-        this.mapRef.current.geoObjects.add(new this.ymaps.Placemark(coords, {},
-            {
-                preset: 'islands#blueCircleDotIconWithCaption',
-                iconCaptionMaxWidth: '50'
-            }));
-    }
-
-    isSameLocation(coords) {
-        return this.geoLocation && this.geoLocation[0] === coords[0] && this.geoLocation[1] === coords[1]
+            JSON.parse(localStorage.getItem("location"))
     }
 
     generateRoute(coordTo) {
-        let geoLocation = (this.geoLocation && this.geoLocation.join(",")) || ""
+        let geoLocation = (this.geoLocation && this.geoLocation.reverse()) || ""
 
-        window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.join(",")}&rtt=auto&ruri=~`, "_blank");
+        window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.reverse().join(",")}&rtt=auto&ruri=~`, "_blank");
     }
 
     constructor() {
