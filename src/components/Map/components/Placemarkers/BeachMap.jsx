@@ -4,11 +4,12 @@ import BeachPlacemarker from "../../../BeachCard/components/BeachPlacemarker";
 import BeachLocalStore from "../../../BeachCard/store/beachLocal.store";
 import MapStore from "../../store/map.store";
 import React, {Fragment} from "react";
+import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
+import UiStore from "../../../../stores/ui.store";
 
 const BeachMap = observer(() => {
     const {
         YMapFeature,
-        YMapMarker
     } = MapStore.mapData
 
     return !BeachLocalStore.isLoading && SelectedClassInfoStore.filteredCards.map((beach, idx) => {
@@ -25,12 +26,29 @@ const BeachMap = observer(() => {
                     style={{
                         fill: polygonColor,
                         fillOpacity: 0.8,
-                        stroke: [{ width: 0 }]
+                        stroke: [{width: 0}]
                     }}
                 />
-                <YMapMarker coordinates={beach.coord}>
-                    <BeachPlacemarker beach={beach} idx={idx}/>
-                </YMapMarker>
+                <ActivePlacemark
+                    wrapper={{
+                        link: `/beach/${beach.code}`,
+                        style: {
+                            animationDelay: `.${idx * UiStore.animationDelay}s`
+                        },
+                        classes: "grid h-[57px]"
+                    }}
+                    coordinates={beach.coord}
+                >
+                    {
+                        (isHovered, triggers) =>
+                            <BeachPlacemarker
+                                isHovered={isHovered}
+                                triggers={triggers}
+                                beach={beach}
+                                idx={idx}
+                            />
+                    }
+                </ActivePlacemark>
             </Fragment>
         )
     })

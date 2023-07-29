@@ -124,6 +124,7 @@ body{
 
 .marker_beach{
     transform: translate(-50%, calc(-50% - 24px));
+    cursor: pointer;
 }
 
 .marker_beach .scale-marker{

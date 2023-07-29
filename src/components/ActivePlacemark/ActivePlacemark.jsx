@@ -1,62 +1,41 @@
-import React from 'react';
-import {Placemark} from '@pbe/react-yandex-maps';
-import ReactDOMServer from 'react-dom/server';
+import React, {useRef, useState} from 'react';
 import MapStore from "../Map/store/map.store";
-import transparent from '../../assets/img/transparent.png';
-
-const makeLayout = (layoutFactory, component) => {
-    let generatedHTML = ReactDOMServer.renderToStaticMarkup(component)
-
-    const Layout = layoutFactory.createClass(generatedHTML, {
-        build: function () {
-            Layout.superclass.build.call(this);
-
-            const markerWrapper = this.getParentElement().getElementsByClassName('marker-wrapper')[0];
-            const scaleMarker = markerWrapper.querySelector('.scale-marker');
-            const hoverMarker = markerWrapper.querySelector('.hover-marker');
-
-            this.getData().geoObject.events.add('mouseenter', (e) => {
-                if (scaleMarker)
-                    scaleMarker.classList.add("scale-marker_active")
-
-                if (hoverMarker)
-                    hoverMarker.classList.add("hover-marker_active")
-            });
-            this.getData().geoObject.events.add('mouseleave', (e) => {
-                if (scaleMarker)
-                    scaleMarker.classList.remove("scale-marker_active")
-
-                if (hoverMarker)
-                    hoverMarker.classList.remove("hover-marker_active")
-            });
-        },
-        clear: function () {
-            Layout.superclass.clear.call(this);
-        },
-    });
-
-    return Layout;
-};
+import {useNavigate, useSearchParams} from "react-router-dom";
+import cc from "classcat";
 
 const ActivePlacemark = (props) => {
-    if (!MapStore.ymaps) return null
+    const {YMapMarker} = MapStore.mapData
+    const navigate = useNavigate()
+    const [queryParameters] = useSearchParams()
 
-    let balloonLayout = makeLayout(
-        MapStore.ymaps.templateLayoutFactory,
-        <div className={"marker-wrapper font-sans"}>{props.component}</div>,
-    );
+    let markerRef = useRef(null)
+    let [isHovered, setIsHovered] = useState(false)
+    let triggers = {
+        onMouseEnter: () => {
+            markerRef.current.element.parentNode.style.zIndex = 5
+            setIsHovered(true)
+        },
+        onMouseLeave: () => {
+            markerRef.current.element.parentNode.style.zIndex = 0
+            setIsHovered(false)
+        },
+    };
+
+    function toPage() {
+        navigate(`${props.wrapper.link}?${queryParameters.toString()}`)
+    }
 
     return (
-        <Placemark
-            {...props}
-            options={{
-                iconLayout: "default#imageWithContent",
-                iconImageHref: transparent,
-                iconContentLayout: balloonLayout,
-                balloonPanelMaxMapArea: 0,
-                ...props.options,
-            }}
-        />
+        <YMapMarker ref={markerRef} {...props}>
+            <div
+                style={props.wrapper?.style}
+                className={cc([props.wrapper?.classes, "marker_beach fadeIn opacity-0"])}
+                {...triggers}
+                onClick={props.wrapper?.link && toPage}
+            >
+                {props.children(isHovered, triggers)}
+            </div>
+        </YMapMarker>
     )
 }
 

@@ -7,9 +7,9 @@ import {Transition} from '@headlessui/react'
 import cc from "classcat";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FilterGroup from "./FilterGroup";
-import { ReactComponent as Close } from "../../../assets/icons/Close.svg";
 import {XMarkIcon} from "@heroicons/react/24/solid";
 import {runInAction} from "mobx";
+import UiStore from "../../../stores/ui.store";
 
 const Filter = observer(() => {
     let filterEl = useRef(null)
@@ -29,12 +29,7 @@ const Filter = observer(() => {
                 <div className={"flex"}>
                     <Transition
                         show={FilterStore.numChangedParams > 0}
-                        enter="transition-opacity duration-75"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="transition-opacity duration-150"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+                        {...UiStore.transitionOpacity}
                     >
                         <div className={"hover:cursor-pointer"} onClick={() => FilterStore.clearAllFilter()}>
                             <Button variant={"text"} color={"white"}>
@@ -42,7 +37,9 @@ const Filter = observer(() => {
                             </Button>
                         </div>
                     </Transition>
-                    <Button onClick={() => {runInAction(() => FilterStore.isOpen = false)}} className={"hidden lg:block"} variant={"text"} color={"white"}>
+                    <Button onClick={() => {
+                        runInAction(() => FilterStore.isOpen = false)
+                    }} className={"hidden lg:block"} variant={"text"} color={"white"}>
                         <XMarkIcon className={"w-5 h-5"}/>
                     </Button>
                 </div>
