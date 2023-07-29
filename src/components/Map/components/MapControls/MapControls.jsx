@@ -23,7 +23,7 @@ const MapControls = observer((
 ) => {
 
     return (
-        <div className={cc([classes, "absolute bottom-5 right-5 lg:right-2  grid gap-5 lg:gap-2 justify-items-end", {
+        <div className={cc([classes, "absolute bottom-8 right-5 lg:right-2  grid gap-5 lg:gap-2 justify-items-end", {
             "lg:bottom-[160px]": !DashboardStore.isDashboard(),
             "z-30": SidebarStore.mobileHideCards,
             "z-10": !SidebarStore.mobileHideCards,

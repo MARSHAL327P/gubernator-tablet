@@ -108,14 +108,6 @@ body{
     gap: 10px;
 }
 
-.scale-marker{
-    transform: scale(1);
-}
-
-.scale-marker_active{
-    transform: scale(1.2);
-}
-
 .hover-marker__body{
     opacity: 0;
     transform: translateY(10px);
@@ -144,4 +136,16 @@ body{
     .rdrStaticRangeLabel{
         text-align: center !important;
     }
+}
+
+.marker_beach{
+    transform: translate(-50%, calc(-50% - 24px));
+}
+
+.marker_beach .scale-marker{
+    transform: scale(1);
+}
+
+.marker_beach:hover .scale-marker{
+    transform: scale(1.2);
 }

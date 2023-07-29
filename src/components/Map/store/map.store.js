@@ -12,6 +12,10 @@ class MapStore {
     mapData = null
     queryParam = null
     location = null
+    defaultLocation = {
+        center: [33.526402, 44.576972],
+        zoom: 12
+    }
     defaultHeatmapOptions = {
         radius: 120,
         dissipating: true,
@@ -88,7 +92,7 @@ class MapStore {
         },
     }
     zoomIsBlocked = false
-    markerTextClasses = "absolute left-[-23px] top-[60px] w-[100px] font-bold text-xs drop-shadow-md shadow-black"
+    markerTextClasses = "font-bold text-xs text-center drop-shadow-md shadow-black"
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
 
     async loadMap() {
@@ -102,33 +106,41 @@ class MapStore {
         };
     }
 
-    setLocation(navigate, location) {
+    initLocation(initDefaultValues = false){
         let url = new URL(window.location)
         let searchParams = url.searchParams
 
-        if( location ){
-            searchParams.set("ll", location.center)
-            searchParams.set("zoom", location.zoom)
+        if( !searchParams.get("ll") || !searchParams.get("zoom") || initDefaultValues ){
+            this.setLocationParams(this.defaultLocation)
         }
 
         this.location = {
-            center: searchParams.get("ll") ? searchParams.get("ll").split(",") : [33.526402, 44.556972],
-            zoom: searchParams.get("zoom") ?? 12,
+            center: searchParams.get("ll") && !initDefaultValues ? searchParams.get("ll").split(",") : this.defaultLocation.center,
+            zoom: searchParams.get("zoom") && !initDefaultValues ? searchParams.get("zoom") : this.defaultLocation.zoom,
+            duration: 500
         }
+    }
 
-        navigate(url.pathname + "?" + searchParams.toString())
+    setLocationParams(newLocation) {
+        let url = new URL(window.location)
+        let searchParams = url.searchParams
+
+        searchParams.set("ll", newLocation.center )
+        searchParams.set("zoom", newLocation.zoom.toFixed(2))
+
+        window.history.pushState({}, "", url)
     }
 
     zoomToItem(coord, zoom = 17) {
-        if (!this.mapRef.current) return
-
         if (this.zoomIsBlocked)
             zoom = 13
 
-        this.mapRef.current.setCenter([coord[0] + 0.0001, coord[1]], zoom, {
-            duration: 500,
-            timingFunction: "ease"
-        })
+        this.location = {
+            center: [coord[0] + 0.0001, coord[1]],
+            zoom: zoom,
+            duration: 500
+        }
+        this.setLocationParams(this.location)
     }
 
     get selectedAdditionalLayer() {
@@ -158,7 +170,7 @@ class MapStore {
         if (this.selectedAdditionalLayer) {
             // this.blockZoom()
         } else {
-            this.unBlockZoom()
+            // this.unBlockZoom()
         }
     }
 
