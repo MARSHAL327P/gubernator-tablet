@@ -11,7 +11,7 @@ const BeachMap = observer(() => {
         YMapMarker
     } = MapStore.mapData
 
-    return !BeachLocalStore.isLoading && SelectedClassInfoStore.filteredCards.map((beach) => {
+    return !BeachLocalStore.isLoading && SelectedClassInfoStore.filteredCards.map((beach, idx) => {
         let polygonColor = beach.bathingComfortMapColors.polygon
 
         return (
@@ -29,7 +29,7 @@ const BeachMap = observer(() => {
                     }}
                 />
                 <YMapMarker coordinates={beach.coord}>
-                    <BeachPlacemarker beach={beach}/>
+                    <BeachPlacemarker beach={beach} idx={idx}/>
                 </YMapMarker>
             </Fragment>
         )

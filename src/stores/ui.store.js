@@ -1,10 +1,7 @@
 import {makeAutoObservable} from "mobx";
-import Notification from "../components/Notification/components/Notification";
 
 class UiStore{
-    notification(content){
-        return <Notification content={content}/>
-    }
+    animationDelay = 75
 
     constructor() {
         makeAutoObservable(this)

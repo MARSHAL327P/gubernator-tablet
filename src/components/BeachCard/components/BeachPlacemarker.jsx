@@ -7,8 +7,9 @@ import MapStore from "../../Map/store/map.store";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useState} from "react";
 import {Popover, PopoverContent, PopoverHandler} from "@material-tailwind/react";
+import UiStore from "../../../stores/ui.store";
 
-const BeachPlacemarker = observer(({beach}) => {
+const BeachPlacemarker = observer(({beach, idx}) => {
     const navigate = useNavigate()
     const [queryParameters] = useSearchParams()
 
@@ -26,7 +27,10 @@ const BeachPlacemarker = observer(({beach}) => {
 
     return (
         <div
-            className={"relative grid h-[57px] marker_beach cursor-pointer"}
+            className={"relative grid h-[57px] marker_beach cursor-pointer fadeIn opacity-0"}
+            style={{
+                animationDelay: `.${idx * UiStore.animationDelay}s`
+            }}
             onClick={toBeachPage}
         >
             <Popover open={descriptionIsOpen} handler={setDescriptionIsOpen} offset={15} animate={{
@@ -44,7 +48,7 @@ const BeachPlacemarker = observer(({beach}) => {
                         </div>
                     </div>
                 </PopoverHandler>
-                <PopoverContent className={"p-0 shadow-none border-0 bg-none"}>
+                <PopoverContent className={"z-30 p-0 shadow-none border-0 bg-none"}>
                     <BeachMarkerDescription beach={beach}/>
                 </PopoverContent>
             </Popover>
