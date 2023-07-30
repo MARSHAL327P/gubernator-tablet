@@ -46,11 +46,12 @@ const MapTemplate = observer(() => {
         controlsRef.current && controlsRef.current._element.addEventListener("click", (e) => {
             if (!MapStore.mapRef) return false
 
+            let target = e.target.querySelector(".ymaps3x0--zoom-control__in") ?? e.target.querySelector(".ymaps3x0--zoom-control__out") ?? e.target
             let zoomRange = MapStore.mapRef.zoomRange
             let currentZoom = parseFloat(MapStore.location.zoom)
-            let isGeoLocation = e.target.classList.contains("ymaps3x0--geolocation-control")
-            let isPlusBtn = e.target.classList.contains("ymaps3x0--zoom-control__in")
-            let isMinusBtn = e.target.classList.contains("ymaps3x0--zoom-control__out")
+            let isGeoLocation = target.classList.contains("ymaps3x0--geolocation-control")
+            let isPlusBtn = target.classList.contains("ymaps3x0--zoom-control__in")
+            let isMinusBtn = target.classList.contains("ymaps3x0--zoom-control__out")
 
             if (isGeoLocation)
                 setTimeout(() => {
@@ -63,11 +64,12 @@ const MapTemplate = observer(() => {
                 }, 500)
 
             if (isPlusBtn && currentZoom < zoomRange.max)
-                MapStore.location.zoom = currentZoom > zoomRange.max ? zoomRange.max : MapStore.location.zoom + 1
+                MapStore.location.zoom = (currentZoom + 1 > zoomRange.max) ? zoomRange.max : currentZoom + 1
 
             if (isMinusBtn && currentZoom > zoomRange.min)
-                MapStore.location.zoom = currentZoom > zoomRange.max ? zoomRange.min : MapStore.location.zoom - 1
+                MapStore.location.zoom = (currentZoom - 1 < zoomRange.min) ? zoomRange.min : currentZoom - 1
 
+            MapStore.location.zoom = parseFloat(MapStore.location.zoom)
             if( !isGeoLocation )
                 MapStore.setLocationParams(MapStore.location)
         })

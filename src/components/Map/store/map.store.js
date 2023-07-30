@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable, runInAction} from "mobx";
+import {makeAutoObservable, observable, runInAction, toJS} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
@@ -116,7 +116,7 @@ class MapStore {
 
         this.location = {
             center: searchParams.get("ll") && !initDefaultValues ? searchParams.get("ll").split(",") : this.defaultLocation.center,
-            zoom: searchParams.get("zoom") && !initDefaultValues ? searchParams.get("zoom") : this.defaultLocation.zoom,
+            zoom: searchParams.get("zoom") && !initDefaultValues ? parseFloat(searchParams.get("zoom")) : this.defaultLocation.zoom,
             duration: 500
         }
     }
@@ -124,9 +124,16 @@ class MapStore {
     setLocationParams(newLocation) {
         let url = new URL(window.location)
         let searchParams = url.searchParams
+        let zoom = parseFloat(newLocation.zoom.toFixed(2))
 
         searchParams.set("ll", newLocation.center )
-        searchParams.set("zoom", newLocation.zoom.toFixed(2))
+        searchParams.set("zoom", zoom)
+
+        this.location = {
+            center: newLocation.center,
+            zoom: zoom,
+            duration: 500
+        }
 
         window.history.pushState({}, "", url)
     }
