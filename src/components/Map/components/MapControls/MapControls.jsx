@@ -1,6 +1,5 @@
 import {observer} from "mobx-react-lite";
 import AdditionalLayerBtns from "./AdditionalLayerBtns";
-import LockScaleNotification from "./LockScaleNotification";
 import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
 import HeatmapGradeBlock from "./HeatmapGradeBlock";
 import {Fragment} from "react";
@@ -13,13 +12,11 @@ const MapControls = observer((
         components = [
             <BathingComfortGradeBlock/>,
             <HeatmapGradeBlock/>,
-            <LockScaleNotification/>,
             <AdditionalLayerBtns/>
         ],
         classes = ""
     }
 ) => {
-
     return (
         <div className={cc([classes, "absolute bottom-8 right-5 lg:right-2  grid gap-5 lg:gap-2 justify-items-end", {
             "lg:bottom-[160px]": !DashboardStore.isDashboard(),

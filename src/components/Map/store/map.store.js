@@ -31,64 +31,20 @@ class MapStore {
         }
     }
     defaultAdditionalLayersOptions = {
-        fetchData: this.showHeatmap.bind(this),
-        data: null,
-        heatmapObject: null,
-        apiUrl: process.env.REACT_APP_AIR_TEMP_HEATMAP,
-        selected: false,
         indicationData: IndicationsStore.indications.temperature,
+        selected: false,
         isLoading: false,
-        options: this.defaultHeatmapOptions,
-        gradeRange: null
+        gradeRange: null,
     }
     additionalLayers = {
         temperature: this.defaultAdditionalLayersOptions,
-        t_surf: {
+        wind: {
             ...this.defaultAdditionalLayersOptions,
-            apiUrl: process.env.REACT_APP_WATER_TEMP_HEATMAP,
-            indicationData: IndicationsStore.indications.t_surf,
-            options: {
-                ...this.defaultHeatmapOptions,
-                gradient: {
-                    0.1: 'rgb(190,41,25)',
-                    0.3: 'rgb(206,90,35)',
-                    0.5: 'rgb(222,151,46)',
-                    0.7: 'rgba(196,201,61,1)',
-                    0.99999: 'rgba(49,173,70,1)',
-                }
-            },
+            indicationData: IndicationsStore.indications.wind,
         },
-        aqi: {
+        pressure: {
             ...this.defaultAdditionalLayersOptions,
-            apiUrl: process.env.REACT_APP_AIR_QUALITY_HEATMAP,
-            indicationData: IndicationsStore.indications.aqi,
-            options: {
-                ...this.defaultHeatmapOptions,
-                gradient: {
-                    0.1: '#36E166',
-                    0.3: '#E8EC20',
-                    0.5: '#ECBF20',
-                    0.7: '#DF2828',
-                    0.8: '#C936E1',
-                    0.99999: '#6236E1',
-                }
-            },
-        },
-        excitement: {
-            ...this.defaultAdditionalLayersOptions,
-            apiUrl: process.env.REACT_APP_EXCITEMENT_HEATMAP,
-            indicationData: IndicationsStore.indications.excitement,
-            options: {
-                ...this.defaultHeatmapOptions,
-                // gradient:	{
-                //     0.1: '#36E166',
-                //     0.3: '#E8EC20',
-                //     0.5: '#ECBF20',
-                //     0.7: '#DF2828',
-                //     0.8: '#C936E1',
-                //     0.99999: '#6236E1',
-                // }
-            },
+            indicationData: IndicationsStore.indications.pressure,
         },
     }
     zoomIsBlocked = false
@@ -161,55 +117,8 @@ class MapStore {
 
         layerData.selected = !layerData.selected
 
-        if (lastSelectedAdditionalLayer && lastSelectedAdditionalLayer.heatmapObject) {
-            lastSelectedAdditionalLayer.heatmapObject.destroy()
+        if( lastSelectedAdditionalLayer )
             lastSelectedAdditionalLayer.selected = false
-        }
-
-        if (layerData.selected && this.selectedAdditionalLayer.data) {
-            this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current)
-        } else if (layerData.selected) {
-            runInAction(() => {
-                this.selectedAdditionalLayer.isLoading = true
-            })
-            layerData.fetchData()
-        }
-
-        if (this.selectedAdditionalLayer) {
-            // this.blockZoom()
-        } else {
-            // this.unBlockZoom()
-        }
-    }
-
-    async loadHeatmapLibrary() {
-        let {yandexHeatmap} = await import('../libs/heatmap');
-
-        yandexHeatmap(this.ymaps)
-    }
-
-    showHeatmap() {
-        if (!this.ymaps) return
-
-        this.loadHeatmapLibrary().then(() => {
-            axios.get(this.selectedAdditionalLayer.apiUrl)
-                .then(({data}) => {
-                    this.selectedAdditionalLayer.gradeRange = data.grade
-                    this.selectedAdditionalLayer.data = data.layer
-                    this.setHeatmap()
-                })
-        })
-    }
-
-    setHeatmap() {
-        this.ymaps.ready(['Heatmap']).then(() => {
-            this.selectedAdditionalLayer.heatmapObject = new this.ymaps.Heatmap(this.selectedAdditionalLayer.data, this.selectedAdditionalLayer.options);
-
-            this.selectedAdditionalLayer.heatmapObject.setMap(this.mapRef.current);
-            runInAction(() => {
-                this.selectedAdditionalLayer.isLoading = false
-            })
-        })
     }
 
     blockZoom(zoomValue = 13) {
@@ -238,26 +147,27 @@ class MapStore {
         window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.reverse().join(",")}&rtt=auto&ruri=~`, "_blank");
     }
 
-    async fetchTile(tileX, tileY, tileZ) {
+    async fetchTile(x, y, z, layer) {
+        runInAction(() => {
+            layer.isLoading = true
+        })
+
         const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
         canvas.width = this.tileSize;
         canvas.height = this.tileSize;
-        const ctx = canvas.getContext('2d');
-        // ctx.fillStyle = '#000000';
-
-        // ctx.beginPath();
-        // ctx.rect(0, 0, canvas.width, canvas.height)
-        // ctx.closePath();
-        // ctx.strokeStyle = "red";
-        // ctx.stroke();
-        // ctx.fillText(`${tileX}:${tileY}:${tileZ}`, 10, 10);
 
         let base_image = new Image();
-        base_image.src = `http://127.0.0.1:8887/${tileZ}/${tileX}/${tileY}.png`;
+
+        base_image.src = `${process.env.REACT_APP_TILES}/${layer.indicationData.nclName}/${z}/${x}/${y}.png`;
         base_image.onload = function(){
+            runInAction(() => {
+                layer.isLoading = false
+            })
+
             ctx.drawImage(base_image, 0, 0);
         }
-
 
         return {image: canvas};
     }
