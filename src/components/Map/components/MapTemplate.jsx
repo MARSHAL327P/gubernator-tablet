@@ -79,7 +79,6 @@ const MapTemplate = observer(() => {
         // eslint-disable-next-line
     }, [MapStore.mapRef])
 
-
     return MapStore.mapData && MapStore.location &&
         <div style={{
             width: "100vw",
@@ -111,20 +110,21 @@ const MapTemplate = observer(() => {
                             <YMapTileDataSource
                                 id={"tileGeneratorSource"}
                                 raster={{
-                                    type: "tiles",
+                                    type: "tileGeneratorSource",
+                                    // fetchTile: MapStore.fetchTile.bind(MapStore),
                                     fetchTile: (x, y, z) => {
                                         return MapStore.fetchTile(x, y, z, MapStore.selectedAdditionalLayer)
                                     },
-                                    transparent: true,
-                                    size: MapStore.tileSize,
-                                    opacity: 0
+                                    // transparent: true,
+                                    // size: MapStore.tileSize,
+                                    // opacity: 0
                                 }}
                             />
                             <YMapLayer
                                 zIndex={1000}
-                                id={"tileLayer"}
+                                id={"tileGeneratorSource"}
                                 source={"tileGeneratorSource"}
-                                type={"tiles"}
+                                type={"tileGeneratorSource"}
                                 raster={{
                                     awaitAllTilesOnFirstDisplay: true,
                                 }}
@@ -132,7 +132,6 @@ const MapTemplate = observer(() => {
                         </>
                     )
                 }
-
                 {
                     !DashboardStore.isDashboard() &&
                     <MapControls/>

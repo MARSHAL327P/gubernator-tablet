@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable, runInAction, toJS} from "mobx";
+import {action, makeAutoObservable, observable, runInAction, toJS} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
@@ -16,35 +16,23 @@ class MapStore {
         center: [33.526402, 44.576972],
         zoom: 12
     }
-    defaultHeatmapOptions = {
-        radius: 120,
-        dissipating: true,
-        opacity: 0.7,
-        intensityOfMidpoint: 0.01,
-        gradient: {
-            0.1: 'rgba(49,173,70,1)',
-            0.15: 'rgba(196,201,61,1)',
-            0.3: 'rgba(222,151,46)',
-            0.5: 'rgb(222,140,46)',
-            0.7: 'rgba(206,90,35)',
-            0.99999: 'rgba(190,41,25)',
-        }
-    }
     defaultAdditionalLayersOptions = {
         indicationData: IndicationsStore.indications.temperature,
         selected: false,
         isLoading: false,
-        gradeRange: null,
+        gradeRange: [-40, -20, -10, 0, 10, 20, 40],
     }
     additionalLayers = {
         temperature: this.defaultAdditionalLayersOptions,
         wind: {
             ...this.defaultAdditionalLayersOptions,
             indicationData: IndicationsStore.indications.wind,
+            gradeRange: [0, 5, 10, 15, 20, 25, 30],
         },
         pressure: {
             ...this.defaultAdditionalLayersOptions,
             indicationData: IndicationsStore.indications.pressure,
+            gradeRange: [664, 1193],
         },
     }
     zoomIsBlocked = false
@@ -63,11 +51,11 @@ class MapStore {
         };
     }
 
-    initLocation(initDefaultValues = false){
+    initLocation(initDefaultValues = false) {
         let url = new URL(window.location)
         let searchParams = url.searchParams
 
-        if( !searchParams.get("ll") || !searchParams.get("zoom") || initDefaultValues ){
+        if (!searchParams.get("ll") || !searchParams.get("zoom") || initDefaultValues) {
             this.setLocationParams(this.defaultLocation)
         }
 
@@ -83,7 +71,7 @@ class MapStore {
         let searchParams = url.searchParams
         let zoom = parseFloat(newLocation.zoom.toFixed(2))
 
-        searchParams.set("ll", newLocation.center )
+        searchParams.set("ll", newLocation.center)
         searchParams.set("zoom", zoom)
 
         this.location = {
@@ -117,7 +105,7 @@ class MapStore {
 
         layerData.selected = !layerData.selected
 
-        if( lastSelectedAdditionalLayer )
+        if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false
     }
 
