@@ -5,7 +5,7 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import React from 'react';
 import DashboardStore from "../../Dashboard/store/dashboard.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import MapControls from "./MapControls/MapControls";
+import {runInAction} from "mobx";
 
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
@@ -29,6 +29,8 @@ const MapTemplate = observer(() => {
         YMapGeolocationControl,
         YMapDefaultFeaturesLayer,
         YMapListener,
+        YMapTileDataSource,
+        YMapLayer,
     } = MapStore.mapData
 
     useEffect(() => {
@@ -70,10 +72,12 @@ const MapTemplate = observer(() => {
                 MapStore.location.zoom = (currentZoom - 1 < zoomRange.min) ? zoomRange.min : currentZoom - 1
 
             MapStore.location.zoom = parseFloat(MapStore.location.zoom)
-            if( !isGeoLocation )
+            if (!isGeoLocation)
                 MapStore.setLocationParams(MapStore.location)
         })
+        // eslint-disable-next-line
     }, [MapStore.mapRef])
+
 
     return MapStore.mapData && MapStore.location &&
         <div style={{
@@ -83,25 +87,46 @@ const MapTemplate = observer(() => {
         }}>
             <YMap
                 zoomRange={{
-                    min: 11,
+                    min: 6,
                     max: 21
                 }}
                 location={MapStore.location}
-                ref={map => MapStore.mapRef = map}
+                ref={map => runInAction(() => {
+                    MapStore.mapRef = map
+                })}
             >
                 <YMapListener onActionEnd={onActionEnd}/>
                 <YMapDefaultSchemeLayer/>
                 <YMapDefaultFeaturesLayer/>
+                <YMapTileDataSource
+                    id={"tileGeneratorSource"}
+                    raster={{
+                        type: "tiles",
+                        fetchTile: MapStore.fetchTile,
+                        transparent: true,
+                        size: MapStore.tileSize,
+                        opacity: 0
+                    }}
+                />
                 <YMapControls position="right" ref={controlsRef}>
                     <YMapZoomControl/>
                     <YMapGeolocationControl/>
                 </YMapControls>
                 {SelectedClassInfoStore.currentClass?.mapLayer}
+                <YMapLayer
+                    zIndex={1000}
+                    id={'osm'}
+                    source={"tileGeneratorSource"}
+                    type={"tiles"}
+                    raster={{
+                        awaitAllTilesOnFirstDisplay: true,
+                    }}
+                />
             </YMap>
-            {
-                !DashboardStore.isDashboard() &&
-                <MapControls/>
-            }
+            {/*{*/}
+            {/*    !DashboardStore.isDashboard() &&*/}
+            {/*    <MapControls/>*/}
+            {/*}*/}
         </div>
 })
 

@@ -94,6 +94,7 @@ class MapStore {
     zoomIsBlocked = false
     markerTextClasses = "font-bold text-xs text-center drop-shadow-md shadow-black"
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
+    tileSize = 256;
 
     async loadMap() {
         const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
@@ -235,6 +236,30 @@ class MapStore {
         let geoLocation = (this.geoLocation && this.geoLocation.reverse()) || ""
 
         window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.reverse().join(",")}&rtt=auto&ruri=~`, "_blank");
+    }
+
+    async fetchTile(tileX, tileY, tileZ) {
+        const canvas = document.createElement('canvas');
+        canvas.width = this.tileSize;
+        canvas.height = this.tileSize;
+        const ctx = canvas.getContext('2d');
+        // ctx.fillStyle = '#000000';
+
+        // ctx.beginPath();
+        // ctx.rect(0, 0, canvas.width, canvas.height)
+        // ctx.closePath();
+        // ctx.strokeStyle = "red";
+        // ctx.stroke();
+        // ctx.fillText(`${tileX}:${tileY}:${tileZ}`, 10, 10);
+
+        let base_image = new Image();
+        base_image.src = `http://127.0.0.1:8887/${tileZ}/${tileX}/${tileY}.png`;
+        base_image.onload = function(){
+            ctx.drawImage(base_image, 0, 0);
+        }
+
+
+        return {image: canvas};
     }
 
     constructor() {
