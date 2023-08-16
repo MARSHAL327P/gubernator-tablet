@@ -5,6 +5,8 @@ import {createContext, useContext} from "react";
 
 class GlobalStore {
     selectedTabClass = {}
+    selectedAdditionalLayer = null
+    generateNewHeatmap = true
 
     constructor() {
         makeAutoObservable(this);
@@ -15,7 +17,8 @@ class GlobalStore {
     }
 }
 
-const StoresContext = createContext(new GlobalStore());
-
-// this will be the function available for the app to connect to the stores
-export const useStores = () => useContext(StoresContext);
+// const StoresContext = createContext(new GlobalStore());
+//
+// // this will be the function available for the app to connect to the stores
+// export const useStores = () => useContext(StoresContext);
+export default GlobalStore = new GlobalStore()

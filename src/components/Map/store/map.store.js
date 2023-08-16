@@ -3,6 +3,7 @@ import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
 import ReactDOM from "react-dom";
+import GlobalStore from "../../../stores/global.store";
 
 /* global ymaps3 */
 
@@ -96,13 +97,17 @@ class MapStore {
     }
 
     get selectedAdditionalLayer() {
-        return Object.values(this.additionalLayers).find((layerData) => layerData.selected)
+        let layer = Object.values(this.additionalLayers).find((layerData) => layerData.selected)
+        GlobalStore.selectedAdditionalLayer = layer
+
+        return layer
     }
 
     selectAdditionalLayer(layerName) {
         let lastSelectedAdditionalLayer = this.selectedAdditionalLayer
         let layerData = this.additionalLayers[layerName]
 
+        GlobalStore.generateNewHeatmap = true
         layerData.selected = !layerData.selected
 
         if (lastSelectedAdditionalLayer)
@@ -135,27 +140,28 @@ class MapStore {
         window.open(`https://yandex.ru/maps/959/sevastopol/?mode=routes&rtext=${geoLocation}~${coordTo.reverse().join(",")}&rtt=auto&ruri=~`, "_blank");
     }
 
-    async fetchTile(x, y, z, layer) {
-        runInAction(() => {
-            layer.isLoading = true
-        })
-
+    async fetchTile(x, y, z) {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
 
+        let layer = GlobalStore.selectedAdditionalLayer
+
+        layer.isLoading = true
         canvas.width = this.tileSize;
         canvas.height = this.tileSize;
 
         let base_image = new Image();
 
         base_image.src = `${process.env.REACT_APP_TILES}/${layer.indicationData.nclName}/${z}/${x}/${y}.png`;
-        base_image.onload = function(){
+        base_image.onload = function () {
             runInAction(() => {
                 layer.isLoading = false
             })
 
             ctx.drawImage(base_image, 0, 0);
         }
+
+        GlobalStore.generateNewHeatmap = false
 
         return {image: canvas};
     }

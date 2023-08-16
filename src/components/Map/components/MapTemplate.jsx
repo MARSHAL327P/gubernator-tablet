@@ -7,6 +7,7 @@ import DashboardStore from "../../Dashboard/store/dashboard.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import MapControls from "./MapControls/MapControls";
+import GlobalStore from "../../../stores/global.store";
 
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
@@ -111,23 +112,14 @@ const MapTemplate = observer(() => {
                                 id={"tileGeneratorSource"}
                                 raster={{
                                     type: "tileGeneratorSource",
-                                    // fetchTile: MapStore.fetchTile.bind(MapStore),
-                                    fetchTile: (x, y, z) => {
-                                        return MapStore.fetchTile(x, y, z, MapStore.selectedAdditionalLayer)
-                                    },
-                                    // transparent: true,
-                                    // size: MapStore.tileSize,
-                                    // opacity: 0
+                                    fetchTile: GlobalStore.generateNewHeatmap ? MapStore.fetchTile.bind(MapStore) : MapStore.fetchTile,
                                 }}
                             />
                             <YMapLayer
-                                zIndex={1000}
+                                zIndex={1300}
                                 id={"tileGeneratorSource"}
                                 source={"tileGeneratorSource"}
                                 type={"tileGeneratorSource"}
-                                raster={{
-                                    awaitAllTilesOnFirstDisplay: true,
-                                }}
                             />
                         </>
                     )
