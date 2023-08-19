@@ -33,6 +33,8 @@ const MapTemplate = observer(() => {
         YMapListener,
         YMapTileDataSource,
         YMapLayer,
+        YMapMarker,
+        YMapFeature,
     } = MapStore.mapData
 
     useEffect(() => {
@@ -45,6 +47,7 @@ const MapTemplate = observer(() => {
         if (resizeEventTypes.includes(type))
             MapStore.setLocationParams(location)
     }, []);
+
 
     useEffect(() => {
         controlsRef.current && controlsRef.current._element.addEventListener("click", (e) => {
@@ -96,10 +99,9 @@ const MapTemplate = observer(() => {
                     MapStore.mapRef = map
                 })}
             >
-                <YMapListener onActionEnd={onActionEnd}/>
                 <YMapDefaultSchemeLayer/>
                 <YMapDefaultFeaturesLayer/>
-
+                <YMapListener onActionEnd={onActionEnd} />
                 <YMapControls position="right" ref={controlsRef}>
                     <YMapZoomControl/>
                     <YMapGeolocationControl/>
@@ -121,6 +123,7 @@ const MapTemplate = observer(() => {
                                 source={"tileGeneratorSource"}
                                 type={"tileGeneratorSource"}
                             />
+                            <YMapListener layer={"any"} onClick={MapStore.findCurrentValue.bind(MapStore)}/>
                         </>
                     )
                 }

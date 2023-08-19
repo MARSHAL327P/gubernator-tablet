@@ -39,7 +39,8 @@ class IndicationsStore {
             icon: Water,
             units: "°",
             unitsFull: "C°",
-            widget: TempSurfWidget
+            widget: TempSurfWidget,
+            nclName: "SST"
         },
         temperature: {
             oldName: "t",

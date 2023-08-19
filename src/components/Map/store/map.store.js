@@ -4,6 +4,7 @@ import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
 import ReactDOM from "react-dom";
 import GlobalStore from "../../../stores/global.store";
+import coordValue from "./coordValues";
 
 /* global ymaps3 */
 
@@ -35,11 +36,17 @@ class MapStore {
             indicationData: IndicationsStore.indications.pressure,
             gradeRange: [664, 1193],
         },
+        t_surf: {
+            ...this.defaultAdditionalLayersOptions,
+            indicationData: IndicationsStore.indications.t_surf,
+            gradeRange: [21.7, 33.1],
+        },
     }
     zoomIsBlocked = false
     markerTextClasses = "font-bold text-xs text-center drop-shadow-md shadow-black"
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
     tileSize = 256;
+    coordValues = {}
 
     async loadMap() {
         const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
@@ -108,6 +115,7 @@ class MapStore {
         let layerData = this.additionalLayers[layerName]
 
         GlobalStore.generateNewHeatmap = true
+        this.coordValues = coordValue
         layerData.selected = !layerData.selected
 
         if (lastSelectedAdditionalLayer)
@@ -164,6 +172,25 @@ class MapStore {
         GlobalStore.generateNewHeatmap = false
 
         return {image: canvas};
+    }
+
+    findCurrentValue(object, event){
+        let startTime = performance.now()
+        let coords = event.coordinates
+        let searchLat = coords[1]
+        let searchLon = coords[0]
+
+        let findElement = this.coordValues.reduce((acc, obj) =>
+            (
+                Math.abs(searchLat - obj.lat) <= Math.abs(searchLat - acc.lat) &&
+                Math.abs(searchLon - obj.lon) <= Math.abs(searchLon - acc.lon)
+            ) ? obj : acc
+        );
+
+        console.log(findElement.value)
+        let endTime = performance.now()
+        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
+        // console.log(findElement.value)
     }
 
     constructor() {
