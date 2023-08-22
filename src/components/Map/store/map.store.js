@@ -22,7 +22,7 @@ class MapStore {
         indicationData: IndicationsStore.indications.temperature,
         selected: false,
         isLoading: false,
-        gradeRange: [-40, -20, -10, 0, 10, 20, 40],
+        gradeRange: [-40, -30, -20, -10, 0, 10, 20, 30, 40],
     }
     additionalLayers = {
         temperature: this.defaultAdditionalLayersOptions,
@@ -47,6 +47,7 @@ class MapStore {
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
     tileSize = 256;
     coordValues = {}
+    currentValue = null
 
     async loadMap() {
         const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
@@ -115,22 +116,16 @@ class MapStore {
         let layerData = this.additionalLayers[layerName]
 
         GlobalStore.generateNewHeatmap = true
+
+        this.currentValue = null
         this.coordValues = coordValue
         layerData.selected = !layerData.selected
 
+        if (layerData.selected)
+            layerData.isLoading = true
+
         if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false
-    }
-
-    blockZoom(zoomValue = 13) {
-        this.zoomToItem([44.577681655459656, 33.49127241954839], zoomValue)
-        this.mapRef.current.behaviors.disable("scrollZoom")
-        this.zoomIsBlocked = true
-    }
-
-    unBlockZoom() {
-        this.mapRef.current.behaviors.enable("scrollZoom")
-        this.zoomIsBlocked = false
     }
 
     saveGeoLocation(coords) {
@@ -154,9 +149,16 @@ class MapStore {
 
         let layer = GlobalStore.selectedAdditionalLayer
 
-        layer.isLoading = true
         canvas.width = this.tileSize;
         canvas.height = this.tileSize;
+        // ctx.fillStyle = '#000000';
+        //
+        // ctx.beginPath();
+        // ctx.rect(0, 0, canvas.width, canvas.height)
+        // ctx.closePath();
+        // ctx.strokeStyle = "red";
+        // ctx.stroke();
+        // ctx.fillText(`${x}:${y}:${z}`, 10, 10);
 
         let base_image = new Image();
 
@@ -175,7 +177,9 @@ class MapStore {
     }
 
     findCurrentValue(object, event){
-        let startTime = performance.now()
+        if( object?.type === "marker" )
+            return false
+
         let coords = event.coordinates
         let searchLat = coords[1]
         let searchLon = coords[0]
@@ -187,10 +191,15 @@ class MapStore {
             ) ? obj : acc
         );
 
-        console.log(findElement.value)
-        let endTime = performance.now()
-        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
-        // console.log(findElement.value)
+        this.currentValue = {
+            coord: coords,
+            value: findElement.value
+        }
+    }
+
+    get currentValueText(){
+        let indication = this.selectedAdditionalLayer.indicationData
+        return `${this.currentValue.value} ${indication.unitsFull ?? indication.units}`
     }
 
     constructor() {

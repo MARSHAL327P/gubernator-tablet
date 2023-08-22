@@ -8,9 +8,19 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import MapControls from "./MapControls/MapControls";
 import GlobalStore from "../../../stores/global.store";
+import TileLayers from "./Layers/TileLayers";
 
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
+    const {
+        YMap,
+        YMapDefaultSchemeLayer,
+        YMapControls,
+        YMapZoomControl,
+        YMapGeolocationControl,
+        YMapDefaultFeaturesLayer,
+        YMapListener,
+    } = MapStore.mapData
 
     let controlsRef = useRef(null)
     let [mapHeight, setMapHeight] = useState("100vh")
@@ -23,19 +33,6 @@ const MapTemplate = observer(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height, width, window.location.pathname, DashboardStore.isOpen])
 
-    const {
-        YMap,
-        YMapDefaultSchemeLayer,
-        YMapControls,
-        YMapZoomControl,
-        YMapGeolocationControl,
-        YMapDefaultFeaturesLayer,
-        YMapListener,
-        YMapTileDataSource,
-        YMapLayer,
-        YMapMarker,
-        YMapFeature,
-    } = MapStore.mapData
 
     useEffect(() => {
         MapStore.initLocation()
@@ -101,32 +98,13 @@ const MapTemplate = observer(() => {
             >
                 <YMapDefaultSchemeLayer/>
                 <YMapDefaultFeaturesLayer/>
-                <YMapListener onActionEnd={onActionEnd} />
+                <YMapListener onActionEnd={onActionEnd}/>
                 <YMapControls position="right" ref={controlsRef}>
                     <YMapZoomControl/>
                     <YMapGeolocationControl/>
                 </YMapControls>
                 {SelectedClassInfoStore.currentClass?.mapLayer}
-                {
-                    MapStore.selectedAdditionalLayer && (
-                        <>
-                            <YMapTileDataSource
-                                id={"tileGeneratorSource"}
-                                raster={{
-                                    type: "tileGeneratorSource",
-                                    fetchTile: GlobalStore.generateNewHeatmap ? MapStore.fetchTile.bind(MapStore) : MapStore.fetchTile,
-                                }}
-                            />
-                            <YMapLayer
-                                zIndex={1300}
-                                id={"tileGeneratorSource"}
-                                source={"tileGeneratorSource"}
-                                type={"tileGeneratorSource"}
-                            />
-                            <YMapListener layer={"any"} onClick={MapStore.findCurrentValue.bind(MapStore)}/>
-                        </>
-                    )
-                }
+                <TileLayers/>
                 {
                     !DashboardStore.isDashboard() &&
                     <MapControls/>

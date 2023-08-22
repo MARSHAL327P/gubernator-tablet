@@ -29,7 +29,7 @@ const ActivePlacemark = (props) => {
         <YMapMarker ref={markerRef} {...props}>
             <div
                 style={props.wrapper?.style}
-                className={cc([props.wrapper?.classes, "marker_beach fadeIn opacity-0"])}
+                className={cc([props.wrapper?.classes, "absolute marker_beach fadeIn opacity-0"])}
                 {...triggers}
                 onClick={props.wrapper?.link && toPage}
             >
