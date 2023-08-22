@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import MapStore from "../../store/map.store";
 import GlobalStore from "../../../../stores/global.store";
-import React from "react";
+import React, {useRef} from "react";
 
 const TileLayers = observer(() => {
     const {
@@ -10,6 +10,8 @@ const TileLayers = observer(() => {
         YMapLayer,
         YMapMarker,
     } = MapStore.mapData
+
+    let currentValueMarker = useRef(null)
 
     return MapStore.selectedAdditionalLayer && (
         <>
@@ -29,14 +31,17 @@ const TileLayers = observer(() => {
             <YMapListener layer={"any"} onFastClick={MapStore.findCurrentValue.bind(MapStore)}/>
             {
                 MapStore.currentValue && (
-                    <YMapMarker draggable mapFollowsOnDrag coordinates={MapStore.currentValue.coord}>
+                    <YMapMarker ref={currentValueMarker} draggable mapFollowsOnDrag coordinates={MapStore.currentValue.coord}>
                         <div
                             onMouseEnter={() => {
                                 console.log("enter")
                             }}
                             onMouseMove={(e) => {
-                                console.log(e)
-                                console.log("move")
+                                MapStore.findCurrentValue("marker", currentValueMarker.current)
+                                // console.log(e)
+                                // console.log(MapStore.currentValue.coord)
+                                // console.log(currentValueMarker.current.coordinates)
+                                // console.log("move")
                             }}
                             onMouseLeave={() => {
                                 console.log("leave")

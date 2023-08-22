@@ -14,7 +14,7 @@ const BeachPlacemarker = observer(({beach, isHovered, triggers}) => {
             mount: { y: 0 },
             unmount: { y: 25 },
         }}>
-            <PopoverHandler {...triggers}>
+            <PopoverHandler>
                 <div>
                     <div className={"relative grid justify-items-center"}>
                         <MarkerIcon className={cc(["w-12 h-12 transition scale-marker", markerColor])}/>
@@ -25,7 +25,7 @@ const BeachPlacemarker = observer(({beach, isHovered, triggers}) => {
                     </div>
                 </div>
             </PopoverHandler>
-            <PopoverContent className={"z-30 p-0 shadow-none border-0 bg-none"}>
+            <PopoverContent className={"z-30 p-0 shadow-none border-0 bg-none pointer-events-none"}>
                 <BeachMarkerDescription beach={beach}/>
             </PopoverContent>
         </Popover>

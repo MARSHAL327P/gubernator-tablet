@@ -22,24 +22,24 @@ class MapStore {
         indicationData: IndicationsStore.indications.temperature,
         selected: false,
         isLoading: false,
-        gradeRange: [-40, -30, -20, -10, 0, 10, 20, 30, 40],
+        gradeRange: null,
     }
     additionalLayers = {
         temperature: this.defaultAdditionalLayersOptions,
         wind: {
             ...this.defaultAdditionalLayersOptions,
             indicationData: IndicationsStore.indications.wind,
-            gradeRange: [0, 5, 10, 15, 20, 25, 30],
+            gradeRange: null,
         },
         pressure: {
             ...this.defaultAdditionalLayersOptions,
             indicationData: IndicationsStore.indications.pressure,
-            gradeRange: [664, 1193],
+            gradeRange: null,
         },
         t_surf: {
             ...this.defaultAdditionalLayersOptions,
             indicationData: IndicationsStore.indications.t_surf,
-            gradeRange: [21.7, 33.1],
+            gradeRange: null,
         },
     }
     zoomIsBlocked = false
@@ -124,6 +124,11 @@ class MapStore {
         if (layerData.selected)
             layerData.isLoading = true
 
+        axios.get(process.env.REACT_APP_TILES_DATA)
+            .then(({data}) => {
+                layerData.gradeRange = data[layerData.indicationData.nclName]
+            })
+
         if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false
     }
@@ -162,8 +167,8 @@ class MapStore {
 
         let base_image = new Image();
 
-        base_image.src = `${process.env.REACT_APP_TILES}/${layer.indicationData.nclName}/${z}/${x}/${y}.png`;
-        base_image.onload = function () {
+        base_image.src = `${process.env.REACT_APP_TILES}/tiles/${layer.indicationData.nclName}/${z}/${x}/${y}`;
+        base_image.onload = () => {
             runInAction(() => {
                 layer.isLoading = false
             })
@@ -180,6 +185,7 @@ class MapStore {
         if( object?.type === "marker" )
             return false
 
+        var startTime = performance.now()
         let coords = event.coordinates
         let searchLat = coords[1]
         let searchLon = coords[0]
@@ -195,6 +201,9 @@ class MapStore {
             coord: coords,
             value: findElement.value
         }
+
+        var endTime = performance.now()
+        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
     }
 
     get currentValueText(){
