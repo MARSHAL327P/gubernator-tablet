@@ -121,13 +121,23 @@ class MapStore {
         this.coordValues = coordValue
         layerData.selected = !layerData.selected
 
-        if (layerData.selected)
+        if (layerData.selected){
             layerData.isLoading = true
+        }
+
+        if( !lastSelectedAdditionalLayer ) {
+            this.setLocationParams({
+                ...this.location,
+                zoom: 10
+            })
+        }
+
 
         axios.get(process.env.REACT_APP_TILES_DATA)
             .then(({data}) => {
                 layerData.gradeRange = data[layerData.indicationData.nclName]
             })
+
 
         if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false

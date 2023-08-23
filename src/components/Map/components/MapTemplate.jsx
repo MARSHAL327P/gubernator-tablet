@@ -89,7 +89,7 @@ const MapTemplate = observer(() => {
             <YMap
                 zoomRange={{
                     min: 8,
-                    max: 21
+                    max: MapStore.selectedAdditionalLayer ? 13 : 21
                 }}
                 location={MapStore.location}
                 ref={map => runInAction(() => {
