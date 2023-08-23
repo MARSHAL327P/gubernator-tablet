@@ -1,6 +1,7 @@
 import {action, makeAutoObservable, runInAction} from "mobx";
 import {ReviewItemStore} from "./reviewItem.store";
 import axios from "axios";
+import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 
 class ReviewsStore {
     reviewList = null
@@ -18,6 +19,8 @@ class ReviewsStore {
                 action(data => {
                     this.reviewList = data ?? []
                     this.isLoading = false
+
+                    // console.log(BeachLocalStore.)
                 })
             )
     }
