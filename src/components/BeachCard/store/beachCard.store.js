@@ -32,10 +32,6 @@ export default class BeachCardStore {
                     item.waterQuality = item.waterQuality && new WaterQualityStore(item.waterQuality)
                     item.airQuality = new AirQualityStore(item.airQuality)
 
-                    // TODO: Убрать когда исправят на бэке
-                    item.polygon = [item.polygon[0][0].map(item => [item[1], item[0]])]
-                    item.coord = [item.coord[1], item.coord[0]]
-
                     return new BeachCardStore(item)
                 });
             })
