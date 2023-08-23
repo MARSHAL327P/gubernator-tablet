@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
+import MapStore from "./components/Map/store/map.store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const defaultBtnParams = {
@@ -95,12 +96,18 @@ const theme = {
     },
 }
 
-root.render(
-    <React.StrictMode>
-        <ThemeProvider value={theme}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </ThemeProvider>
-    </React.StrictMode>
-);
+main()
+async function main(){
+    await MapStore.loadMap();
+
+    root.render(
+        <React.StrictMode>
+            <ThemeProvider value={theme}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </ThemeProvider>
+        </React.StrictMode>
+    );
+}
+

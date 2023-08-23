@@ -65,21 +65,17 @@ body{
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translate(-20px, 0);
     }
     to {
         opacity: 1;
-        transform: translate(0px, 0px);
     }
 }
 
 @keyframes fadeOut {
     from {
         opacity: 1;
-        transform: translate(0px, 0px);
     }
     to {
-        transform: translate(-20px, 0);
         opacity: 0;
     }
 }
@@ -108,26 +104,6 @@ body{
     gap: 10px;
 }
 
-.scale-marker{
-    transform: scale(1);
-}
-
-.scale-marker_active{
-    transform: scale(1.2);
-}
-
-.hover-marker__body{
-    opacity: 0;
-    transform: translateY(10px);
-    transition: .3s;
-}
-
-.hover-marker_active .hover-marker__body{
-    opacity: 1;
-    transform: translateY(0);
-    transition: .3s;
-}
-
 .recharts-legend-item:hover{
     cursor: pointer;
 }
@@ -144,4 +120,17 @@ body{
     .rdrStaticRangeLabel{
         text-align: center !important;
     }
+}
+
+.marker_beach{
+    transform: translate(-50%, calc(-50% - 24px));
+    cursor: pointer;
+}
+
+.marker_beach .scale-marker{
+    transform: scale(1);
+}
+
+.marker_beach:hover .scale-marker{
+    transform: scale(1.2);
 }

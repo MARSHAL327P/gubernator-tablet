@@ -1,89 +1,117 @@
 import {observer} from "mobx-react-lite";
-import {Map, RulerControl, useYMaps, ZoomControl} from "@pbe/react-yandex-maps";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../store/map.store";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import {runInAction} from "mobx";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import {useCallback, useEffect, useRef, useState} from "react";
+import React from 'react';
 import DashboardStore from "../../Dashboard/store/dashboard.store";
+import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import {runInAction} from "mobx";
 import MapControls from "./MapControls/MapControls";
-import GeoLocationControl from "./MapControls/GeoLocationControl";
-
+import GlobalStore from "../../../stores/global.store";
+import TileLayers from "./Layers/TileLayers";
 
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
-    const location = useLocation();
-    const [queryParameters] = useSearchParams()
-    const navigate = useNavigate()
-    const mapDefaultState = useMemo(() => {
-        let data = MapStore.queryParam || queryParameters
+    const {
+        YMap,
+        YMapDefaultSchemeLayer,
+        YMapControls,
+        YMapZoomControl,
+        YMapGeolocationControl,
+        YMapDefaultFeaturesLayer,
+        YMapListener,
+    } = MapStore.mapData
 
-        return {
-            center: data.get("ll") ? data.get("ll").split(",") : [44.556972, 33.526402],
-            zoom: data.get("zoom") ?? 12,
-            controls: [],
-        }
-    }, [queryParameters])
-
-    let [mapHeight, setMapHeight] = useState(height)
-
-    let setMapCoords = useCallback((mapStates) => {
-        let center = mapStates.center
-        let zoom = mapStates.zoom
-
-        if (mapStates.originalEvent) {
-            center = mapStates.originalEvent.newCenter
-            zoom = mapStates.originalEvent.newZoom
-        }
-
-        queryParameters.set("ll", center)
-        queryParameters.set("zoom", zoom)
-
-        runInAction(() => {
-            MapStore.queryParam = queryParameters
-        })
-
-        navigate(location.pathname + "?" + queryParameters.toString())
-    }, [location.pathname, navigate, queryParameters])
+    let controlsRef = useRef(null)
+    let [mapHeight, setMapHeight] = useState("100vh")
 
     useEffect(() => {
-        setMapCoords(mapDefaultState)
-    }, [mapDefaultState, setMapCoords])
+        let mobileDashboardOffset = width > 1024 ? 436 : 300
+        let dashboardOffset = DashboardStore.isDashboard() && DashboardStore.isOpen ? mobileDashboardOffset : 0
 
-    runInAction(() => {
-        MapStore.ymaps = useYMaps()
-        MapStore.mapRef = useRef(null);
-    })
-
-    useEffect(() => {
-        let dashboardOffset = width > 1024 ? 436 : 300
-        setMapHeight(window.innerHeight - (DashboardStore.isDashboard() && DashboardStore.isOpen ? dashboardOffset : 0))
+        setMapHeight(`calc(100vh - ${dashboardOffset}px)`)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [height, window.location.pathname, DashboardStore.isOpen])
+    }, [height, width, window.location.pathname, DashboardStore.isOpen])
 
 
-    return (
-        <Map
-            instanceRef={MapStore.mapRef}
-            width={width}
-            height={mapHeight}
-            defaultState={mapDefaultState}
-            onBoundsChange={(e) => {
-                setMapCoords(e)
-            }}
-        >
-            <RulerControl options={{float: "right"}}/>
-            <ZoomControl options={{float: "right"}}/>
-            <GeoLocationControl/>
-            {SelectedClassInfoStore.currentClass?.mapLayer}
-            {
-                !DashboardStore.isDashboard() &&
-                <MapControls/>
-            }
+    useEffect(() => {
+        MapStore.initLocation()
+    }, [])
 
-        </Map>
-    )
+    const onActionEnd = useCallback(({location, type}) => {
+        const resizeEventTypes = ["drag", "scrollZoom", "oneFingerZoom", "dblClick", "pinchZoom", "magnifier"]
+
+        if (resizeEventTypes.includes(type))
+            MapStore.setLocationParams(location)
+    }, []);
+
+
+    useEffect(() => {
+        controlsRef.current && controlsRef.current._element.addEventListener("click", (e) => {
+            if (!MapStore.mapRef) return false
+
+            let target = e.target.querySelector(".ymaps3x0--zoom-control__in") ?? e.target.querySelector(".ymaps3x0--zoom-control__out") ?? e.target
+            let zoomRange = MapStore.mapRef.zoomRange
+            let currentZoom = parseFloat(MapStore.location.zoom)
+            let isGeoLocation = target.classList.contains("ymaps3x0--geolocation-control")
+            let isPlusBtn = target.classList.contains("ymaps3x0--zoom-control__in")
+            let isMinusBtn = target.classList.contains("ymaps3x0--zoom-control__out")
+
+            if (isGeoLocation)
+                setTimeout(() => {
+                    MapStore.location = {
+                        center: MapStore.mapRef.center,
+                        zoom: currentZoom
+                    }
+                    MapStore.setLocationParams(MapStore.location)
+                    MapStore.saveGeoLocation(MapStore.location.center)
+                }, 500)
+
+            if (isPlusBtn && currentZoom < zoomRange.max)
+                MapStore.location.zoom = (currentZoom + 1 > zoomRange.max) ? zoomRange.max : currentZoom + 1
+
+            if (isMinusBtn && currentZoom > zoomRange.min)
+                MapStore.location.zoom = (currentZoom - 1 < zoomRange.min) ? zoomRange.min : currentZoom - 1
+
+            MapStore.location.zoom = parseFloat(MapStore.location.zoom)
+            if (!isGeoLocation)
+                MapStore.setLocationParams(MapStore.location)
+        })
+        // eslint-disable-next-line
+    }, [MapStore.mapRef])
+
+    return MapStore.mapData && MapStore.location &&
+        <div style={{
+            width: "100vw",
+            height: mapHeight,
+            transition: "height .2s"
+        }}>
+            <YMap
+                zoomRange={{
+                    min: 8,
+                    max: 21
+                }}
+                location={MapStore.location}
+                ref={map => runInAction(() => {
+                    MapStore.mapRef = map
+                })}
+            >
+                <YMapDefaultSchemeLayer/>
+                <YMapDefaultFeaturesLayer/>
+                <YMapListener onActionEnd={onActionEnd}/>
+                <YMapControls position="right" ref={controlsRef}>
+                    <YMapZoomControl/>
+                    <YMapGeolocationControl/>
+                </YMapControls>
+                {SelectedClassInfoStore.currentClass?.mapLayer}
+                <TileLayers/>
+                {
+                    !DashboardStore.isDashboard() &&
+                    <MapControls/>
+                }
+            </YMap>
+
+        </div>
 })
 
 export default MapTemplate

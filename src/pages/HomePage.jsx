@@ -10,8 +10,6 @@ import {Tooltip} from "@material-tailwind/react";
 import SidebarStore from "../components/Sidebar/store/sidebar.store";
 import FastFilter from "../components/Filter/components/FastFilter";
 import useWindowSize from "../hooks/useWindowSize";
-import DashboardStore from "../components/Dashboard/store/dashboard.store";
-import MapControls from "../components/Map/components/MapControls/MapControls";
 import BathingComfortModal from "../components/Map/components/MapControls/BathingComfortModal";
 
 const HomePage = observer(({tabItems}) => {
@@ -67,13 +65,13 @@ const HomePage = observer(({tabItems}) => {
                     <Filter/>
                     <Tooltip content={hideSidebar ? "Открыть боковую панель" : "Скрыть боковую панель"}>
                         <div
-                            className={cc(["lg:hidden overflow-hidden rotate-0 relative left-5 top-7 bg-white hover:bg-gray-200 " +
-                            "hover:cursor-pointer transition rounded-xl py-4 px-3 h-fit", {
-                                "rotate-180": hideSidebar
-                            }])}
+                            className={cc(["lg:hidden overflow-hidden relative left-5 top-7 bg-white hover:bg-gray-200 " +
+                            "hover:cursor-pointer transition rounded-xl py-4 px-3 h-fit"])}
                             onClick={() => setHideSidebar(hideSidebar => !hideSidebar)}
                         >
-                            <Chevron/>
+                            <Chevron className={cc(["transition rotate-0", {
+                                "rotate-180": hideSidebar
+                            }])}/>
                             <Ripple color={"rgba(0,0,0,.6)"}/>
                         </div>
                     </Tooltip>

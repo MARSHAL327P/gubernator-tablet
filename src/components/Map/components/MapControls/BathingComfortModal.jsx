@@ -13,7 +13,7 @@ const BathingComfortModal = observer(() => {
             <PopoverHandler>
                 <Button color={"white"} className={"hidden md:flex p-3 gap-1 relative left-2 mb-2"}>
                     <QuestionMarkCircleIcon className={"w-5 h-5"}/>
-                    Про цвета пляжей
+                    Комфортность купания
                 </Button>
             </PopoverHandler>
             <PopoverContent className={cc([MapStore.blurBackgroundClasses, "ml-2"])}>

@@ -39,7 +39,8 @@ class IndicationsStore {
             icon: Water,
             units: "°",
             unitsFull: "C°",
-            widget: TempSurfWidget
+            widget: TempSurfWidget,
+            nclName: "SST"
         },
         temperature: {
             oldName: "t",
@@ -51,7 +52,8 @@ class IndicationsStore {
             icon: Temperature,
             units: "°",
             unitsFull: "C°",
-            widget: TemperatureWidget
+            widget: TemperatureWidget,
+            nclName: "T2"
         },
         wind: {
             name: "Ветер",
@@ -61,7 +63,8 @@ class IndicationsStore {
             stroke: "stroke-danger",
             icon: Wind,
             units: " м/с",
-            widget: WindWidget
+            widget: WindWidget,
+            nclName: "WIND"
         },
         humidity: {
             oldName: "HM",
@@ -82,7 +85,8 @@ class IndicationsStore {
             text: "text-success",
             icon: Pressure,
             units: " мм.рт.ст",
-            widget: PressureWidget
+            widget: PressureWidget,
+            nclName: "P"
         },
         Honf: {
             oldName: "honf",

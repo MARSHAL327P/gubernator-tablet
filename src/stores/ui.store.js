@@ -1,9 +1,14 @@
 import {makeAutoObservable} from "mobx";
-import Notification from "../components/Notification/components/Notification";
 
 class UiStore{
-    notification(content){
-        return <Notification content={content}/>
+    animationDelay = 75
+    transitionOpacity = {
+        enter: "transition-opacity duration-75",
+        enterFrom:"opacity-0",
+        enterTo:"opacity-100",
+        leave:"transition-opacity duration-150",
+        leaveFrom:"opacity-100",
+        leaveTo:"opacity-0",
     }
 
     constructor() {

@@ -1,41 +1,54 @@
 import {observer} from "mobx-react-lite";
-import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
-import {Polygon} from "@pbe/react-yandex-maps";
-import {useNavigate, useSearchParams} from "react-router-dom";
 import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
 import BeachPlacemarker from "../../../BeachCard/components/BeachPlacemarker";
 import BeachLocalStore from "../../../BeachCard/store/beachLocal.store";
+import MapStore from "../../store/map.store";
+import React, {Fragment} from "react";
+import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
+import UiStore from "../../../../stores/ui.store";
 
 const BeachMap = observer(() => {
-    let navigate = useNavigate()
-    const [queryParameters] = useSearchParams()
+    const {
+        YMapFeature,
+    } = MapStore.mapData
 
-    return !BeachLocalStore.isLoading && SelectedClassInfoStore.filteredCards.map((beach) => {
+    return !BeachLocalStore.isLoading && SelectedClassInfoStore.filteredCards.map((beach, idx) => {
         let polygonColor = beach.bathingComfortMapColors.polygon
 
         return (
-            <div key={beach.id}>
-                <Polygon
-                    geometry={beach.polygon[0]}
-                    options={{
-                        fillColor: polygonColor,
-                        opacity: 0.8,
-                        strokeWidth: 0,
+            <Fragment key={beach.id}>
+                <YMapFeature
+                    id={beach.id.toString()}
+                    geometry={{
+                        type: 'Polygon',
+                        coordinates: beach.polygon
+                    }}
+                    style={{
+                        fill: polygonColor,
+                        fillOpacity: 0.8,
+                        stroke: [{width: 0}]
                     }}
                 />
                 <ActivePlacemark
-                    geometry={beach.coord}
-                    onClick={() => {
-                        navigate(`/beach/${beach.code}?${queryParameters.toString()}`)
+                    wrapper={{
+                        link: `/beach/${beach.code}`,
+                        style: {
+                            animationDelay: `.${idx * UiStore.animationDelay}s`
+                        },
+                        classes: "grid h-[57px]"
                     }}
-                    options={{
-                        iconImageSize: [40, 55],
-                        iconImageOffset: [-20, -50],
-                        iconContentOffset: [-8, -2],
-                    }}
-                    component={<BeachPlacemarker beach={beach}/>}
-                />
-            </div>
+                    coordinates={beach.coord}
+                >
+                    {
+                        (isHovered, triggers) =>
+                            <BeachPlacemarker
+                                isHovered={isHovered}
+                                triggers={triggers}
+                                beach={beach}
+                            />
+                    }
+                </ActivePlacemark>
+            </Fragment>
         )
     })
 

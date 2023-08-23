@@ -9,8 +9,6 @@ import MapStore from "../../store/map.store";
 import MobileAdditionalLayerBtns from "./MobileAdditionalLayerBtns";
 
 const AdditionalLayerBtns = observer(() => {
-    if (!MapStore.ymaps) return
-
     return (
         window.outerWidth > 1024 ?
             <div className={"flex gap-5"}>
@@ -18,7 +16,7 @@ const AdditionalLayerBtns = observer(() => {
                     Object.values(MapStore.additionalLayers).map((additionalLayer) => {
                         let indication = additionalLayer.indicationData
                         let Icon = indication.icon
-                        let isSelected = MapStore.additionalLayers[indication.indicationName].selected
+                        let isSelected = additionalLayer.selected
 
                         return (
                             <Tooltip key={indication.id} content={indication.name}>

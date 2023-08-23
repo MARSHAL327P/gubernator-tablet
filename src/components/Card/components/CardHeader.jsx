@@ -3,25 +3,26 @@ import {Tooltip, Typography} from "@material-tailwind/react";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
 import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import {getUpdateTimeText} from "../../../Utils";
-import cc from "classcat";
 import {Link} from "react-router-dom";
 import useWindowSize from "../../../hooks/useWindowSize";
 
 const CardHeader = observer(({
                                  card,
                                  size = "xs",
-                                 classes = "px-7 pt-4"
+                                 classes = "px-7 pt-4",
+                                 noUpdateTime = false
                              }) => {
-    if( !card ) return
+    if (!card) return
 
     const [width] = useWindowSize()
+
     let cardProblems = card.beachProblems && BeachLocalStore.beachProblemsType[card.beachProblems]
     let updateTime = card.updateTime || card.props_updated_at
 
     return (
         <div className={classes}>
             {
-                updateTime &&
+                updateTime && !noUpdateTime &&
                 <Tooltip content={"Время последнего обновления данных"}>
                     <div className="text-gray-400 text-[12px]">
                         {getUpdateTimeText(updateTime)}
@@ -37,14 +38,9 @@ const CardHeader = observer(({
                             {cardProblems.icon}
                         </Tooltip>
                     }
-                    <Typography variant={width > 640 ? "h4" : "h5"}>
+                    <Typography className={"text-black"} variant={width > 640 && size === "xs" ? "h4" : "h5"}>
                         {card.name}
                     </Typography>
-                    {/*<span className={cc({*/}
-                    {/*    "text-black": true,*/}
-                    {/*    "text-title": size === "xs",*/}
-                    {/*    "text-xl font-bold": size === "md"*/}
-                    {/*})}>{card.name}</span>*/}
                 </div>
 
 
