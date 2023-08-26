@@ -1,6 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {Card, CardBody} from "@material-tailwind/react";
-import BathingComfort from "./BathingComfort";
+import BathingComfort from "../../BathingComfort/components/BathingComfort";
 import CardHeader from "../../Card/components/CardHeader";
 import IndicationsStore from "../../Indications/store/indications.store";
 import Indications from "../../Indications/components/Indications";

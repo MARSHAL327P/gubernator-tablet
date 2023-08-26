@@ -7,7 +7,7 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import {action} from "mobx";
 
 const ReviewForm = observer(({beachId}) => {
-    let rating = SelectedClassInfoStore.currentClass.reviews
+    let reviews = SelectedClassInfoStore.currentClass.card.reviews
     let name = reviewForm.$('name')
     let email = reviewForm.$('email')
     let review = reviewForm.$('review')
@@ -25,10 +25,10 @@ const ReviewForm = observer(({beachId}) => {
             <FormField field={email} info={"Не публикуется"}/>
             <FormField field={review} info={"Не обязательно"} type={Textarea}/>
 
-            <Button onClick={action(reviewForm.onSubmit)} disabled={rating.isSend}>
+            <Button onClick={action(reviewForm.onSubmit)} disabled={reviews.isSend}>
                 Отправить
                 {
-                    rating.isSend ?
+                    reviews.isSend ?
                         <Spinner className={"spinner_white"}/> :
                         <PaperAirplaneIcon className={"w-5 h-5"}/>
                 }

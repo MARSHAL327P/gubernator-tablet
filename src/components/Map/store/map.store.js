@@ -121,9 +121,8 @@ class MapStore {
         this.coordValues = coordValue
         layerData.selected = !layerData.selected
 
-        if (layerData.selected){
+        if (layerData.selected)
             layerData.isLoading = true
-        }
 
         if( !lastSelectedAdditionalLayer ) {
             this.setLocationParams({
@@ -132,12 +131,10 @@ class MapStore {
             })
         }
 
-
         axios.get(process.env.REACT_APP_TILES_DATA)
             .then(({data}) => {
-                layerData.gradeRange = data[layerData.indicationData.nclName]
+                layerData.gradeRange = layerData.gradeRange ?? data[layerData.indicationData.nclName]
             })
-
 
         if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false

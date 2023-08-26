@@ -2,7 +2,7 @@ import {ReactComponent as Map} from "../../../assets/icons/Map.svg";
 import {ReactComponent as Route} from "../../../assets/icons/Route.svg";
 import {Button, Tooltip} from "@material-tailwind/react";
 import {observer} from "mobx-react-lite";
-import BathingComfort from "./BathingComfort";
+import BathingComfort from "../../BathingComfort/components/BathingComfort";
 import 'dayjs/locale/ru';
 import 'dayjs/plugin/updateLocale';
 import {Link} from "react-router-dom";

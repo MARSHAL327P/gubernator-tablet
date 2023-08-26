@@ -3,31 +3,34 @@ import {Typography} from "@material-tailwind/react";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import ReviewsStore from "../store/reviews.store";
 import Loading from "../../Loading/components/Loading";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Reviews = observer(() => {
-    if (!SelectedClassInfoStore.currentClass?.card) return
-    let [ReviewStore, setReviewStore] = useState(null)
-    let beachId = SelectedClassInfoStore.currentClass.card.id
+    let card = SelectedClassInfoStore.currentClass.card
+    let beachId = card.id
 
     useEffect(() => {
-        let ReviewStore = new ReviewsStore(beachId)
+        console.log(card.reviews)
+        if( !card.reviews )
+            card.reviews = new ReviewsStore(beachId)
 
-        setReviewStore(ReviewStore)
-        SelectedClassInfoStore.currentClass.reviews = ReviewStore
+        console.log(card.reviews)
     }, [beachId])
 
+    console.log(card.reviews)
     return (
-        ReviewStore &&
+        card.reviews &&
         <div className={"grid grid-cols-review lg:grid-cols-1 lg:w-full lg:gap-5 gap-24 w-[1200px] mx-auto"}>
             <div className={"flex flex-col gap-5"}>
                 <Typography variant={"h4"}>
                     Оставить отзыв
                 </Typography>
                 {
-                    ReviewStore.successAdded ?
+                    card.reviews.successAdded ?
                         <div className={"bg-primary p-5 text-center text-white rounded-xl shadow-lg"}>Отзыв успешно добавлен</div> :
                         <ReviewForm beachId={beachId}/>
                 }
@@ -37,12 +40,16 @@ const Reviews = observer(() => {
                     Отзывы
                 </Typography>
                 {
-                    ReviewStore.isLoading ?
-                        <Loading text={"Загрузка отзывов"}/> :
-                        <ReviewList/>
+                    card.reviews.isLoading  ?
+                        <>
+                            <Skeleton width={100}/>
+                            <Skeleton height={200}/>
+                        </> :
+                        <ReviewList reviewList={card.reviews.reviewList} />
                 }
             </div>
         </div>
+
     )
 })
 

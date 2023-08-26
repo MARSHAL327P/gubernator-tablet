@@ -5,54 +5,16 @@ import Indications from "../../Indications/components/Indications";
 import cc from "classcat";
 import {Fancybox} from "@fancyapps/ui";
 import MasonryGallery from "../../MasonryGallery/components/MasonryGallery";
-import BathingComfort from "./BathingComfort";
-import IndicationsStore from "../../Indications/store/indications.store";
-import parse from "html-react-parser";
+import BathingComfort from "../../BathingComfort/components/BathingComfort";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const BeachInfo = observer(() => {
-    let card = SelectedClassInfoStore.currentClass.card
+    let card = SelectedClassInfoStore.currentClass?.card
     let styles = {
         block: "p-7 shadow-lg rounded-xl flex flex-col gap-5",
         title: "text-2xl font-bold",
-        bathingComfort: "flex gap-2 items-center"
     }
-    let temperatureTextValues = [
-        {
-            lessThan: 17,
-            text: "холодная"
-        },
-        {
-            lessThan: 20,
-            text: "прохладная"
-        },
-        {
-            lessThan: 25,
-            text: "тепловатая"
-        },
-        {
-            lessThan: 27,
-            text: "теплая"
-        }
-    ]
-    let temperatureText =
-        temperatureTextValues
-            .find((item) => item.lessThan > card.indications.t_surf)
-            .text
-
-    let bathingComfortIndications = [
-        {
-            indication: IndicationsStore.indications.Honf,
-            text: parse(`Средняя высота 10% значительных волн <span class="font-bold">${card.indications.Honf} м.</span>`)
-        },
-        {
-            indication: IndicationsStore.indications.t_surf,
-            text: parse(`Вода <span class="font-bold">${temperatureText}</span>`)
-        },
-        {
-            indication: IndicationsStore.indications.turbidity,
-            text: parse(`Мутность воды: <span class='font-bold'>${IndicationsStore.indications.turbidity.alias[card.indications.turbidity]}</span>`)
-        }
-    ]
 
     Fancybox.bind("[data-fancybox]");
 
@@ -64,10 +26,18 @@ const BeachInfo = observer(() => {
                         Описание
                     </div>
                     <div>
-                        {card.description}
+                        {
+                            card ?
+                                card.description :
+                                <Skeleton count={5}/>
+                        }
                     </div>
                     <div className="flex flex-wrap gap-1">
-                        <BeachCardProps cardProps={card.props} classes={"bg-primary text-white"}/>
+                        {
+                            card ?
+                                <BeachCardProps cardProps={card.props} classes={"bg-primary text-white"}/> :
+                                <Skeleton width={100} count={3} containerClassName={"flex gap-1"}/>
+                        }
                     </div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-1 gap-7">
@@ -76,9 +46,13 @@ const BeachInfo = observer(() => {
                             Текущие показатели
                         </div>
                         <div>
-                            <Indications
-                                data={card.indications}
-                            />
+                            {
+                                card ?
+                                    <Indications
+                                        data={card.indications}
+                                    /> :
+                                    <Skeleton count={6} height={50} inline={true} containerClassName={"grid grid-cols-3 gap-2"}/>
+                            }
                         </div>
                     </div>
                     <div className={styles.block}>
@@ -86,21 +60,16 @@ const BeachInfo = observer(() => {
                             Комфортность купания
                         </div>
                         <div className={"flex flex-col gap-4"}>
-                            <BathingComfort rounded={true} bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
                             {
-                                bathingComfortIndications.map((item, idx) => {
-                                    return (
-                                        <div key={idx} className={styles.bathingComfort}>
-                                            <Indications
-                                                data={card.indications}
-                                                indications={[item.indication]}
-                                            />
-                                            <div>
-                                                {item.text}
-                                            </div>
-                                        </div>
-                                    )
-                                })
+                                card ?
+                                    <BathingComfort
+                                        rounded={true}
+                                        bathingComfort={card.bathingComfort}
+                                        isOpen={card.isOpen}
+                                        showDescription={true}
+                                        cardIndications={card.indications}
+                                    /> :
+                                    <Skeleton height={50} count={3}/>
                             }
                         </div>
                     </div>
@@ -110,7 +79,11 @@ const BeachInfo = observer(() => {
                 <div className={styles.title}>
                     Фотографии
                 </div>
-                <MasonryGallery imgs={card.img} id={card.id}/>
+                {
+                    card ?
+                        <MasonryGallery imgs={card.img} id={card.id}/> :
+                        <Skeleton count={6} inline={true} height={200} containerClassName={"grid grid-cols-3 gap-2"}/>
+                }
             </div>
         </div>
     )
