@@ -8,6 +8,8 @@ import MasonryGallery from "../../MasonryGallery/components/MasonryGallery";
 import BathingComfort from "../../BathingComfort/components/BathingComfort";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
+import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
+import ReviewForm from "../../Reviews/components/ReviewForm";
 
 const BeachInfo = observer(() => {
     let card = SelectedClassInfoStore.currentClass?.card
@@ -26,18 +28,20 @@ const BeachInfo = observer(() => {
                         Описание
                     </div>
                     <div>
-                        {
-                            card ?
-                                card.description :
-                                <Skeleton count={5}/>
-                        }
+                        <SkeletonCondition condition={!card} skeleton={<Skeleton count={5}/>}>
+                            {() => (
+                                card.description
+                            )}
+                        </SkeletonCondition>
                     </div>
                     <div className="flex flex-wrap gap-1">
-                        {
-                            card ?
-                                <BeachCardProps cardProps={card.props} classes={"bg-primary text-white"}/> :
-                                <Skeleton width={100} count={3} containerClassName={"flex gap-1"}/>
-                        }
+                        <SkeletonCondition condition={!card} skeleton={
+                            <Skeleton width={100} count={3} containerClassName={"flex gap-1"}/>
+                        }>
+                            {() => (
+                                <BeachCardProps cardProps={card.props} classes={"bg-primary text-white"}/>
+                            )}
+                        </SkeletonCondition>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-1 gap-7">
@@ -46,13 +50,15 @@ const BeachInfo = observer(() => {
                             Текущие показатели
                         </div>
                         <div>
-                            {
-                                card ?
+                            <SkeletonCondition condition={!card} skeleton={
+                                <Skeleton count={6} height={50} inline={true} containerClassName={"grid grid-cols-3 gap-2"}/>
+                            }>
+                                {() => (
                                     <Indications
                                         data={card.indications}
-                                    /> :
-                                    <Skeleton count={6} height={50} inline={true} containerClassName={"grid grid-cols-3 gap-2"}/>
-                            }
+                                    />
+                                )}
+                            </SkeletonCondition>
                         </div>
                     </div>
                     <div className={styles.block}>
@@ -60,17 +66,17 @@ const BeachInfo = observer(() => {
                             Комфортность купания
                         </div>
                         <div className={"flex flex-col gap-4"}>
-                            {
-                                card ?
+                            <SkeletonCondition condition={!card} skeleton={<Skeleton height={50} count={3}/>}>
+                                {() => (
                                     <BathingComfort
                                         rounded={true}
                                         bathingComfort={card.bathingComfort}
                                         isOpen={card.isOpen}
                                         showDescription={true}
                                         cardIndications={card.indications}
-                                    /> :
-                                    <Skeleton height={50} count={3}/>
-                            }
+                                    />
+                                )}
+                            </SkeletonCondition>
                         </div>
                     </div>
                 </div>

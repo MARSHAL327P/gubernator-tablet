@@ -4,12 +4,29 @@ import ReviewsStore from "../store/reviews.store";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
 import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css'
+import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
+
+function ReviewFormSkeleton() {
+    return (
+        <>
+            <Skeleton height={40} count={3} inline={true} containerClassName={"grid gap-2"}/>
+            <Skeleton height={80}/>
+            <Skeleton height={40}/>
+        </>
+    )
+}
+
+function ReviewListSkeleton() {
+    return (
+        <>
+            <Skeleton width={100} height={25}/>
+            <Skeleton height={150} count={2} inline={true} containerClassName={"grid gap-5"}/>
+        </>
+    )
+}
 
 const Reviews = observer(({card}) => {
-    if (!card) return
-
-    if (!card.reviews)
+    if (card && !card.reviews)
         card.reviews = new ReviewsStore(card.id)
 
     return (
@@ -18,33 +35,26 @@ const Reviews = observer(({card}) => {
                 <Typography variant={"h4"}>
                     Оставить отзыв
                 </Typography>
-                {
-                    card ?
+                <SkeletonCondition condition={!card} skeleton={ReviewFormSkeleton()}>
+                    {() => (
                         card.reviews.successAdded ?
                             <div className={"bg-primary p-5 text-center text-white rounded-xl shadow-lg"}>
                                 Отзыв успешно добавлен
                             </div> :
-                            <ReviewForm card={card}/> :
-                        <>
-                            <Skeleton height={40} count={3} inline={true} containerClassName={"grid gap-2"}/>
-                            <Skeleton height={80}/>
-                            <Skeleton height={40}/>
-                        </>
-                }
+                            <ReviewForm card={card}/>
+                    )}
+                </SkeletonCondition>
             </div>
             <div className={"flex flex-col gap-5 lg:gap-1"}>
                 <Typography variant={"h4"}>
                     Отзывы
                 </Typography>
-                {
-                    card.reviews.reviewList ?
-                        <ReviewList reviewList={card.reviews.reviewList}/> :
-                        (!card || card.reviews.isLoading) &&
-                        <>
-                            <Skeleton width={100} height={25}/>
-                            <Skeleton height={150} count={2} inline={true} containerClassName={"grid gap-5"}/>
-                        </>
-                }
+                <SkeletonCondition condition={!card || card.reviews.isLoading} skeleton={ReviewListSkeleton()}>
+                    {() => (
+                        card?.reviews.reviewList &&
+                        <ReviewList reviewList={card.reviews.reviewList}/>
+                    )}
+                </SkeletonCondition>
             </div>
         </div>
 
