@@ -22,7 +22,6 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
 
     tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
 
-
     useEffect(() => {
         document.body.style.overflowY = "auto"
     }, [width])
@@ -34,7 +33,10 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
             <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50"}>
                 <div className="relative">
                     {
-                        tabItems.map((tab) => <Tab.Panel key={tab.title}>{tab.content}</Tab.Panel>)
+                        tabItems.map((tab) =>
+                            <Tab.Panel key={tab.title}>
+                                {tab.content}
+                            </Tab.Panel>)
                     }
                     <div className={"absolute -top-20 right-0 w-full"}>
                         <Button

@@ -22,7 +22,7 @@ const BeachPage = observer(() => {
         },
         {
             title: "Отзывы",
-            content: <Reviews/>,
+            content: <Reviews card={SelectedClassInfoStore.currentClass?.card}/>,
             link: "reviews",
             getParam: true,
         },

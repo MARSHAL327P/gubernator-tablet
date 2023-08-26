@@ -1,38 +1,35 @@
 import {observer} from "mobx-react-lite";
 import {Typography} from "@material-tailwind/react";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import ReviewsStore from "../store/reviews.store";
-import Loading from "../../Loading/components/Loading";
-import {useEffect} from "react";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const Reviews = observer(() => {
-    let card = SelectedClassInfoStore.currentClass.card
-    let beachId = card.id
+const Reviews = observer(({card}) => {
+    if (!card) return
 
-    useEffect(() => {
-        console.log(card.reviews)
-        if( !card.reviews )
-            card.reviews = new ReviewsStore(beachId)
+    if (!card.reviews)
+        card.reviews = new ReviewsStore(card.id)
 
-        console.log(card.reviews)
-    }, [beachId])
-
-    console.log(card.reviews)
     return (
-        card.reviews &&
         <div className={"grid grid-cols-review lg:grid-cols-1 lg:w-full lg:gap-5 gap-24 w-[1200px] mx-auto"}>
             <div className={"flex flex-col gap-5"}>
                 <Typography variant={"h4"}>
                     Оставить отзыв
                 </Typography>
                 {
-                    card.reviews.successAdded ?
-                        <div className={"bg-primary p-5 text-center text-white rounded-xl shadow-lg"}>Отзыв успешно добавлен</div> :
-                        <ReviewForm beachId={beachId}/>
+                    card ?
+                        card.reviews.successAdded ?
+                            <div className={"bg-primary p-5 text-center text-white rounded-xl shadow-lg"}>
+                                Отзыв успешно добавлен
+                            </div> :
+                            <ReviewForm card={card}/> :
+                        <>
+                            <Skeleton height={40} count={3} inline={true} containerClassName={"grid gap-2"}/>
+                            <Skeleton height={80}/>
+                            <Skeleton height={40}/>
+                        </>
                 }
             </div>
             <div className={"flex flex-col gap-5 lg:gap-1"}>
@@ -40,15 +37,17 @@ const Reviews = observer(() => {
                     Отзывы
                 </Typography>
                 {
-                    card.reviews.isLoading  ?
+                    card.reviews.reviewList ?
+                        <ReviewList reviewList={card.reviews.reviewList}/> :
+                        (!card || card.reviews.isLoading) &&
                         <>
-                            <Skeleton width={100}/>
-                            <Skeleton height={200}/>
-                        </> :
-                        <ReviewList reviewList={card.reviews.reviewList} />
+                            <Skeleton width={100} height={25}/>
+                            <Skeleton height={150} count={2} inline={true} containerClassName={"grid gap-5"}/>
+                        </>
                 }
             </div>
         </div>
+
 
     )
 })

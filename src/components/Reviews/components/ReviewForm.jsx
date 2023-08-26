@@ -3,11 +3,10 @@ import {Button, Spinner, Textarea} from "@material-tailwind/react";
 import {PaperAirplaneIcon} from "@heroicons/react/24/solid";
 import reviewForm from "../store/reviewForm";
 import FormField from "../../Form/components/FormField";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import {action} from "mobx";
 
-const ReviewForm = observer(({beachId}) => {
-    let reviews = SelectedClassInfoStore.currentClass.card.reviews
+const ReviewForm = observer(({card}) => {
+    let reviews = card.reviews
     let name = reviewForm.$('name')
     let email = reviewForm.$('email')
     let review = reviewForm.$('review')
@@ -15,7 +14,7 @@ const ReviewForm = observer(({beachId}) => {
 
     reviewForm.add({
         name: "beachId",
-        value: beachId
+        value: card.id
     })
 
     return (

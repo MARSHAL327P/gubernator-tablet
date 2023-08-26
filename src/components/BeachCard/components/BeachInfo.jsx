@@ -79,11 +79,7 @@ const BeachInfo = observer(() => {
                 <div className={styles.title}>
                     Фотографии
                 </div>
-                {
-                    card ?
-                        <MasonryGallery imgs={card.img} id={card.id}/> :
-                        <Skeleton count={6} inline={true} height={200} containerClassName={"grid grid-cols-3 gap-2"}/>
-                }
+                <MasonryGallery card={card} />
             </div>
         </div>
     )
