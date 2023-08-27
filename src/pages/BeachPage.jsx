@@ -28,7 +28,7 @@ const BeachPage = observer(() => {
         },
         {
             title: "Качество воздуха",
-            content: <AirQuality />,
+            content: <AirQuality airQualityData={SelectedClassInfoStore.currentClass?.card?.airQuality} />,
             link: "aqi",
             getParam: true,
         },
