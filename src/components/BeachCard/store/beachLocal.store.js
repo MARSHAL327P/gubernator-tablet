@@ -1,8 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import { ReactComponent as Warning } from "../../../assets/icons/Warning.svg";
 import { ReactComponent as Danger } from "../../../assets/icons/Danger.svg";
-import { ReactComponent as Wave } from "../../../assets/icons/Wave.svg";
-import { ReactComponent as Water } from "../../../assets/icons/Water.svg";
 import BeachCardStore from "./beachCard.store";
 import FilterStore from "../../Filter/store/filter.store";
 import BeachMap from "../../Map/components/Placemarkers/BeachMap";
