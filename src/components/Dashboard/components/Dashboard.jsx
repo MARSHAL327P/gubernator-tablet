@@ -18,9 +18,9 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
     const [width] = useWindowSize()
 
     let card = SelectedClassInfoStore.currentClass?.card
-    let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
 
     tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
+    let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
 
     useEffect(() => {
         document.body.style.overflowY = "auto"
