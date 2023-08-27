@@ -32,7 +32,7 @@ const BeachPage = observer(() => {
         },
         {
             title: "Качество воздуха",
-            content: <AirQuality airQualityData={card?.airQuality}/>,
+            content: <AirQuality card={card}/>,
             link: "aqi",
             getParam: true,
         },

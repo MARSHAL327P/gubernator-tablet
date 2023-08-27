@@ -1,7 +1,5 @@
 import {makeAutoObservable} from "mobx";
 import axios from "axios";
-import AirQualityStore from "../../AirQuality/store/airQuality.store";
-import WaterQualityStore from "../../WaterQuality/store/waterQuality.store";
 
 export default class BeachCardStore {
     id = 0
@@ -19,8 +17,6 @@ export default class BeachCardStore {
     isOpen = true
     polygon = []
     props = {}
-    airQuality = {}
-    waterQuality = {}
     img = []
     description = ""
     indications = {}
@@ -29,9 +25,6 @@ export default class BeachCardStore {
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 return data.map(item => {
-                    item.waterQuality = item.waterQuality && new WaterQualityStore(item.waterQuality)
-                    item.airQuality = new AirQualityStore(item.airQuality)
-
                     return new BeachCardStore(item)
                 });
             })
