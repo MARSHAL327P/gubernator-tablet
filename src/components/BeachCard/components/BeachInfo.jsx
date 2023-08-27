@@ -48,7 +48,7 @@ const BeachInfo = observer(() => {
                             Текущие показатели
                         </div>
                         <div>
-                            <SkeletonCondition condition={!card} skeleton={<IndicationsSkeleton/>}>
+                            <SkeletonCondition condition={!card} skeleton={<IndicationsSkeleton count={6}/>}>
                                 {() => (
                                     <Indications
                                         data={card.indications}
