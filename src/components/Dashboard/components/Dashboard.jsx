@@ -3,7 +3,6 @@ import {Tab} from '@headlessui/react'
 import {useSearchParams} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import DashboardHeader from "./DashboardHeader";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import DashboardStore from "../store/dashboard.store";
 import {Button} from "@material-tailwind/react";
 import cc from "classcat";
@@ -17,7 +16,9 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
     const [searchParams,] = useSearchParams();
     const [width] = useWindowSize()
 
-    tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
+    if (card)
+        tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
+
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
 
     useEffect(() => {

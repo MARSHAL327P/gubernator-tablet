@@ -88,7 +88,14 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
             </div>
             {
                 width > 1024 ?
-                    <TabHeader tabItems={tabItems}/> :
+                    <SkeletonCondition condition={!card} skeleton={
+                        <Skeleton count={5} width={150} height={48} inline={true} containerClassName={"flex gap-2"} />
+                    }>
+                        {() => (
+                            <TabHeader tabItems={tabItems}/>
+                        )}
+                    </SkeletonCondition>
+                     :
                     <Bars3Icon className={"w-8 h-8"} onClick={() => {
                         runInAction(() => {
                             DashboardStore.drawerIsOpen = true
