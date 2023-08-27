@@ -8,6 +8,7 @@ import FilterStore from "../../Filter/store/filter.store";
 import BeachMap from "../../Map/components/Placemarkers/BeachMap";
 import BeachCard from "../components/BeachCard";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import BeachCardSkeleton from "../components/BeachCardSkeleton";
 
 class BeachLocalStore {
     beachType = {
@@ -80,6 +81,7 @@ class BeachLocalStore {
     filterInputs = {}
     filteredList = null
     filterUrl = process.env.REACT_APP_BEACHES_FILTER
+    skeleton= <BeachCardSkeleton/>
     // fastFilter = {
     //     fields: {
     //         // beachType: [],

@@ -1,15 +1,19 @@
 import {observer} from "mobx-react-lite";
-import Loading from "../../Loading/components/Loading";
 import CardComponent from "./CardComponent";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
 
 const Card = observer(() => {
+    if( !SelectedClassInfoStore.currentClass ) return
+
     return (
-        SelectedClassInfoStore.currentClass?.isLoading ?
-            <Loading text={SelectedClassInfoStore.currentClass.loadingText}/> :
-            SelectedClassInfoStore.filteredCards.length > 0 ?
-                <CardComponent/> :
-                <div className={"text-center font-bold text-2xl"}>Нет результатов</div>
+        <SkeletonCondition condition={SelectedClassInfoStore.currentClass.isLoading} skeleton={SelectedClassInfoStore.currentClass.skeleton}>
+            {() => (
+                SelectedClassInfoStore.filteredCards.length > 0 ?
+                    <CardComponent/> :
+                    <div className={"text-center font-bold text-2xl"}>Нет результатов</div>
+            )}
+        </SkeletonCondition>
     )
 })
 

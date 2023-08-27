@@ -3,6 +3,7 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FilterStore from "../../Filter/store/filter.store";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import CardHeader from "./CardHeader";
+import UiStore from "../../../stores/ui.store";
 
 const CardComponent = observer(() => {
     return (
@@ -17,7 +18,7 @@ const CardComponent = observer(() => {
                     Показано {SelectedClassInfoStore.filteredCards.length} из {SelectedClassInfoStore.currentClass.list.length}
                 </div>
             }
-            <div className={"grid grid-cols-card gap-10 lg:gap-5"}>
+            <div className={UiStore.cardWrapperClasses}>
                 {
                     SelectedClassInfoStore.filteredCards.map((card) => {
                         let Component = SelectedClassInfoStore.currentClass.component
@@ -25,7 +26,7 @@ const CardComponent = observer(() => {
                         return (
                             <div
                                 key={card.id}
-                                className={"bg-white rounded-xl shadow-lg border-solid border border-gray-200"}
+                                className={UiStore.cardItemClasses}
                             >
                                 <CardHeader card={card}/>
                                 <Component card={card}/>

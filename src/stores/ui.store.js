@@ -10,6 +10,8 @@ class UiStore{
         leaveFrom:"opacity-100",
         leaveTo:"opacity-0",
     }
+    cardWrapperClasses = "grid grid-cols-card gap-10 lg:gap-5"
+    cardItemClasses = "bg-white rounded-xl shadow-lg border-solid border border-gray-200"
 
     constructor() {
         makeAutoObservable(this)

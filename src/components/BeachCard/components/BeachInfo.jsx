@@ -7,9 +7,9 @@ import {Fancybox} from "@fancyapps/ui";
 import MasonryGallery from "../../MasonryGallery/components/MasonryGallery";
 import BathingComfort from "../../BathingComfort/components/BathingComfort";
 import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css'
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
-import ReviewForm from "../../Reviews/components/ReviewForm";
+import BeachPropsSkeleton from "../../SkeletonCondition/Templates/BeachProps.skeleton";
+import IndicationsSkeleton from "../../SkeletonCondition/Templates/Indications.skeleton";
 
 const BeachInfo = observer(() => {
     let card = SelectedClassInfoStore.currentClass?.card
@@ -35,9 +35,7 @@ const BeachInfo = observer(() => {
                         </SkeletonCondition>
                     </div>
                     <div className="flex flex-wrap gap-1">
-                        <SkeletonCondition condition={!card} skeleton={
-                            <Skeleton width={100} count={3} containerClassName={"flex gap-1"}/>
-                        }>
+                        <SkeletonCondition condition={!card} skeleton={<BeachPropsSkeleton/>}>
                             {() => (
                                 <BeachCardProps cardProps={card.props} classes={"bg-primary text-white"}/>
                             )}
@@ -50,9 +48,7 @@ const BeachInfo = observer(() => {
                             Текущие показатели
                         </div>
                         <div>
-                            <SkeletonCondition condition={!card} skeleton={
-                                <Skeleton count={6} height={50} inline={true} containerClassName={"grid grid-cols-3 gap-2"}/>
-                            }>
+                            <SkeletonCondition condition={!card} skeleton={<IndicationsSkeleton/>}>
                                 {() => (
                                     <Indications
                                         data={card.indications}
