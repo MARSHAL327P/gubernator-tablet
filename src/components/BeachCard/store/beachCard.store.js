@@ -20,11 +20,14 @@ export default class BeachCardStore {
     img = []
     description = ""
     indications = {}
+    hasWaterQuality = false
 
     static get() {
         return axios.get(process.env.REACT_APP_BEACHES)
             .then(({data}) => {
                 return data.map(item => {
+                    item.hasWaterQuality = !!item.waterQuality
+
                     return new BeachCardStore(item)
                 });
             })

@@ -90,7 +90,7 @@ class AirQualityStore {
     sendRequest() {
         this.isLoading = true
 
-        axios.get(`https://dss-sevsu.ru:8081/api/beaches/air_quality/${this.beachId}`)
+        axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.beachId}`)
             .then(({data}) => {
                 this.parseAndSaveData(data)
                 runInAction(() => {this.isLoading = false})

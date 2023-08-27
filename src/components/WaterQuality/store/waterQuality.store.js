@@ -1,6 +1,8 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
+import axios from "axios";
 
 class WaterQualityStore {
+
     ratingLevels = {
         MUDDY: {
             color: "bg-danger",
@@ -13,7 +15,6 @@ class WaterQualityStore {
             indicationTitle: "В норме",
         },
     }
-    totalRating = ""
     indications = {
         "petroleumHydrocarbons": {
             title: `Нефтяные углеводороды`,
@@ -59,13 +60,24 @@ class WaterQualityStore {
             open: false,
         },
     }
+    beachId = 0
+    totalRating = ""
+    isLoading = false
     updateTime = null
 
-    constructor(waterQualityData) {
-        makeAutoObservable(this);
+    sendRequest() {
+        this.isLoading = true
 
-        for (const indicationName in waterQualityData.indications) {
-            let indication = waterQualityData.indications[indicationName]
+        axios.get(`${process.env.REACT_APP_WATER_QUALITY}/${this.beachId}`)
+            .then(({data}) => {
+                this.parseAndSaveData(data)
+                runInAction(() => {this.isLoading = false})
+            })
+    }
+
+    parseAndSaveData(data){
+        for (const indicationName in data.indications) {
+            let indication = data.indications[indicationName]
             let ratingLevel = this.ratingLevels[indication.rating]
 
             this.indications[indicationName] = {
@@ -76,8 +88,16 @@ class WaterQualityStore {
             }
         }
 
-        this.updateTime = waterQualityData.updateTime
-        this.totalRating = this.ratingLevels[waterQualityData.totalRating]
+        this.updateTime = data.updateTime
+        this.totalRating = this.ratingLevels[data.totalRating]
+        console.log(this.totalRating)
+    }
+
+    constructor(beachId) {
+        makeAutoObservable(this);
+
+        this.beachId = beachId
+        this.sendRequest()
     }
 }
 

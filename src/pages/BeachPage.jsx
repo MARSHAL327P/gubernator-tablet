@@ -38,7 +38,7 @@ const BeachPage = observer(() => {
         },
         {
             title: "Качество воды",
-            content: <WaterQuality waterQualityData={card?.waterQuality}/>,
+            content: <WaterQuality card={card}/>,
             link: "wqi",
             getParam: true,
         },

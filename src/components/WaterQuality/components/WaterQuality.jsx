@@ -5,15 +5,19 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {action} from "mobx";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
 import Skeleton from "react-loading-skeleton";
+import WaterQualityStore from "../store/waterQuality.store";
 
-const WaterQuality = observer(({waterQualityData}) => {
+const WaterQuality = observer(({card}) => {
+    if (card && !card.waterQuality)
+        card.waterQuality = new WaterQualityStore(card.id)
+
     return (
         <div className={"w-[900px] lg:w-full mx-auto grid justify-items-center gap-8"}>
-            <SkeletonCondition condition={!waterQualityData} skeleton={<Skeleton width={220} height={72}/>}>
+            <SkeletonCondition condition={!card?.waterQuality || card?.waterQuality.isLoading} skeleton={<Skeleton width={220} height={72}/>}>
                 {() => (
                     <div
-                        className={cc([waterQualityData.totalRating.color, "text-2xl py-5 px-8 rounded-xl font-bold text-white w-fit"])}>
-                        {waterQualityData.totalRating.title}
+                        className={cc([card.waterQuality.totalRating.color, "text-2xl py-5 px-8 rounded-xl font-bold text-white w-fit"])}>
+                        {card.waterQuality.totalRating.title}
                     </div>
                 )}
             </SkeletonCondition>
@@ -22,12 +26,12 @@ const WaterQuality = observer(({waterQualityData}) => {
                 <Typography variant={"h5"}>
                     Загрязняющие вещества в воде
                 </Typography>
-                <SkeletonCondition condition={!waterQualityData} skeleton={
+                <SkeletonCondition condition={!card?.waterQuality || card?.waterQuality.isLoading} skeleton={
                     <Skeleton count={8} inline={true} height={55} width={300} containerClassName={"grid grid-cols-2 sm:grid-cols-1 gap-4"}/>
                 }>
                     {() => (
                         <List className={"p-0 grid grid-cols-2 lg:grid-cols-1 gap-4 text-base"}>
-                            {Object.entries(waterQualityData.indications).map(([indicationName, indication]) => {
+                            {Object.entries(card.waterQuality.indications).map(([indicationName, indication]) => {
                                 return (
                                     <Accordion
                                         key={indicationName}

@@ -17,7 +17,7 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
     const [width] = useWindowSize()
 
     if (card)
-        tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
+        tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card.hasWaterQuality))
 
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
 
