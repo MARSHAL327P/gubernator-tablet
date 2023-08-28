@@ -13,7 +13,11 @@ import Reviews from "../components/Reviews/components/Reviews";
 import WaterQuality from "../components/WaterQuality/components/WaterQuality";
 
 const BeachPage = observer(() => {
-    const tabItems = [
+    const {beachCode} = useParams()
+
+    let card = SelectedClassInfoStore.currentClass?.card
+    let isLoading  = SelectedClassInfoStore.currentClass?.isLoading
+    let tabItems = [
         {
             title: "Информация",
             content: <BeachInfo/>,
@@ -22,35 +26,32 @@ const BeachPage = observer(() => {
         },
         {
             title: "Отзывы",
-            content: <Reviews/>,
+            content: <Reviews card={card}/>,
             link: "reviews",
             getParam: true,
         },
         {
             title: "Качество воздуха",
-            content: <AirQuality />,
+            content: <AirQuality card={card}/>,
             link: "aqi",
             getParam: true,
         },
         {
             title: "Качество воды",
-            content: <WaterQuality />,
+            content: <WaterQuality card={card}/>,
             link: "wqi",
             getParam: true,
         },
         {
             title: "Виджеты",
             content: <WidgetTemplate
-                data={SelectedClassInfoStore.currentClass?.card?.indications}
+                data={card?.indications}
                 hasCharts={false}
             />,
             link: "widgets",
             getParam: true,
         },
     ]
-
-    const {beachCode} = useParams()
-    let isLoading  = SelectedClassInfoStore.currentClass?.isLoading
 
     useEffect(() => {
         runInAction(() => {
@@ -60,11 +61,15 @@ const BeachPage = observer(() => {
 
             if(SelectedClassInfoStore.currentClass.list.length > 0 && !isLoading)
                 MapStore.zoomToItem(SelectedClassInfoStore.currentClass.card.coord)
+
         })
     }, [beachCode, isLoading])
 
+
+
     return (
         <Dashboard
+            card={card}
             tabItems={tabItems}
         />
     )

@@ -2,7 +2,8 @@ import {observer} from "mobx-react-lite";
 import {Tab} from "@headlessui/react";
 import {Button} from "@material-tailwind/react";
 import cc from "classcat";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useEffect} from "react";
 
 export const tabHeaderVariants = {
     DEFAULT: {
@@ -15,51 +16,64 @@ export const tabHeaderVariants = {
     }
 }
 
-function TabItem(variant, size, tab) {
-    return <Tab as={"div"} className={"outline-none w-full"}>
-        {({selected}) => {
-            tab.selected = selected
+function buttonClickHandler(tab, navigate) {
+    if (tab.onClick)
+        tab.onClick(tab.selected)
 
-            return (
-                <Button
-                    onClick={tab.onClick ? tab.onClick.bind(null, tab.selected) : null}
-                    color={selected ? "blue" : "white"}
-                    variant={selected ? "filled" : variant.noSelected}
-                    className={
-                        cc({
-                            "outline-none whitespace-nowrap": true,
-                            "font-semibold px-7": size === "md",
-                            // "shadow-lg": selected && variant.name === tabHeaderVariants.DEFAULT.name,
-                            "text-sm w-full": size === "sm"
-                        })
-                    }
-                >
-                    {tab.title}
-                </Button>
-            )
-        }}
-    </Tab>
+    if (tab.link) {
+        let url = new URL(window.location)
+        let initialUrl = new URL(window.location)
+
+        if (tab.getParam) {
+            url.searchParams.set("tab", tab.link)
+        } else {
+            url.pathname = tab.link
+        }
+
+        if( initialUrl.toString() !== url.toString() )
+            navigate(url.pathname + url.search)
+    }
 }
 
-const TabHeader = observer(({tabItems, variant = tabHeaderVariants.DEFAULT, size = "md"}) => {
-    return (
-        <Tab.List className={"flex gap-2 justify-self-center"}>
-            {tabItems.map((tab) => {
-                    return (
-                        tab.link ?
-                            <Link
-                                key={tab.title}
-                                to={tab.getParam ? ("?tab=" + tab.link) : tab.link}
-                                className={"outline-none w-full"}
-                            >
-                                {TabItem(variant, size, tab)}
-                            </Link>
-                            : TabItem(variant, size, tab)
-                    )
-                }
-            )}
-        </Tab.List>
-    )
-})
+const TabHeader = observer(
+    ({
+         tabItems,
+         variant = tabHeaderVariants.DEFAULT,
+         size = "md"
+     }) => {
+        let navigate = useNavigate();
+
+        return (
+            <Tab.List className={"flex gap-2 justify-self-center"}>
+                {tabItems.map((tab) => {
+                        return (
+                            <Tab key={tab.title} as={"div"} className={"outline-none w-full"}>
+                                {({selected}) => {
+                                    tab.selected = selected
+
+                                    return (
+                                        <Button
+                                            onClick={buttonClickHandler.bind(null, tab, navigate)}
+                                            color={selected ? "blue" : "white"}
+                                            variant={selected ? "filled" : variant.noSelected}
+                                            className={
+                                                cc({
+                                                    "outline-none whitespace-nowrap": true,
+                                                    "font-semibold px-7": size === "md",
+                                                    "text-sm w-full": size === "sm"
+                                                })
+                                            }
+                                        >
+                                            {tab.title}
+                                        </Button>
+                                    )
+                                }}
+                            </Tab>
+                        )
+                    }
+                )}
+            </Tab.List>
+        )
+    })
 
 export default TabHeader

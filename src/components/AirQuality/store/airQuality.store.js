@@ -1,7 +1,10 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
+import axios from "axios";
 
 class AirQualityStore {
+    beachId = 0
     totalRating = 0
+    isLoading = false
     indications = {
         "no2": {
             title: `NO<sub>2</sub>`,
@@ -84,11 +87,19 @@ class AirQualityStore {
         return this.ratingLevels.find((ratingLevel) => ratingLevel.level > this.totalRating)
     }
 
-    constructor(airQualityData) {
-        makeAutoObservable(this);
+    sendRequest() {
+        this.isLoading = true
 
-        for (const indicationName in airQualityData.indications) {
-            let indication = airQualityData.indications[indicationName]
+        axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.beachId}`)
+            .then(({data}) => {
+                this.parseAndSaveData(data)
+                runInAction(() => {this.isLoading = false})
+            })
+    }
+
+    parseAndSaveData(data){
+        for (const indicationName in data.indications) {
+            let indication = data.indications[indicationName]
             let ratingLevel = this.ratingLevels.find((ratingLevel) => ratingLevel.level > indication.level)
 
             this.indications[indicationName] = {
@@ -99,8 +110,15 @@ class AirQualityStore {
             }
         }
 
-        this.updateTime = airQualityData.updateTime
-        this.totalRating = airQualityData.totalRating
+        this.updateTime = data.updateTime
+        this.totalRating = data.totalRating
+    }
+
+    constructor(beachId) {
+        makeAutoObservable(this);
+
+        this.beachId = beachId
+        this.sendRequest()
     }
 }
 

@@ -2,11 +2,10 @@ import {ReactComponent as Map} from "../../../assets/icons/Map.svg";
 import {ReactComponent as Route} from "../../../assets/icons/Route.svg";
 import {Button, Tooltip} from "@material-tailwind/react";
 import {observer} from "mobx-react-lite";
-import BathingComfort from "./BathingComfort";
+import BathingComfort from "../../BathingComfort/components/BathingComfort";
 import 'dayjs/locale/ru';
 import 'dayjs/plugin/updateLocale';
 import {Link} from "react-router-dom";
-import CardHeader from "../../Card/components/CardHeader";
 import Indications from "../../Indications/components/Indications";
 import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
@@ -25,7 +24,7 @@ const BeachCard = observer(({card}) => {
             <BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
             <div className="px-7 py-5 flex flex-col gap-4">
                 <div className={"flex gap-1"}>
-                    <BeachCardProps cardProps={card.props} />
+                    <BeachCardProps cardProps={card.props}/>
                 </div>
                 <Indications
                     data={card.indications}
@@ -51,8 +50,10 @@ const BeachCard = observer(({card}) => {
                         </Button>
                     </Tooltip>
                     <Link to={`/beach/${card.code}`}>
-                        <Button fullWidth
-                                className={"w-[230px] sm:w-[180px] sm:text-sm flex items-center gap-2"}>
+                        <Button
+                            fullWidth
+                            className={"w-[230px] sm:w-[180px] sm:text-sm flex items-center gap-2"}
+                        >
                             Подробнее о пляже
                         </Button>
                     </Link>

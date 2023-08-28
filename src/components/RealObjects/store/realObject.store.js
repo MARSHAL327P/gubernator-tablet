@@ -8,6 +8,7 @@ import IndicationsStore from "../../Indications/store/indications.store";
 import RealObjectMap from "../../Map/components/Placemarkers/RealObjectMap";
 import RealObjectCard from "../components/RealObjectCard";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
+import RealObjectCardSkeleton from "../components/RealObjectCardSkeleton";
 
 class RealObjectStore {
     meteoProps = {
@@ -144,6 +145,7 @@ class RealObjectStore {
     title = "Объект"
     filterName = "Фильтр объектов"
     mapLayer = <RealObjectMap/>
+    skeleton = <RealObjectCardSkeleton/>
     component = RealObjectCard
     loadingText = "Загрузка объектов"
     filterGroup = this.realObjectTypes

@@ -3,18 +3,16 @@ import {declOfNum, getUpdateTimeText} from "../../../Utils";
 import {Rating} from "@material-tailwind/react";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
-const ReviewList = observer(() => {
-    let reviews = SelectedClassInfoStore.currentClass.reviews
-
+const ReviewList = observer(({reviewList}) => {
     return (
-        reviews.reviewList.length > 0 ?
+        reviewList.length > 0 ?
             <div className={"flex flex-col gap-5"}>
                 <div>
-                    {reviews.reviewList.length} {declOfNum(reviews.reviewList.length, ["Отзыв", "Отзыва", "Отзывов"])}
+                    {reviewList.length} {declOfNum(reviewList.length, ["Отзыв", "Отзыва", "Отзывов"])}
                 </div>
                 <div className={"flex flex-col gap-5"}>
                     {
-                        reviews.reviewList.map(review => {
+                        reviewList.map(review => {
                             return (
                                 <div key={review.id} className={"flex flex-col gap-2 bg-white shadow-lg shadow-blue-gray-900/5 p-8 rounded-xl border border-blue-gray-50"}>
                                     <div>

@@ -1,48 +1,64 @@
 import {observer} from "mobx-react-lite";
 import {Typography} from "@material-tailwind/react";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import ReviewsStore from "../store/reviews.store";
-import Loading from "../../Loading/components/Loading";
-import {useEffect, useState} from "react";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
+import Skeleton from "react-loading-skeleton";
+import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
 
-const Reviews = observer(() => {
-    if (!SelectedClassInfoStore.currentClass?.card) return
-    let [ReviewStore, setReviewStore] = useState(null)
-    let beachId = SelectedClassInfoStore.currentClass.card.id
+function ReviewFormSkeleton() {
+    return (
+        <>
+            <Skeleton height={40} count={3} inline={true} containerClassName={"grid gap-2"}/>
+            <Skeleton height={80}/>
+            <Skeleton height={40}/>
+        </>
+    )
+}
 
-    useEffect(() => {
-        let ReviewStore = new ReviewsStore(beachId)
+function ReviewListSkeleton() {
+    return (
+        <>
+            <Skeleton width={100} height={25}/>
+            <Skeleton height={150} count={2} inline={true} containerClassName={"grid gap-5"}/>
+        </>
+    )
+}
 
-        setReviewStore(ReviewStore)
-        SelectedClassInfoStore.currentClass.reviews = ReviewStore
-    }, [beachId])
+const Reviews = observer(({card}) => {
+    if (card && !card.reviews)
+        card.reviews = new ReviewsStore(card.id)
 
     return (
-        ReviewStore &&
         <div className={"grid grid-cols-review lg:grid-cols-1 lg:w-full lg:gap-5 gap-24 w-[1200px] mx-auto"}>
             <div className={"flex flex-col gap-5"}>
                 <Typography variant={"h4"}>
                     Оставить отзыв
                 </Typography>
-                {
-                    ReviewStore.successAdded ?
-                        <div className={"bg-primary p-5 text-center text-white rounded-xl shadow-lg"}>Отзыв успешно добавлен</div> :
-                        <ReviewForm beachId={beachId}/>
-                }
+                <SkeletonCondition condition={!card} skeleton={ReviewFormSkeleton()}>
+                    {() => (
+                        card.reviews.successAdded ?
+                            <div className={"bg-primary p-5 text-center text-white rounded-xl shadow-lg"}>
+                                Отзыв успешно добавлен
+                            </div> :
+                            <ReviewForm card={card}/>
+                    )}
+                </SkeletonCondition>
             </div>
             <div className={"flex flex-col gap-5 lg:gap-1"}>
                 <Typography variant={"h4"}>
                     Отзывы
                 </Typography>
-                {
-                    ReviewStore.isLoading ?
-                        <Loading text={"Загрузка отзывов"}/> :
-                        <ReviewList/>
-                }
+                <SkeletonCondition condition={!card || card.reviews.isLoading} skeleton={ReviewListSkeleton()}>
+                    {() => (
+                        card?.reviews.reviewList &&
+                        <ReviewList reviewList={card.reviews.reviewList}/>
+                    )}
+                </SkeletonCondition>
             </div>
         </div>
+
+
     )
 })
 

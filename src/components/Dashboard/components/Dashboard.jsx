@@ -3,9 +3,6 @@ import {Tab} from '@headlessui/react'
 import {useSearchParams} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import DashboardHeader from "./DashboardHeader";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
-import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css'
 import DashboardStore from "../store/dashboard.store";
 import {Button} from "@material-tailwind/react";
 import cc from "classcat";
@@ -15,11 +12,13 @@ import DrawerDashboard from "./DrawerDashboard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import {useEffect} from "react";
 
-const Dashboard = observer(({tabItems, homeLink = "/"}) => {
+const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
     const [searchParams,] = useSearchParams();
     const [width] = useWindowSize()
-    let card = SelectedClassInfoStore.currentClass?.card
-    tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card?.waterQuality))
+
+    if (card)
+        tabItems = tabItems.filter(tab => !(tab.link === "wqi" && !card.hasWaterQuality))
+
     let selectedTabIndex = getIndexLinkInArray(searchParams.get("tab"), tabItems)
 
     useEffect(() => {
@@ -33,9 +32,10 @@ const Dashboard = observer(({tabItems, homeLink = "/"}) => {
             <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50"}>
                 <div className="relative">
                     {
-                        card ?
-                            tabItems.map((tab) => <Tab.Panel key={tab.title}>{tab.content}</Tab.Panel>) :
-                            <Skeleton count={5}/>
+                        tabItems.map((tab) =>
+                            <Tab.Panel key={tab.title}>
+                                {tab.content}
+                            </Tab.Panel>)
                     }
                     <div className={"absolute -top-20 right-0 w-full"}>
                         <Button
