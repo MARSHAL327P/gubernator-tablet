@@ -8,7 +8,6 @@ import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import Charts from "../components/Charts/components/Charts";
 import DashboardStore from "../components/Dashboard/store/dashboard.store";
 import {useEffect} from "react";
-import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 
 const RealObjectPage = observer(() => {
     const tabItems = [
@@ -20,7 +19,7 @@ const RealObjectPage = observer(() => {
         },
         {
             title: "Графики",
-            content: <Charts/>,
+            content: <Charts data={SelectedClassInfoStore.currentClass?.card?.props}/>,
             link: "charts",
             getParam: true,
         },

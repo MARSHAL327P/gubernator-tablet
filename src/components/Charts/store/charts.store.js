@@ -14,6 +14,7 @@ class ChartsStore {
         }
     ]
     isLoading = false
+    isFetched = false
     loadingError = false
     indicationWithChartData = {}
     dateRangesPreset = [
@@ -113,9 +114,11 @@ class ChartsStore {
                         })
                 })
 
+                this.isFetched = true
                 this.isLoading = false
             })
             .catch((reason) => {
+                this.isFetched = true
                 this.isLoading = false
                 this.loadingError = true
                 console.error(reason)

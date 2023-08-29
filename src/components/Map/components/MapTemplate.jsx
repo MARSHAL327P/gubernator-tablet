@@ -7,7 +7,6 @@ import DashboardStore from "../../Dashboard/store/dashboard.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import MapControls from "./MapControls/MapControls";
-import GlobalStore from "../../../stores/global.store";
 import TileLayers from "./Layers/TileLayers";
 
 const MapTemplate = observer(() => {
