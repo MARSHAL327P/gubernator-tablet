@@ -47,7 +47,7 @@ class FilterStore {
                 return card
                     .name
                     .toLowerCase()
-                    .indexOf(SidebarStore.searchQuery.toLowerCase()) >= 0
+                    .indexOf(SidebarStore.searchQuery.trim().toLowerCase()) >= 0
             })
         }
 

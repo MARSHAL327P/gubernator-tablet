@@ -31,7 +31,7 @@ const BeachMap = observer(() => {
                 />
                 <ActivePlacemark
                     wrapper={{
-                        link: `/beach/${beach.code}`,
+                        link: `/beach/${beach.code}?tab=info`,
                         style: {
                             animationDelay: `.${idx * UiStore.animationDelay}s`
                         },

@@ -22,7 +22,7 @@ const BeachInfo = observer(() => {
 
     return (
         <div className={"flex gap-7 flex-wrap"}>
-            <div className={"flex flex-col gap-7 flex-1 xl:flex-auto lg:w-full"}>
+            <div className={"flex flex-col gap-7 flex-1 xl:flex-auto xl:w-full"}>
                 <div className={styles.block}>
                     <div className={styles.title}>
                         Описание

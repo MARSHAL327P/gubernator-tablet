@@ -90,7 +90,6 @@ class WaterQualityStore {
 
         this.updateTime = data.updateTime
         this.totalRating = this.ratingLevels[data.totalRating]
-        console.log(this.totalRating)
     }
 
     constructor(beachId) {

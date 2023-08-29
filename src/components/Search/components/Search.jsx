@@ -1,7 +1,7 @@
 import { ReactComponent as SearchIcon } from "../../../assets/icons/Search.svg";
-import sidebarStore from "../../Sidebar/store/sidebar.store";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 const Search = observer(() => {
     return (
@@ -10,8 +10,8 @@ const Search = observer(() => {
                 "justify-between w-full focus:bg-white focus:shadow-lg outline-none"}
                    type="text"
                    placeholder={"Поиск..."}
-                   value={sidebarStore.searchQuery}
-                   onChange={action((e) => {sidebarStore.searchQuery = e.currentTarget.value})}
+                   value={SidebarStore.searchQuery}
+                   onChange={action((e) => {SidebarStore.searchQuery = e.currentTarget.value})}
             />
             <SearchIcon className={"absolute top-[13px] right-5 fill-gray-500"}/>
         </div>

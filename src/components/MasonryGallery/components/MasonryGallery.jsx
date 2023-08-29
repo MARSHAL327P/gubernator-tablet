@@ -7,17 +7,25 @@ import {useLocation} from "react-router-dom";
 
 const MasonryGallery = observer(({card}) => {
     let [countLoadedImages, setCountLoadedImages] = useState(0)
+    let [countErrorImages, setCountErrorImages] = useState(0)
     let location = useLocation();
 
     useEffect(() => {
         setCountLoadedImages(0)
+        setCountErrorImages(0)
     }, [location])
 
     return (
         <>
             <Skeleton count={6} inline={true} height={200} containerClassName={cc(["grid grid-cols-3 gap-2", {
-                "hidden": countLoadedImages === card?.img.length,
+                "hidden": countLoadedImages === card?.img.length || countErrorImages === card?.img.length,
             }])}/>
+            {
+                countErrorImages === card?.img.length &&
+                <div className={"text-bold text-danger"}>
+                    При загрузке произошла ошибка
+                </div>
+            }
             {
                 card &&
                 <ResponsiveMasonry columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}} className={cc({
@@ -39,6 +47,9 @@ const MasonryGallery = observer(({card}) => {
                                             className="h-full w-full object-cover rounded-md hover:scale-110 transition"
                                             onLoad={() => {
                                                 setCountLoadedImages(prev => prev + 1)
+                                            }}
+                                            onError={() => {
+                                                setCountErrorImages(prev => prev + 1)
                                             }}
                                         />
                                     </a>
