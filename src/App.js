@@ -1,5 +1,5 @@
 import './App.css';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import BeachPage from "./pages/BeachPage";
 import MapTemplate from "./components/Map/components/MapTemplate";
@@ -18,6 +18,7 @@ function onTabClick(isSelected, e) {
 }
 
 function App() {
+    // let navigate = useNavigate()
     let tabItems = [
         {
             title: "Пляжи",
@@ -41,6 +42,13 @@ function App() {
         //     link: "/architecture",
         // },
     ]
+
+
+    // window.onpopstate = (e) => {
+    //     e.preventDefault()
+    //     navigate(-1);
+    // }
+
 
     return (
         <>

@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -141,6 +141,7 @@ class FilterStore {
                         numChangedParams++
                     break;
                 default:
+                    console.log(toJS(filterInput.selected))
                     if (filterInput.selected.length > 0)
                         numChangedParams++
             }
@@ -237,7 +238,7 @@ class FilterStore {
 
     setCheckedItems(inputName, inputParams, checkedItems) {
         if (inputParams.type === this.filterTypes.radioBtn.type) {
-            inputParams.selected = [checkedItems]
+            inputParams.selected = checkedItems ? [checkedItems] : []
         } else {
             inputParams = {
                 ...inputParams,
