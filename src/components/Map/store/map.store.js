@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, observable, runInAction, toJS} from "mobx";
+import {makeAutoObservable, observable, runInAction} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";

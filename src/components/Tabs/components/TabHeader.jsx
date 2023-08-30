@@ -2,8 +2,7 @@ import {observer} from "mobx-react-lite";
 import {Tab} from "@headlessui/react";
 import {Button} from "@material-tailwind/react";
 import cc from "classcat";
-import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 export const tabHeaderVariants = {
     DEFAULT: {

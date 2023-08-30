@@ -1,10 +1,7 @@
 import {ReactComponent as Swimmer} from "../../../assets/icons/Swimmer.svg";
-import BeachLocalStore from "../../BeachCard/store/beachLocal.store";
 import cc from "classcat";
 import {Fragment} from "react";
 import Indications from "../../Indications/components/Indications";
-import IndicationsStore from "../../Indications/store/indications.store";
-import parse from "html-react-parser";
 import BathingComfortStore from "../store/bathingComfort.store";
 
 export default function BathingComfort({

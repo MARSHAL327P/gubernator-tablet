@@ -1,7 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {ReactComponent as Chart} from "../../../assets/icons/Chart.svg";
 import {ReactComponent as Share} from "../../../assets/icons/Share.svg";
-import {Button, Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../../Indications/store/indications.store";
 import cc from "classcat";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
