@@ -22,7 +22,14 @@ const ActivePlacemark = (props) => {
     };
 
     function toPage() {
-        navigate(`${props.wrapper.link}?${queryParameters.toString()}`)
+        let urlPath = `${window.location.origin}${props.wrapper.link}`
+        let urlTo = new URL(urlPath)
+        let url = new URL(`${urlPath}?${queryParameters.toString()}`)
+
+        if (urlTo.searchParams.get("tab"))
+            url.searchParams.set("tab", urlTo.searchParams.get("tab"))
+
+        navigate(url.pathname + url.search)
     }
 
     return (

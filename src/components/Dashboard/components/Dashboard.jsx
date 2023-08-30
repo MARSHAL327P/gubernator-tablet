@@ -26,7 +26,7 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
     }, [width])
 
     return (
-        <Tab.Group defaultIndex={selectedTabIndex}>
+        <Tab.Group defaultIndex={selectedTabIndex} selectedIndex={selectedTabIndex}>
             <DashboardHeader homeLink={homeLink} tabItems={tabItems}/>
 
             <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50"}>

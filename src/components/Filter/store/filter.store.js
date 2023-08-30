@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, runInAction, toJS} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -47,7 +47,7 @@ class FilterStore {
                 return card
                     .name
                     .toLowerCase()
-                    .indexOf(SidebarStore.searchQuery.toLowerCase()) >= 0
+                    .indexOf(SidebarStore.searchQuery.trim().toLowerCase()) >= 0
             })
         }
 
