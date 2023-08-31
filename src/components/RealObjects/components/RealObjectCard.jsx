@@ -41,11 +41,11 @@ const RealObjectCard = observer(({card}) => {
                         </Button>
                     </Tooltip>
                     {
-                        btns.map(btn => {
+                        btns.map((btn, idx) => {
                             let Icon = btn.icon
 
                             return (
-                                <Link to={btn.link}>
+                                <Link to={btn.link} key={idx}>
                                     <Button fullWidth className={"flex items-center gap-2 sm:w-[120px] sm:text-sm sm:!p-2 sm:!py-3"}>
                                         <Icon className={"fill-white sm:w-4 sm:h-4"}/>
                                         {btn.title}

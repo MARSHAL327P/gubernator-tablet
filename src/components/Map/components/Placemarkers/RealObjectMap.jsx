@@ -4,7 +4,6 @@ import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
 import RealObjectPlacemarker from "../../../RealObjects/components/RealObjectPlacemarker";
 import IndicationsStore from "../../../Indications/store/indications.store";
 import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
-import React from "react";
 
 const RealObjectMap = observer(() => {
     return !RealObjectStore.isLoading && SelectedClassInfoStore.filteredCards.map((realObject, index) => {
@@ -15,14 +14,14 @@ const RealObjectMap = observer(() => {
             <ActivePlacemark
                 wrapper={{
                     link: realObject.link,
+                    data: realObject
                 }}
                 key={realObject.id}
                 coordinates={realObject.coord}
             >
                 {
-                    (isOpen) =>
+                    () =>
                         <RealObjectPlacemarker
-                            isOpen={isOpen}
                             data={mapIndication}
                             realObject={realObject}
                             indicationData={IndicationsStore.indications[indicationName]}

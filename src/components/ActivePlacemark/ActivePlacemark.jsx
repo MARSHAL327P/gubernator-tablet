@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import MapStore from "../Map/store/map.store";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import cc from "classcat";
@@ -12,24 +12,28 @@ const ActivePlacemark = observer((props) => {
     const [queryParameters] = useSearchParams()
     const [width] = useWindowSize()
 
+    let wrapper = props.wrapper
+    let nowClick = wrapper.nowClick !== undefined ? wrapper.nowClick : true
     let markerRef = useRef(null)
     let triggers = {
         onMouseEnter: () => {
             markerRef.current.element.parentNode.style.zIndex = 5
             runInAction(() => {
-                props.wrapper.data.markerDescriptionIsOpen = true
+                if (wrapper.data)
+                    wrapper.data.markerDescriptionIsOpen = true
             })
         },
         onMouseLeave: () => {
             markerRef.current.element.parentNode.style.zIndex = 0
             runInAction(() => {
-                props.wrapper.data.markerDescriptionIsOpen = false
+                if (wrapper.data)
+                    wrapper.data.markerDescriptionIsOpen = false
             })
         },
     };
 
     function toPage() {
-        let urlPath = `${window.location.origin}${props.wrapper.link}`
+        let urlPath = `${window.location.origin}${wrapper.link}`
         let urlTo = new URL(urlPath)
         let url = new URL(`${urlPath}?${queryParameters.toString()}`)
 
@@ -42,10 +46,10 @@ const ActivePlacemark = observer((props) => {
     return (
         <YMapMarker ref={markerRef} {...props}>
             <div
-                style={props.wrapper?.style}
-                className={cc([props.wrapper?.classes, "absolute marker_beach fadeIn opacity-0"])}
+                style={wrapper?.style}
+                className={cc([wrapper?.classes, "absolute marker_beach fadeIn opacity-0"])}
                 {...triggers}
-                onClick={(width > 1024 && props.wrapper?.link) ? toPage : null}
+                onClick={((width > 1024 && wrapper?.link) || nowClick) ? toPage : null}
             >
                 {props.children(triggers)}
             </div>
