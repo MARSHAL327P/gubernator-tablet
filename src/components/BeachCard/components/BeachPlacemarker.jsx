@@ -6,11 +6,11 @@ import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoi
 import MapStore from "../../Map/store/map.store";
 import {Popover, PopoverContent, PopoverHandler} from "@material-tailwind/react";
 
-const BeachPlacemarker = observer(({beach, isHovered, triggers}) => {
+const BeachPlacemarker = observer(({beach}) => {
     let markerColor = beach.bathingComfortMapColors.marker
 
     return (
-        <Popover open={isHovered} offset={15} animate={{
+        <Popover open={beach.markerDescriptionIsOpen} offset={15} animate={{
             mount: { y: 0 },
             unmount: { y: 25 },
         }}>
@@ -25,7 +25,7 @@ const BeachPlacemarker = observer(({beach, isHovered, triggers}) => {
                     </div>
                 </div>
             </PopoverHandler>
-            <PopoverContent className={"z-30 p-0 shadow-none border-0 bg-none pointer-events-none"}>
+            <PopoverContent className={"z-30 p-0 shadow-none border-0 bg-none pointer-events-none lg:pointer-events-auto"}>
                 <BeachMarkerDescription beach={beach}/>
             </PopoverContent>
         </Popover>

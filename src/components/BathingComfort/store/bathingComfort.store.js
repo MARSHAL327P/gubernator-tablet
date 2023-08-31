@@ -68,8 +68,8 @@ class BathingComfortStore{
 
 
     get temperatureText(){
-        console.log(this.cardIndications.t_surf)
-        return this.temperatureTextValues.find((item) => item.lessThan > this.cardIndications.t_surf.value)
+        return this.temperatureTextValues
+            .find((item) => item.lessThan > this.cardIndications.t_surf.value)
             .text
     }
 

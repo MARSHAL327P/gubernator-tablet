@@ -32,18 +32,18 @@ const BeachMap = observer(() => {
                 <ActivePlacemark
                     wrapper={{
                         link: `/beach/${beach.code}?tab=info`,
+                        nowClick: false,
                         style: {
                             animationDelay: `.${idx * UiStore.animationDelay}s`
                         },
-                        classes: "grid h-[57px]"
+                        classes: "grid h-[57px]",
+                        data: beach
                     }}
                     coordinates={beach.coord}
                 >
                     {
-                        (isHovered, triggers) =>
+                        () =>
                             <BeachPlacemarker
-                                isHovered={isHovered}
-                                triggers={triggers}
                                 beach={beach}
                             />
                     }

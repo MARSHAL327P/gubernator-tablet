@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import {makeAutoObservable} from "mobx";
 import axios from "axios";
 
 export class RealObjectCardStore {
@@ -12,6 +12,7 @@ export class RealObjectCardStore {
     updated_at = null;
     props_updated_at = null;
     props = {}
+    markerDescriptionIsOpen = false
 
     static get() {
         return axios.get(process.env.REACT_APP_REAL_OBJECTS)
@@ -22,11 +23,11 @@ export class RealObjectCardStore {
             })
     }
 
-    get link(){
+    get link() {
         return `/object/${this.formattedType}/${this.id}`
     }
 
-    get formattedType(){
+    get formattedType() {
         return this.type.toLowerCase().replace(/_/g, "-")
     }
 
@@ -34,7 +35,8 @@ export class RealObjectCardStore {
         makeAutoObservable(this);
 
         Object.keys(this).forEach(prop => {
-            this[prop] = data[prop]
+            if (data[prop])
+                this[prop] = data[prop]
         })
     }
 }
