@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, runInAction, toJS} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -59,7 +59,7 @@ class FilterStore {
                     return fastFilter.selected.includes(card[fieldName])
                 })
 
-                if( fastFilterFilteredList.length > 0 )
+                if (fastFilterFilteredList.length > 0)
                     filteredList = fastFilterFilteredList
 
                 // resultFilteredList = [...resultFilteredList, ...fastFilterFilteredList]
@@ -141,7 +141,6 @@ class FilterStore {
                         numChangedParams++
                     break;
                 default:
-                    console.log(toJS(filterInput.selected))
                     if (filterInput.selected.length > 0)
                         numChangedParams++
             }
@@ -237,13 +236,14 @@ class FilterStore {
     }
 
     setCheckedItems(inputName, inputParams, checkedItems) {
-        if (inputParams.type === this.filterTypes.radioBtn.type) {
-            inputParams.selected = checkedItems ? [checkedItems] : []
-        } else {
-            inputParams = {
-                ...inputParams,
-                selected: checkedItems
-            }
+        switch (inputParams.type) {
+            case this.filterTypes.radioBtn.type:
+                inputParams.selected = checkedItems.isChecked ? [] : [checkedItems.value]
+                break;
+            default:
+                inputParams.selected = checkedItems.isChecked ?
+                    inputParams.selected.filter(item => item !== checkedItems.value) :
+                    [...inputParams.selected, checkedItems.value]
         }
 
         return inputParams
@@ -289,7 +289,7 @@ class FilterStore {
             this.sentFilterInputs[inputName] = sentInputParams
         }
 
-        if( window.outerWidth > 1024 ){
+        if (window.outerWidth > 1024) {
             this.fetchFilterInputs()
         } else {
             toast.promise(this.fetchFilterInputs(), {
@@ -304,16 +304,16 @@ class FilterStore {
     getInputAttr(inputName, item) {
         let id = inputName
         let label = item
-        let sendData = label
+        let inputValue = label
 
         if (typeof item === "object") {
             id = item.key
             label = item.name
-            sendData = id
+            inputValue = id
         }
 
         return {
-            id, label, sendData
+            id, label, inputValue
         }
     }
 
