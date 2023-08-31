@@ -43,7 +43,7 @@ class MapStore {
         },
     }
     zoomIsBlocked = false
-    markerTextClasses = "font-bold text-xs text-center drop-shadow-md shadow-black"
+    markerTextClasses = "font-bold text-xs text-center drop-shadow-md shadow-black bg-white rounded-xl py-1 px-2 whitespace-nowrap"
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
     tileSize = 256;
     coordValues = {}
