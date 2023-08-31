@@ -5,7 +5,6 @@ import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondit
 import AQIDescription from "./AQIDescription";
 import AQIValues from "./AQIValues";
 import AirQualityStore from "../store/airQuality.store";
-import {useEffect} from "react";
 
 function AQIValuesSkeleton() {
     return (

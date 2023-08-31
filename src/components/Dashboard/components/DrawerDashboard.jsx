@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
 import DashboardStore from "../store/dashboard.store";
 import {Drawer, IconButton, List, ListItem, Typography} from "@material-tailwind/react";
-import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/solid";
+import {XMarkIcon} from "@heroicons/react/24/solid";
 import {runInAction} from "mobx";
 import {Link} from "react-router-dom";
 import {Tab} from "@headlessui/react";
@@ -10,12 +10,6 @@ const DrawerDashboard = observer(({tabItems}) => {
     const closeDrawer = () => {
         runInAction(() => {
             DashboardStore.drawerIsOpen = false
-        })
-    };
-
-    const openDrawer = () => {
-        runInAction(() => {
-            DashboardStore.drawerIsOpen = true
         })
     };
 

@@ -6,7 +6,7 @@ import cc from "classcat";
 import FilterStore from "../store/filter.store";
 import {FilterInputs} from "./FilterInputs";
 import {ReactComponent as Star} from "../../../assets/icons/Star.svg";
-import {action, toJS} from "mobx";
+import {action} from "mobx";
 
 const FilterInputSection = observer((
     {

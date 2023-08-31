@@ -20,6 +20,8 @@ const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
                                 key={id}
                                 onClick={
                                     action(() => {
+                                        if( itemIsSelected )
+                                            sendData = null
                                         FilterStore.setFilterInputs(inputName, inputParams, sendData, filterGroupName)
                                     })
                                 }

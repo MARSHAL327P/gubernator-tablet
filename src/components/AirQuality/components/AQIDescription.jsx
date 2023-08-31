@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Accordion, AccordionBody, AccordionHeader, List, ListItem, Tooltip} from "@material-tailwind/react";
+import {Accordion, AccordionBody, AccordionHeader} from "@material-tailwind/react";
 import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import cc from "classcat";
 import {action} from "mobx";

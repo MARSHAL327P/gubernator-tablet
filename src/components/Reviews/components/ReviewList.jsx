@@ -1,7 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {declOfNum, getUpdateTimeText} from "../../../Utils";
 import {Rating} from "@material-tailwind/react";
-import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 
 const ReviewList = observer(({reviewList}) => {
     return (

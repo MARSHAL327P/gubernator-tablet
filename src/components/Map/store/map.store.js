@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, observable, runInAction, toJS} from "mobx";
+import {makeAutoObservable, observable, runInAction} from "mobx";
 import axios from "axios";
 import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
@@ -174,7 +174,7 @@ class MapStore {
 
         let base_image = new Image();
 
-        base_image.src = `http://192.168.150.2:8083/tiles/${layer.indicationData.nclName}/${z}/${x}/${y}`;
+        base_image.src = `https://192.168.150.2:8083/afalina/tiles/${layer.indicationData.nclName}/${z}/${x}/${y}/yes`;
         base_image.onload = () => {
             runInAction(() => {
                 layer.isLoading = false
