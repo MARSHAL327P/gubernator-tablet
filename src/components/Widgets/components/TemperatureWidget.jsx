@@ -13,7 +13,7 @@ const TemperatureWidget = observer(({data, indication}) => {
         }
     ]
 
-    return <BaseWidgetTemplate data={data.value} indication={indication} params={params}/>
+    return <BaseWidgetTemplate value={data.value} indication={indication} params={params}/>
 })
 
 export default TemperatureWidget

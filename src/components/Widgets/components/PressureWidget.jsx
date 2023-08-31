@@ -4,7 +4,7 @@ import PressureIndicator from "../../PressureIndicator/PressureIndicator";
 const PressureWidget = observer(({ data, indication }) => {
     return (
         <>
-            <PressureIndicator value={data} indication={indication}/>
+            <PressureIndicator value={data.value ?? data} indication={indication}/>
             <div></div>
         </>
 

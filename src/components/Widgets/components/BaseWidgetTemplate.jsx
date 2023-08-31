@@ -1,12 +1,12 @@
 import {observer} from "mobx-react-lite";
 import cc from "classcat";
 
-const BaseWidgetTemplate = observer(({data, indication, params = []}) => {
+const BaseWidgetTemplate = observer(({value, indication, params = []}) => {
     return (
         <>
             <div>
                 <div className={cc([indication.text, "text-center font-bold text-6xl mb-3"])}>
-                    {data}{indication.units}
+                    {value}{indication.units}
                 </div>
                 <div className={"flex justify-center"}>
                     {params.map((item, idx) => {
