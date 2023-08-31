@@ -5,7 +5,7 @@ import MapStore from "../../Map/store/map.store";
 import UiStore from "../../../stores/ui.store";
 import {Transition} from "@headlessui/react";
 
-const RealObjectPlacemarker = observer(({data, realObject, indicationData, isHovered}) => {
+const RealObjectPlacemarker = observer(({data, realObject, indicationData, isOpen}) => {
     let mapIndication = data + indicationData.units
     let realObjectType = RealObjectStore.realObjectTypes[realObject.type]
     let Icon = realObjectType.icon
@@ -29,7 +29,7 @@ const RealObjectPlacemarker = observer(({data, realObject, indicationData, isHov
 
             </div>
             <Transition
-                show={isHovered}
+                show={isOpen}
                 {...UiStore.transitionOpacity}
             >
                 <div className={cc([MapStore.markerTextClasses, "absolute top-[65px] left-0 z-30"])}>

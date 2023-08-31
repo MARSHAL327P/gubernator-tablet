@@ -20,9 +20,9 @@ const RealObjectMap = observer(() => {
                 coordinates={realObject.coord}
             >
                 {
-                    (isHovered) =>
+                    (isOpen) =>
                         <RealObjectPlacemarker
-                            isHovered={isHovered}
+                            isOpen={isOpen}
                             data={mapIndication}
                             realObject={realObject}
                             indicationData={IndicationsStore.indications[indicationName]}

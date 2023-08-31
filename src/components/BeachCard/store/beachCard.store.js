@@ -21,6 +21,7 @@ export default class BeachCardStore {
     description = ""
     indications = {}
     hasWaterQuality = false
+    markerDescriptionIsOpen = false
 
     static get() {
         return axios.get(process.env.REACT_APP_BEACHES)
@@ -56,7 +57,8 @@ export default class BeachCardStore {
         makeAutoObservable(this);
 
         Object.keys(this).forEach(prop => {
-            this[prop] = data[prop]
+            if( data[prop] )
+                this[prop] = data[prop]
         })
     }
 }

@@ -98,10 +98,17 @@ const MapTemplate = observer(() => {
                 <YMapDefaultSchemeLayer/>
                 <YMapDefaultFeaturesLayer/>
                 <YMapListener onActionEnd={onActionEnd}/>
-                <YMapControls position="right" ref={controlsRef}>
-                    <YMapZoomControl/>
-                    <YMapGeolocationControl/>
-                </YMapControls>
+                {
+                    width > 1024 ?
+                        <YMapControls position="right" ref={controlsRef}>
+                            <YMapZoomControl/>
+                            <YMapGeolocationControl/>
+                        </YMapControls> :
+                        <YMapControls position="left" ref={controlsRef}>
+                            <YMapGeolocationControl/>
+                        </YMapControls>
+                }
+
                 {SelectedClassInfoStore.currentClass?.mapLayer}
                 <TileLayers/>
                 {
