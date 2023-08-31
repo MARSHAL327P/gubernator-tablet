@@ -5,6 +5,7 @@ import IndicationsStore from "../../Indications/store/indications.store";
 import cc from "classcat";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
 import Skeleton from "react-loading-skeleton";
+import WidgetStore from "../store/widget.store";
 
 const WidgetTemplate = observer((
     {
@@ -42,35 +43,46 @@ const WidgetTemplate = observer((
                 <div className={styles.widgetWrapper}>
                     {
                         indications.map(indication => {
-                            let indicationValue = data[indication.indicationName]?.value || data[indication.indicationName]
+                            let indicationData = data[indication.indicationName]
+                            if( !indicationData ) return false
+
+                            let indicationValue = indicationData?.value || indicationData
                             let Icon = indication.icon
                             let Widget = indication.widget
+                            let comfort = WidgetStore.comfort[indicationData.comfort]
 
                             return indicationValue && Widget && (
                                 <div
-                                    className={cc([styles.widgetHeight, "p-6 shadow-lg rounded-xl bg-white grid content-between"])}
+                                    className={cc([styles.widgetHeight, "shadow-lg rounded-xl bg-white"])}
                                     key={indication.id}
                                 >
-                                    <div className={"flex gap-2 justify-between"}>
-                                        <div className={"flex gap-2 items-center"}>
-                                            {indication.icon && <Icon className={cc([indication.color, "w-8 h-8"])}/>}
-                                            <span>{indication.name || indication.indicationName}</span>
-                                        </div>
-                                        {/*<div className={"flex gap-2"}>*/}
-                                        {/*    {buttons.map((btn, idx) => {*/}
-                                        {/*        let Icon = btn.icon*/}
+                                    {
+                                        comfort &&
+                                        <div className={cc(["py-1 text-white rounded-t-xl text-center", comfort.classes])}>{comfort.value}</div>
+                                    }
+                                    <div className={"px-6 py-5 grid content-between h-[348px]"}>
+                                        <div className={"flex gap-2 justify-between"}>
+                                            <div className={"flex gap-2 items-center"}>
+                                                {indication.icon && <Icon className={cc([indication.color, "w-8 h-8"])}/>}
+                                                <span>{indication.name || indication.indicationName}</span>
+                                            </div>
+                                            {/*<div className={"flex gap-2"}>*/}
+                                            {/*    {buttons.map((btn, idx) => {*/}
+                                            {/*        let Icon = btn.icon*/}
 
-                                        {/*        return (*/}
-                                        {/*            <Tooltip key={idx} content={btn.name}>*/}
-                                        {/*                <Button className={"p-3 rounded-full w-[40px] h-[40px]"} size={"sm"}>*/}
-                                        {/*                    <Icon className={"fill-white"}/>*/}
-                                        {/*                </Button>*/}
-                                        {/*            </Tooltip>*/}
-                                        {/*        )*/}
-                                        {/*    })}*/}
-                                        {/*</div>*/}
+                                            {/*        return (*/}
+                                            {/*            <Tooltip key={idx} content={btn.name}>*/}
+                                            {/*                <Button className={"p-3 rounded-full w-[40px] h-[40px]"} size={"sm"}>*/}
+                                            {/*                    <Icon className={"fill-white"}/>*/}
+                                            {/*                </Button>*/}
+                                            {/*            </Tooltip>*/}
+                                            {/*        )*/}
+                                            {/*    })}*/}
+                                            {/*</div>*/}
+                                        </div>
+                                        <Widget data={data[indication.indicationName]} indication={indication}/>
                                     </div>
-                                    <Widget data={data[indication.indicationName]} indication={indication}/>
+
                                 </div>
                             )
                         })

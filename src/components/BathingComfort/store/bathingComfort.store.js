@@ -68,7 +68,8 @@ class BathingComfortStore{
 
 
     get temperatureText(){
-        return this.temperatureTextValues.find((item) => item.lessThan > this.cardIndications.t_surf)
+        console.log(this.cardIndications.t_surf)
+        return this.temperatureTextValues.find((item) => item.lessThan > this.cardIndications.t_surf.value)
             .text
     }
 
@@ -76,7 +77,7 @@ class BathingComfortStore{
         return [
             {
                 indication: IndicationsStore.indications.Honf,
-                text: parse(`Средняя высота 10% значительных волн <span class="font-bold">${this.cardIndications.Honf} м.</span>`)
+                text: parse(`Средняя высота 10% значительных волн <span class="font-bold">${this.cardIndications.Honf.value} м.</span>`)
             },
             {
                 indication: IndicationsStore.indications.t_surf,

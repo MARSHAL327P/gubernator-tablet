@@ -27,6 +27,20 @@ class WidgetStore {
             content: <PressureWidget color={{text: "text-success"}}/>
         },
     }
+    comfort = {
+        COMFORT: {
+            value: "Комфортно",
+            classes: "bg-success"
+        },
+        MEDIUM: {
+            value: "Средняя комфортность",
+            classes: "bg-warning"
+        },
+        BAD: {
+            value: "Выше нормы",
+            classes: "bg-danger"
+        },
+    }
 
     constructor() {
         makeAutoObservable(this);

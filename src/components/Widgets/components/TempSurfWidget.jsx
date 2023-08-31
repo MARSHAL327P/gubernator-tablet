@@ -9,7 +9,7 @@ const TempSurfWidget = observer(({data, indication}) => {
         },
     ]
 
-    return <BaseWidgetTemplate data={data} indication={indication} params={params}/>
+    return <BaseWidgetTemplate value={data.value} indication={indication} params={params}/>
 })
 
 export default TempSurfWidget
