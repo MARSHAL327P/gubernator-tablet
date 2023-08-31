@@ -2,7 +2,6 @@ import {observer} from "mobx-react-lite";
 import BaseWidgetTemplate from "./BaseWidgetTemplate";
 
 const TempSurfWidget = observer(({data, indication}) => {
-    console.log(data)
     const params = [
         {
             name: "Вчера было",
