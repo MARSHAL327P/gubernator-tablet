@@ -12,16 +12,16 @@ const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
             return (
                 <div className={"flex flex-row gap-5"}>
                     {inputParams.variants.map((item, idx) => {
-                        let {id, label, sendData} = FilterStore.getInputAttr(inputName + "-" + idx, item)
-                        let itemIsSelected = FilterStore.findSelectedItem(inputName, sendData) !== -1
+                        let {id, label, inputValue} = FilterStore.getInputAttr(inputName + "-" + idx, item)
+                        let itemIsSelected = FilterStore.findSelectedItem(inputName, inputValue) !== -1
 
                         return (
                             <Button
                                 key={id}
                                 onClick={
                                     action(() => {
-                                        if( itemIsSelected )
-                                            sendData = null
+                                        let sendData = {isChecked: itemIsSelected, value: inputValue}
+
                                         FilterStore.setFilterInputs(inputName, inputParams, sendData, filterGroupName)
                                     })
                                 }
@@ -70,29 +70,21 @@ const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
                 </div>
             )
         default:
-            let checkedCheckbox = []
             return (
                 <div className={"flex flex-col"}>
                     {inputParams.variants.map((item, i) => {
-                        let {id, label, sendData} = FilterStore.getInputAttr(inputName + "-" + i, item)
-                        let checkedItemIndex = FilterStore.findSelectedItem(inputName, sendData)
+                        let {id, label, inputValue} = FilterStore.getInputAttr(inputName + "-" + i, item)
+                        let checkedItemIndex = FilterStore.findSelectedItem(inputName, inputValue)
                         let isChecked = checkedItemIndex !== -1
-
-                        if (isChecked)
-                            checkedCheckbox.push(sendData)
 
                         return (
                             <div
                                 key={id}
                                 className={"overflow-hidden relative rounded-md hover:cursor-pointer hover:bg-gray-100 transition duration-150"}
                                 onClick={action(() => {
-                                    if (isChecked) {
-                                        checkedCheckbox.splice(checkedItemIndex, 1)
-                                    } else {
-                                        checkedCheckbox.push(sendData)
-                                    }
+                                    let sendData = {isChecked: isChecked, value: inputValue}
 
-                                    FilterStore.setFilterInputs(inputName, inputParams, checkedCheckbox, filterGroupName)
+                                    FilterStore.setFilterInputs(inputName, inputParams, sendData, filterGroupName)
                                 })}
                             >
                                 <Checkbox
