@@ -174,7 +174,7 @@ class MapStore {
 
         let base_image = new Image();
 
-        base_image.src = `https://dss-sevsu.ru:8183/afalina/tiles/${layer.indicationData.nclName}/${z}/${x}/${y}`;
+        base_image.src = `https://10.32.141.2:8081/api/afalina/tiles/${layer.indicationData.nclName}/${z}/${x}/${y}`;
         base_image.onload = () => {
             runInAction(() => {
                 layer.isLoading = false
