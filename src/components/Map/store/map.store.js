@@ -174,7 +174,7 @@ class MapStore {
 
         let base_image = new Image();
 
-        base_image.src = `https://10.32.141.2:8083/tiles/${layer.indicationData.nclName}/${z}/${x}/${y}`;
+        base_image.src = `${process.env.REACT_APP_TILES}/${layer.indicationData.nclName}/${z}/${x}/${y}`;
         base_image.onload = () => {
             runInAction(() => {
                 layer.isLoading = false
