@@ -2,10 +2,17 @@
 <project version="4">
   <component name="PublishConfigData" serverName="main" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="main">
+      <paths name="external">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="main">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
