@@ -11,8 +11,35 @@ import SidebarStore from "../components/Sidebar/store/sidebar.store";
 import FastFilter from "../components/Filter/components/FastFilter";
 import useWindowSize from "../hooks/useWindowSize";
 import BathingComfortModal from "../components/Map/components/MapControls/BathingComfortModal";
+import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
+import RealObjectStore from "../components/RealObjects/store/realObject.store";
+import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 
-const HomePage = observer(({tabItems}) => {
+let tabItems = [
+    {
+        title: "Пляжи",
+        data: BeachLocalStore,
+        selected: true,
+        link: "/",
+        onClick: onTabClick
+    },
+    {
+        title: "Объекты",
+        data: RealObjectStore,
+        selected: false,
+        link: "/object",
+        onClick: onTabClick
+    },
+]
+
+function onTabClick(isSelected, e) {
+    if (SelectedClassInfoStore.currentClass.isLoading)
+        e.preventDefault()
+    if (isSelected)
+        SidebarStore.toggleMobileHideCards(false)
+}
+
+const HomePage = observer(() => {
     let [hideSidebar, setHideSidebar] = useState(false)
     let sidebarWrapper = useRef(null)
     let [width] = useWindowSize()
@@ -58,24 +85,27 @@ const HomePage = observer(({tabItems}) => {
                     <Sidebar tabItems={tabItems}/>
                 </div>
 
-                <div className={cc(["transition flex absolute h-full lg:z-20 lg:w-full", {
-                    "translate-x-0 lg:translate-x-full": !FilterStore.isOpen,
-                    "translate-x-[calc(100%-21px)] lg:translate-x-0": FilterStore.isOpen,
-                }])}>
-                    <Filter/>
-                    <Tooltip content={hideSidebar ? "Открыть боковую панель" : "Скрыть боковую панель"}>
-                        <div
-                            className={cc(["lg:hidden overflow-hidden relative left-5 top-7 bg-white hover:bg-gray-200 " +
-                            "hover:cursor-pointer transition rounded-xl py-4 px-3 h-fit"])}
-                            onClick={() => setHideSidebar(hideSidebar => !hideSidebar)}
-                        >
-                            <Chevron className={cc(["transition rotate-0", {
-                                "rotate-180": hideSidebar
-                            }])}/>
-                            <Ripple color={"rgba(0,0,0,.6)"}/>
-                        </div>
-                    </Tooltip>
-                </div>
+                {
+                    <div className={cc(["transition flex absolute h-full lg:z-20 lg:w-full", {
+                        "translate-x-0 lg:translate-x-full": !FilterStore.isOpen,
+                        "translate-x-[calc(100%-21px)] lg:translate-x-0": FilterStore.isOpen,
+                    }])}>
+                        <Filter/>
+                        <Tooltip content={hideSidebar ? "Открыть боковую панель" : "Скрыть боковую панель"}>
+                            <div
+                                className={cc(["lg:hidden overflow-hidden relative left-5 top-7 bg-white hover:bg-gray-200 " +
+                                "hover:cursor-pointer transition rounded-xl py-4 px-3 h-fit"])}
+                                onClick={() => setHideSidebar(hideSidebar => !hideSidebar)}
+                            >
+                                <Chevron className={cc(["transition rotate-0", {
+                                    "rotate-180": hideSidebar
+                                }])}/>
+                                <Ripple color={"rgba(0,0,0,.6)"}/>
+                            </div>
+                        </Tooltip>
+                    </div>
+                }
+
             </div>
             {/*<AdminBtn/>*/}
         </>

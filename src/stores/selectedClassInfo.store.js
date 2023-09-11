@@ -1,11 +1,11 @@
 import FilterStore from "../components/Filter/store/filter.store";
-import {action, makeAutoObservable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction, toJS} from "mobx";
 
-class SelectedClassInfoStore{
+class SelectedClassInfoStore {
     allClasses = []
     currentClass = null
 
-    get filteredCards(){
+    get filteredCards() {
         return this.currentClass && !this.currentClass.isLoading ? FilterStore.filteredCards() : []
     }
 
