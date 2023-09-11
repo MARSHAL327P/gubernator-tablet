@@ -1,13 +1,14 @@
 import {observer} from "mobx-react-lite";
 import Dashboard from "../components/Dashboard/components/Dashboard";
-import WidgetTemplate from "../components/Widgets/templates/WidgetTemplate";
 import {useParams} from "react-router-dom";
 import RealObjectStore from "../components/RealObjects/store/realObject.store";
 import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
-import Charts from "../components/Charts/components/Charts";
 import DashboardStore from "../components/Dashboard/store/dashboard.store";
-import {useEffect} from "react";
+import {lazy, useEffect} from "react";
+
+const WidgetTemplate = lazy(() => import("../components/Widgets/templates/WidgetTemplate"))
+const Charts = lazy(() => import("../components/Charts/components/Charts"))
 
 const RealObjectPage = observer(() => {
     const tabItems = [

@@ -3,7 +3,7 @@ import {Suspense} from "react";
 
 const SuspenseWrapper = observer(({children}) => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className={"absolute"}></div>}>
             {children}
         </Suspense>
     )
