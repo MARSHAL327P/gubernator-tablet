@@ -4,7 +4,6 @@ import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
 import ReactDOM from "react-dom";
 import GlobalStore from "../../../stores/global.store";
-import coordValue from "./coordValues";
 
 /* global ymaps3 */
 
@@ -118,7 +117,7 @@ class MapStore {
         GlobalStore.generateNewHeatmap = true
 
         this.currentValue = null
-        this.coordValues = coordValue
+        // this.coordValues = coordValue
         layerData.selected = !layerData.selected
 
         if (layerData.selected)

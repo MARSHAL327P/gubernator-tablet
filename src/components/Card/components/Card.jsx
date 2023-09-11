@@ -6,8 +6,10 @@ import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondit
 const Card = observer(() => {
     if( !SelectedClassInfoStore.currentClass ) return
 
+    let currentClass = SelectedClassInfoStore.currentClass
+
     return (
-        <SkeletonCondition condition={SelectedClassInfoStore.currentClass.isLoading} skeleton={SelectedClassInfoStore.currentClass.skeleton}>
+        <SkeletonCondition condition={currentClass.isLoading} skeleton={currentClass.skeleton}>
             {() => (
                 SelectedClassInfoStore.filteredCards.length > 0 ?
                     <CardComponent/> :

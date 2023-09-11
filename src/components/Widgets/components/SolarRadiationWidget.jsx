@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import BaseWidgetTemplate from "./BaseWidgetTemplate";
+import BaseWidgetTemplate from "../templates/BaseWidgetTemplate";
 import parse from "html-react-parser";
 
 const SolarRadiationWidget = observer(({ data, indication }) => {

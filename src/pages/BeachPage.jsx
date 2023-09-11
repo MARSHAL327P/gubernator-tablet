@@ -1,20 +1,22 @@
 import { observer } from "mobx-react-lite";
 import Dashboard from "../components/Dashboard/components/Dashboard";
-import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
 import {useParams} from "react-router-dom";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
-import AirQuality from "../components/AirQuality/components/AirQuality";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
-import BeachInfo from "../components/BeachCard/components/BeachInfo";
-import Reviews from "../components/Reviews/components/Reviews";
-import WaterQuality from "../components/WaterQuality/components/WaterQuality";
 import DashboardStore from "../components/Dashboard/store/dashboard.store";
-import {useEffect} from "react";
+import {lazy, useEffect} from "react";
+
+const BeachInfo = lazy(() => import("../components/BeachCard/components/BeachInfo"))
+const Reviews = lazy(() => import("../components/Reviews/components/Reviews"))
+const AirQuality = lazy(() => import("../components/AirQuality/components/AirQuality"))
+const WaterQuality = lazy(() => import("../components/WaterQuality/components/WaterQuality"))
+const WidgetTemplate = lazy(() => import("../components/Widgets/templates/WidgetTemplate"))
 
 const BeachPage = observer(() => {
     const card = SelectedClassInfoStore.currentClass?.card
     const {beachCode} = useParams()
+
     const tabItems = [
         {
             title: "Информация",

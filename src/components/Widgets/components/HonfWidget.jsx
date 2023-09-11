@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import BaseWidgetTemplate from "./BaseWidgetTemplate";
+import BaseWidgetTemplate from "../templates/BaseWidgetTemplate";
 
 const HonfWidget = observer(({data, indication}) => {
     const params = [

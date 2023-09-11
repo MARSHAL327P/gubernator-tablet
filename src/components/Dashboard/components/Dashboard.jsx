@@ -7,6 +7,7 @@ import DrawerDashboard from "./DrawerDashboard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import {useEffect} from "react";
 import DashboardToggleButton from "./DashboardToggleButton";
+import SuspenseWrapper from "../../SuspenseWrapper/SuspenseWrapper";
 
 const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
     const [searchParams,] = useSearchParams();
@@ -30,7 +31,9 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
                     {
                         tabItems.map((tab) =>
                             <Tab.Panel key={tab.title}>
-                                {tab.content}
+                                <SuspenseWrapper>
+                                    {tab.content}
+                                </SuspenseWrapper>
                             </Tab.Panel>)
                     }
                     {
