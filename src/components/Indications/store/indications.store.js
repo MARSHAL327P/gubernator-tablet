@@ -17,7 +17,7 @@ import parse from 'html-react-parser';
 import WindWidget from "../../Widgets/components/WindWidget";
 import TempSurfWidget from "../../Widgets/components/TempSurfWidget";
 import HonfWidget from "../../Widgets/components/HonfWidget";
-import DefaultWidget from "../../Widgets/components/DefaultWidget";
+import DefaultWidget from "../../Widgets/templates/DefaultWidget";
 
 class IndicationsStore {
     windAngleNames = [

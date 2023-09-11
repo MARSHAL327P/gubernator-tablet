@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import Dashboard from "../components/Dashboard/components/Dashboard";
-import WidgetTemplate from "../components/Widgets/components/WidgetTemplate";
+import WidgetTemplate from "../components/Widgets/templates/WidgetTemplate";
 import {useParams} from "react-router-dom";
 import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 import AirQuality from "../components/AirQuality/components/AirQuality";
