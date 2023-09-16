@@ -1,4 +1,4 @@
-import {action, makeAutoObservable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction, toJS} from "mobx";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import axios from "axios";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
@@ -92,7 +92,10 @@ class FilterStore {
                 })
             )
             .catch((data) => {
-                console.log(data)
+                if( data.message !== "canceled" ){
+                    toast.error('При отправке произошла ошибка');
+                    SelectedClassInfoStore.currentClass.isLoading = false
+                }
             })
     }
 
@@ -172,6 +175,8 @@ class FilterStore {
                 let cardValue = card[filterInputKey]
                     || (card.indications && card.indications[filterInputKey])
                     || (card.props && card.props[filterInputKey])
+
+                cardValue = cardValue?.value ? cardValue.value : cardValue
 
                 let filterInput = defaultFilterInputs[filterInputKey]
 
