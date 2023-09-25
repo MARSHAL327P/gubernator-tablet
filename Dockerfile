@@ -16,7 +16,6 @@ RUN npm run build
 FROM nginx:latest AS front
 
 RUN apt-get update -y
-RUN apt-get install systemctl
 RUN rm -rf /var/cache/nginx/*
 
 COPY --from=builder nginx/default.conf /etc/nginx/conf.d/default.conf
