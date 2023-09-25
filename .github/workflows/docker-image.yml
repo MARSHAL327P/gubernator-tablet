@@ -32,5 +32,3 @@ jobs:
         context: .
         push: true
         tags: marshal327/front_guber:latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
