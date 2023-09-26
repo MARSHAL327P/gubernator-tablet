@@ -45,7 +45,7 @@ class MapStore {
     markerTextClasses = "font-bold text-xs text-center drop-shadow-md shadow-black bg-white rounded-xl py-1 px-2 whitespace-nowrap"
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
     tileSize = 256;
-    coordValues = {}
+    indicationData = null
     currentValue = null
 
     async loadMap() {
@@ -113,11 +113,11 @@ class MapStore {
     selectAdditionalLayer(layerName) {
         let lastSelectedAdditionalLayer = this.selectedAdditionalLayer
         let layerData = this.additionalLayers[layerName]
+        let nclName = layerData.indicationData.nclName
 
         GlobalStore.generateNewHeatmap = true
 
         this.currentValue = null
-        // this.coordValues = coordValue
         layerData.selected = !layerData.selected
 
         if (layerData.selected)
@@ -132,8 +132,10 @@ class MapStore {
 
         axios.get(process.env.REACT_APP_TILES_DATA)
             .then(({data}) => {
-                layerData.gradeRange = layerData.gradeRange ?? data[layerData.indicationData.nclName]
+                layerData.gradeRange = layerData.gradeRange ?? data[nclName]
             })
+
+        this.fetchIndicationData(nclName)
 
         if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false
@@ -188,28 +190,32 @@ class MapStore {
     }
 
     findCurrentValue(object, event){
-        if( object?.type === "marker" )
+        if( object?.type === "marker" || !this.indicationData )
             return false
 
-        var startTime = performance.now()
         let coords = event.coordinates
         let searchLat = coords[1]
         let searchLon = coords[0]
 
-        let findElement = this.coordValues.reduce((acc, obj) =>
-            (
-                Math.abs(searchLat - obj.lat) <= Math.abs(searchLat - acc.lat) &&
-                Math.abs(searchLon - obj.lon) <= Math.abs(searchLon - acc.lon)
-            ) ? obj : acc
+        let findLat = Object.keys(this.indicationData).reduce((acc, obj) =>
+            (Math.abs(searchLat - obj) <= Math.abs(searchLat - acc)) ? obj : acc
+        );
+
+        let findLon = Object.keys(this.indicationData[findLat]).reduce((acc, obj) =>
+            (Math.abs(searchLon - obj) <= Math.abs(searchLon - acc)) ? obj : acc
         );
 
         this.currentValue = {
             coord: coords,
-            value: findElement.value
+            value: this.indicationData[findLat][findLon]
         }
+    }
 
-        var endTime = performance.now()
-        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
+    fetchIndicationData(indication){
+        axios.get(`https://localhost:8083/tiles/point/${indication}`)
+            .then(({data}) => {
+               this.indicationData = data
+            })
     }
 
     get currentValueText(){
