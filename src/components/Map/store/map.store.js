@@ -212,7 +212,7 @@ class MapStore {
     }
 
     fetchIndicationData(indication){
-        axios.get(`https://localhost:8083/tiles/point/${indication}`)
+        axios.get(`${process.env.REACT_APP_TILES_POINT_DATA}/${indication}`)
             .then(({data}) => {
                this.indicationData = data
             })
