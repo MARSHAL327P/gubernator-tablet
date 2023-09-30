@@ -6,6 +6,12 @@ import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import DashboardStore from "../components/Dashboard/store/dashboard.store";
 import {lazy, useEffect} from "react";
+import {ReactComponent as InfoFilled} from "../assets/icons/InfoFilled.svg";
+import {ReactComponent as FilledStar} from "../assets/icons/FilledStar.svg";
+import {ReactComponent as Clouds} from "../assets/icons/Clouds.svg";
+import {ReactComponent as WaterDrops} from "../assets/icons/WaterDrops.svg";
+import {ReactComponent as Widgets} from "../assets/icons/Widgets.svg";
+
 
 const BeachInfo = lazy(() => import("../components/BeachCard/components/BeachInfo"))
 const Reviews = lazy(() => import("../components/Reviews/components/Reviews"))
@@ -23,24 +29,28 @@ const BeachPage = observer(() => {
             content: <BeachInfo/>,
             link: "info",
             getParam: true,
+            icon: InfoFilled
         },
         {
             title: "Отзывы",
             content: <Reviews card={card}/>,
             link: "reviews",
             getParam: true,
+            icon: FilledStar
         },
         {
             title: "Качество воздуха",
             content: <AirQuality card={card}/>,
             link: "aqi",
             getParam: true,
+            icon: Clouds
         },
         {
             title: "Качество воды",
             content: <WaterQuality card={card}/>,
             link: "wqi",
             getParam: true,
+            icon: WaterDrops
         },
         {
             title: "Виджеты",
@@ -50,6 +60,7 @@ const BeachPage = observer(() => {
             />,
             link: "widgets",
             getParam: true,
+            icon: Widgets
         },
     ]
 
