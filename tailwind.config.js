@@ -38,6 +38,9 @@ module.exports = withMT({
                         transform: 'translateY(0)'
                     },
                 }
+            },
+            boxShadow: {
+                'top': '0px -4px 15px -3px rgba(0, 0, 0, 0.10)',
             }
         },
         transitionDuration: {

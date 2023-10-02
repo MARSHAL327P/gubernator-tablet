@@ -18,7 +18,7 @@ const AirQuality = observer(({card}) => {
 
     return (
         <div className={"flex lg:flex-wrap justify-center w-8/12 lg:w-full mx-auto gap-10"}>
-            <div className={"flex flex-col gap-14 w-[70%]"}>
+            <div className={"flex flex-col gap-14 w-[70%] lg:w-full"}>
                 <div className={"flex sm:flex-wrap sm:justify-center sm:text-center gap-7 h-fit items-center"}>
                     <SkeletonCondition condition={!card?.airQuality || card?.airQuality.isLoading}
                                        skeleton={<Skeleton width={150} height={135}/>}>
@@ -57,7 +57,7 @@ const AirQuality = observer(({card}) => {
                 </div>
             </div>
 
-            <div className={"w-[30%]"}>
+            <div className={"w-[30%] lg:w-full"}>
                 <div className={"text-2xl font-bold"}>
                     Подробнее о значениях AQI
                 </div>

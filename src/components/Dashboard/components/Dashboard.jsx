@@ -3,11 +3,11 @@ import {Tab} from '@headlessui/react'
 import {useSearchParams} from "react-router-dom";
 import {getIndexLinkInArray} from "../../../Utils";
 import DashboardHeader from "./DashboardHeader";
-import DrawerDashboard from "./DrawerDashboard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import {useEffect} from "react";
 import DashboardToggleButton from "./DashboardToggleButton";
 import SuspenseWrapper from "../../SuspenseWrapper/SuspenseWrapper";
+import MenuDashboard from "./MenuDashboard";
 
 const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
     const [searchParams,] = useSearchParams();
@@ -26,7 +26,7 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
         <Tab.Group defaultIndex={selectedTabIndex} selectedIndex={selectedTabIndex}>
             <DashboardHeader homeLink={homeLink} tabItems={tabItems}/>
 
-            <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50"}>
+            <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50 lg:mb-16"}>
                 <div className="relative">
                     {
                         tabItems.map((tab) =>
@@ -43,9 +43,8 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
                 </div>
             </Tab.Panels>
             {
-                width <= 1024 && <DrawerDashboard tabItems={tabItems}/>
+                width <= 1024 && <MenuDashboard tabItems={tabItems}/>
             }
-
         </Tab.Group>
     )
 })

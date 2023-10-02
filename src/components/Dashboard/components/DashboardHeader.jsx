@@ -1,15 +1,13 @@
 import {observer} from "mobx-react-lite";
 import {Button, Tooltip, Typography} from "@material-tailwind/react";
 import {useNavigate} from "react-router-dom";
-import {Bars3Icon, HomeIcon} from "@heroicons/react/24/solid";
+import {HomeIcon} from "@heroicons/react/24/solid";
 import {getUpdateTimeText} from "../../../Utils";
 import TabHeader from "../../Tabs/components/TabHeader";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 import useWindowSize from "../../../hooks/useWindowSize";
-import {runInAction} from "mobx";
-import DashboardStore from "../store/dashboard.store";
 import MapStore from "../../Map/store/map.store";
 import {ReactComponent as Map} from "../../../assets/icons/Map.svg";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
@@ -87,7 +85,7 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
                 </div>
             </div>
             {
-                width > 1024 ?
+                width > 1024 &&
                     <SkeletonCondition condition={!card} skeleton={
                         <Skeleton count={5} width={150} height={48} inline={true} containerClassName={"flex gap-2"} />
                     }>
@@ -95,12 +93,6 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
                             <TabHeader tabItems={tabItems}/>
                         )}
                     </SkeletonCondition>
-                     :
-                    <Bars3Icon className={"w-8 h-8"} onClick={() => {
-                        runInAction(() => {
-                            DashboardStore.drawerIsOpen = true
-                        })
-                    }}/>
             }
 
             {/*<AdminBtn color={"blue"} classes={""}/>*/}

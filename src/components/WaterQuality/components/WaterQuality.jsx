@@ -6,8 +6,20 @@ import {action} from "mobx";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
 import Skeleton from "react-loading-skeleton";
 import WaterQualityStore from "../store/waterQuality.store";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const WaterQuality = observer(({card}) => {
+    function indicationValueHtml(value, hasGray = true){
+        return (
+            <>
+                {value} <span className={hasGray ? "text-gray-400 font-normal" : ""}>мг/дм<sup>3</sup></span>
+            </>
+        )
+    }
+
+    const [width] = useWindowSize()
+    const valuePositionMediaQuery = 640
+
     if (card && !card.waterQuality)
         card.waterQuality = new WaterQualityStore(card.id)
 
@@ -57,12 +69,13 @@ const WaterQuality = observer(({card}) => {
                                                         <Tooltip content={indication.levelTooltip}>
                                                             <div className={`w-3 h-3 rounded-full ${indication.color}`}></div>
                                                         </Tooltip>
-                                                        <div className={"w-[240px]"}
-                                                             dangerouslySetInnerHTML={{__html: indication.title}}></div>
+                                                        <div className={"w-[240px]"}>
+                                                            {indication.title} {width < valuePositionMediaQuery && <>({indicationValueHtml(indication.value, false)})</>}
+                                                        </div>
                                                     </div>
-
-                                                    <div>{indication.value} <span
-                                                        className={"text-gray-400 font-normal"}>мг/дм<sup>3</sup></span></div>
+                                                    {
+                                                        width >= valuePositionMediaQuery && <div>{indicationValueHtml(indication.value)}</div>
+                                                    }
                                                 </div>
                                             </AccordionHeader>
                                         </ListItem>
