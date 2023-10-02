@@ -26,7 +26,7 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
         <Tab.Group defaultIndex={selectedTabIndex} selectedIndex={selectedTabIndex}>
             <DashboardHeader homeLink={homeLink} tabItems={tabItems}/>
 
-            <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50"}>
+            <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50 lg:mb-16"}>
                 <div className="relative">
                     {
                         tabItems.map((tab) =>
@@ -45,7 +45,6 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
             {
                 width <= 1024 && <MenuDashboard tabItems={tabItems}/>
             }
-
         </Tab.Group>
     )
 })
