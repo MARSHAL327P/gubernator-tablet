@@ -12,7 +12,6 @@ import MapStore from "../../store/map.store";
 import {ReactComponent as Layer} from '../../../../assets/icons/Layer.svg'
 import {useState} from "react";
 import {XMarkIcon} from "@heroicons/react/24/solid";
-import SidebarStore from "../../../Sidebar/store/sidebar.store";
 
 const MobileAdditionalLayerBtns = observer(() => {
     const [open, setOpen] = useState(false);
@@ -21,7 +20,7 @@ const MobileAdditionalLayerBtns = observer(() => {
     let isLoading = additionalLayers.filter(item => item.isLoading)
 
     return (
-        SidebarStore.mobileHideCards && <SpeedDial placement={"top"} open={open}>
+        <SpeedDial placement={"top"} open={open}>
             <SpeedDialHandler onClick={() => {
                 setOpen(open => !open)
             }} className={"shadow-lg"}>
@@ -50,6 +49,7 @@ const MobileAdditionalLayerBtns = observer(() => {
                             })}>
                                 <div onClick={() => {
                                     MapStore.selectAdditionalLayer(indication.indicationName)
+                                    setOpen(false)
                                 }}>
                                     <Icon className={cc({
                                         "w-7 h-7": true,

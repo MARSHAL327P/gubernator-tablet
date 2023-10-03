@@ -9,7 +9,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 const CardHeader = observer(({
                                  card,
                                  size = "xs",
-                                 classes = "px-7 pt-4",
+                                 classes = "px-7 pt-4 sm:px-5",
                                  noUpdateTime = false
                              }) => {
     if (!card) return

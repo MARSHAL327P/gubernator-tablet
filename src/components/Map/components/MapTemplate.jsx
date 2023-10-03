@@ -46,6 +46,9 @@ const MapTemplate = observer(() => {
 
 
     useEffect(() => {
+        if (controlsRef.current)
+            controlsRef.current._element.style.zIndex = 0
+
         controlsRef.current && controlsRef.current._element.addEventListener("click", (e) => {
             if (!MapStore.mapRef) return false
 
