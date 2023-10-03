@@ -11,7 +11,7 @@ const BathingComfortModal = observer(() => {
     return (
         SelectedClassInfoStore.currentClass === BeachLocalStore && <Popover>
             <PopoverHandler>
-                <Button color={"white"} className={"hidden md:flex p-3 gap-1 relative left-2 mb-2"}>
+                <Button color={"white"} className={"hidden md:flex p-3 gap-1"}>
                     <QuestionMarkCircleIcon className={"w-5 h-5"}/>
                     Комфортность купания
                 </Button>

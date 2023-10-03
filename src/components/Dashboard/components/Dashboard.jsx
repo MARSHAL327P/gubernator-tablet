@@ -37,10 +37,7 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
                             </Tab.Panel>
                         )
                     }
-                    {
-                        width > 1024 &&
-                        <DashboardToggleButton/>
-                    }
+                    <DashboardToggleButton/>
                 </div>
             </Tab.Panels>
             {
