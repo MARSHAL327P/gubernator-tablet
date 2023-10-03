@@ -3,7 +3,7 @@ import {Button, Tooltip, Typography} from "@material-tailwind/react";
 import {useNavigate} from "react-router-dom";
 import {HomeIcon} from "@heroicons/react/24/solid";
 import {getUpdateTimeText} from "../../../Utils";
-import TabHeader from "../../Tabs/components/TabHeader";
+import TabHeader, {tabHeaderVariants} from "../../Tabs/components/TabHeader";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -11,6 +11,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import MapStore from "../../Map/store/map.store";
 import {ReactComponent as Map} from "../../../assets/icons/Map.svg";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
+import cc from "classcat";
 
 const DashboardHeader = observer(({homeLink, tabItems}) => {
     const [width] = useWindowSize()
@@ -28,16 +29,22 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
         MapStore.initLocation(true)
     }
 
+    function iconButtons(Icon, classes = "") {
+        return (
+            <Button className={"whitespace-nowrap p-3 sm:p-3"}>
+                <Icon className={cc(["w-6 h-6 sm:w-4 sm:h-4", classes])}/>
+            </Button>
+        )
+    }
+
     return (
         <div
-            className="border-b border-white fixed z-50 top-0 backdrop-blur bg-white/50 flex justify-between items-center px-7 py-4 sm:p-3 gap-2 w-full">
+            className="border-b border-white fixed z-50 top-0 backdrop-blur bg-white/50 flex justify-between items-center px-7 sm:p-3 gap-2 w-full">
             <div className={"flex items-center gap-5 sm:gap-2"}>
-                <div className={"flex gap-2"}>
+                <div className={"flex gap-2 sm:gap-1"}>
                     <Tooltip placement="top-start" content="Вернуться на главную">
                         <div onClick={toHome}>
-                            <Button className={"whitespace-nowrap p-3"}>
-                                <HomeIcon className={"w-6 h-6"}/>
-                            </Button>
+                            {iconButtons(HomeIcon)}
                         </div>
                     </Tooltip>
                     <SkeletonCondition condition={!card} skeleton={
@@ -52,9 +59,7 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
                                 <div onClick={() => {
                                     MapStore.zoomToItem(card.coord)
                                 }}>
-                                    <Button className={"whitespace-nowrap p-3"}>
-                                        <Map className={"w-6 h-6 fill-white"}/>
-                                    </Button>
+                                    {iconButtons(Map, "fill-white")}
                                 </div>
                             </Tooltip>
                         )}
@@ -86,13 +91,18 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
             </div>
             {
                 width > 1024 &&
-                    <SkeletonCondition condition={!card} skeleton={
-                        <Skeleton count={5} width={150} height={48} inline={true} containerClassName={"flex gap-2"} />
-                    }>
-                        {() => (
-                            <TabHeader tabItems={tabItems}/>
-                        )}
-                    </SkeletonCondition>
+                <SkeletonCondition condition={!card} skeleton={
+                    <Skeleton count={5} width={150} height={48} inline={true} containerClassName={"flex gap-2"}/>
+                }>
+                    {() => (
+                        <TabHeader
+                            tabItems={tabItems}
+                            variant={tabHeaderVariants.FULL}
+                            classes={"px-5 py-6 gap-2"}
+                            tabListClasses={"!gap-0"}
+                        />
+                    )}
+                </SkeletonCondition>
             }
 
             {/*<AdminBtn color={"blue"} classes={""}/>*/}

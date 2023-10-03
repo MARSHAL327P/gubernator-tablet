@@ -73,7 +73,7 @@ const Indications = observer((
                             indicationValue &&
                             <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
-                                    "flex items-center gap-2 whitespace-nowrap px-5 rounded-xl h-12 sm:px-3",
+                                    "flex items-center gap-2 whitespace-nowrap px-5 sm:px-3 rounded-xl h-12 sm:h-11",
                                     indication.background || defaultBackgroundColor
                                 ])}>
                                     {indication.icon && <Icon className={cc([indication.color || "fill-white", "sm:w-6 sm:h-6"])}/>}

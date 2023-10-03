@@ -6,6 +6,8 @@ import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import DashboardStore from "../components/Dashboard/store/dashboard.store";
 import {lazy, useEffect} from "react";
+import {ReactComponent as Widgets} from "../assets/icons/Widgets.svg";
+import {ReactComponent as Chart} from "../assets/icons/Chart.svg";
 
 const WidgetTemplate = lazy(() => import("../components/Widgets/templates/WidgetTemplate"))
 const Charts = lazy(() => import("../components/Charts/components/Charts"))
@@ -17,12 +19,14 @@ const RealObjectPage = observer(() => {
             content: <WidgetTemplate data={SelectedClassInfoStore.currentClass?.card?.props} />,
             link: "widgets",
             getParam: true,
+            icon: Widgets
         },
         {
             title: "Графики",
             content: <Charts data={SelectedClassInfoStore.currentClass?.card?.props}/>,
             link: "charts",
             getParam: true,
+            icon: Chart
         },
     ]
 
