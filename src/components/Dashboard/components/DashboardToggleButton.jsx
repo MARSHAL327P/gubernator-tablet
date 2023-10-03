@@ -7,10 +7,10 @@ import MapControls from "../../Map/components/MapControls/MapControls";
 
 const DashboardToggleButton = observer(() => {
     return (
-        <div className={"absolute -top-20 right-0 w-full"}>
+        <div className={"absolute -top-20 lg:top-0 right-0 w-full"}>
             <Button
                 color={"white"}
-                className={"relative shadow-lg bottom-5 mx-auto z-20 px-4 rounded-xl w-fit"}
+                className={"relative shadow-lg bottom-5 mx-auto z-20 px-4 rounded-xl w-fit lg:hidden"}
                 onClick={DashboardStore.toggleOpen.bind(DashboardStore)}
             >
                 <ChevronDownIcon
@@ -21,7 +21,7 @@ const DashboardToggleButton = observer(() => {
                 />
                 {DashboardStore.isOpen ? "Скрыть" : "Раскрыть"}
             </Button>
-            <MapControls/>
+            <MapControls classes={"!p-0"}/>
         </div>
     )
 })

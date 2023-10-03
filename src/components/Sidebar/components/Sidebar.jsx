@@ -42,11 +42,7 @@ const Sidebar = observer(({tabItems}) => {
 
     useEffect(() => {
         runInAction(() => {
-            let fixedHeaderHeight = 0
-            if( width <= 1024 )
-                fixedHeaderHeight = currentClass?.fastFilter ? 110 : 55
-            
-            SidebarStore.fixedHeaderHeight = fixedHeaderEl.current.offsetHeight + fixedHeaderHeight
+            SidebarStore.fixedHeaderHeight = fixedHeaderEl.current.offsetHeight
         })
     }, [currentClass, currentClass?.isLoading, width])
 

@@ -5,7 +5,8 @@ import HeatmapGradeBlock from "./HeatmapGradeBlock";
 import {Fragment} from "react";
 import cc from "classcat";
 import DashboardStore from "../../../Dashboard/store/dashboard.store";
-import SidebarStore from "../../../Sidebar/store/sidebar.store";
+import FastFilter from "../../../Filter/components/FastFilter";
+import useWindowSize from "../../../../hooks/useWindowSize";
 
 const MapControls = observer((
     {
@@ -17,11 +18,16 @@ const MapControls = observer((
         classes = ""
     }
 ) => {
+    let [width] = useWindowSize()
+
     return (
-        <div className={cc([classes, "absolute bottom-8 right-5 lg:right-0 grid lg:flex " +
-        "lg:justify-between lg:w-full gap-5 lg:gap-2 justify-items-end z-10 lg:pl-1 lg:pr-3", {
-            "lg:bottom-[210px]": !DashboardStore.isDashboard(),
+        <div className={cc(["absolute bottom-8 right-5 lg:right-0 grid lg:flex lg:items-center " +
+        "lg:justify-between lg:w-full gap-5 lg:gap-2 justify-items-end z-10 lg:px-3", classes, {
+            "lg:bottom-[165px]": !DashboardStore.isDashboard(),
         }])}>
+            {
+                width <= 1024 && <FastFilter classes={"gap-3"} itemClasses={"bg-white"}/>
+            }
             {
                 components.map((component, idx) => <Fragment key={idx}>{component}</Fragment>)
             }

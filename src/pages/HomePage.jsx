@@ -74,14 +74,6 @@ const HomePage = observer(() => {
                 }])}
             >
                 <div className={"w-full"}>
-                    {
-                        width <= 1024 && (
-                            <>
-                                {/*<BathingComfortModal/>*/}
-                                <FastFilter classes={"gap-3"} itemClasses={"bg-white"}/>
-                            </>
-                        )
-                    }
                     <Sidebar tabItems={tabItems}/>
                 </div>
 

@@ -25,7 +25,7 @@ const BeachPlacemarker = observer(({beach}) => {
                     </div>
                 </div>
             </PopoverHandler>
-            <PopoverContent className={"z-30 p-0 shadow-none border-0 bg-none pointer-events-none lg:pointer-events-auto"}>
+            <PopoverContent className={"z-50 p-0 shadow-none border-0 bg-none pointer-events-none lg:pointer-events-auto"}>
                 <BeachMarkerDescription beach={beach}/>
             </PopoverContent>
         </Popover>
