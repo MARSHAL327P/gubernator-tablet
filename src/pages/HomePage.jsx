@@ -77,7 +77,7 @@ const HomePage = observer(() => {
                     {
                         width <= 1024 && (
                             <>
-                                <BathingComfortModal/>
+                                {/*<BathingComfortModal/>*/}
                                 <FastFilter classes={"gap-3"} itemClasses={"bg-white"}/>
                             </>
                         )

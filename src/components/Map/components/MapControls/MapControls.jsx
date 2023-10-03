@@ -18,10 +18,9 @@ const MapControls = observer((
     }
 ) => {
     return (
-        <div className={cc([classes, "absolute bottom-8 right-5 lg:right-2  grid gap-5 lg:gap-2 justify-items-end", {
-            "lg:bottom-[160px]": !DashboardStore.isDashboard(),
-            "z-30": SidebarStore.mobileHideCards,
-            "z-10": !SidebarStore.mobileHideCards,
+        <div className={cc([classes, "absolute bottom-8 right-5 lg:right-0 grid lg:flex " +
+        "lg:justify-between lg:w-full gap-5 lg:gap-2 justify-items-end z-10 lg:pl-1 lg:pr-3", {
+            "lg:bottom-[210px]": !DashboardStore.isDashboard(),
         }])}>
             {
                 components.map((component, idx) => <Fragment key={idx}>{component}</Fragment>)
