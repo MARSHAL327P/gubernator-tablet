@@ -66,7 +66,6 @@ const Sidebar = observer(({tabItems}) => {
                     </div>
                     <TabHeader
                         variant={tabHeaderVariants.WHITE}
-                        size={"sm"}
                         tabItems={tabItems}
                     />
                     {

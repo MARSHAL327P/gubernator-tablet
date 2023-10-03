@@ -3,15 +3,29 @@ import {Tab} from "@headlessui/react";
 import {Button} from "@material-tailwind/react";
 import cc from "classcat";
 import {useNavigate} from "react-router-dom";
+import useWindowSize from "../../../hooks/useWindowSize";
 
+const defaultColor = (selected) => (selected ? "blue" : "white")
 export const tabHeaderVariants = {
     DEFAULT: {
         name: "default",
-        noSelected: "text"
+        colorNoSelected: "white",
+        variantNoSelected: "text",
+        color: defaultColor
     },
     WHITE: {
         name: "white",
-        noSelected: "filled"
+        colorNoSelected: "white",
+        variantNoSelected: "filled",
+        color: defaultColor
+    },
+    FULL: {
+        name: "full",
+        variantNoSelected: "text",
+        colorNoSelected: "white",
+            classes: "h-full shadow-none flex lg:flex-col gap-1 justify-center " +
+            "items-center text-center p-2 bg-transparent rounded-none border-b-2 border-transparent",
+        color: (selected) => (selected ? "white" : "white")
     }
 }
 
@@ -29,7 +43,7 @@ function buttonClickHandler(tab, navigate) {
             url.pathname = tab.link
         }
 
-        if( initialUrl.toString() !== url.toString() )
+        if (initialUrl.toString() !== url.toString())
             navigate(url.pathname + url.search)
     }
 }
@@ -38,32 +52,46 @@ const TabHeader = observer(
     ({
          tabItems,
          variant = tabHeaderVariants.DEFAULT,
-         size = "md"
+         classes = "",
+         tabListClasses = ""
      }) => {
+        const [width] = useWindowSize()
+
         let navigate = useNavigate();
 
         return (
-            <Tab.List className={"flex gap-2 justify-self-center"}>
+            <Tab.List className={cc(["flex gap-2 items-center", tabListClasses])}>
                 {tabItems.map((tab) => {
                         return (
-                            <Tab key={tab.title} as={"div"} className={"outline-none w-full"}>
+                            <Tab key={tab.title} as={"div"} className={"outline-0 w-full h-full"}>
                                 {({selected}) => {
+                                    let Icon = tab.icon
                                     tab.selected = selected
 
                                     return (
                                         <Button
                                             onClick={buttonClickHandler.bind(null, tab, navigate)}
-                                            color={selected ? "blue" : "white"}
-                                            variant={selected ? "filled" : variant.noSelected}
+                                            color={variant.color(selected)}
+                                            variant={selected ? "filled" : variant.variantNoSelected}
                                             className={
-                                                cc({
-                                                    "outline-none whitespace-nowrap": true,
-                                                    "font-semibold px-7": size === "md",
-                                                    "text-sm w-full": size === "sm"
-                                                })
+                                                cc(["w-full text-sm", variant.classes, classes, {
+                                                    "border-b-2 border-primary": selected && variant.name === tabHeaderVariants.FULL.name
+                                                }])
                                             }
                                         >
-                                            {tab.title}
+                                            {
+                                                variant.name === tabHeaderVariants.FULL.name ?
+                                                    <>
+                                                        {Icon && <Icon className={selected ? "fill-primary" : "fill-black"}/>}
+                                                        <p className={cc(["text-black", {
+                                                            "text-primary font-bold": selected,
+                                                            "truncate": width >= 370
+                                                        }])}>
+                                                            {tab.title}
+                                                        </p>
+                                                    </>
+                                                    : tab.title
+                                            }
                                         </Button>
                                     )
                                 }}

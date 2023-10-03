@@ -34,13 +34,13 @@ const defaultBtnStyles = {
                 white: {
                     ...defaultBtnParams,
                     shadow: "shadow-lg",
-                    hover: "hover:bg-gray-100"
+                    hover: "hover:bg-gray-200"
                 }
             },
             text: {
                 white: {
                     ...defaultBtnParams,
-                    hover: "hover:bg-gray-100",
+                    hover: "hover:bg-gray-200",
                     other: "text-black"
                 },
             }

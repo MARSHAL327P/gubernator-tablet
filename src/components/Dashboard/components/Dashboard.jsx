@@ -7,7 +7,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import {useEffect} from "react";
 import DashboardToggleButton from "./DashboardToggleButton";
 import SuspenseWrapper from "../../SuspenseWrapper/SuspenseWrapper";
-import MenuDashboard from "./MenuDashboard";
+import TabHeader, {tabHeaderVariants} from "../../Tabs/components/TabHeader";
 
 const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
     const [searchParams,] = useSearchParams();
@@ -26,7 +26,7 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
         <Tab.Group defaultIndex={selectedTabIndex} selectedIndex={selectedTabIndex}>
             <DashboardHeader homeLink={homeLink} tabItems={tabItems}/>
 
-            <Tab.Panels className={"p-7 w-screen min-h-[300px] bg-gray-50 lg:mb-16"}>
+            <Tab.Panels className={"p-7 lg:p-3 w-screen min-h-[300px] bg-gray-50 lg:mb-16"}>
                 <div className="relative">
                     {
                         tabItems.map((tab) =>
@@ -34,7 +34,8 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
                                 <SuspenseWrapper>
                                     {tab.content}
                                 </SuspenseWrapper>
-                            </Tab.Panel>)
+                            </Tab.Panel>
+                        )
                     }
                     {
                         width > 1024 &&
@@ -43,7 +44,12 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
                 </div>
             </Tab.Panels>
             {
-                width <= 1024 && <MenuDashboard tabItems={tabItems}/>
+                width <= 1024 && <TabHeader
+                    variant={tabHeaderVariants.FULL}
+                    tabItems={tabItems}
+                    tabListClasses={"fixed bottom-0 left-0 bg-white w-full shadow-top z-20 justify-center !gap-0 h-[73px]"}
+                    classes={"text-[10px]"}
+                />
             }
         </Tab.Group>
     )
