@@ -66,7 +66,7 @@ const HomePage = observer(() => {
             <div
                 style={styles.sidebarWrapper}
                 ref={sidebarWrapper}
-                className={cc(["flex drop-shadow-xl h-full transition lg:duration-0 lg:w-screen lg:overflow-hidden absolute top-0 left-0 z-20", {
+                className={cc(["flex drop-shadow-xl h-full transition lg:duration-0 lg:w-screen lg:overflow-hidden absolute top-0 left-0 z-50", {
                     "translate-x-0": !FilterStore.isOpen && !hideSidebar && SidebarStore.mobileHideCards,
                     "lg:translate-y-[30px]": !SidebarStore.mobileHideCards,
                     "-translate-x-full": !FilterStore.isOpen && hideSidebar,
@@ -77,7 +77,7 @@ const HomePage = observer(() => {
                     {
                         width <= 1024 && (
                             <>
-                                <BathingComfortModal/>
+                                {/*<BathingComfortModal/>*/}
                                 <FastFilter classes={"gap-3"} itemClasses={"bg-white"}/>
                             </>
                         )

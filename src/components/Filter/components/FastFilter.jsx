@@ -11,7 +11,7 @@ const FastFilter = observer(({classes, itemClasses}) => {
     let fastFilter = SelectedClassInfoStore.currentClass.fastFilter
 
     return (
-        <List className={cc(["flex-row flex-wrap gap-0", classes])}>
+        <List className={cc(["flex-row flex-wrap lg:flex-nowrap gap-0 overflow-x-auto", classes])}>
             {
                 Object.entries(FilterStore.fastFilter.fields).map(([fieldName, fieldValues]) => {
                     return fieldValues.map(fastFilterItem => {
@@ -43,7 +43,7 @@ const FastFilter = observer(({classes, itemClasses}) => {
                                             checked={isChecked}
                                         />
                                     </ListItemPrefix>
-                                    <Typography color="blue-gray" className="font-medium">
+                                    <Typography color="blue-gray" className="font-medium whitespace-nowrap">
                                         {FilterStore.fastFilter.alias[fastFilterItem] ?? fastFilterItem}
                                     </Typography>
                                 </label>

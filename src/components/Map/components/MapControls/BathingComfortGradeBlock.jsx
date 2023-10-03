@@ -5,17 +5,19 @@ import cc from "classcat";
 import MapStore from "../../store/map.store";
 import {Typography} from "@material-tailwind/react";
 import BathingComfortGrade from "./BathingComfortGrade";
+import BathingComfortModal from "./BathingComfortModal";
 
 const BathingComfortGradeBlock = observer(({classes}) => {
     return (
-        SelectedClassInfoStore.currentClass === BeachLocalStore &&
-        !MapStore.selectedAdditionalLayer &&
-        <div className={cc([MapStore.blurBackgroundClasses, classes, "py-4 px-5 lg:hidden"])}>
-            <Typography as={"div"} variant={"h6"} className={"mb-4"}>
-                Комфортность купания
-            </Typography>
-            <BathingComfortGrade/>
-        </div>
+        (SelectedClassInfoStore.currentClass === BeachLocalStore && window.outerWidth > 1024) ?
+            !MapStore.selectedAdditionalLayer &&
+            <div className={cc([MapStore.blurBackgroundClasses, classes, "py-4 px-5 lg:hidden"])}>
+                <Typography as={"div"} variant={"h6"} className={"mb-4"}>
+                    Комфортность купания
+                </Typography>
+                <BathingComfortGrade/>
+            </div> :
+            <BathingComfortModal/>
     )
 })
 

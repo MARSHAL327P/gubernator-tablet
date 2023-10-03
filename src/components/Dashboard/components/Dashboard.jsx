@@ -44,7 +44,7 @@ const Dashboard = observer(({tabItems, homeLink = "/", card}) => {
                 </div>
             </Tab.Panels>
             {
-                width <= 1024 && <TabHeader
+                width <= 1280 && <TabHeader
                     variant={tabHeaderVariants.FULL}
                     tabItems={tabItems}
                     tabListClasses={"fixed bottom-0 left-0 bg-white w-full shadow-top z-20 justify-center !gap-0 h-[73px]"}

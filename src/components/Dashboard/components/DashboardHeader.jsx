@@ -39,8 +39,8 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
 
     return (
         <div
-            className="border-b border-white fixed z-50 top-0 backdrop-blur bg-white/50 flex justify-between items-center px-7 sm:p-3 gap-2 w-full">
-            <div className={"flex items-center gap-5 sm:gap-2"}>
+            className="border-b border-white fixed z-50 top-0 backdrop-blur bg-white/50 flex justify-between items-center gap-2 w-full">
+            <div className={"flex items-center gap-5 sm:gap-2 py-2 pl-7 lg:pl-3"}>
                 <div className={"flex gap-2 sm:gap-1"}>
                     <Tooltip placement="top-start" content="Вернуться на главную">
                         <div onClick={toHome}>
@@ -90,7 +90,7 @@ const DashboardHeader = observer(({homeLink, tabItems}) => {
                 </div>
             </div>
             {
-                width > 1024 &&
+                width > 1280 &&
                 <SkeletonCondition condition={!card} skeleton={
                     <Skeleton count={5} width={150} height={48} inline={true} containerClassName={"flex gap-2"}/>
                 }>

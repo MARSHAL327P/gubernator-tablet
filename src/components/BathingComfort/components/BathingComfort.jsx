@@ -36,7 +36,7 @@ export default function BathingComfort({
                         Пляж закрыт
                     </div> :
                     <div className={cc([
-                        "flex justify-center items-center gap-3 w-full p-3",
+                        "flex justify-center items-center gap-3 w-full p-3 sm:gap-2 sm:p-[10px]",
                         colorClasses,
                         classes,
                         {"rounded-xl shadow-lg": rounded},
@@ -49,8 +49,8 @@ export default function BathingComfort({
 
                                 return (
                                     <Fragment key={item}>
-                                        {bathingComfortType.showIcon ?? <Icon className={"fill-white"}/>}
-                                        <div className={bathingComfortType.textClasses ?? "text-white"}>
+                                        {bathingComfortType.showIcon ?? <Icon className={"fill-white sm:w-6 sm:h-6"}/>}
+                                        <div className={bathingComfortType.textClasses ?? "text-white sm:text-sm"}>
                                             {bathingComfortType.text}
                                         </div>
                                     </Fragment>

@@ -8,6 +8,7 @@ import BeachCard from "../components/BeachCard";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import BeachCardSkeleton from "../components/BeachCardSkeleton";
 
+const iconSize = "w-6 h-6 sm:w-5 sm:h-5"
 class BeachLocalStore {
     beachType = {
         CITY: "Городской",
@@ -16,11 +17,11 @@ class BeachLocalStore {
     beachProblemsType = {
         DANGER: {
             name: "Серъёзные проблемы",
-            icon: <Danger className={"stroke-danger w-6 h-6"} />,
+            icon: <Danger className={`stroke-danger ${iconSize}`} />,
         },
         WARNING: {
             name: "Незначительные проблемы",
-            icon: <Warning className={"fill-warning w-6 h-6"}/>,
+            icon: <Warning className={`fill-warning ${iconSize}`}/>,
         },
     }
     defaultFilterInputs = {

@@ -12,7 +12,7 @@ const BeachMarkerDescription = observer(({beach}) => {
     const [width] = useWindowSize()
 
     return (
-        <Card className="w-[400px] overflow-hidden">
+        <Card className="w-[400px] sm:w-full overflow-hidden">
             <CardBody>
                 <CardHeader classes={""} card={beach} noUpdateTime={true} size={"md"}/>
                 <BathingComfort rounded={true} classes={"mt-2"} bathingComfort={beach.bathingComfort} isOpen={beach.isOpen}/>

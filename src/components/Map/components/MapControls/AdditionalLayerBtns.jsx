@@ -7,6 +7,8 @@ import {
 import cc from "classcat";
 import MapStore from "../../store/map.store";
 import MobileAdditionalLayerBtns from "./MobileAdditionalLayerBtns";
+import BathingComfortModal from "./BathingComfortModal";
+import FastFilter from "../../../Filter/components/FastFilter";
 
 const AdditionalLayerBtns = observer(() => {
     return (
@@ -43,6 +45,7 @@ const AdditionalLayerBtns = observer(() => {
                 }
             </div> :
             <MobileAdditionalLayerBtns/>
+
     )
 })
 
