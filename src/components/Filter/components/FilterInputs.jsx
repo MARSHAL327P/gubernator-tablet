@@ -10,7 +10,7 @@ const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
     switch (inputParams.type) {
         case FilterStore.filterTypes.radioBtn.type:
             return (
-                <div className={"flex flex-row gap-5"}>
+                <div className={"flex flex-row gap-5 sm:gap-3"}>
                     {inputParams.variants.map((item, idx) => {
                         let {id, label, inputValue} = FilterStore.getInputAttr(inputName + "-" + idx, item)
                         let itemIsSelected = FilterStore.findSelectedItem(inputName, inputValue) !== -1
@@ -25,15 +25,14 @@ const FilterInputsComponent = ({inputName, inputParams, filterGroupName}) => {
                                         FilterStore.setFilterInputs(inputName, inputParams, sendData, filterGroupName)
                                     })
                                 }
-                                className={cc({
-                                    "flex": true,
+                                className={cc(["flex sm:p-3", {
                                     "shadow-md": itemIsSelected
-                                })}
+                                }])}
                                 fullWidth
                                 color={itemIsSelected ? "" : "white"}
                             >
                                 {label}
-                                {inputName === "rating" && <Star className={"fill-warning"}/>}
+                                {inputName === "rating" && <Star className={"fill-warning sm:w-4 sm:h-4"}/>}
                             </Button>
                         )
                     })

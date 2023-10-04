@@ -22,7 +22,7 @@ const Filter = observer(() => {
              })}
         >
             <FixedHeader elOffset={elOffset} classes={"p-7 items-center justify-between h-[104px]"}>
-                <div className={"text-title"}>
+                <div className={"text-2xl font-bold sm:text-lg"}>
                     {SelectedClassInfoStore.currentClass?.filterName}
                 </div>
 
@@ -32,7 +32,7 @@ const Filter = observer(() => {
                         {...UiStore.transitionOpacity}
                     >
                         <div className={"hover:cursor-pointer"} onClick={() => FilterStore.clearAllFilter()}>
-                            <Button variant={"text"} color={"white"}>
+                            <Button variant={"text"} color={"white"} className={"p-3"}>
                                 Очистить
                             </Button>
                         </div>
