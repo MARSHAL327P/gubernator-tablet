@@ -134,3 +134,11 @@ body{
 .marker_beach:hover .scale-marker{
     transform: scale(1.2);
 }
+
+.swiper-pagination-bullet{
+    border-radius: 10px !important;
+}
+
+.swiper-pagination-bullet-active{
+    width: 32px !important;
+}
