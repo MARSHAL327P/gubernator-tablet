@@ -55,13 +55,13 @@ const CarouselBeachCard = observer(({imgs, cardId}) => {
     return (
         <>
             <Swiper
-                className={"mt-2 h-[220px] md:h-[160px] relative"}
+                className={"mt-2 h-[220px] md:h-[200px] relative"}
                 modules={[Pagination, Navigation]}
                 pagination={true}
                 style={{
                     "--swiper-pagination-color": "#fff",
                     "--swiper-pagination-bullet-inactive-color": "#fff",
-                    "--swiper-pagination-bullet-inactive-opacity": ".2",
+                    "--swiper-pagination-bullet-inactive-opacity": ".5",
                     "--swiper-pagination-bullet-size": "10px",
                     "--swiper-pagination-bullet-horizontal-gap": "4px",
                     "--swiper-pagination-bullet-width": "16px",
