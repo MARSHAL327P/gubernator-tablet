@@ -73,7 +73,7 @@ const Sidebar = observer(({tabItems}) => {
                         setElOffset(e.currentTarget.scrollTop)
                     }}
                     style={{
-                        "height": `calc(100% - ${SidebarStore.fixedHeaderHeight}px)`
+                        "height": `calc(100dvh - ${SidebarStore.fixedHeaderHeight}px)`
                     }}
                     className={"sidebar p-3 sm:p-0 pb-7 overflow-auto transition"}
                     onTouchStart={SidebarStore.onTouchStart}
