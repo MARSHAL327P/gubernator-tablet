@@ -26,7 +26,7 @@ class SidebarStore {
         this.deltaOffset = this.touchStart - this.touchEnd
         let hasMoveDown = !this.mobileHideCards && this.deltaOffset < 0
         let hasMoveUp = this.mobileHideCards && this.deltaOffset > 0
-        let offsetValue = `calc(100% - ${this.deltaOffset + this.fixedHeaderHeight}px)`
+        let offsetValue = `calc(100dvh - ${this.deltaOffset + this.fixedHeaderHeight}px)`
         this.isUpSwipe = this.deltaOffset > this.minSwipeDistance
         this.isDownSwipe = this.deltaOffset < -this.minSwipeDistance
 
@@ -51,7 +51,7 @@ class SidebarStore {
             this.toggleMobileHideCards(true)
             FilterStore.isOpen = false
         } else {
-            this.sidebarWrapper.current.style.transform = `translateY(calc(100% - ${this.fixedHeaderHeight}px))`
+            this.sidebarWrapper.current.style.transform = `translateY(calc(100dvh - ${this.fixedHeaderHeight}px))`
         }
     }
 

@@ -47,7 +47,7 @@ const HomePage = observer(() => {
                 !FilterStore.isOpen &&
                 !hideSidebar &&
                 SidebarStore.mobileHideCards &&
-                `translateY(calc(100% - ${SidebarStore.fixedHeaderHeight}px))`
+                `translateY(calc(100dvh - ${SidebarStore.fixedHeaderHeight}px))`
         }
     }
 
