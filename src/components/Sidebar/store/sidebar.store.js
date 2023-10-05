@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import {makeAutoObservable} from "mobx";
 import FilterStore from "../../Filter/store/filter.store";
 
 class SidebarStore {
@@ -9,39 +9,53 @@ class SidebarStore {
     minSwipeDistance = 10
     mobileHideCards = true
     fixedHeaderHeight = 0
+    deltaOffset = 0
+    isUpSwipe = 0
+    isDownSwipe = 0
 
     onTouchStart = (e) => {
         this.touchEnd = null
-        this.touchStart = e.targetTouches[0].clientY
+        this.touchStart = document.querySelector(".sidebar").scrollTop <= 0 ? e.targetTouches[0].clientY : 0
     }
 
     onTouchMove = (e) => {
-        let clientYOffset = e.targetTouches[0].clientY
+        if (!this.touchStart) return
 
-        this.touchEnd = clientYOffset
+        this.touchEnd = e.targetTouches[0].clientY
 
-        if ((window.innerHeight - clientYOffset) > 148){
+        this.deltaOffset = this.touchStart - this.touchEnd
+        let hasMoveDown = !this.mobileHideCards && this.deltaOffset < 0
+        let hasMoveUp = this.mobileHideCards && this.deltaOffset > 0
+        let offsetValue = `calc(100% - ${this.deltaOffset + this.fixedHeaderHeight}px)`
+        this.isUpSwipe = this.deltaOffset > this.minSwipeDistance
+        this.isDownSwipe = this.deltaOffset < -this.minSwipeDistance
+
+        if (!this.mobileHideCards)
+            offsetValue = `${30 + Math.abs(this.deltaOffset)}px`
+
+        if ((hasMoveDown) || (hasMoveUp)) {
             this.sidebarWrapper.current.style.transition = "0s"
-            this.sidebarWrapper.current.style.transform = `translateY(${clientYOffset}px)`
+            this.sidebarWrapper.current.style.transform = `translateY(${offsetValue})`
+        } else {
+            this.touchEnd = null
         }
     }
 
     onTouchEnd = () => {
         if (!this.touchStart || !this.touchEnd) return
-        const distance = this.touchStart - this.touchEnd
-        const isUpSwipe = distance > this.minSwipeDistance
-        const isDownSwipe = distance < -this.minSwipeDistance
 
-        if (isUpSwipe)
+        if (this.isUpSwipe)
             this.toggleMobileHideCards(false)
 
-        if( isDownSwipe ){
+        if (this.isDownSwipe && !this.mobileHideCards) {
             this.toggleMobileHideCards(true)
             FilterStore.isOpen = false
+        } else {
+            this.sidebarWrapper.current.style.transform = `translateY(calc(100% - ${this.fixedHeaderHeight}px))`
         }
     }
 
-    toggleMobileHideCards(value){
+    toggleMobileHideCards(value) {
         this.mobileHideCards = value
 
         this.sidebarWrapper.current.style.transform = ``

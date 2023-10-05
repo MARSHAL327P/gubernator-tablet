@@ -75,7 +75,11 @@ const Sidebar = observer(({tabItems}) => {
                     style={{
                         "height": `calc(100% - ${SidebarStore.fixedHeaderHeight}px)`
                     }}
-                    className={"sidebar p-3 sm:p-0 pb-7 overflow-auto transition"}>
+                    className={"sidebar p-3 sm:p-0 pb-7 overflow-auto transition"}
+                    onTouchStart={SidebarStore.onTouchStart}
+                    onTouchMove={SidebarStore.onTouchMove}
+                    onTouchEnd={SidebarStore.onTouchEnd}
+                >
 
                     <Tab.Panels>
                         {tabItems.map((tab, idx) => {

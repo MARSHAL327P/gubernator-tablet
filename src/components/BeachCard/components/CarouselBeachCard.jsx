@@ -1,5 +1,5 @@
 import {observer} from "mobx-react-lite";
-import {Carousel, IconButton} from "@material-tailwind/react";
+import {IconButton} from "@material-tailwind/react";
 import {ArrowLeftIcon, ArrowRightIcon} from "@heroicons/react/20/solid";
 import {Fancybox} from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
@@ -13,24 +13,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import cc from "classcat";
-import {useState} from "react";
-
-
-function carouselNavigation({setActiveIndex, activeIndex, length}) {
-    return (
-        <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-            {new Array(length).fill("").map((_, i) => (
-                <span
-                    key={i}
-                    className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                        activeIndex === i ? "bg-white w-8" : "bg-white/50 w-4"
-                    }`}
-                    onClick={() => setActiveIndex(i)}
-                />
-            ))}
-        </div>
-    )
-}
 
 function ArrowElement({icon, btnType, classes = ""}) {
     const swiper = useSwiper();
