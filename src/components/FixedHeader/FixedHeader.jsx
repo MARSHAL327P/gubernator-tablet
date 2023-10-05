@@ -6,11 +6,10 @@ import SidebarStore from "../Sidebar/store/sidebar.store";
 const FixedHeader = observer(forwardRef(({children, elOffset, classes}, ref) => {
     return (
         <div
-            className={cc({
+            className={cc([classes, {
                 "flex gap-4 transition lg:w-full": true,
                 "shadow-xl": elOffset > 0,
-                [classes]: true
-            })}
+            }])}
             ref={ref}
             onTouchStart={SidebarStore.onTouchStart}
             onTouchMove={SidebarStore.onTouchMove}
