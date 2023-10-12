@@ -22,3 +22,14 @@ export function declOfNum(number, words) {
 export function arrDiff(arr1, arr2){
     return arr1.filter(function(i) {return arr2.indexOf(i) < 0;});
 }
+
+export function toPage(link, navigate) {
+    let url = new URL(window.location.href)
+    let urlTo = new URL(`${window.location.origin}${link}`)
+
+    for (let searchParam of url.searchParams)
+        if( !urlTo.searchParams.get(searchParam[0]) )
+            urlTo.searchParams.set(searchParam[0], searchParam[1])
+
+    navigate(urlTo.pathname + urlTo.search)
+}

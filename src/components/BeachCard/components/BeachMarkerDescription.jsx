@@ -7,6 +7,7 @@ import Indications from "../../Indications/components/Indications";
 import BeachCardProps from "./BeachCardProps";
 import useWindowSize from "../../../hooks/useWindowSize";
 import {Link} from "react-router-dom";
+import {runInAction} from "mobx";
 
 const BeachMarkerDescription = observer(({beach}) => {
     const [width] = useWindowSize()
@@ -35,7 +36,7 @@ const BeachMarkerDescription = observer(({beach}) => {
                 {
                     width <= 1024 &&
                     <Link to={`/beach/${beach.code}`}>
-                        <Button className={"mt-4 w-full"} onClick={() => {beach.markerDescriptionIsOpen = false}}>
+                        <Button className={"mt-4 w-full"} onClick={() => {runInAction(() => {beach.markerDescriptionIsOpen = false})}}>
                             Подробнее
                         </Button>
                     </Link>

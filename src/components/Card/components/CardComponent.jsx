@@ -4,8 +4,16 @@ import FilterStore from "../../Filter/store/filter.store";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
 import CardHeader from "./CardHeader";
 import UiStore from "../../../stores/ui.store";
+import {useEffect} from "react";
 
 const CardComponent = observer(() => {
+    useEffect(() => {
+        let elementId = window.location.hash.replace("#", "")
+
+        if( elementId )
+            document.getElementById(elementId).scrollIntoView({ behavior: "smooth" })
+    }, []);
+
     return (
         <>
             {
@@ -25,6 +33,7 @@ const CardComponent = observer(() => {
 
                         return (
                             <div
+                                id={card.code}
                                 key={card.id}
                                 className={UiStore.cardItemClasses}
                             >

@@ -5,12 +5,15 @@ import {ReactComponent as MarkerIcon} from "../../../assets/icons/Marker.svg";
 import {ReactComponent as MarkerPointIcon} from "../../../assets/icons/MarkerPoint.svg";
 import MapStore from "../../Map/store/map.store";
 import {Popover, PopoverContent, PopoverHandler} from "@material-tailwind/react";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const BeachPlacemarker = observer(({beach}) => {
+    const [width] = useWindowSize()
+
     let markerColor = beach.bathingComfortMapColors.marker
 
     return (
-        <Popover open={beach.markerDescriptionIsOpen} offset={15} animate={{
+        <Popover open={width > 1024 ? beach.markerDescriptionIsOpen : false} offset={15} animate={{
             mount: { y: 0 },
             unmount: { y: 25 },
         }}>
