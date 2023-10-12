@@ -8,12 +8,25 @@ import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
 import UiStore from "../../../../stores/ui.store";
 import {toPage} from "../../../../Utils";
 import {useNavigate} from "react-router-dom";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import SidebarStore from "../../../Sidebar/store/sidebar.store";
 
 const BeachMap = observer(() => {
     const {
         YMapFeature,
     } = MapStore.mapData
     const navigate = useNavigate()
+    const [width] = useWindowSize()
+
+    function onClickHandler(beach){
+        if( width <= 1024 ){
+            SidebarStore.mobileHideCards = false
+
+            document.getElementById(beach.code).scrollIntoView({ behavior: "smooth" })
+        } else {
+            toPage(`/beach/${beach.code}?tab=info`, navigate)
+        }
+    }
 
     return !BeachLocalStore.isLoading && SelectedClassInfoStore.filteredCards.map((beach, idx) => {
         let polygonColor = beach.bathingComfortMapColors.polygon
@@ -34,9 +47,7 @@ const BeachMap = observer(() => {
                 />
                 <ActivePlacemark
                     wrapper={{
-                        onClick: () => {
-                            toPage(`/beach/${beach.code}?tab=info`, navigate)
-                        },
+                        onClick: onClickHandler.bind(null, beach),
                         style: {
                             animationDelay: `.${idx * UiStore.animationDelay}s`
                         },
