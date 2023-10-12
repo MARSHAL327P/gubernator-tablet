@@ -49,7 +49,7 @@ const Sidebar = observer(({tabItems}) => {
     return (
         <div className={"h-full bg-white transition z-20 w-[460px] lg:w-full relative"}>
             <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
-                <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 pb-3 pt-7 lg:pt-3 mr-[6px] flex-col"}>
+                <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 pb-3 pt-7 lg:pt-3 mr-[6px] flex-col sidebar__header"}>
                     <div className={"bg-gray-500 rounded-full w-[100px] h-1 hidden lg:block mx-auto"}></div>
                     <div className="flex gap-4">
                         <Search/>

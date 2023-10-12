@@ -4,8 +4,12 @@ import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
 import RealObjectPlacemarker from "../../../RealObjects/components/RealObjectPlacemarker";
 import IndicationsStore from "../../../Indications/store/indications.store";
 import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
+import {toPage} from "../../../../Utils";
+import {useNavigate} from "react-router-dom";
 
 const RealObjectMap = observer(() => {
+    const navigate = useNavigate()
+
     return !RealObjectStore.isLoading && SelectedClassInfoStore.filteredCards.map((realObject, index) => {
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
         let mapIndication = realObject.props[indicationName]?.value || realObject.props[indicationName]
@@ -14,6 +18,9 @@ const RealObjectMap = observer(() => {
             <ActivePlacemark
                 wrapper={{
                     link: realObject.link,
+                    onClick: () => {
+                        toPage(realObject.link, navigate)
+                    },
                     data: realObject
                 }}
                 key={realObject.id}
