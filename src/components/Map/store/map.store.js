@@ -118,6 +118,7 @@ class MapStore {
         GlobalStore.generateNewHeatmap = true
 
         this.currentValue = null
+        this.indicationData = null
         layerData.selected = !layerData.selected
 
         if (layerData.selected)
@@ -190,12 +191,20 @@ class MapStore {
     }
 
     findCurrentValue(object, event){
-        if( object?.type === "marker" || !this.indicationData )
+        if( object?.type === "marker" )
             return false
 
         let coords = event.coordinates
         let searchLat = coords[1]
         let searchLon = coords[0]
+
+        this.currentValue = {
+            coord: coords,
+            value: null
+        }
+
+        if( !this.indicationData )
+            return false
 
         let findLat = Object.keys(this.indicationData).reduce((acc, obj) =>
             (Math.abs(searchLat - obj) <= Math.abs(searchLat - acc)) ? obj : acc
@@ -205,14 +214,23 @@ class MapStore {
             (Math.abs(searchLon - obj) <= Math.abs(searchLon - acc)) ? obj : acc
         );
 
-        this.currentValue = {
-            coord: coords,
-            value: this.indicationData[findLat][findLon]
+        let pointInRectangle = searchLat > 46.3044 || searchLat < 44.0737 || searchLon < 31.9598 || searchLon > 37.0402
+        if( pointInRectangle || !this.indicationData[findLat][findLon] ){
+            this.currentValue.value = undefined
+        } else {
+            this.currentValue.value = this.indicationData[findLat][findLon]
         }
     }
 
     fetchIndicationData(indication){
-        axios.get(`${process.env.REACT_APP_TILES_POINT_DATA}/${indication}`)
+        this.indicationDataActiveRequest && this.indicationDataActiveRequest.abort();
+        let request = this.indicationDataActiveRequest = new AbortController();
+
+        axios({
+            method: "get",
+            url: `${process.env.REACT_APP_TILES_POINT_DATA}/${indication}`,
+            signal: request.signal
+        })
             .then(({data}) => {
                this.indicationData = data
             })
