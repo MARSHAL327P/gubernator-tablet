@@ -1,7 +1,8 @@
 import {observer} from "mobx-react-lite";
 import MapStore from "../../store/map.store";
 import GlobalStore from "../../../../stores/global.store";
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
+import {Spinner} from "@material-tailwind/react";
 
 const TileLayers = observer(() => {
     const {
@@ -12,6 +13,11 @@ const TileLayers = observer(() => {
     } = MapStore.mapData
 
     let currentValueMarker = useRef(null)
+
+    useEffect(() => {
+        if (currentValueMarker.current)
+            MapStore.findCurrentValue("marker", currentValueMarker.current)
+    }, [MapStore.indicationData]);
 
     return MapStore.selectedAdditionalLayer && (
         <>
@@ -31,7 +37,8 @@ const TileLayers = observer(() => {
             <YMapListener layer={"any"} onFastClick={MapStore.findCurrentValue.bind(MapStore)}/>
             {
                 MapStore.currentValue && (
-                    <YMapMarker ref={currentValueMarker} draggable mapFollowsOnDrag coordinates={MapStore.currentValue.coord}>
+                    <YMapMarker ref={currentValueMarker} draggable mapFollowsOnDrag
+                                coordinates={MapStore.currentValue?.coord}>
                         <div
                             onMouseMove={(e) => {
                                 MapStore.findCurrentValue("marker", currentValueMarker.current)
@@ -39,7 +46,14 @@ const TileLayers = observer(() => {
                             className={"grid cursor-move justify-items-center absolute top-[-42px] -translate-x-2/4"}
                         >
                             <div className={"bg-white rounded-full px-3 py-1 whitespace-nowrap shadow-lg"}>
-                                {MapStore.currentValueText}
+                                {
+                                    MapStore.currentValue.value === undefined ?
+                                        "Нет результатов" :
+                                        MapStore.currentValue.value === null ?
+                                            <Spinner/> :
+                                            MapStore.currentValueText
+
+                                }
                             </div>
                             <div className="w-fit overflow-hidden inline-block relative top-[-2px]">
                                 <div className="shadow-lg z-50 h-3 w-[18px] bg-white

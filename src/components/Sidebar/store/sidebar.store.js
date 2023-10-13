@@ -21,7 +21,6 @@ class SidebarStore {
     }
 
     onTouchMove = (e) => {
-        console.log(this.touchStart)
         if (!this.touchStart) return
 
         this.touchEnd = e.targetTouches[0].clientY

@@ -10,6 +10,7 @@ import {toPage} from "../../../../Utils";
 import {useNavigate} from "react-router-dom";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import SidebarStore from "../../../Sidebar/store/sidebar.store";
+import {runInAction} from "mobx";
 
 const BeachMap = observer(() => {
     const {
@@ -20,7 +21,9 @@ const BeachMap = observer(() => {
 
     function onClickHandler(beach){
         if( width <= 1024 ){
-            SidebarStore.mobileHideCards = false
+            runInAction(() => {
+                SidebarStore.mobileHideCards = false
+            })
 
             document.getElementById(beach.code).scrollIntoView({ behavior: "smooth" })
         } else {
