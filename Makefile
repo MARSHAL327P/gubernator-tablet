@@ -6,10 +6,10 @@ run-linux:
 	sudo docker run -d -p 3000:443 --name front_guber_container marshal327/front_guber
 update-container:
 	sudo docker login
-	sudo docker pull marshal327/front_guber
+	sudo docker pull marshal327/front_guber:latest
 	sudo docker stop front_guber_container
 	sudo docker rm front_guber_container
-	sudo docker run -d -p 443:443 --restart=always --name=front_guber_container marshal327/front_guber
+	sudo docker run -d -p 443:443 --restart=always --name=front_guber_container marshal327/front_guber:latest
 start:
 	docker start front_guber_container
 stop:
