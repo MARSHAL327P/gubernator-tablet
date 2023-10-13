@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="main" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" serverName="afalina" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="external">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="main">
+      <paths name="afalina">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="sprintbox">
+      <paths name="main">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
