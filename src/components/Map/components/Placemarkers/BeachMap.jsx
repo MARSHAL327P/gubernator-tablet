@@ -21,11 +21,8 @@ const BeachMap = observer(() => {
 
     function onClickHandler(beach){
         if( width <= 1024 ){
-            runInAction(() => {
-                SidebarStore.mobileHideCards = false
-            })
-
-            document.getElementById(beach.code).scrollIntoView({ behavior: "smooth" })
+            SidebarStore.toggleMobileHideCards(false)
+            document.getElementById(beach.code + beach.id).scrollIntoView({ behavior: "smooth" })
         } else {
             toPage(`/beach/${beach.code}?tab=info`, navigate)
         }
@@ -50,7 +47,9 @@ const BeachMap = observer(() => {
                 />
                 <ActivePlacemark
                     wrapper={{
-                        onClick: onClickHandler.bind(null, beach),
+                        events: {
+                            onClick: onClickHandler.bind(null, beach),
+                        },
                         style: {
                             animationDelay: `.${idx * UiStore.animationDelay}s`
                         },

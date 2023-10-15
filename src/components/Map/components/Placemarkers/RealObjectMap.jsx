@@ -6,9 +6,21 @@ import IndicationsStore from "../../../Indications/store/indications.store";
 import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
 import {toPage} from "../../../../Utils";
 import {useNavigate} from "react-router-dom";
+import SidebarStore from "../../../Sidebar/store/sidebar.store";
+import useWindowSize from "../../../../hooks/useWindowSize";
 
 const RealObjectMap = observer(() => {
     const navigate = useNavigate()
+    const [width] = useWindowSize()
+
+    function onClickHandler(realObject){
+        if( width <= 1024 ){
+            SidebarStore.toggleMobileHideCards(false)
+            document.getElementById(realObject.code + realObject.id).scrollIntoView({ behavior: "smooth" })
+        } else {
+            toPage(realObject.link, navigate)
+        }
+    }
 
     return !RealObjectStore.isLoading && SelectedClassInfoStore.filteredCards.map((realObject, index) => {
         let indicationName = RealObjectStore.realObjectTypes[realObject.type].mapIndication
@@ -18,8 +30,8 @@ const RealObjectMap = observer(() => {
             <ActivePlacemark
                 wrapper={{
                     link: realObject.link,
-                    onClick: () => {
-                        toPage(realObject.link, navigate)
+                    events: {
+                        onClick: onClickHandler.bind(null, realObject),
                     },
                     data: realObject
                 }}

@@ -24,7 +24,7 @@ const ActivePlacemark = observer((props) => {
                     wrapper.data.markerDescriptionIsOpen = false
             })
         },
-        onClick: props.wrapper.onClick
+        ...props.wrapper.events
     };
 
     return (

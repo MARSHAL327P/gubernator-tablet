@@ -64,9 +64,10 @@ const HomePage = observer(() => {
             <div
                 style={styles.sidebarWrapper}
                 ref={sidebarWrapper}
+                id={"sidebar"}
                 className={cc(["flex drop-shadow-xl h-full transition lg:duration-0 lg:w-screen lg:overflow-hidden absolute top-0 left-0 z-50", {
                     "translate-x-0": !FilterStore.isOpen && !hideSidebar && SidebarStore.mobileHideCards,
-                    "lg:translate-y-[30px]": !SidebarStore.mobileHideCards,
+                    "lg:translate-y-0": !SidebarStore.mobileHideCards,
                     "-translate-x-full": !FilterStore.isOpen && hideSidebar,
                     "-translate-x-[200%]": FilterStore.isOpen && hideSidebar
                 }])}

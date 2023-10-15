@@ -17,7 +17,7 @@ class SidebarStore {
         let isSidebarHeader = e.target.closest(".sidebar__header")
 
         this.touchEnd = null
-        this.touchStart = document.querySelector(".sidebar").scrollTop <= 0 || isSidebarHeader ? e.targetTouches[0].clientY : 0
+        this.touchStart = document.getElementById("sidebar__content").scrollTop <= 0 || isSidebarHeader ? e.targetTouches[0].clientY : 0
     }
 
     onTouchMove = (e) => {
