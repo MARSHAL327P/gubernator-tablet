@@ -33,7 +33,7 @@ const CardComponent = observer(() => {
 
                         return (
                             <div
-                                id={card.code}
+                                id={card.code + card.id}
                                 key={card.id}
                                 className={UiStore.cardItemClasses}
                             >
