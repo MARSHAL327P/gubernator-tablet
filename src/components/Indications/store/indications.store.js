@@ -86,7 +86,7 @@ class IndicationsStore {
             icon: Pressure,
             units: " мм.рт.ст",
             widget: PressureWidget,
-            nclName: "P"
+            nclName: "PSFC"
         },
         Honf: {
             oldName: "honf",
