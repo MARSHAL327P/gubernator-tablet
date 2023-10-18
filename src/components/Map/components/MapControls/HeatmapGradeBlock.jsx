@@ -13,7 +13,7 @@ const HeatmapGradeBlock = observer(() => {
             MapStore.blurBackgroundClasses,
             "!p-0 relative !rounded-full w-fit flex gap-3 items-center lg:absolute lg:bottom-16 lg:right-3"
         ])}>
-            <div className={"flex justify-between gap-4 text-white rounded-full py-1 px-5 min-w-[260px]"}
+            <div className={"flex justify-between gap-4 text-white text-sm rounded-full py-1 px-4 min-w-[300px]"}
                  style={{
                      background: `linear-gradient(90deg, ${jetGradient})`
                  }}
