@@ -25,10 +25,11 @@ const Charts = observer(({data}) => {
             ChartsStore.fetchData(Object.keys(data))
     }, [data])
 
+
     return (
         <div>
             {
-                SelectedClassInfoStore.currentClass.type === "BUOY" &&
+                SelectedClassInfoStore.currentClass?.type === "BUOY" &&
                 <FileDownload dateRange={ChartsStore.selectedDateRanges[0]}/>
             }
             <div className={"flex xl:flex-wrap justify-center gap-7 relative"}>
@@ -63,8 +64,8 @@ const Charts = observer(({data}) => {
                     />
                 </div>
                 <div className={"grid gap-5 w-full items-center justify-items-center"}>
-                    <SkeletonCondition condition={!ChartsStore.isFetched || ChartsStore.isLoading } skeleton={
-                        <Skeleton count={2} height={250} width={"100%"} containerClassName={"w-full grid"} />
+                    <SkeletonCondition condition={!ChartsStore.isFetched || ChartsStore.isLoading} skeleton={
+                        <Skeleton count={2} height={250} width={"100%"} containerClassName={"w-full grid"}/>
                     }>
                         {() => (
                             ChartsStore.loadingError ?
