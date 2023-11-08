@@ -4,6 +4,7 @@ import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import IndicationsStore from "../../Indications/store/indications.store";
 import axios from "axios";
 import {ru} from "react-date-range/dist/locale";
+import {defaultDateFormat} from "../../../Utils";
 
 class ChartsStore {
     selectedDateRanges = [
@@ -77,8 +78,8 @@ class ChartsStore {
             fetchedIndicationNames.push(indicationName)
             let url = `${process.env.REACT_APP_CHARTS}/${SelectedClassInfoStore.currentClass.card.id}/${indication.oldName}`
             let dateRange = {
-                start: format(this.selectedDateRanges[0].startDate, "yyyy-MM-dd"),
-                end: format(this.selectedDateRanges[0].endDate, "yyyy-MM-dd"),
+                start: format(this.selectedDateRanges[0].startDate, defaultDateFormat),
+                end: format(this.selectedDateRanges[0].endDate, defaultDateFormat),
             }
 
             requests.push(axios.get(url, {params: dateRange}))
