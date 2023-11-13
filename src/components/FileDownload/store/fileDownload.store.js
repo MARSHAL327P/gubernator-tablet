@@ -15,7 +15,7 @@ class FileDownloadStore{
         let startDate = format(dateRanges.startDate, defaultDateFormat)
         let endDate = format(dateRanges.endDate, defaultDateFormat)
 
-        return `http://dss.sevsu.ru:8084/get_data?carid=3209&start_data=${startDate}T00:00:00&end_data=${endDate}T23:59:59`
+        return `${process.env.REACT_APP_GET_EXCEL}?carid=3209&start_data=${startDate}T00:00:00&end_data=${endDate}T23:59:59`
     }
 
     // fetchData(dateRanges){
