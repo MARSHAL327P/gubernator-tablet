@@ -68,9 +68,10 @@ const Indications = observer((
 
                         if (indication.alias)
                             indicationValue = indication.alias[indicationValue]
+                        console.log(indicationValue)
 
                         return (
-                            indicationValue &&
+                            indicationValue !== undefined &&
                             <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
                                     "flex items-center gap-2 whitespace-nowrap px-5 sm:px-3 rounded-xl h-12 sm:h-11",

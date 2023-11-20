@@ -69,14 +69,15 @@ class ChartsStore {
 
         realObjectIndicationData.forEach((indicationName) => {
             let indication = IndicationsStore.indications[indicationName]
+            let fetchIndicationName = indication?.oldName || indicationName
 
-            if (!(indication && indication.oldName))
+            if (!indication?.showOnChart)
                 return false
 
             chartIndications[indicationName] = indication
 
             fetchedIndicationNames.push(indicationName)
-            let url = `${process.env.REACT_APP_CHARTS}/${SelectedClassInfoStore.currentClass.card.id}/${indication.oldName}`
+            let url = `${process.env.REACT_APP_CHARTS}/${SelectedClassInfoStore.currentClass.card.id}/${fetchIndicationName}`
             let dateRange = {
                 start: format(this.selectedDateRanges[0].startDate, defaultDateFormat),
                 end: format(this.selectedDateRanges[0].endDate, defaultDateFormat),

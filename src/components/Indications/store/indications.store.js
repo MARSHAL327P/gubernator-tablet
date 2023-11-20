@@ -40,7 +40,8 @@ class IndicationsStore {
             units: "°",
             unitsFull: "C°",
             widget: TempSurfWidget,
-            nclName: "SST"
+            nclName: "SST",
+            showOnChart: true,
         },
         temperature: {
             oldName: "t",
@@ -53,7 +54,8 @@ class IndicationsStore {
             units: "°",
             unitsFull: "C°",
             widget: TemperatureWidget,
-            nclName: "T2"
+            nclName: "T2",
+            showOnChart: true,
         },
         wind: {
             name: "Ветер",
@@ -75,7 +77,8 @@ class IndicationsStore {
             icon: Humidity,
             units: "%",
             widget: HumidityWidget,
-            chartDomain: [0, 100]
+            chartDomain: [0, 100],
+            showOnChart: true,
         },
         pressure: {
             oldName: "PR",
@@ -86,17 +89,30 @@ class IndicationsStore {
             icon: Pressure,
             units: " мм.рт.ст",
             widget: PressureWidget,
-            nclName: "PSFC"
+            nclName: "PSFC",
+            showOnChart: true,
         },
-        Honf: {
+        // Honf: {
+        //     oldName: "honf",
+        //     name: "Средняя высота 10% наибольших волн (м)",
+        //     color: "fill-primary",
+        //     background: "bg-primary/20",
+        //     text: "text-primary",
+        //     icon: Wave,
+        //     units: " м",
+        //     widget: HonfWidget,
+        //     showOnChart: false
+        // },
+        Hsignf: {
             oldName: "honf",
-            name: "Средняя высота 10% наибольших волн (м)",
+            name: "Высота волны",
             color: "fill-primary",
             background: "bg-primary/20",
             text: "text-primary",
             icon: Wave,
             units: " м",
-            widget: HonfWidget
+            widget: HonfWidget,
+            showOnChart: true
         },
         turbidity: {
             name: "Мутность",
