@@ -9,7 +9,11 @@ const HonfWidget = observer(({data, indication}) => {
         },
     ]
 
-    return <BaseWidgetTemplate value={data.value} indication={indication} params={params}/>
+    return <BaseWidgetTemplate
+        value={data.value}
+        indication={indication}
+        // params={params}
+    />
 })
 
 export default HonfWidget
