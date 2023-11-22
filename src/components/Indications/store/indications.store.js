@@ -92,17 +92,17 @@ class IndicationsStore {
             nclName: "PSFC",
             showOnChart: true,
         },
-        // Honf: {
-        //     oldName: "honf",
-        //     name: "Средняя высота 10% наибольших волн (м)",
-        //     color: "fill-primary",
-        //     background: "bg-primary/20",
-        //     text: "text-primary",
-        //     icon: Wave,
-        //     units: " м",
-        //     widget: HonfWidget,
-        //     showOnChart: false
-        // },
+        Honf: {
+            oldName: "honf",
+            name: "Средняя высота 10% наибольших волн (м)",
+            color: "fill-primary",
+            background: "bg-primary/20",
+            text: "text-primary",
+            icon: Wave,
+            units: " м",
+            widget: HonfWidget,
+            showOnChart: true
+        },
         Hsignf: {
             oldName: "honf",
             name: "Высота волны",
