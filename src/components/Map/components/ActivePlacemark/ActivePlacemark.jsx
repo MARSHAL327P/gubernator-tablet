@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import MapStore from "../Map/store/map.store";
+import MapStore from "../../store/map.store";
 import cc from "classcat";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";

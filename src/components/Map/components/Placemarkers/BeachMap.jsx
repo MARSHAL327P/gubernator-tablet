@@ -4,13 +4,12 @@ import BeachPlacemarker from "../../../BeachCard/components/BeachPlacemarker";
 import BeachLocalStore from "../../../BeachCard/store/beachLocal.store";
 import MapStore from "../../store/map.store";
 import React, {Fragment} from "react";
-import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
+import ActivePlacemark from "../ActivePlacemark/ActivePlacemark";
 import UiStore from "../../../../stores/ui.store";
 import {toPage} from "../../../../Utils";
 import {useNavigate} from "react-router-dom";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import SidebarStore from "../../../Sidebar/store/sidebar.store";
-import {runInAction} from "mobx";
 
 const BeachMap = observer(() => {
     const {

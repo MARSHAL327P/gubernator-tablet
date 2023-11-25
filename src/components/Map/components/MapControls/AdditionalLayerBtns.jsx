@@ -7,11 +7,13 @@ import {
 import cc from "classcat";
 import MapStore from "../../store/map.store";
 import MobileAdditionalLayerBtns from "./MobileAdditionalLayerBtns";
+import HeatmapTimeline from "../../../HeatmapTimeline/components/HeatmapTimeline";
 
 const AdditionalLayerBtns = observer(() => {
     return (
         window.outerWidth > 1024 ?
             <div className={"flex gap-5"}>
+                <HeatmapTimeline/>
                 {
                     Object.values(MapStore.additionalLayers).map((additionalLayer) => {
                         let indication = additionalLayer.indicationData
