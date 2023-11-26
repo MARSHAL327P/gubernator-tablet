@@ -4,6 +4,7 @@ import IndicationsStore from "../../Indications/store/indications.store";
 import React from "react";
 import ReactDOM from "react-dom";
 import GlobalStore from "../../../stores/global.store";
+import HeatmapTimelineStore from "../../HeatmapTimeline/store/heatmapTimeline.store";
 
 /* global ymaps3 */
 
@@ -113,9 +114,6 @@ class MapStore {
     selectAdditionalLayer(layerName) {
         let lastSelectedAdditionalLayer = this.selectedAdditionalLayer
         let layerData = this.additionalLayers[layerName]
-        let nclName = layerData.indicationData.nclName
-
-        GlobalStore.generateNewHeatmap = true
 
         this.currentValue = null
         this.indicationData = null
@@ -124,22 +122,29 @@ class MapStore {
         if (layerData.selected)
             layerData.isLoading = true
 
-        if( !lastSelectedAdditionalLayer ) {
+        if( !lastSelectedAdditionalLayer && this.location.zoom > 10 ) {
             this.setLocationParams({
                 ...this.location,
                 zoom: 10
             })
         }
 
-        axios.get(process.env.REACT_APP_TILES_DATA)
-            .then(({data}) => {
-                layerData.gradeRange = layerData.gradeRange ?? data[nclName]
-            })
-
-        this.fetchIndicationData(nclName)
+        this.generateTilesAndData(layerData)
 
         if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false
+    }
+
+    generateTilesAndData(layerData){
+        let nclName = layerData.indicationData.nclName
+        GlobalStore.generateNewHeatmap = true
+
+        axios.get(process.env.REACT_APP_TILES_DATA + `?datetime=${HeatmapTimelineStore.formattedSelectedDatetime}`)
+            .then(({data}) => {
+                layerData.gradeRange = data[nclName]
+            })
+
+        this.fetchIndicationData(nclName)
     }
 
     saveGeoLocation(coords) {
@@ -176,7 +181,7 @@ class MapStore {
 
         let base_image = new Image();
 
-        base_image.src = `${process.env.REACT_APP_TILES}/${layer.indicationData.nclName}/${z}/${x}/${y}`;
+        base_image.src = `${process.env.REACT_APP_TILES}/${layer.indicationData.nclName}/${z}/${x}/${y}?datetime=${HeatmapTimelineStore.formattedSelectedDatetime}`;
         base_image.onload = () => {
             runInAction(() => {
                 layer.isLoading = false
@@ -228,7 +233,7 @@ class MapStore {
 
         axios({
             method: "get",
-            url: `${process.env.REACT_APP_TILES_POINT_DATA}/${indication}`,
+            url: `${process.env.REACT_APP_TILES_POINT_DATA}/${indication}?datetime=${HeatmapTimelineStore.formattedSelectedDatetime}`,
             signal: request.signal
         })
             .then(({data}) => {

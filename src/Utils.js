@@ -2,6 +2,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 export const defaultDateFormat = "yyyy-MM-dd"
+export const dayjsDefaultDateFormat = "YYYY-MM-DD"
+export const dayjsDefaultTimeFormat = "HH:mm:ss"
+export const dayjsZeroTimeFormat = "HH:00:00"
 
 export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
