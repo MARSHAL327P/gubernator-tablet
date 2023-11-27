@@ -35,7 +35,7 @@ const HeatmapLayers = observer(() => {
                 source={"tileGeneratorSource"}
                 type={"tileGeneratorSource"}
             />
-            <YMapListener layer={"any"} onFastClick={HeatmapStore.findCurrentValue.bind(MapStore)}/>
+            <YMapListener layer={"any"} onFastClick={HeatmapStore.findCurrentValue.bind(HeatmapStore)}/>
             {
                 HeatmapStore.currentValue && (
                     <YMapMarker ref={currentValueMarker} draggable mapFollowsOnDrag

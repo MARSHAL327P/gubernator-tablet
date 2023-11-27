@@ -11,8 +11,13 @@ import {runInAction} from "mobx";
 import HeatmapStore from "../store/heatmap.store";
 import UiStore from "../../../stores/ui.store";
 import {Transition} from "@headlessui/react";
+import {useEffect} from "react";
 
 const HeatmapTimeline = observer(() => {
+    useEffect(() => {
+        console.log(HeatmapTimelineStore.widthElapsedTime)
+    }, []);
+
     return HeatmapStore.selectedAdditionalLayer && (
         <div className={"flex items-end gap-5"}>
             <div className={"grid justify-items-center gap-2"}>
@@ -73,7 +78,7 @@ const HeatmapTimeline = observer(() => {
                         <div className={"bg-warning w-[4px] h-full"}></div>
                         <div
                             className={"bg-danger w-[4px] h-full absolute"}
-                            style={{left: (HeatmapTimelineStore.widthElapsedTime) + "px"}}
+                            style={{left: (HeatmapTimelineStore.leftOffsetToNowHours) + "px"}}
                         ></div>
                     </div>
                     <div className={"bg-gray-200 w-full h-full"}></div>

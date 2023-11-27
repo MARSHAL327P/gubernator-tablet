@@ -14,6 +14,7 @@ class HeatmapTimelineStore {
     nowSelectedData = dayjs()
     lineWidthRef = null
     timerId = null
+    leftOffsetToNowHours = null
 
     toggleTimelineAnimation() {
         if (this.isLastDay)
@@ -73,9 +74,14 @@ class HeatmapTimelineStore {
 
     get widthElapsedTime() {
         if (!this.lineWidthRef) return 0
-        let pixelsInHours = this.lineWidthRef.clientWidth / this.totalHours
 
-        return this.hoursPassed * pixelsInHours
+        let pixelsInHours = this.lineWidthRef.clientWidth / this.totalHours
+        let widthElapsedTime = this.hoursPassed * pixelsInHours
+
+        if( !this.leftOffsetToNowHours )
+            this.leftOffsetToNowHours = widthElapsedTime
+
+        return widthElapsedTime
     }
 
     get days() {

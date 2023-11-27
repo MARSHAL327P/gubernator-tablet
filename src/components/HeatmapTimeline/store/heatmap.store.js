@@ -72,7 +72,9 @@ class HeatmapStore {
 
         axios.get(process.env.REACT_APP_TILES_DATA + `?datetime=${HeatmapTimelineStore.formattedSelectedDatetime}`)
             .then(({data}) => {
-                layerData.gradeRange = data[nclName]
+                runInAction(() => {
+                    layerData.gradeRange = data[nclName]
+                })
             })
 
         this.fetchIndicationData(nclName)
