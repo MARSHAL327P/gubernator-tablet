@@ -8,7 +8,6 @@ import {
     Typography
 } from "@material-tailwind/react";
 import cc from "classcat";
-import MapStore from "../../Map/store/map.store";
 import {ReactComponent as Layer} from '../../../assets/icons/Layer.svg'
 import {useState} from "react";
 import {XMarkIcon} from "@heroicons/react/24/solid";

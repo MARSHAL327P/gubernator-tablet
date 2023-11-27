@@ -33,7 +33,7 @@ const HeatmapTimeline = observer(() => {
                 <div
                     ref={dateRef}
                     className={cc([MapStore.blurBackgroundClasses,
-                        "py-2 px-3 text-sm absolute top-[-50px] whitespace-nowrap shadow-none"
+                        "py-2 px-3 text-sm absolute top-[-50px] whitespace-nowrap shadow-none transition-all"
                     ])}
                     style={{left: HeatmapTimelineStore.widthElapsedTime - dateTooltipLeftOffset + "px"}}
                 >
@@ -74,7 +74,7 @@ const HeatmapTimeline = observer(() => {
                 >
                     <div className={"absolute top-0 left-0 h-full flex"}>
                         <div
-                            className={"bg-primary h-full transition"}
+                            className={"bg-primary h-full transition-all"}
                             style={{width: (HeatmapTimelineStore.draggableWidthElapsedTime ?? HeatmapTimelineStore.widthElapsedTime) + "px"}}
                         ></div>
                         <div className={"bg-warning w-[4px] h-full"}></div>

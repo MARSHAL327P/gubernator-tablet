@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable} from "mobx";
 import dayjs from "dayjs";
 import {capitalizeFirstLetter, dayjsDefaultDateFormat, dayjsZeroTimeFormat} from "../../../Utils";
 import HeatmapStore from "./heatmap.store";
@@ -31,7 +31,7 @@ class HeatmapTimelineStore {
         }
 
         this.startTimelineAnimation()
-        this.timerId = setInterval(this.startTimelineAnimation.bind(this), 800) // 800
+        this.timerId = setInterval(this.startTimelineAnimation.bind(this), 1000) // 800
     }
 
     startTimelineAnimation() {
