@@ -5,17 +5,17 @@ import {
     Tooltip
 } from "@material-tailwind/react";
 import cc from "classcat";
-import MapStore from "../../store/map.store";
-import MobileAdditionalLayerBtns from "./MobileAdditionalLayerBtns";
-import HeatmapTimeline from "../../../HeatmapTimeline/components/HeatmapTimeline";
+import MobileHeatmapLayerBtns from "./MobileHeatmapLayerBtns";
+import HeatmapTimeline from "./HeatmapTimeline";
+import HeatmapStore from "../store/heatmap.store";
 
-const AdditionalLayerBtns = observer(() => {
+const HeatmapLayerBtns = observer(() => {
     return (
         window.outerWidth > 1024 ?
             <div className={"flex gap-5"}>
                 <HeatmapTimeline/>
                 {
-                    Object.values(MapStore.additionalLayers).map((additionalLayer) => {
+                    Object.values(HeatmapStore.additionalLayers).map((additionalLayer) => {
                         let indication = additionalLayer.indicationData
                         let Icon = indication.icon
                         let isSelected = additionalLayer.selected
@@ -27,7 +27,7 @@ const AdditionalLayerBtns = observer(() => {
                                     variant={"filled"}
                                     className={"outline-none whitespace-nowrap w-14 h-14 p-4"}
                                     onClick={() => {
-                                        MapStore.selectAdditionalLayer(indication.indicationName)
+                                        HeatmapStore.selectAdditionalLayer(indication.indicationName)
                                     }}
                                 >
                                     {
@@ -44,8 +44,8 @@ const AdditionalLayerBtns = observer(() => {
                     })
                 }
             </div> :
-            <MobileAdditionalLayerBtns/>
+            <MobileHeatmapLayerBtns/>
     )
 })
 
-export default AdditionalLayerBtns
+export default HeatmapLayerBtns

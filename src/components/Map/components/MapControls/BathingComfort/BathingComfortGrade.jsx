@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
-import {ReactComponent as MarkerSmile} from '../../../../assets/icons/MarkerSmile.svg'
-import {ReactComponent as MarkerNeutral} from '../../../../assets/icons/MarkerNeutral.svg'
-import {ReactComponent as MarkerSad} from '../../../../assets/icons/MarkerSad.svg'
+import {ReactComponent as MarkerSmile} from '../../../../../assets/icons/MarkerSmile.svg'
+import {ReactComponent as MarkerNeutral} from '../../../../../assets/icons/MarkerNeutral.svg'
+import {ReactComponent as MarkerSad} from '../../../../../assets/icons/MarkerSad.svg'
 import cc from "classcat";
 
 const BathingComfortGrade = observer(({classes}) => {

@@ -1,7 +1,7 @@
 import {observer} from "mobx-react-lite";
-import AdditionalLayerBtns from "./AdditionalLayerBtns";
-import BathingComfortGradeBlock from "./BathingComfortGradeBlock";
-import HeatmapGradeBlock from "./HeatmapGradeBlock";
+import HeatmapLayerBtns from "../../../HeatmapTimeline/components/HeatmapLayerBtns";
+import BathingComfortGradeBlock from "./BathingComfort/BathingComfortGradeBlock";
+import HeatmapGradeBlock from "../../../HeatmapTimeline/components/HeatmapGradeBlock";
 import {Fragment} from "react";
 import cc from "classcat";
 import DashboardStore from "../../../Dashboard/store/dashboard.store";
@@ -13,7 +13,7 @@ const MapControls = observer((
         components = [
             <BathingComfortGradeBlock/>,
             <HeatmapGradeBlock/>,
-            <AdditionalLayerBtns/>
+            <HeatmapLayerBtns/>
         ],
         classes = ""
     }

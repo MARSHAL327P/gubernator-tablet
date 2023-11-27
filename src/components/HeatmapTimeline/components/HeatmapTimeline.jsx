@@ -7,9 +7,10 @@ import cc from "classcat";
 import {capitalizeFirstLetter} from "../../../Utils";
 import HeatmapTimelineStore from "../store/heatmapTimeline.store";
 import {runInAction} from "mobx";
+import HeatmapStore from "../store/heatmap.store";
 
 const HeatmapTimeline = observer(() => {
-    return MapStore.selectedAdditionalLayer && (
+    return HeatmapStore.selectedAdditionalLayer && (
         <div className={"flex items-center gap-5"}>
             <Button
                 color={"white"}

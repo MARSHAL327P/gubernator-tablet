@@ -7,7 +7,8 @@ import DashboardStore from "../../Dashboard/store/dashboard.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import MapControls from "./MapControls/MapControls";
-import TileLayers from "./Layers/TileLayers";
+import HeatmapLayers from "../../HeatmapTimeline/components/HeatmapLayers";
+import HeatmapStore from "../../HeatmapTimeline/store/heatmap.store";
 
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
@@ -91,7 +92,7 @@ const MapTemplate = observer(() => {
             <YMap
                 zoomRange={{
                     min: 8,
-                    max: MapStore.selectedAdditionalLayer ? 13 : 21
+                    max: HeatmapStore.selectedAdditionalLayer ? 13 : 21
                 }}
                 location={MapStore.location}
                 ref={map => runInAction(() => {
@@ -113,7 +114,7 @@ const MapTemplate = observer(() => {
                 }
 
                 {SelectedClassInfoStore.currentClass?.mapLayer}
-                <TileLayers/>
+                <HeatmapLayers/>
                 {
                     !DashboardStore.isDashboard() &&
                     <MapControls/>

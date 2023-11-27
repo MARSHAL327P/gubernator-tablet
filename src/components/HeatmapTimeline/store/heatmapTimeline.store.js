@@ -1,8 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import dayjs from "dayjs";
 import {capitalizeFirstLetter, dayjsDefaultDateFormat, dayjsZeroTimeFormat} from "../../../Utils";
-import MapStore from "../../Map/store/map.store";
-import GlobalStore from "../../../stores/global.store";
+import HeatmapStore from "./heatmap.store";
 
 require('dayjs/locale/ru')  // Загружаем русскую локализацию
 dayjs.locale('ru') // Используем русскую локализацию
@@ -31,8 +30,8 @@ class HeatmapTimelineStore {
                 if (this.isLastDay)
                     this.stopTimelineAnimation()
 
-                MapStore.generateTilesAndData(MapStore.selectedAdditionalLayer)
                 this.nowSelectedData = this.nowSelectedData.add(1, "hour")
+                HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
             })
         }, 1000) // 800
     }
