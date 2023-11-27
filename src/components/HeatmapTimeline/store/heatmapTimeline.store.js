@@ -24,22 +24,33 @@ class HeatmapTimelineStore {
             return
         }
 
-        this.animationStarted = true
-        this.timerId = setInterval(() => {
-            runInAction(() => {
-                if (this.isLastDay)
-                    this.stopTimelineAnimation()
+        this.startTimelineAnimation()
+        this.timerId = setInterval(this.startTimelineAnimation.bind(this), 800) // 800
+    }
 
-                this.nowSelectedData = this.nowSelectedData.add(1, "hour")
-                HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
-            })
-        }, 1000) // 800
+    startTimelineAnimation(){
+        this.animationStarted = true
+        if (this.isLastDay)
+            this.stopTimelineAnimation()
+
+        this.nowSelectedData = this.nowSelectedData.add(1, "hour")
+        HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
     }
 
     stopTimelineAnimation() {
         clearInterval(this.timerId)
         this.timerId = null
         this.animationStarted = false
+    }
+
+    backToToday(){
+        this.nowSelectedData = dayjs()
+        HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
+        this.stopTimelineAnimation()
+    }
+
+    get differentHourFromNow(){
+        return Math.ceil(this.nowSelectedData.diff(dayjs(), "hour", true))
     }
 
     get isLastDay() {

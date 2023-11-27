@@ -1,29 +1,51 @@
 import {observer} from "mobx-react-lite";
 import {ReactComponent as Play} from "../../../assets/icons/Play.svg";
 import {ReactComponent as Pause} from "../../../assets/icons/Pause.svg";
-import {Button} from "@material-tailwind/react";
+import {ReactComponent as Return} from "../../../assets/icons/Return.svg";
+import {Button, Tooltip} from "@material-tailwind/react";
 import MapStore from "../../Map/store/map.store";
 import cc from "classcat";
 import {capitalizeFirstLetter} from "../../../Utils";
 import HeatmapTimelineStore from "../store/heatmapTimeline.store";
 import {runInAction} from "mobx";
 import HeatmapStore from "../store/heatmap.store";
+import UiStore from "../../../stores/ui.store";
+import {Transition} from "@headlessui/react";
 
 const HeatmapTimeline = observer(() => {
     return HeatmapStore.selectedAdditionalLayer && (
-        <div className={"flex items-center gap-5"}>
-            <Button
-                color={"white"}
-                variant={"filled"}
-                className={"outline-none whitespace-nowrap w-14 h-14 p-4 rounded-full"}
-                onClick={HeatmapTimelineStore.toggleTimelineAnimation.bind(HeatmapTimelineStore)}
-            >
-                {
-                    HeatmapTimelineStore.animationStarted ?
-                        <Pause/> :
-                        <Play className={"ml-[2px]"}/>
-                }
-            </Button>
+        <div className={"flex items-end gap-5"}>
+            <div className={"grid justify-items-center gap-2"}>
+                <Transition
+                    show={HeatmapTimelineStore.differentHourFromNow !== 0}
+                    {...UiStore.transitionTransformY}
+                >
+                    <Tooltip content={"Вернуться к текущему часу"}>
+                        <Button
+                            color={"blue"}
+                            variant={"filled"}
+                            className={"outline-none whitespace-nowrap w-10 h-10 p-0 rounded-full !absolute left-[-19px]"}
+                            onClick={HeatmapTimelineStore.backToToday.bind(HeatmapTimelineStore)}
+                        >
+                            <Return className={"fill-white w-3 h-3"}/>
+                        </Button>
+                    </Tooltip>
+                </Transition>
+
+                <Button
+                    color={"white"}
+                    variant={"filled"}
+                    className={"outline-none whitespace-nowrap w-14 h-14 p-4 rounded-full"}
+                    onClick={HeatmapTimelineStore.toggleTimelineAnimation.bind(HeatmapTimelineStore)}
+                >
+                    {
+                        HeatmapTimelineStore.animationStarted ?
+                            <Pause/> :
+                            <Play className={"ml-[2px]"}/>
+                    }
+                </Button>
+            </div>
+
             <div className={"grid relative w-[990px] shadow-lg rounded-xl"}
                  ref={ref => runInAction(() => {
                      if (ref)
@@ -48,7 +70,7 @@ const HeatmapTimeline = observer(() => {
                             className={"bg-primary h-full transition"}
                             style={{width: HeatmapTimelineStore.widthElapsedTime + "px"}}
                         ></div>
-                        <div className={"bg-warning w-[4px] h-full right-0"}></div>
+                        <div className={"bg-warning w-[4px] h-full"}></div>
                         <div
                             className={"bg-danger w-[4px] h-full absolute"}
                             style={{left: (HeatmapTimelineStore.widthElapsedTime) + "px"}}
