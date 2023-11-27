@@ -6,7 +6,7 @@ import MapStore from "../../../store/map.store";
 import {Typography} from "@material-tailwind/react";
 import BathingComfortGrade from "./BathingComfortGrade";
 import BathingComfortModal from "./BathingComfortModal";
-import HeatmapStore from "../../../../HeatmapTimeline/store/heatmap.store";
+import HeatmapStore from "../../../../Heatmap/store/heatmap.store";
 
 const BathingComfortGradeBlock = observer(({classes}) => {
     return (

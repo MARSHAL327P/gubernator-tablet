@@ -7,8 +7,8 @@ import DashboardStore from "../../Dashboard/store/dashboard.store";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
 import MapControls from "./MapControls/MapControls";
-import HeatmapLayers from "../../HeatmapTimeline/components/HeatmapLayers";
-import HeatmapStore from "../../HeatmapTimeline/store/heatmap.store";
+import HeatmapLayers from "../../Heatmap/components/HeatmapLayers";
+import HeatmapStore from "../../Heatmap/store/heatmap.store";
 
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
