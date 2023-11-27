@@ -11,14 +11,19 @@ class HeatmapTimelineStore {
     animationStarted = false
     shortFormat = "dddd, DD"
     fullFormat = "dddd, DD - HH:00"
-    nowSelectedData = dayjs()
+    nowSelectedDate = dayjs()
+    hoveredDate = dayjs()
     lineWidthRef = null
     timerId = null
     leftOffsetToNowHours = null
+    isHovered = false
+    isDraggable = false
+    hoverDistance = 0
+    draggableWidthElapsedTime = null
 
     toggleTimelineAnimation() {
         if (this.isLastDay)
-            this.nowSelectedData = dayjs()
+            this.nowSelectedDate = dayjs()
 
         if (this.timerId) {
             this.stopTimelineAnimation()
@@ -29,12 +34,12 @@ class HeatmapTimelineStore {
         this.timerId = setInterval(this.startTimelineAnimation.bind(this), 800) // 800
     }
 
-    startTimelineAnimation(){
+    startTimelineAnimation() {
         this.animationStarted = true
         if (this.isLastDay)
             this.stopTimelineAnimation()
 
-        this.nowSelectedData = this.nowSelectedData.add(1, "hour")
+        this.nowSelectedDate = this.nowSelectedDate.add(1, "hour")
         HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
     }
 
@@ -44,41 +49,82 @@ class HeatmapTimelineStore {
         this.animationStarted = false
     }
 
-    backToToday(){
-        this.nowSelectedData = dayjs()
+    goToDate(date = dayjs()){
+        this.nowSelectedDate = date
         HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
         this.stopTimelineAnimation()
     }
 
-    get differentHourFromNow(){
-        return Math.ceil(this.nowSelectedData.diff(dayjs(), "hour", true))
+    onTimelineMouseLeave() {
+        this.isHovered = false
+    }
+
+    onTimelineMouseEnter() {
+        this.isHovered = true
+    }
+
+    onTimelineMouseUp() {
+        this.isDraggable = false
+        this.draggableWidthElapsedTime = null
+    }
+
+    onTimelineMouseDown() {
+        this.isDraggable = true
+    }
+
+    onTimelineMouseMove(e) {
+        let mouseX = e.clientX;
+        let targetX = e.currentTarget.getBoundingClientRect().left;
+        this.hoverDistance = mouseX - targetX;
+        let hourNum = Math.round(this.hoverDistance / this.pixelsInHours)
+        this.hoveredDate = dayjs().startOf('day').add(hourNum, 'hour')
+
+        // if(this.isDraggable){
+        //     this.draggableWidthElapsedTime = this.hoverDistance
+        //     HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
+        // }
+    }
+
+    diffDateWithNow(date){
+        return Math.ceil(date.diff(dayjs(), "hour", true))
+    }
+
+    get formattedHoveredDate(){
+        return capitalizeFirstLetter(this.hoveredDate.format(this.fullFormat))
+    }
+
+    get differentHourFromNow() {
+        return this.diffDateWithNow(this.nowSelectedDate)
     }
 
     get isLastDay() {
         let lastDay = dayjs().startOf('day').add(this.numDays, 'day')
-        return this.nowSelectedData.diff(lastDay, "hour") === 0
+        return this.nowSelectedDate.diff(lastDay, "hour") === 0
     }
 
     get totalHours() {
         return this.numDays * 24
     }
 
-    get formattedData() {
-        return capitalizeFirstLetter(this.nowSelectedData.format(this.fullFormat))
+    get formattedDate() {
+        return capitalizeFirstLetter(this.nowSelectedDate.format(this.fullFormat))
     }
 
     get hoursPassed() {
         let startOfDay = dayjs().startOf('day');
-        return this.nowSelectedData.diff(startOfDay, 'hour');
+        return this.nowSelectedDate.diff(startOfDay, 'hour');
+    }
+
+    get pixelsInHours() {
+        return this.lineWidthRef.clientWidth / this.totalHours
     }
 
     get widthElapsedTime() {
         if (!this.lineWidthRef) return 0
 
-        let pixelsInHours = this.lineWidthRef.clientWidth / this.totalHours
-        let widthElapsedTime = this.hoursPassed * pixelsInHours
+        let widthElapsedTime = this.hoursPassed * this.pixelsInHours
 
-        if( !this.leftOffsetToNowHours )
+        if (this.leftOffsetToNowHours === null)
             this.leftOffsetToNowHours = widthElapsedTime
 
         return widthElapsedTime
@@ -90,8 +136,8 @@ class HeatmapTimelineStore {
             .map((item, i) => dayjs().add(i, 'day').format(this.shortFormat))
     }
 
-    get formattedSelectedDatetime(){
-        return this.nowSelectedData.format(dayjsDefaultDateFormat + "_" + dayjsZeroTimeFormat)
+    get formattedSelectedDatetime() {
+        return this.nowSelectedDate.format(dayjsDefaultDateFormat + "_" + dayjsZeroTimeFormat)
     }
 
     constructor() {

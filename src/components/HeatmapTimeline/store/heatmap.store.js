@@ -4,6 +4,7 @@ import axios from "axios";
 import HeatmapTimelineStore from "./heatmapTimeline.store";
 import IndicationsStore from "../../Indications/store/indications.store";
 import MapStore from "../../Map/store/map.store";
+import dayjs from "dayjs";
 
 class HeatmapStore {
     defaultAdditionalLayersOptions = {
@@ -50,7 +51,7 @@ class HeatmapStore {
         if (layerData.selected)
             layerData.isLoading = true
 
-        if( !lastSelectedAdditionalLayer && MapStore.location.zoom > 10 ) {
+        if (!lastSelectedAdditionalLayer && MapStore.location.zoom > 10) {
             MapStore.setLocationParams({
                 ...MapStore.location,
                 zoom: 10
@@ -61,12 +62,22 @@ class HeatmapStore {
 
         if (lastSelectedAdditionalLayer)
             lastSelectedAdditionalLayer.selected = false
+
+        if( lastSelectedAdditionalLayer?.indicationData.indicationName === layerData.indicationData.indicationName){
+            HeatmapTimelineStore.nowSelectedDate = dayjs()
+            HeatmapTimelineStore.stopTimelineAnimation()
+        }
+
     }
 
-    generateTilesAndData(layerData){
+    generateTilesAndData(layerData) {
         let nclName = layerData.indicationData.nclName
 
-        this.currentValue = null
+        if (this.currentValue !== null)
+            this.currentValue = {
+                ...this.currentValue,
+                value: null
+            }
         this.indicationData = null
         GlobalStore.generateNewHeatmap = true
 
@@ -113,8 +124,8 @@ class HeatmapStore {
         return {image: canvas};
     }
 
-    findCurrentValue(object, event){
-        if( object?.type === "marker" )
+    findCurrentValue(object, event) {
+        if (object?.type === "marker")
             return false
 
         let coords = event.coordinates
@@ -126,7 +137,7 @@ class HeatmapStore {
             value: null
         }
 
-        if( !this.indicationData )
+        if (!this.indicationData)
             return false
 
         let findLat = Object.keys(this.indicationData).reduce((acc, obj) =>
@@ -138,14 +149,14 @@ class HeatmapStore {
         );
 
         let pointInRectangle = searchLat > 46.3044 || searchLat < 44.0737 || searchLon < 31.9598 || searchLon > 37.0402
-        if( pointInRectangle || !this.indicationData[findLat][findLon] ){
+        if (pointInRectangle || !this.indicationData[findLat][findLon]) {
             this.currentValue.value = undefined
         } else {
             this.currentValue.value = this.indicationData[findLat][findLon]
         }
     }
 
-    fetchIndicationData(indication){
+    fetchIndicationData(indication) {
         this.indicationDataActiveRequest && this.indicationDataActiveRequest.abort();
         let request = this.indicationDataActiveRequest = new AbortController();
 
@@ -155,11 +166,13 @@ class HeatmapStore {
             signal: request.signal
         })
             .then(({data}) => {
-                this.indicationData = data
+                runInAction(() => {
+                    this.indicationData = data
+                })
             })
     }
 
-    get currentValueText(){
+    get currentValueText() {
         let indication = this.selectedAdditionalLayer.indicationData
         return `${this.currentValue.value} ${indication.unitsFull ?? indication.units}`
     }

@@ -6,7 +6,7 @@ import {
 } from "@material-tailwind/react";
 import cc from "classcat";
 import MobileHeatmapLayerBtns from "./MobileHeatmapLayerBtns";
-import HeatmapTimeline from "./HeatmapTimeline";
+import HeatmapTimeline from "./Timeline/HeatmapTimeline";
 import HeatmapStore from "../store/heatmap.store";
 
 const HeatmapLayerBtns = observer(() => {
