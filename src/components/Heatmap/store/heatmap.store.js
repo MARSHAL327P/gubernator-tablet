@@ -47,7 +47,8 @@ class HeatmapStore {
         let lastSelectedAdditionalLayer = this.selectedAdditionalLayer
         let layerData = this.additionalLayers[layerName]
 
-        SidebarStore.isOpen = false
+        if( window.outerWidth > 1024 )
+            SidebarStore.isOpen = false
         layerData.selected = !layerData.selected
 
         if (layerData.selected)
