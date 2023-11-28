@@ -68,7 +68,6 @@ const Indications = observer((
 
                         if (indication.alias)
                             indicationValue = indication.alias[indicationValue]
-                        console.log(indicationValue)
 
                         return (
                             indicationValue !== undefined &&

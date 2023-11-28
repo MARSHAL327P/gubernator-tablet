@@ -3,9 +3,9 @@ import {QuestionMarkCircleIcon} from "@heroicons/react/24/solid";
 import {Button, Popover, PopoverContent, PopoverHandler} from "@material-tailwind/react";
 import BathingComfortGrade from "./BathingComfortGrade";
 import cc from "classcat";
-import MapStore from "../../store/map.store";
-import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";
-import BeachLocalStore from "../../../BeachCard/store/beachLocal.store";
+import MapStore from "../../../store/map.store";
+import SelectedClassInfoStore from "../../../../../stores/selectedClassInfo.store";
+import BeachLocalStore from "../../../../BeachCard/store/beachLocal.store";
 
 const BathingComfortModal = observer(() => {
     return (

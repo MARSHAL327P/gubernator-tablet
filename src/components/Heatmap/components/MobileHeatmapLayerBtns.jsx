@@ -8,15 +8,15 @@ import {
     Typography
 } from "@material-tailwind/react";
 import cc from "classcat";
-import MapStore from "../../store/map.store";
-import {ReactComponent as Layer} from '../../../../assets/icons/Layer.svg'
+import {ReactComponent as Layer} from '../../../assets/icons/Layer.svg'
 import {useState} from "react";
 import {XMarkIcon} from "@heroicons/react/24/solid";
+import HeatmapStore from "../store/heatmap.store";
 
-const MobileAdditionalLayerBtns = observer(() => {
+const MobileHeatmapLayerBtns = observer(() => {
     const [open, setOpen] = useState(false);
 
-    let additionalLayers = Object.values(MapStore.additionalLayers)
+    let additionalLayers = Object.values(HeatmapStore.additionalLayers)
     let isLoading = additionalLayers.filter(item => item.isLoading)
 
     return (
@@ -36,10 +36,10 @@ const MobileAdditionalLayerBtns = observer(() => {
             </SpeedDialHandler>
             <SpeedDialContent>
                 {
-                    Object.values(MapStore.additionalLayers).map((additionalLayer) => {
+                    additionalLayers.map((additionalLayer) => {
                         let indication = additionalLayer.indicationData
                         let Icon = indication.icon
-                        let isSelected = MapStore.additionalLayers[indication.indicationName].selected
+                        let isSelected = HeatmapStore.additionalLayers[indication.indicationName].selected
 
                         return (
                             <SpeedDialAction key={indication.id} className={cc({
@@ -48,7 +48,7 @@ const MobileAdditionalLayerBtns = observer(() => {
                                 "p-3 shadow-lg": true
                             })}>
                                 <div onClick={() => {
-                                    MapStore.selectAdditionalLayer(indication.indicationName)
+                                    HeatmapStore.selectAdditionalLayer(indication.indicationName)
                                     setOpen(false)
                                 }}>
                                     <Icon className={cc({
@@ -77,4 +77,4 @@ const MobileAdditionalLayerBtns = observer(() => {
     )
 })
 
-export default MobileAdditionalLayerBtns
+export default MobileHeatmapLayerBtns

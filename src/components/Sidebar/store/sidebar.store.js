@@ -12,6 +12,7 @@ class SidebarStore {
     deltaOffset = 0
     isUpSwipe = 0
     isDownSwipe = 0
+    isOpen = true
 
     onTouchStart = (e) => {
         let isSidebarHeader = e.target.closest(".sidebar__header")

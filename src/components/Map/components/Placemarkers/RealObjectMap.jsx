@@ -1,6 +1,6 @@
 import {observer} from "mobx-react-lite";
 import RealObjectStore from "../../../RealObjects/store/realObject.store";
-import ActivePlacemark from "../../../ActivePlacemark/ActivePlacemark";
+import ActivePlacemark from "../ActivePlacemark/ActivePlacemark";
 import RealObjectPlacemarker from "../../../RealObjects/components/RealObjectPlacemarker";
 import IndicationsStore from "../../../Indications/store/indications.store";
 import SelectedClassInfoStore from "../../../../stores/selectedClassInfo.store";

@@ -5,6 +5,7 @@ import {ReactComponent as Wind} from "../../../assets/icons/Wind.svg";
 import {ReactComponent as Humidity} from "../../../assets/icons/Humidity.svg";
 import {ReactComponent as Pressure} from "../../../assets/icons/Pressure.svg";
 import {ReactComponent as Wave} from "../../../assets/icons/Wave.svg";
+import {ReactComponent as Wave10Percent} from "../../../assets/icons/Wave10Percent.svg";
 import {ReactComponent as Blob} from "../../../assets/icons/Blob.svg";
 import {ReactComponent as AirQuality} from "../../../assets/icons/AirQuality.svg";
 import {ReactComponent as Sun} from "../../../assets/icons/Sun.svg";
@@ -13,11 +14,11 @@ import TemperatureWidget from "../../Widgets/components/TemperatureWidget";
 import HumidityWidget from "../../Widgets/components/HumidityWidget";
 import PressureWidget from "../../Widgets/components/PressureWidget";
 import SolarRadiationWidget from "../../Widgets/components/SolarRadiationWidget";
-import parse from 'html-react-parser';
 import WindWidget from "../../Widgets/components/WindWidget";
 import TempSurfWidget from "../../Widgets/components/TempSurfWidget";
 import HonfWidget from "../../Widgets/components/HonfWidget";
 import DefaultWidget from "../../Widgets/templates/DefaultWidget";
+import parse from 'html-react-parser';
 
 class IndicationsStore {
     windAngleNames = [
@@ -98,7 +99,7 @@ class IndicationsStore {
             color: "fill-primary",
             background: "bg-primary/20",
             text: "text-primary",
-            icon: Wave,
+            icon: Wave10Percent,
             units: " м",
             widget: HonfWidget,
             showOnChart: true

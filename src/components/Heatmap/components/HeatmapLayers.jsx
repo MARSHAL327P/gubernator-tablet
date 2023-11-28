@@ -1,10 +1,11 @@
 import {observer} from "mobx-react-lite";
-import MapStore from "../../store/map.store";
-import GlobalStore from "../../../../stores/global.store";
+import MapStore from "../../Map/store/map.store";
+import GlobalStore from "../../../stores/global.store";
 import React, {useEffect, useRef} from "react";
 import {Spinner} from "@material-tailwind/react";
+import HeatmapStore from "../store/heatmap.store";
 
-const TileLayers = observer(() => {
+const HeatmapLayers = observer(() => {
     const {
         YMapListener,
         YMapTileDataSource,
@@ -16,16 +17,16 @@ const TileLayers = observer(() => {
 
     useEffect(() => {
         if (currentValueMarker.current)
-            MapStore.findCurrentValue("marker", currentValueMarker.current)
-    }, [MapStore.indicationData]);
+            HeatmapStore.findCurrentValue("marker", currentValueMarker.current)
+    }, [HeatmapStore.indicationData]);
 
-    return MapStore.selectedAdditionalLayer && (
+    return HeatmapStore.selectedAdditionalLayer && (
         <>
             <YMapTileDataSource
                 id={"tileGeneratorSource"}
                 raster={{
                     type: "tileGeneratorSource",
-                    fetchTile: GlobalStore.generateNewHeatmap ? MapStore.fetchTile.bind(MapStore) : MapStore.fetchTile,
+                    fetchTile: GlobalStore.generateNewHeatmap ? HeatmapStore.fetchTile.bind(HeatmapStore) : HeatmapStore.fetchTile,
                 }}
             />
             <YMapLayer
@@ -34,24 +35,24 @@ const TileLayers = observer(() => {
                 source={"tileGeneratorSource"}
                 type={"tileGeneratorSource"}
             />
-            <YMapListener layer={"any"} onFastClick={MapStore.findCurrentValue.bind(MapStore)}/>
+            <YMapListener layer={"any"} onFastClick={HeatmapStore.findCurrentValue.bind(HeatmapStore)}/>
             {
-                MapStore.currentValue && (
+                HeatmapStore.currentValue && (
                     <YMapMarker ref={currentValueMarker} draggable mapFollowsOnDrag
-                                coordinates={MapStore.currentValue?.coord}>
+                                coordinates={HeatmapStore.currentValue?.coord}>
                         <div
-                            onMouseMove={(e) => {
-                                MapStore.findCurrentValue("marker", currentValueMarker.current)
+                            onMouseMove={() => {
+                                HeatmapStore.findCurrentValue("marker", currentValueMarker.current)
                             }}
                             className={"grid cursor-move justify-items-center absolute top-[-42px] -translate-x-2/4"}
                         >
                             <div className={"bg-white rounded-full px-3 py-1 whitespace-nowrap shadow-lg"}>
                                 {
-                                    MapStore.currentValue.value === undefined ?
+                                    HeatmapStore.currentValue.value === undefined ?
                                         "Нет результатов" :
-                                        MapStore.currentValue.value === null ?
+                                        HeatmapStore.currentValue.value === null ?
                                             <Spinner/> :
-                                            MapStore.currentValueText
+                                            HeatmapStore.currentValueText
 
                                 }
                             </div>
@@ -68,4 +69,4 @@ const TileLayers = observer(() => {
     )
 })
 
-export default TileLayers
+export default HeatmapLayers

@@ -5,7 +5,7 @@ import {ReactComponent as LockIcon} from '../../../../assets/icons/Lock.svg'
 
 const LockScaleNotification = observer(({classes}) => {
     return (
-        !!MapStore.selectedAdditionalLayer &&
+        !!HeatmapStore.selectedAdditionalLayer &&
         <Alert
             className={"alert w-fit bg-white text-black shadow-xl"}
         >
