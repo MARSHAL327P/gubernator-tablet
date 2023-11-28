@@ -5,6 +5,7 @@ import HeatmapTimelineStore from "./heatmapTimeline.store";
 import IndicationsStore from "../../Indications/store/indications.store";
 import MapStore from "../../Map/store/map.store";
 import dayjs from "dayjs";
+import SidebarStore from "../../Sidebar/store/sidebar.store";
 
 class HeatmapStore {
     defaultAdditionalLayersOptions = {
@@ -46,6 +47,7 @@ class HeatmapStore {
         let lastSelectedAdditionalLayer = this.selectedAdditionalLayer
         let layerData = this.additionalLayers[layerName]
 
+        SidebarStore.isOpen = false
         layerData.selected = !layerData.selected
 
         if (layerData.selected)
@@ -66,6 +68,7 @@ class HeatmapStore {
         if( lastSelectedAdditionalLayer?.indicationData.indicationName === layerData.indicationData.indicationName){
             HeatmapTimelineStore.nowSelectedDate = dayjs()
             HeatmapTimelineStore.stopTimelineAnimation()
+            SidebarStore.isOpen = true
         }
 
     }

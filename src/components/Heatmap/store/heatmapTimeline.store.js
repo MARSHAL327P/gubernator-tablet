@@ -126,7 +126,7 @@ class HeatmapTimelineStore {
 
         let widthElapsedTime = this.hoursPassed * this.pixelsInHours
 
-        if (this.leftOffsetToNowHours === null)
+        if (!this.leftOffsetToNowHours)
             this.leftOffsetToNowHours = widthElapsedTime
 
         return widthElapsedTime

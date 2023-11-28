@@ -36,7 +36,7 @@ const MobileHeatmapLayerBtns = observer(() => {
             </SpeedDialHandler>
             <SpeedDialContent>
                 {
-                    Object.values(HeatmapStore.additionalLayers).map((additionalLayer) => {
+                    additionalLayers.map((additionalLayer) => {
                         let indication = additionalLayer.indicationData
                         let Icon = indication.icon
                         let isSelected = HeatmapStore.additionalLayers[indication.indicationName].selected

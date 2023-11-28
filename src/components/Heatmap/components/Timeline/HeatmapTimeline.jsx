@@ -21,7 +21,7 @@ const HeatmapTimeline = observer(() => {
     }, [dateRef.current]);
 
     return HeatmapStore.selectedAdditionalLayer && (
-        <div className={"flex items-end gap-5 w-[1066px]"}>
+        <div className={"flex items-end gap-5 w-[calc(100vw-345px)]"}>
             <TimelineButtons/>
 
             <div className={"grid relative shadow-lg rounded-xl select-none w-full"}
