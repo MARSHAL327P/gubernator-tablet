@@ -41,7 +41,7 @@ const HeatmapLayers = observer(() => {
                     <YMapMarker ref={currentValueMarker} draggable mapFollowsOnDrag
                                 coordinates={HeatmapStore.currentValue?.coord}>
                         <div
-                            onMouseMove={(e) => {
+                            onMouseMove={() => {
                                 HeatmapStore.findCurrentValue("marker", currentValueMarker.current)
                             }}
                             className={"grid cursor-move justify-items-center absolute top-[-42px] -translate-x-2/4"}

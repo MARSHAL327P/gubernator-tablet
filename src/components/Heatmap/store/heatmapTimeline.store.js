@@ -35,9 +35,11 @@ class HeatmapTimelineStore {
     }
 
     startTimelineAnimation() {
-        this.animationStarted = true
-        if (this.isLastDay)
+        if (this.isLastDay) {
             this.stopTimelineAnimation()
+            return
+        }
+        this.animationStarted = true
 
         this.nowSelectedDate = this.nowSelectedDate.add(1, "hour")
         HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
@@ -49,7 +51,7 @@ class HeatmapTimelineStore {
         this.animationStarted = false
     }
 
-    goToDate(date = dayjs()){
+    goToDate(date = dayjs()) {
         this.nowSelectedDate = date
         HeatmapStore.generateTilesAndData(HeatmapStore.selectedAdditionalLayer)
         this.stopTimelineAnimation()
@@ -85,11 +87,11 @@ class HeatmapTimelineStore {
         // }
     }
 
-    diffDateWithNow(date){
-        return Math.ceil(date.diff(dayjs(), "hour", true))
+    diffDateWithNow(date1, date2 = dayjs()) {
+        return Math.ceil(date1.diff(date2, "hour", true))
     }
 
-    get formattedHoveredDate(){
+    get formattedHoveredDate() {
         return capitalizeFirstLetter(this.hoveredDate.format(this.fullFormat))
     }
 
@@ -99,7 +101,7 @@ class HeatmapTimelineStore {
 
     get isLastDay() {
         let lastDay = dayjs().startOf('day').add(this.numDays, 'day')
-        return this.nowSelectedDate.diff(lastDay, "hour") === 0
+        return this.diffDateWithNow(this.nowSelectedDate, lastDay) === 0
     }
 
     get totalHours() {

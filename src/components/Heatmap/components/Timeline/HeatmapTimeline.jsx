@@ -21,10 +21,10 @@ const HeatmapTimeline = observer(() => {
     }, [dateRef.current]);
 
     return HeatmapStore.selectedAdditionalLayer && (
-        <div className={"flex items-end gap-5"}>
+        <div className={"flex items-end gap-5 w-[1066px]"}>
             <TimelineButtons/>
 
-            <div className={"grid relative w-[990px] shadow-lg rounded-xl select-none"}
+            <div className={"grid relative shadow-lg rounded-xl select-none w-full"}
                  ref={ref => runInAction(() => {
                      if (ref)
                          HeatmapTimelineStore.lineWidthRef = ref
@@ -79,7 +79,7 @@ const HeatmapTimeline = observer(() => {
                         ></div>
                         <div className={"bg-warning w-[4px] h-full"}></div>
                         <div
-                            className={"bg-danger w-[4px] h-full absolute"}
+                            className={"bg-danger w-[4px] h-full absolute transition-all"}
                             style={{left: (HeatmapTimelineStore.leftOffsetToNowHours) + "px"}}
                         ></div>
                         <Transition
