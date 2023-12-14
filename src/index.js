@@ -96,18 +96,30 @@ const theme = {
     },
 }
 
-main()
-async function main(){
-    await MapStore.loadMap();
+// window.map = null;
 
-    root.render(
-        <React.StrictMode>
-            <ThemeProvider value={theme}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </ThemeProvider>
-        </React.StrictMode>
-    );
+/* global ymaps3 */
+main();
+async function main() {
+    await MapStore.loadMap()
+    // const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
+    // const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
+    // action(() => {
+    //     console.log("ok")
+    //     MapStore.mapData = reactify.module(ymaps3);
+    //
+    // })
+    //
+    //
+    // const {YMapZoomControl} = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1'));
 }
 
+root.render(
+    <React.StrictMode>
+        <ThemeProvider value={theme}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </ThemeProvider>
+    </React.StrictMode>
+);

@@ -10,17 +10,17 @@ import MapControls from "./MapControls/MapControls";
 import HeatmapLayers from "../../Heatmap/components/HeatmapLayers";
 import HeatmapStore from "../../Heatmap/store/heatmap.store";
 
+const MapError = () => (
+    <div style={{
+        width: "100%",
+        height: "100vh",
+    }} >
+        <div id={"no-map"}></div>
+    </div>
+)
+
 const MapTemplate = observer(() => {
     const [width, height] = useWindowSize() // Следим за изменением высоты
-    const {
-        YMap,
-        YMapDefaultSchemeLayer,
-        YMapControls,
-        YMapZoomControl,
-        YMapGeolocationControl,
-        YMapDefaultFeaturesLayer,
-        YMapListener,
-    } = MapStore.mapData
 
     let controlsRef = useRef(null)
     let [mapHeight, setMapHeight] = useState("100vh")
@@ -33,6 +33,18 @@ const MapTemplate = observer(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height, width, window.location.pathname, DashboardStore.isOpen])
 
+    if( !MapStore.mapData )
+        return MapError(mapHeight)
+
+    const {
+        YMap,
+        YMapDefaultSchemeLayer,
+        YMapControls,
+        YMapZoomControl,
+        YMapGeolocationControl,
+        YMapDefaultFeaturesLayer,
+        YMapListener,
+    } = MapStore.mapData
 
     useEffect(() => {
         MapStore.initLocation()
