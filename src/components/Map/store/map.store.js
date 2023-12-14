@@ -20,14 +20,19 @@ class MapStore {
     blurBackgroundClasses = "bg-white/50 backdrop-blur p-6 shadow-lg rounded-xl border-2 border-white min-w-72"
 
     async loadMap() {
-        const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
-        const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
-        let additionalModules = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1'))
-        this.mapData = {
-            ...reactify.module(ymaps3),
-            YMapZoomControl: additionalModules.YMapZoomControl,
-            YMapGeolocationControl: additionalModules.YMapGeolocationControl
-        };
+        try {
+            const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
+            const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
+            let additionalModules = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1'))
+
+            this.mapData = {
+                ...reactify.module(ymaps3),
+                YMapZoomControl: additionalModules.YMapZoomControl,
+                YMapGeolocationControl: additionalModules.YMapGeolocationControl
+            };
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     initLocation(initDefaultValues = false) {
@@ -73,7 +78,6 @@ class MapStore {
         }
         this.setLocationParams(this.location)
     }
-
 
 
     saveGeoLocation(coords) {
