@@ -1,17 +1,19 @@
 import {observer} from "mobx-react-lite";
 import MapStore from "../../Map/store/map.store";
 import GlobalStore from "../../../stores/global.store";
-import React, {useEffect, useRef} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import {Spinner} from "@material-tailwind/react";
 import HeatmapStore from "../store/heatmap.store";
+import {MyContext} from "../../MyContext";
 
 const HeatmapLayers = observer(() => {
+    const { mapComponents } = useContext(MyContext);
     const {
         YMapListener,
         YMapTileDataSource,
         YMapLayer,
         YMapMarker,
-    } = MapStore.mapData
+    } = mapComponents
 
     let currentValueMarker = useRef(null)
 

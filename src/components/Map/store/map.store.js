@@ -25,11 +25,17 @@ class MapStore {
             const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
             let additionalModules = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1'))
 
-            this.mapData = {
+            return {
                 ...reactify.module(ymaps3),
                 YMapZoomControl: additionalModules.YMapZoomControl,
                 YMapGeolocationControl: additionalModules.YMapGeolocationControl
-            };
+            }
+
+            // this.mapData = {
+            //     ...reactify.module(ymaps3),
+            //     YMapZoomControl: additionalModules.YMapZoomControl,
+            //     YMapGeolocationControl: additionalModules.YMapGeolocationControl
+            // }
         } catch (e) {
             console.error(e)
         }
