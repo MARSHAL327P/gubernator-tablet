@@ -1,11 +1,13 @@
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import MapStore from "../../store/map.store";
 import cc from "classcat";
 import {runInAction} from "mobx";
 import {observer} from "mobx-react-lite";
+import {MyContext} from "../../../MyContext";
 
 const ActivePlacemark = observer((props) => {
-    const {YMapMarker} = MapStore.mapData
+    const { mapComponents } = useContext(MyContext);
+    const {YMapMarker} = mapComponents
 
     let wrapper = props.wrapper
     let markerRef = useRef(null)

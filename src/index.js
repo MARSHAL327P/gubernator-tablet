@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider } from "@material-tailwind/react";
+import {BrowserRouter} from "react-router-dom";
+import {ThemeProvider} from "@material-tailwind/react";
 import MapStore from "./components/Map/store/map.store";
+import {MyContextProvider} from "./components/MyContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const defaultBtnParams = {
@@ -96,29 +97,19 @@ const theme = {
     },
 }
 
-// window.map = null;
-
-/* global ymaps3 */
-main();
-async function main() {
-    await MapStore.loadMap()
-    // const [ymaps3React] = await Promise.all([ymaps3.import('@yandex/ymaps3-reactify'), ymaps3.ready]);
-    // const reactify = ymaps3React.reactify.bindTo(React, ReactDOM);
-    // action(() => {
-    //     console.log("ok")
-    //     MapStore.mapData = reactify.module(ymaps3);
-    //
-    // })
-    //
-    //
-    // const {YMapZoomControl} = reactify.module(await ymaps3.import('@yandex/ymaps3-controls@0.0.1'));
-}
+// main();
+//
+// async function main() {
+//     await MapStore.loadMap()
+// }
 
 root.render(
     <React.StrictMode>
         <ThemeProvider value={theme}>
             <BrowserRouter>
-                <App />
+                <MyContextProvider>
+                    <App/>
+                </MyContextProvider>
             </BrowserRouter>
         </ThemeProvider>
     </React.StrictMode>
