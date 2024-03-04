@@ -36,7 +36,7 @@ const WidgetTemplate = observer((
     if (hasCharts)
         buttons.unshift({
             name: "Графики",
-            icon: Chart
+            icon: Chart,
         })
 
     return (
@@ -76,9 +76,11 @@ const WidgetTemplate = observer((
                                             </div>
                                             <div className={"flex gap-2"}>
                                                 {buttons.map((btn, idx) => {
-                                                    url.searchParams.set("tab", "charts")
+                                                    if( !indication.showOnChart ) return
 
                                                     let Icon = btn.icon
+
+                                                    url.searchParams.set("tab", "charts")
 
                                                     return (
                                                         <Tooltip key={idx} content={btn.name}>
