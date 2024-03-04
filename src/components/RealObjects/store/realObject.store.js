@@ -19,7 +19,10 @@ class RealObjectStore {
         rainfall: 0,
         uvIndex: 0,
         humidity: 0,
-        solarRadiation: 0
+        solarRadiation: 0,
+        no2: 0,
+        so2: 0,
+        o3: 0
     }
     buoyProps = {
         t_surf: 0,

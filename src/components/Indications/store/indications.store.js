@@ -42,7 +42,6 @@ class IndicationsStore {
             unitsFull: "C°",
             widget: TempSurfWidget,
             nclName: "SST",
-            showOnChart: true,
         },
         temperature: {
             oldName: "t",
@@ -56,7 +55,6 @@ class IndicationsStore {
             unitsFull: "C°",
             widget: TemperatureWidget,
             nclName: "T2",
-            showOnChart: true,
         },
         wind: {
             name: "Ветер",
@@ -79,7 +77,6 @@ class IndicationsStore {
             units: "%",
             widget: HumidityWidget,
             chartDomain: [0, 100],
-            showOnChart: true,
         },
         pressure: {
             oldName: "PR",
@@ -91,7 +88,6 @@ class IndicationsStore {
             units: " мм.рт.ст",
             widget: PressureWidget,
             nclName: "PSFC",
-            showOnChart: true,
         },
         Honf: {
             oldName: "honf",
@@ -102,7 +98,6 @@ class IndicationsStore {
             icon: Wave10Percent,
             units: " м",
             widget: HonfWidget,
-            showOnChart: true
         },
         Hsignf: {
             oldName: "honf",
@@ -113,7 +108,6 @@ class IndicationsStore {
             icon: Wave,
             units: " м",
             widget: HonfWidget,
-            showOnChart: true
         },
         turbidity: {
             name: "Мутность",
@@ -169,6 +163,21 @@ class IndicationsStore {
         cu: {
             name: "Медь",
             widget: DefaultWidget
+        },
+        no2: {
+            name: "NO2",
+            widget: DefaultWidget,
+            showOnChart: true,
+        },
+        so2: {
+            name: "SO2",
+            widget: DefaultWidget,
+            showOnChart: true,
+        },
+        o3: {
+            name: "O3",
+            widget: DefaultWidget,
+            showOnChart: true,
         }
     }
 
