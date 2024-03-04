@@ -8,25 +8,35 @@ import DashboardStore from "../components/Dashboard/store/dashboard.store";
 import {lazy, useEffect} from "react";
 import {ReactComponent as Widgets} from "../assets/icons/Widgets.svg";
 import {ReactComponent as Chart} from "../assets/icons/Chart.svg";
+import {ReactComponent as Clouds} from "../assets/icons/Clouds.svg";
+import AirQuality from "../components/AirQuality/components/AirQuality";
 
 const WidgetTemplate = lazy(() => import("../components/Widgets/templates/WidgetTemplate"))
 const Charts = lazy(() => import("../components/Charts/components/Charts"))
 
 const RealObjectPage = observer(() => {
+    const card = SelectedClassInfoStore.currentClass?.card
     const tabItems = [
         {
             title: "Виджеты",
-            content: <WidgetTemplate data={SelectedClassInfoStore.currentClass?.card?.props} />,
+            content: <WidgetTemplate data={card?.props} />,
             link: "widgets",
             getParam: true,
             icon: Widgets
         },
         {
             title: "Графики",
-            content: <Charts data={SelectedClassInfoStore.currentClass?.card?.props}/>,
+            content: <Charts data={card?.props}/>,
             link: "charts",
             getParam: true,
             icon: Chart
+        },
+        {
+            title: "Качество воздуха",
+            content: <AirQuality card={card}/>,
+            link: "aqi",
+            getParam: true,
+            icon: Clouds
         },
     ]
 
