@@ -18,7 +18,7 @@ const BeachCardSkeleton = observer(() => {
                     >
                         <CardHeaderSkeleton/>
                         <Skeleton height={220} containerClassName={"mt-2 block"}/>
-                        <Skeleton height={48}/>
+                        {/*<Skeleton height={48}/>*/}
                         <div className={"px-7 py-5 flex flex-col gap-4"}>
                             <BeachPropsSkeleton/>
                             <IndicationsSkeleton/>

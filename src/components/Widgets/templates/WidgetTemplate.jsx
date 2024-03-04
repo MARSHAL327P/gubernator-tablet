@@ -6,6 +6,8 @@ import cc from "classcat";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
 import Skeleton from "react-loading-skeleton";
 import WidgetStore from "../store/widget.store";
+import {Button, Tooltip} from "@material-tailwind/react";
+import {Link} from "react-router-dom";
 
 const WidgetTemplate = observer((
     {
@@ -14,16 +16,22 @@ const WidgetTemplate = observer((
         hasCharts = true
     }
 ) => {
+
+    function chartButtonHandler(indicationName) {
+        console.log(indicationName)
+    }
+
     const buttons = [
-        {
-            name: "Поделиться",
-            icon: Share
-        },
+        // {
+        //     name: "Поделиться",
+        //     icon: Share
+        // },
     ]
     const styles = {
         widgetWrapper: "grid grid-cols-widgets sm:grid-cols-1 gap-10 mx-auto lg:w-full",
         widgetHeight: "min-h-[380px] sm:min-h-[300px]"
     }
+    const url = new URL(window.location)
 
     if (hasCharts)
         buttons.unshift({
@@ -66,19 +74,26 @@ const WidgetTemplate = observer((
                                                 {indication.icon && <Icon className={cc([indication.color, "w-8 h-8"])}/>}
                                                 <span>{indication.name || indication.indicationName}</span>
                                             </div>
-                                            {/*<div className={"flex gap-2"}>*/}
-                                            {/*    {buttons.map((btn, idx) => {*/}
-                                            {/*        let Icon = btn.icon*/}
+                                            <div className={"flex gap-2"}>
+                                                {buttons.map((btn, idx) => {
+                                                    url.searchParams.set("tab", "charts")
 
-                                            {/*        return (*/}
-                                            {/*            <Tooltip key={idx} content={btn.name}>*/}
-                                            {/*                <Button className={"p-3 rounded-full w-[40px] h-[40px]"} size={"sm"}>*/}
-                                            {/*                    <Icon className={"fill-white"}/>*/}
-                                            {/*                </Button>*/}
-                                            {/*            </Tooltip>*/}
-                                            {/*        )*/}
-                                            {/*    })}*/}
-                                            {/*</div>*/}
+                                                    let Icon = btn.icon
+
+                                                    return (
+                                                        <Tooltip key={idx} content={btn.name}>
+                                                            <Link to={`${url.toString()}#${indication.indicationName}`}>
+                                                                <Button
+                                                                    className={"p-3 rounded-full w-[40px] h-[40px]"}
+                                                                    size={"sm"}
+                                                                >
+                                                                    <Icon className={"fill-white"}/>
+                                                                </Button>
+                                                            </Link>
+                                                        </Tooltip>
+                                                    )
+                                                })}
+                                            </div>
                                         </div>
                                         <Widget data={data[indication.indicationName]} indication={indication}/>
                                     </div>

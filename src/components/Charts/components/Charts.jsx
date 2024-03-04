@@ -12,6 +12,7 @@ import ChartItem from "./ChartItem";
 import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondition";
 import Skeleton from "react-loading-skeleton";
 import FileDownload from "../../FileDownload/components/FileDownload";
+import {scrollToElement} from "../../../Utils";
 
 
 const Charts = observer(({data}) => {
@@ -25,7 +26,13 @@ const Charts = observer(({data}) => {
             ChartsStore.fetchData(Object.keys(data))
     }, [data])
 
+    useEffect(() => {
+        let chartEl = document.getElementById(window.location.hash.replace("#", ""))
 
+        if (ChartsStore.isLoading || !chartEl) return
+
+        scrollToElement(chartEl)
+    }, [ChartsStore.isLoading])
     return (
         <div>
             {
