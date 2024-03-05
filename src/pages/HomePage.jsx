@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import FilterStore from "../components/Filter/store/filter.store";
 import cc from "classcat";
 import {ReactComponent as Chevron} from "../assets/icons/Chevron.svg";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import Ripple from "../components/RedefinedTags/Ripple/Ripple";
 import {Tooltip} from "@material-tailwind/react";
 import SidebarStore from "../components/Sidebar/store/sidebar.store";
@@ -13,6 +13,7 @@ import BeachLocalStore from "../components/BeachCard/store/beachLocal.store";
 import RealObjectStore from "../components/RealObjects/store/realObject.store";
 import SelectedClassInfoStore from "../stores/selectedClassInfo.store";
 import {runInAction} from "mobx";
+import AdminControl from "../components/adminControl/components/AdminControl";
 
 let tabItems = [
     {
@@ -86,7 +87,9 @@ const HomePage = observer(() => {
                             <div
                                 className={cc(["lg:hidden overflow-hidden relative left-5 top-7 bg-white hover:bg-gray-200 " +
                                 "hover:cursor-pointer transition rounded-xl py-4 px-3 h-fit"])}
-                                onClick={() => runInAction(() => {SidebarStore.isOpen = !SidebarStore.isOpen})}
+                                onClick={() => runInAction(() => {
+                                    SidebarStore.isOpen = !SidebarStore.isOpen
+                                })}
                             >
                                 <Chevron className={cc(["transition rotate-0", {
                                     "rotate-180": !SidebarStore.isOpen
@@ -98,6 +101,8 @@ const HomePage = observer(() => {
                 }
 
             </div>
+            <AdminControl/>
+
             {/*<AdminBtn/>*/}
         </>
     )
