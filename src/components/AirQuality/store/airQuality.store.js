@@ -2,7 +2,7 @@ import {makeAutoObservable, runInAction} from "mobx";
 import axios from "axios";
 
 class AirQualityStore {
-    beachId = 0
+    realObjectId = 0
     totalRating = 0
     isLoading = false
     indications = {
@@ -90,7 +90,7 @@ class AirQualityStore {
     sendRequest() {
         this.isLoading = true
 
-        axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.beachId}`)
+        axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.realObjectId}`)
             .then(({data}) => {
                 this.parseAndSaveData(data)
                 runInAction(() => {this.isLoading = false})
@@ -114,10 +114,10 @@ class AirQualityStore {
         this.totalRating = data.totalRating
     }
 
-    constructor(beachId) {
+    constructor(realObjectId) {
         makeAutoObservable(this);
 
-        this.beachId = beachId
+        this.realObjectId = realObjectId
         this.sendRequest()
     }
 }

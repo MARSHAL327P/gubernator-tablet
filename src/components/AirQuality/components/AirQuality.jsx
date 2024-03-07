@@ -14,7 +14,7 @@ function AQIValuesSkeleton() {
 
 const AirQuality = observer(({card}) => {
     if (card && !card.airQuality)
-        card.airQuality = new AirQualityStore(card.id)
+        card.airQuality = new AirQualityStore(card.stationId || card.id)
 
     return (
         <div className={"flex lg:flex-wrap justify-center w-8/12 lg:w-full mx-auto gap-10"}>

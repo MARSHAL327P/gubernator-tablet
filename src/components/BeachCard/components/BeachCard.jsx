@@ -21,7 +21,7 @@ const BeachCard = observer(({card}) => {
     return (
         <>
             <CarouselBeachCard imgs={card.img.slice(0, 10)} cardId={card.id}/>
-            <BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>
+            {/*<BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>*/}
             <div className="px-7 sm:px-5 py-5 flex flex-col gap-4">
                 <BeachCardProps cardProps={card.props} classes={"bg-primary/20 text-black"}/>
                 <Indications

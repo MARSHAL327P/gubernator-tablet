@@ -20,7 +20,12 @@ class DashboardStore {
         if( currentClass === null )
             SelectedClassInfoStore.initCurrentClass(className)
 
-        if(currentClass !== null && currentClass.list.length > 0 && currentClass.isFetched)
+        if(
+            currentClass !== null &&
+            currentClass.list.length > 0 &&
+            currentClass.isFetched &&
+            currentClass.card
+        )
             MapStore.zoomToItem(currentClass.card.coord)
     }
 

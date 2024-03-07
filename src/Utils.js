@@ -38,3 +38,12 @@ export function toPage(link, navigate) {
 
     navigate(urlTo.pathname + urlTo.search)
 }
+
+export function scrollToElement(el, offset = -450){
+    const scrollPosition = el.offsetTop - offset;
+
+    window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+    });
+}

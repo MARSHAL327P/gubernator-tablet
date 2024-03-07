@@ -18,6 +18,10 @@ export class RealObjectCardStore {
         return axios.get(process.env.REACT_APP_REAL_OBJECTS)
             .then(({data}) => {
                 return data.map(item => {
+                    // item.props.no2 = 0
+                    // item.props.so2 = 0
+                    // item.props.o3 = 0
+
                     return new RealObjectCardStore(item)
                 });
             })

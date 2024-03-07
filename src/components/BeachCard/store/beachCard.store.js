@@ -22,6 +22,7 @@ export default class BeachCardStore {
     indications = {}
     hasWaterQuality = false
     markerDescriptionIsOpen = false
+    stationId = 0
 
     static get() {
         return axios.get(process.env.REACT_APP_BEACHES)

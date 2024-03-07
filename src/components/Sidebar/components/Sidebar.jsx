@@ -15,6 +15,7 @@ import {runInAction} from "mobx";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import FastFilter from "../../Filter/components/FastFilter";
 import useWindowSize from "../../../hooks/useWindowSize";
+import AdminControlStore from "../../adminControl/store/adminControl.store";
 
 const Sidebar = observer(({tabItems}) => {
     function changeSelectedTab(tabIndex) {
@@ -29,12 +30,13 @@ const Sidebar = observer(({tabItems}) => {
     const location = useLocation();
     let [width] = useWindowSize()
     let [elOffset, setElOffset] = useState(0)
-    let selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
     let fixedHeaderEl = useRef(null)
+
+    SidebarStore.selectedTabIndex = getIndexLinkInArray(location.pathname, tabItems)
 
     useEffect(() => {
         runInAction(() => {
-            SelectedClassInfoStore.initCurrentClass(tabItems[selectedTabIndex].data)
+            SelectedClassInfoStore.initCurrentClass(tabItems[SidebarStore.selectedTabIndex].data)
         })
     }, [])
 
@@ -48,7 +50,7 @@ const Sidebar = observer(({tabItems}) => {
 
     return (
         <div className={"h-full bg-white transition z-20 w-[460px] lg:w-full relative"}>
-            <Tab.Group defaultIndex={selectedTabIndex} onChange={changeSelectedTab}>
+            <Tab.Group defaultIndex={SidebarStore.selectedTabIndex} onChange={changeSelectedTab}>
                 <FixedHeader ref={fixedHeaderEl} elOffset={elOffset} classes={"px-3 pb-3 pt-7 lg:pt-3 mr-[6px] flex-col sidebar__header"}>
                     <div className={"bg-gray-500 rounded-full w-[100px] h-1 hidden lg:block mx-auto"}></div>
                     <div className="flex gap-4">
@@ -62,7 +64,7 @@ const Sidebar = observer(({tabItems}) => {
                     </div>
                     <TabHeader
                         variant={tabHeaderVariants.WHITE}
-                        tabItems={tabItems}
+                        tabItems={AdminControlStore.isAdmin ? tabItems : []}
                     />
                     {
                         width > 1024 && <FastFilter/>
