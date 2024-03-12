@@ -11,15 +11,19 @@ import MapStore from "../../Map/store/map.store";
 import CarouselBeachCard from "./CarouselBeachCard";
 import BeachCardProps from "./BeachCardProps";
 import SidebarStore from "../../Sidebar/store/sidebar.store";
+import {useRef} from "react";
 
 const BeachCard = observer(({card}) => {
+    const indicationsRef = useRef(null);
     const styles = {
         btn: "flex items-center gap-2 shadow-none border hover:shadow-md p-0 w-full",
         btnIcon: "fill-black w-5 h-5"
     }
 
     return (
-        <>
+        <div onMouseLeave={() => {
+            indicationsRef.current.style.height = "50px"
+        }}>
             <CarouselBeachCard imgs={card.img.slice(0, 10)} cardId={card.id}/>
             {/*<BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>*/}
             <div className="px-7 sm:px-5 py-5 flex flex-col gap-4">
@@ -29,6 +33,7 @@ const BeachCard = observer(({card}) => {
                     fixedValue={true}
                     classes={"justify-between"}
                     oneLine={true}
+                    ref={indicationsRef}
                 />
                 <div className="flex justify-between gap-2">
                     <Tooltip content={"На карте"}>
@@ -59,7 +64,7 @@ const BeachCard = observer(({card}) => {
             </div>
 
             {/*<Comfort cardProps={card.props}/>*/}
-        </>
+        </div>
     )
 })
 

@@ -90,11 +90,20 @@ class AirQualityStore {
     sendRequest() {
         this.isLoading = true
 
-        axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.realObjectId}`)
-            .then(({data}) => {
-                this.parseAndSaveData(data)
-                runInAction(() => {this.isLoading = false})
-            })
+        // Эта логика временная, чтобы у каждого пляжа работала вкладка качества воздуха
+        Promise.any([
+            axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.realObjectId}`),
+            axios.get(`https://dss.sevsu.ru:8081/api/beaches/air_quality/${this.realObjectId}`)
+        ]).then(({data}) => {
+            this.parseAndSaveData(data)
+            runInAction(() => {this.isLoading = false})
+        });
+
+        // axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.realObjectId}`)
+        //     .then(({data}) => {
+        //         this.parseAndSaveData(data)
+        //         runInAction(() => {this.isLoading = false})
+        //     })
     }
 
     parseAndSaveData(data){
