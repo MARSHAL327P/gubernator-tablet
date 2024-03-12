@@ -2,10 +2,10 @@ import {observer} from "mobx-react-lite";
 import {Tooltip} from "@material-tailwind/react";
 import IndicationsStore from "../store/indications.store";
 import cc from "classcat";
-import {Fragment, useRef} from "react";
+import {forwardRef, Fragment, useRef} from "react";
 
 
-const Indications = observer((
+const Indications = observer(forwardRef((
     {
         data,
         indications = Object.values(IndicationsStore.indications),
@@ -13,10 +13,10 @@ const Indications = observer((
         classes = "",
         noTooltip = false,
         oneLine = false
-    }
+    }, ref
 ) => {
     let TooltipComponent = noTooltip ? Fragment : Tooltip
-    let headerEl = useRef(null)
+    // let headerEl = useRef(null)
     let bodyEl = useRef(null)
     let cardIndications = Object.keys(data)
     let indicationNames = indications.map(indication => indication.indicationName)
@@ -38,15 +38,15 @@ const Indications = observer((
         <div className={cc([classes, {
             "overflow-hidden h-[50px] transition-[height]": oneLine
         }])}
-             ref={headerEl}
+             ref={ref}
              onMouseEnter={() => {
                  if (oneLine)
-                     headerEl.current.style.height = bodyEl.current.offsetHeight + "px"
+                     ref.current.style.height = bodyEl.current.offsetHeight + "px"
              }}
-             onMouseLeave={() => {
-                 if (oneLine)
-                     headerEl.current.style.height = "50px"
-             }}
+            // onMouseLeave={() => {
+            //     if (oneLine)
+            //         headerEl.current.style.height = "50px"
+            // }}
         >
             <div
                 ref={bodyEl}
@@ -92,6 +92,6 @@ const Indications = observer((
             </div>
         </div>
     )
-})
+}))
 
 export default Indications

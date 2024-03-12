@@ -92,8 +92,8 @@ class AirQualityStore {
 
         // Эта логика временная, чтобы у каждого пляжа работала вкладка качества воздуха
         Promise.any([
-            axios.get(`https://dss.sevsu.ru:8081/api/beaches/air_quality/${this.realObjectId}`),
-            axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.realObjectId}`)
+            axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.realObjectId}`),
+            axios.get(`https://dss.sevsu.ru:8081/api/beaches/air_quality/${this.realObjectId}`)
         ]).then(({data}) => {
             this.parseAndSaveData(data)
             runInAction(() => {this.isLoading = false})
