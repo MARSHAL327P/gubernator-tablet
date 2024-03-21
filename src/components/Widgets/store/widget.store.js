@@ -29,7 +29,7 @@ class WidgetStore {
     }
     comfort = {
         COMFORT: {
-            value: "Комфортно",
+            value: "В норме",
             classes: "bg-success"
         },
         MEDIUM: {

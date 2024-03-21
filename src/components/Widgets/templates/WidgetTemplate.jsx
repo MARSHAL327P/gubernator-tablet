@@ -64,10 +64,10 @@ const WidgetTemplate = observer((
                                     className={cc([styles.widgetHeight, "shadow-lg rounded-xl bg-white"])}
                                     key={indication.id}
                                 >
-                                    {/*{*/}
-                                    {/*    comfort &&*/}
-                                    {/*    <div className={cc(["py-1 text-white rounded-t-xl text-center", comfort.classes])}>{comfort.value}</div>*/}
-                                    {/*}*/}
+                                    {
+                                        comfort &&
+                                        <div className={cc(["py-1 text-white rounded-t-xl text-center", comfort.classes])}>{comfort.value}</div>
+                                    }
                                     <div className={"px-6 py-5 grid content-between h-[348px]"}>
                                         <div className={"flex gap-2 justify-between"}>
                                             <div className={"flex gap-2 items-center"}>
