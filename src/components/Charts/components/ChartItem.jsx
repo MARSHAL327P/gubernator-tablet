@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import {Typography} from "@material-tailwind/react";
 import {runInAction} from "mobx";
+import UiStore from "../../../stores/ui.store";
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -87,15 +88,15 @@ const ChartItem = observer(({indication}) => {
                             }}/>
                             <defs>
                                 <linearGradient id={svgColorName} x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset={off - 0.6} stopColor="#FF4C28" stopOpacity={1} />
-                                    <stop offset={off} stopColor="#FF4C28" stopOpacity={0.1} />
-                                    <stop offset={off} stopColor="#3366FF" stopOpacity={1} />
-                                    <stop offset={0.95} stopColor="#3366FF" stopOpacity={0.1} />
+                                    <stop offset={off - 0.6} stopColor={UiStore.colors.danger} stopOpacity={1} />
+                                    <stop offset={off} stopColor={UiStore.colors.danger} stopOpacity={0.1} />
+                                    <stop offset={off} stopColor={UiStore.colors.primary} stopOpacity={1} />
+                                    <stop offset={0.95} stopColor={UiStore.colors.primary} stopOpacity={0.1} />
                                 </linearGradient>
                             </defs>
-                            {indication.pdk && <ReferenceLine y={indication.pdk} stroke="#FF4C28" />}
+                            {indication.pdk && <ReferenceLine y={indication.pdk} stroke={UiStore.colors.danger} />}
                             <Area fillOpacity={1} type="monotone" hide={indication.chart.hide} dataKey={indication.name}
-                                  stroke="#3366FF" dot={false} fill={`url(#${svgColorName})`}/>
+                                  stroke={UiStore.colors.primary} dot={false} fill={`url(#${svgColorName})`}/>
                         </AreaChart>
                     </ResponsiveContainer>
                 </div>

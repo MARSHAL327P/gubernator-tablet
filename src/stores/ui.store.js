@@ -20,6 +20,13 @@ class UiStore {
     }
     cardWrapperClasses = "grid grid-cols-card gap-10 lg:gap-5"
     cardItemClasses = "bg-white rounded-xl sm:rounded-none shadow-lg border-solid border sm:border-y sm:border-x-0 border-gray-200"
+    colors = {
+        "primary": "#3366FF",
+        "success": "#87E827",
+        "info": "#36CFF9",
+        "warning": "#FCC33F",
+        "danger": "#FF4C28",
+    }
 
     constructor() {
         makeAutoObservable(this)

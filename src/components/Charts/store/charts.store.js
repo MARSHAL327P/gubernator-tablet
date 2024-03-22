@@ -127,6 +127,12 @@ class ChartsStore {
             })
     }
 
+    getChartIndicationUrl(url, indicationName){
+        url.searchParams.set("tab", "charts")
+
+        return `${url.toString()}#${indicationName}`
+    }
+
     constructor() {
         makeAutoObservable(this)
     }

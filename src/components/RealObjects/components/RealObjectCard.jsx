@@ -33,6 +33,7 @@ const RealObjectCard = observer(({card}) => {
             <div className="px-7 py-5">
                 <Indications
                     data={card.props}
+                    showPdk={true}
                 />
                 <div className="flex justify-between lg:justify-start gap-2 mt-5">
                     <Tooltip content={"На карте"}>

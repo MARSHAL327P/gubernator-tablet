@@ -164,34 +164,46 @@ class IndicationsStore {
             name: "Медь",
             widget: DefaultWidget
         },
-        so2: {
-            name: "SO2",
-            widget: DefaultWidget,
-            showOnChart: true,
-        },
+        // so2: {
+        //     name: "SO2",
+        //     widget: DefaultWidget,
+        //     showOnChart: true,
+        // },
         no2: {
-            name: "NO2",
+            name: "NO2 [Оксид азота]",
             widget: DefaultWidget,
             showOnChart: true,
-            pdk: 200,
+            pdk: 5,
         },
         o3: {
-            name: "O3 (Озон)",
+            name: "O3 [Озон]",
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 160,
         },
         co: {
-            name: "CO",
+            name: "CO [Угарный газ]",
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 5000,
         },
         co2: {
-            name: "CO2",
+            name: "CO2 [Углекислый газ]",
             widget: DefaultWidget,
             showOnChart: true,
-            pdk: 5000,
+            pdk: 300,
+        },
+        pm25: {
+            name: "pm2.5 [Частицы менее 2.5 микрон]",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 500,
+        },
+        pm10: {
+            name: "pm10 [Частицы менее 10 микрон]",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 300,
         }
     }
 
