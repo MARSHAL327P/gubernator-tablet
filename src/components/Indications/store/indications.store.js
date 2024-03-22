@@ -44,7 +44,6 @@ class IndicationsStore {
             nclName: "SST",
         },
         temperature: {
-            oldName: "t",
             name: "Температура воздуха",
             color: "fill-warning",
             background: "bg-warning/20",
@@ -55,6 +54,7 @@ class IndicationsStore {
             unitsFull: "C°",
             widget: TemperatureWidget,
             nclName: "T2",
+            showOnChart: true,
         },
         wind: {
             name: "Ветер",
@@ -68,7 +68,6 @@ class IndicationsStore {
             nclName: "WIND"
         },
         humidity: {
-            oldName: "HM",
             name: "Влажность",
             color: "fill-info",
             background: "bg-info/20",
@@ -77,9 +76,9 @@ class IndicationsStore {
             units: "%",
             widget: HumidityWidget,
             chartDomain: [0, 100],
+            showOnChart: true,
         },
         pressure: {
-            oldName: "PR",
             name: "Давление",
             color: "fill-success",
             background: "bg-success/20",
@@ -88,6 +87,7 @@ class IndicationsStore {
             units: " мм.рт.ст",
             widget: PressureWidget,
             nclName: "PSFC",
+            showOnChart: true,
         },
         Honf: {
             oldName: "honf",
@@ -164,20 +164,34 @@ class IndicationsStore {
             name: "Медь",
             widget: DefaultWidget
         },
-        no2: {
-            name: "NO2",
-            widget: DefaultWidget,
-            showOnChart: true,
-        },
         so2: {
             name: "SO2",
             widget: DefaultWidget,
             showOnChart: true,
         },
-        o3: {
-            name: "O3",
+        no2: {
+            name: "NO2",
             widget: DefaultWidget,
             showOnChart: true,
+            pdk: 200,
+        },
+        o3: {
+            name: "O3 (Озон)",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 160,
+        },
+        co: {
+            name: "CO",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 5000,
+        },
+        co2: {
+            name: "CO2",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 5000,
         }
     }
 

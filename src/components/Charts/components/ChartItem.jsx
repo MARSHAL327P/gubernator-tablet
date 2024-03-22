@@ -1,5 +1,15 @@
 import {observer} from "mobx-react-lite";
-import {CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {
+    Area,
+    AreaChart,
+    CartesianGrid,
+    Legend,
+    ReferenceLine,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis
+} from "recharts";
 import {Typography} from "@material-tailwind/react";
 import {runInAction} from "mobx";
 
@@ -23,12 +33,30 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const ChartItem = observer(({indication}) => {
-    let Icon = indication.icon
-    let chartValues = indication.chart.data.map(item => item[indication.name])
-    let chartScale = [
+    const gradientOffset = () => {
+        const dataMax = Math.max(...indication.chart.data.map((i) => i[indication.name]));
+        const dataMin = Math.min(...indication.chart.data.map((i) => i[indication.name]));
+
+        if (dataMax <= indication.pdk || !indication.pdk) {
+            return 0;
+        }
+
+        if ((dataMin >= indication.pdk) ) {
+            return 1;
+        }
+
+        return 1 - (indication.pdk / dataMax);
+    };
+
+    const off = gradientOffset();
+    const svgColorName = indication.id + "-color"
+    const Icon = indication.icon
+    const chartValues = indication.chart.data.map(item => item[indication.name])
+    const chartScale = [
         Math.floor(Math.min(...chartValues)),
         Math.floor(Math.max(...chartValues)) + 1.5
     ]
+
 
     return (
         indication.chart.data.length > 0 ?
@@ -39,7 +67,7 @@ const ChartItem = observer(({indication}) => {
                     {/*    {indication.name}*/}
                     {/*</div>*/}
                     <ResponsiveContainer width="100%" height="100%">
-                        <LineChart
+                        <AreaChart
                             width={730}
                             height={250}
                             data={indication.chart.data}
@@ -57,9 +85,18 @@ const ChartItem = observer(({indication}) => {
                                     indication.chart.hide = !indication.chart.hide
                                 })
                             }}/>
-                            <Line type="monotone" hide={indication.chart.hide} dataKey={indication.name}
-                                  stroke="#3366FF" dot={false}/>
-                        </LineChart>
+                            <defs>
+                                <linearGradient id={svgColorName} x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset={off - 0.6} stopColor="#FF4C28" stopOpacity={1} />
+                                    <stop offset={off} stopColor="#FF4C28" stopOpacity={0.1} />
+                                    <stop offset={off} stopColor="#3366FF" stopOpacity={1} />
+                                    <stop offset={0.95} stopColor="#3366FF" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
+                            {indication.pdk && <ReferenceLine y={indication.pdk} stroke="#FF4C28" />}
+                            <Area fillOpacity={1} type="monotone" hide={indication.chart.hide} dataKey={indication.name}
+                                  stroke="#3366FF" dot={false} fill={`url(#${svgColorName})`}/>
+                        </AreaChart>
                     </ResponsiveContainer>
                 </div>
             </> :

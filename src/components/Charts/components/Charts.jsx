@@ -33,6 +33,7 @@ const Charts = observer(({data}) => {
 
         scrollToElement(chartEl)
     }, [ChartsStore.isLoading])
+
     return (
         <div>
             {
@@ -40,7 +41,7 @@ const Charts = observer(({data}) => {
                 <FileDownload dateRange={ChartsStore.selectedDateRanges[0]}/>
             }
             <div className={"flex xl:flex-wrap justify-center gap-7 relative"}>
-                <div className="bg-white p-6 rounded-xl shadow-lg w-[550px] lg:w-full h-fit">
+                <div className="bg-white p-6 rounded-xl shadow-lg w-[550px] lg:w-full h-fit sticky top-[90px]">
                     <Typography variant={"h4"} className={"mb-5"}>
                         Выбор даты
                     </Typography>
