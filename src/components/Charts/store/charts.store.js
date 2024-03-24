@@ -5,6 +5,7 @@ import IndicationsStore from "../../Indications/store/indications.store";
 import axios from "axios";
 import {ru} from "react-date-range/dist/locale";
 import {defaultDateFormat} from "../../../Utils";
+import {Area, AreaChart, LineChart, Line} from "recharts";
 
 class ChartsStore {
     selectedDateRanges = [
@@ -14,6 +15,18 @@ class ChartsStore {
             key: 'selection'
         }
     ]
+    chartTypes = {
+        area: {
+            name: "area",
+            wrapper: AreaChart,
+            line: Area
+        },
+        line: {
+            name: "line",
+            wrapper: LineChart,
+            line: Line
+        }
+    }
     isLoading = false
     isFetched = false
     loadingError = false
@@ -127,14 +140,16 @@ class ChartsStore {
             })
     }
 
-    getChartIndicationUrl(url, indicationName){
+    getChartIndicationUrl(url, indicationName) {
         url.searchParams.set("tab", "charts")
 
         return `${url.toString()}#${indicationName}`
     }
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this, {
+            chartTypes: false
+        })
     }
 }
 

@@ -19,6 +19,7 @@ import TempSurfWidget from "../../Widgets/components/TempSurfWidget";
 import HonfWidget from "../../Widgets/components/HonfWidget";
 import DefaultWidget from "../../Widgets/templates/DefaultWidget";
 import parse from 'html-react-parser';
+import ChartsStore from "../../Charts/store/charts.store";
 
 class IndicationsStore {
     windAngleNames = [
@@ -55,6 +56,7 @@ class IndicationsStore {
             widget: TemperatureWidget,
             nclName: "T2",
             showOnChart: true,
+            chartTypeName: ChartsStore.chartTypes.line.name
         },
         wind: {
             name: "Ветер",
@@ -77,6 +79,7 @@ class IndicationsStore {
             widget: HumidityWidget,
             chartDomain: [0, 100],
             showOnChart: true,
+            chartTypeName: ChartsStore.chartTypes.line.name
         },
         pressure: {
             name: "Давление",
@@ -88,6 +91,7 @@ class IndicationsStore {
             widget: PressureWidget,
             nclName: "PSFC",
             showOnChart: true,
+            chartTypeName: ChartsStore.chartTypes.line.name
         },
         Honf: {
             oldName: "honf",

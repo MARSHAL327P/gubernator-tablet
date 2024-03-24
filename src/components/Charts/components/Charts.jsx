@@ -5,7 +5,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import {ru} from 'react-date-range/dist/locale';
 import {Typography} from "@material-tailwind/react";
 import ChartsStore from "../store/charts.store";
-import {action, toJS} from "mobx";
+import {action, runInAction, toJS} from "mobx";
 import {useEffect} from "react";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import ChartItem from "./ChartItem";
@@ -13,6 +13,7 @@ import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondit
 import Skeleton from "react-loading-skeleton";
 import FileDownload from "../../FileDownload/components/FileDownload";
 import {scrollToElement} from "../../../Utils";
+import {Area, AreaChart, Line, LineChart} from "recharts";
 
 
 const Charts = observer(({data}) => {
@@ -77,15 +78,16 @@ const Charts = observer(({data}) => {
                     }>
                         {() => (
                             ChartsStore.loadingError ?
-                                <Typography variant={"h3"} className={"text-center"}>Произошла ошибка при получении
+                                <Typography variant={"h4"} className={"text-center"}>Произошла ошибка при получении
                                     данных</Typography> :
                                 Object.entries(ChartsStore.indicationWithChartData).length > 0 ?
                                     Object.entries(ChartsStore.indicationWithChartData).map(([indicationName, indication]) => {
                                         if (!indication.chart?.data) return false
+                                        if (!indication.chartTypeName) indication.chartTypeName = ChartsStore.chartTypes.area.name
 
-                                        return (<ChartItem indication={indication} key={indicationName}/>)
+                                        return (<ChartItem indication={indication} key={indicationName} />)
                                     }) :
-                                    <Typography variant={"h3"}>Нет графиков</Typography>
+                                    <Typography variant={"h4"}>Нет графиков</Typography>
                         )}
                     </SkeletonCondition>
                 </div>

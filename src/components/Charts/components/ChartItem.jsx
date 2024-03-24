@@ -1,7 +1,5 @@
 import {observer} from "mobx-react-lite";
 import {
-    Area,
-    AreaChart,
     CartesianGrid,
     Legend,
     ReferenceLine,
@@ -13,6 +11,7 @@ import {
 import {Typography} from "@material-tailwind/react";
 import {runInAction} from "mobx";
 import UiStore from "../../../stores/ui.store";
+import ChartsStore from "../store/charts.store";
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -49,6 +48,10 @@ const ChartItem = observer(({indication}) => {
         return 1 - (indication.pdk / dataMax);
     };
 
+
+    const chartType = ChartsStore.chartTypes[indication.chartTypeName]
+    const ChartWrapper = chartType.wrapper
+    const ChartLine = chartType.line
     const off = gradientOffset();
     const svgColorName = indication.id + "-color"
     const Icon = indication.icon
@@ -57,7 +60,6 @@ const ChartItem = observer(({indication}) => {
         Math.floor(Math.min(...chartValues)),
         Math.floor(Math.max(...chartValues)) + 1.5
     ]
-
 
     return (
         indication.chart.data.length > 0 ?
@@ -68,7 +70,7 @@ const ChartItem = observer(({indication}) => {
                     {/*    {indication.name}*/}
                     {/*</div>*/}
                     <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart
+                        <ChartWrapper
                             width={730}
                             height={250}
                             data={indication.chart.data}
@@ -95,13 +97,13 @@ const ChartItem = observer(({indication}) => {
                                 </linearGradient>
                             </defs>
                             {indication.pdk && <ReferenceLine y={indication.pdk} stroke={UiStore.colors.danger} />}
-                            <Area fillOpacity={1} type="monotone" hide={indication.chart.hide} dataKey={indication.name}
+                            <ChartLine fillOpacity={1} type="monotone" hide={indication.chart.hide} dataKey={indication.name}
                                   stroke={UiStore.colors.primary} dot={false} fill={`url(#${svgColorName})`}/>
-                        </AreaChart>
+                        </ChartWrapper>
                     </ResponsiveContainer>
                 </div>
             </> :
-            <Typography variant={"h3"}>Нет данных по показателю «{indication.name}»</Typography>
+            <Typography variant={"h4"}>Нет данных по показателю «{indication.name}»</Typography>
     )
 })
 
