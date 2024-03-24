@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable} from "mobx";
 import {addDays, differenceInDays, format} from "date-fns";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import IndicationsStore from "../../Indications/store/indications.store";
@@ -6,6 +6,7 @@ import axios from "axios";
 import {ru} from "react-date-range/dist/locale";
 import {defaultDateFormat} from "../../../Utils";
 import {Area, AreaChart, LineChart, Line} from "recharts";
+import toast from "react-hot-toast";
 
 class ChartsStore {
     selectedDateRanges = [
@@ -100,9 +101,15 @@ class ChartsStore {
         })
 
         this.isLoading = true
+        this.loadingError = false
 
-        Promise.all(requests)
-            .then((data) => {
+        toast
+            .promise(Promise.all(requests), {
+                loading: "Загрузка данных",
+                success: "Данные успешно загружены",
+                error: "При загрузке произошла ошибка",
+            })
+            .then(data => {
                 this.indicationWithChartData = chartIndications
 
                 data.forEach((item, idx) => {
@@ -138,6 +145,7 @@ class ChartsStore {
                 this.loadingError = true
                 console.error(reason)
             })
+
     }
 
     getChartIndicationUrl(url, indicationName) {

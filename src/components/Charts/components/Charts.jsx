@@ -73,7 +73,7 @@ const Charts = observer(({data}) => {
                     />
                 </div>
                 <div className={"grid gap-5 w-full items-center justify-items-center"}>
-                    <SkeletonCondition condition={!ChartsStore.isFetched || ChartsStore.isLoading} skeleton={
+                    <SkeletonCondition condition={!ChartsStore.isFetched} skeleton={
                         <Skeleton count={2} height={250} width={"100%"} containerClassName={"w-full grid"}/>
                     }>
                         {() => (
