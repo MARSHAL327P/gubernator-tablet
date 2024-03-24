@@ -22,7 +22,8 @@ const BeachCard = observer(({card}) => {
 
     return (
         <div onMouseLeave={() => {
-            indicationsRef.current.style.height = "50px"
+            if( indicationsRef.current )
+                indicationsRef.current.style.height = "50px"
         }}>
             <CarouselBeachCard imgs={card.img.slice(0, 10)} cardId={card.id}/>
             {/*<BathingComfort bathingComfort={card.bathingComfort} isOpen={card.isOpen}/>*/}

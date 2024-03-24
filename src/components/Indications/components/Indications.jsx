@@ -12,7 +12,8 @@ const Indications = observer(forwardRef((
         fixedValue = false,
         classes = "",
         noTooltip = false,
-        oneLine = false
+        oneLine = false,
+        showPdk = false
     }, ref
 ) => {
     let TooltipComponent = noTooltip ? Fragment : Tooltip
@@ -73,17 +74,30 @@ const Indications = observer(forwardRef((
                             indicationValue !== undefined &&
                             <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
-                                    "flex items-center gap-2 whitespace-nowrap px-5 sm:px-3 rounded-xl h-12 sm:h-11",
+                                    "rounded-xl relative",
                                     indication.background || defaultBackgroundColor
                                 ])}>
-                                    {indication.icon && <Icon className={cc([indication.color || "fill-white", "sm:w-6 sm:h-6"])}/>}
-                                    <span className={"sm:text-sm"}>
+                                    {showPdk &&
+                                        indicationValue > indication.pdk &&
+                                        // <Tooltip className={"bg-danger"} content={"Превышение ПДК"}>
+                                        //     <div className={"absolute top-0 left-0 w-full h-[4px] bg-danger"}></div>
+                                        // </Tooltip>
+                                        <Tooltip className={"bg-danger"} content={"Превышение ПДК"}>
+                                            <div className={"absolute -top-1 -right-1 w-3 h-3 rounded-full bg-danger"}></div>
+                                        </Tooltip>
+
+                                    }
+                                    <div className={"flex items-center gap-2 whitespace-nowrap px-5 sm:px-3  h-12 sm:h-11"}>
+                                        {indication.icon && <Icon className={cc([indication.color || "fill-white", "sm:w-6 sm:h-6"])}/>}
+                                        <span className={"sm:text-sm"}>
                                         {
                                             fixedValue && indication.type !== "string" ?
                                                 indicationValue.toFixed(1) :
                                                 indicationValue
                                         }{indication.units}
                                     </span>
+                                    </div>
+
                                 </div>
                             </TooltipComponent>
                         )

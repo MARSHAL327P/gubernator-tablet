@@ -5,7 +5,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import {ru} from 'react-date-range/dist/locale';
 import {Typography} from "@material-tailwind/react";
 import ChartsStore from "../store/charts.store";
-import {action, toJS} from "mobx";
+import {action, runInAction, toJS} from "mobx";
 import {useEffect} from "react";
 import SelectedClassInfoStore from "../../../stores/selectedClassInfo.store";
 import ChartItem from "./ChartItem";
@@ -13,6 +13,7 @@ import SkeletonCondition from "../../SkeletonCondition/components/SkeletonCondit
 import Skeleton from "react-loading-skeleton";
 import FileDownload from "../../FileDownload/components/FileDownload";
 import {scrollToElement} from "../../../Utils";
+import {Area, AreaChart, Line, LineChart} from "recharts";
 
 
 const Charts = observer(({data}) => {
@@ -33,6 +34,7 @@ const Charts = observer(({data}) => {
 
         scrollToElement(chartEl)
     }, [ChartsStore.isLoading])
+
     return (
         <div>
             {
@@ -40,7 +42,7 @@ const Charts = observer(({data}) => {
                 <FileDownload dateRange={ChartsStore.selectedDateRanges[0]}/>
             }
             <div className={"flex xl:flex-wrap justify-center gap-7 relative"}>
-                <div className="bg-white p-6 rounded-xl shadow-lg w-[550px] lg:w-full h-fit">
+                <div className="bg-white p-6 rounded-xl shadow-lg w-[550px] lg:w-full h-fit sticky top-[90px]">
                     <Typography variant={"h4"} className={"mb-5"}>
                         Выбор даты
                     </Typography>
@@ -71,20 +73,21 @@ const Charts = observer(({data}) => {
                     />
                 </div>
                 <div className={"grid gap-5 w-full items-center justify-items-center"}>
-                    <SkeletonCondition condition={!ChartsStore.isFetched || ChartsStore.isLoading} skeleton={
+                    <SkeletonCondition condition={!ChartsStore.isFetched} skeleton={
                         <Skeleton count={2} height={250} width={"100%"} containerClassName={"w-full grid"}/>
                     }>
                         {() => (
                             ChartsStore.loadingError ?
-                                <Typography variant={"h3"} className={"text-center"}>Произошла ошибка при получении
+                                <Typography variant={"h4"} className={"text-center"}>Произошла ошибка при получении
                                     данных</Typography> :
                                 Object.entries(ChartsStore.indicationWithChartData).length > 0 ?
                                     Object.entries(ChartsStore.indicationWithChartData).map(([indicationName, indication]) => {
                                         if (!indication.chart?.data) return false
+                                        if (!indication.chartTypeName) indication.chartTypeName = ChartsStore.chartTypes.area.name
 
-                                        return (<ChartItem indication={indication} key={indicationName}/>)
+                                        return (<ChartItem indication={indication} key={indicationName} />)
                                     }) :
-                                    <Typography variant={"h3"}>Нет графиков</Typography>
+                                    <Typography variant={"h4"}>Нет графиков</Typography>
                         )}
                     </SkeletonCondition>
                 </div>

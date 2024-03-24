@@ -19,6 +19,7 @@ import TempSurfWidget from "../../Widgets/components/TempSurfWidget";
 import HonfWidget from "../../Widgets/components/HonfWidget";
 import DefaultWidget from "../../Widgets/templates/DefaultWidget";
 import parse from 'html-react-parser';
+import ChartsStore from "../../Charts/store/charts.store";
 
 class IndicationsStore {
     windAngleNames = [
@@ -44,7 +45,6 @@ class IndicationsStore {
             nclName: "SST",
         },
         temperature: {
-            oldName: "t",
             name: "Температура воздуха",
             color: "fill-warning",
             background: "bg-warning/20",
@@ -55,6 +55,8 @@ class IndicationsStore {
             unitsFull: "C°",
             widget: TemperatureWidget,
             nclName: "T2",
+            showOnChart: true,
+            chartTypeName: ChartsStore.chartTypes.line.name
         },
         wind: {
             name: "Ветер",
@@ -68,7 +70,6 @@ class IndicationsStore {
             nclName: "WIND"
         },
         humidity: {
-            oldName: "HM",
             name: "Влажность",
             color: "fill-info",
             background: "bg-info/20",
@@ -77,9 +78,10 @@ class IndicationsStore {
             units: "%",
             widget: HumidityWidget,
             chartDomain: [0, 100],
+            showOnChart: true,
+            chartTypeName: ChartsStore.chartTypes.line.name
         },
         pressure: {
-            oldName: "PR",
             name: "Давление",
             color: "fill-success",
             background: "bg-success/20",
@@ -88,6 +90,8 @@ class IndicationsStore {
             units: " мм.рт.ст",
             widget: PressureWidget,
             nclName: "PSFC",
+            showOnChart: true,
+            chartTypeName: ChartsStore.chartTypes.line.name
         },
         Honf: {
             oldName: "honf",
@@ -164,20 +168,46 @@ class IndicationsStore {
             name: "Медь",
             widget: DefaultWidget
         },
+        // so2: {
+        //     name: "SO2",
+        //     widget: DefaultWidget,
+        //     showOnChart: true,
+        // },
         no2: {
-            name: "NO2",
+            name: "NO2 [Оксид азота]",
             widget: DefaultWidget,
             showOnChart: true,
-        },
-        so2: {
-            name: "SO2",
-            widget: DefaultWidget,
-            showOnChart: true,
+            pdk: 5,
         },
         o3: {
-            name: "O3",
+            name: "O3 [Озон]",
             widget: DefaultWidget,
             showOnChart: true,
+            pdk: 160,
+        },
+        co: {
+            name: "CO [Угарный газ]",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 5000,
+        },
+        co2: {
+            name: "CO2 [Углекислый газ]",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 300,
+        },
+        pm25: {
+            name: "pm2.5 [Частицы менее 2.5 микрон]",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 500,
+        },
+        pm10: {
+            name: "pm10 [Частицы менее 10 микрон]",
+            widget: DefaultWidget,
+            showOnChart: true,
+            pdk: 300,
         }
     }
 

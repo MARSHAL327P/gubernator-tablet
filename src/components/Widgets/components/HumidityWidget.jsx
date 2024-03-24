@@ -4,7 +4,7 @@ import BaseWidgetTemplate from "../templates/BaseWidgetTemplate";
 const HumidityWidget = observer(({ data, indication }) => {
     const params = [
         {
-            name: "Вчера было",
+            name: "Вчера в это же время было",
             value: `${data.yesterday}${indication.units}`
         },
     ]

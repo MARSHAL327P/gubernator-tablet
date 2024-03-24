@@ -1,7 +1,17 @@
 import {observer} from "mobx-react-lite";
-import {CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {
+    CartesianGrid,
+    Legend,
+    ReferenceLine,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis
+} from "recharts";
 import {Typography} from "@material-tailwind/react";
 import {runInAction} from "mobx";
+import UiStore from "../../../stores/ui.store";
+import ChartsStore from "../store/charts.store";
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -23,9 +33,30 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const ChartItem = observer(({indication}) => {
-    let Icon = indication.icon
-    let chartValues = indication.chart.data.map(item => item[indication.name])
-    let chartScale = [
+    const gradientOffset = () => {
+        const dataMax = Math.max(...indication.chart.data.map((i) => i[indication.name]));
+        const dataMin = Math.min(...indication.chart.data.map((i) => i[indication.name]));
+
+        if (dataMax <= indication.pdk || !indication.pdk) {
+            return 0;
+        }
+
+        if ((dataMin >= indication.pdk) ) {
+            return 1;
+        }
+
+        return 1 - (indication.pdk / dataMax);
+    };
+
+
+    const chartType = ChartsStore.chartTypes[indication.chartTypeName]
+    const ChartWrapper = chartType.wrapper
+    const ChartLine = chartType.line
+    const off = gradientOffset();
+    const svgColorName = indication.id + "-color"
+    const Icon = indication.icon
+    const chartValues = indication.chart.data.map(item => item[indication.name])
+    const chartScale = [
         Math.floor(Math.min(...chartValues)),
         Math.floor(Math.max(...chartValues)) + 1.5
     ]
@@ -39,7 +70,7 @@ const ChartItem = observer(({indication}) => {
                     {/*    {indication.name}*/}
                     {/*</div>*/}
                     <ResponsiveContainer width="100%" height="100%">
-                        <LineChart
+                        <ChartWrapper
                             width={730}
                             height={250}
                             data={indication.chart.data}
@@ -57,13 +88,22 @@ const ChartItem = observer(({indication}) => {
                                     indication.chart.hide = !indication.chart.hide
                                 })
                             }}/>
-                            <Line type="monotone" hide={indication.chart.hide} dataKey={indication.name}
-                                  stroke="#3366FF" dot={false}/>
-                        </LineChart>
+                            <defs>
+                                <linearGradient id={svgColorName} x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset={off - 0.6} stopColor={UiStore.colors.danger} stopOpacity={1} />
+                                    <stop offset={off} stopColor={UiStore.colors.danger} stopOpacity={0.1} />
+                                    <stop offset={off} stopColor={UiStore.colors.primary} stopOpacity={1} />
+                                    <stop offset={0.95} stopColor={UiStore.colors.primary} stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
+                            {indication.pdk && <ReferenceLine y={indication.pdk} stroke={UiStore.colors.danger} />}
+                            <ChartLine fillOpacity={1} type="monotone" hide={indication.chart.hide} dataKey={indication.name}
+                                  stroke={UiStore.colors.primary} dot={false} fill={`url(#${svgColorName})`}/>
+                        </ChartWrapper>
                     </ResponsiveContainer>
                 </div>
             </> :
-            <Typography variant={"h3"}>Нет данных по показателю «{indication.name}»</Typography>
+            <Typography variant={"h4"}>Нет данных по показателю «{indication.name}»</Typography>
     )
 })
 

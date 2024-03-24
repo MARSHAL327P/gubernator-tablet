@@ -8,6 +8,7 @@ import Skeleton from "react-loading-skeleton";
 import WidgetStore from "../store/widget.store";
 import {Button, Tooltip} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
+import ChartsStore from "../../Charts/store/charts.store";
 
 const WidgetTemplate = observer((
     {
@@ -64,10 +65,10 @@ const WidgetTemplate = observer((
                                     className={cc([styles.widgetHeight, "shadow-lg rounded-xl bg-white"])}
                                     key={indication.id}
                                 >
-                                    {/*{*/}
-                                    {/*    comfort &&*/}
-                                    {/*    <div className={cc(["py-1 text-white rounded-t-xl text-center", comfort.classes])}>{comfort.value}</div>*/}
-                                    {/*}*/}
+                                    {
+                                        comfort &&
+                                        <div className={cc(["py-1 text-white rounded-t-xl text-center", comfort.classes])}>{comfort.value}</div>
+                                    }
                                     <div className={"px-6 py-5 grid content-between h-[348px]"}>
                                         <div className={"flex gap-2 justify-between"}>
                                             <div className={"flex gap-2 items-center"}>
@@ -80,11 +81,9 @@ const WidgetTemplate = observer((
 
                                                     let Icon = btn.icon
 
-                                                    url.searchParams.set("tab", "charts")
-
                                                     return (
                                                         <Tooltip key={idx} content={btn.name}>
-                                                            <Link to={`${url.toString()}#${indication.indicationName}`}>
+                                                            <Link to={ChartsStore.getChartIndicationUrl(url, indication.indicationName)}>
                                                                 <Button
                                                                     className={"p-3 rounded-full w-[40px] h-[40px]"}
                                                                     size={"sm"}
