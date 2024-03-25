@@ -37,13 +37,8 @@ const ChartItem = observer(({indication}) => {
         const dataMax = Math.max(...indication.chart.data.map((i) => i[indication.name]));
         const dataMin = Math.min(...indication.chart.data.map((i) => i[indication.name]));
 
-        if (dataMax <= indication.pdk || !indication.pdk) {
-            return 0;
-        }
-
-        if ((dataMin >= indication.pdk) ) {
-            return 1;
-        }
+        if (dataMax <= indication.pdk) return 0;
+        if (dataMin >= indication.pdk) return 1;
 
         return 1 - (indication.pdk / dataMax);
     };
@@ -52,7 +47,7 @@ const ChartItem = observer(({indication}) => {
     const chartType = ChartsStore.chartTypes[indication.chartTypeName]
     const ChartWrapper = chartType.wrapper
     const ChartLine = chartType.line
-    const off = gradientOffset();
+    const off = !indication.pdk ? 0 : gradientOffset();
     const svgColorName = indication.id + "-color"
     const Icon = indication.icon
     const chartValues = indication.chart.data.map(item => item[indication.name])

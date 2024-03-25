@@ -58,7 +58,7 @@ const WidgetTemplate = observer((
                             let indicationValue = indicationData?.value || indicationData
                             let Icon = indication.icon
                             let Widget = indication.widget
-                            let comfort = WidgetStore.comfort[indicationData.comfort]
+                            let comfort = indicationValue > indication.pdk && WidgetStore.comfort.BAD
 
                             return indicationValue && Widget && (
                                 <div
@@ -69,7 +69,11 @@ const WidgetTemplate = observer((
                                         comfort &&
                                         <div className={cc(["py-1 text-white rounded-t-xl text-center", comfort.classes])}>{comfort.value}</div>
                                     }
-                                    <div className={"px-6 py-5 grid content-between h-[348px]"}>
+                                    <div className={cc({
+                                        "px-6 py-5 grid content-between": true,
+                                        "h-[348px]": indication.pdk,
+                                        "h-full": !indication.pdk
+                                    })}>
                                         <div className={"flex gap-2 justify-between"}>
                                             <div className={"flex gap-2 items-center"}>
                                                 {indication.icon && <Icon className={cc([indication.color, "w-8 h-8"])}/>}
