@@ -9,8 +9,10 @@ import {Link} from "react-router-dom";
 import Indications from "../../Indications/components/Indications";
 import MapStore from "../../Map/store/map.store";
 import cc from "classcat";
+import {useRef} from "react";
 
 const RealObjectCard = observer(({card}) => {
+    const indicationsRef = useRef(null);
     const styles = {
         btn: "flex items-center gap-2 shadow-none border hover:shadow-md p-0 w-full",
         btnIcon: "fill-black w-5 h-5"
@@ -30,10 +32,15 @@ const RealObjectCard = observer(({card}) => {
 
     return (
         <>
-            <div className="px-7 py-5">
+            <div className="px-7 py-5" onMouseLeave={() => {
+                if( indicationsRef.current )
+                    indicationsRef.current.style.height = "60px"
+            }}>
                 <Indications
                     data={card.props}
                     showPdk={true}
+                    oneLine={true}
+                    ref={indicationsRef}
                 />
                 <div className="flex justify-between lg:justify-start gap-2 mt-5">
                     <Tooltip content={"На карте"}>

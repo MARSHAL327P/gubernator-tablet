@@ -21,6 +21,8 @@ import DefaultWidget from "../../Widgets/templates/DefaultWidget";
 import parse from 'html-react-parser';
 import ChartsStore from "../../Charts/store/charts.store";
 
+const aqiUnit = parse(" мкг/м<sup>3</sup>")
+
 class IndicationsStore {
     windAngleNames = [
         "Cеверный",
@@ -67,7 +69,7 @@ class IndicationsStore {
             icon: Wind,
             units: " м/с",
             widget: WindWidget,
-            nclName: "WIND"
+            nclName: "WIND",
         },
         humidity: {
             name: "Влажность",
@@ -79,7 +81,8 @@ class IndicationsStore {
             widget: HumidityWidget,
             chartDomain: [0, 100],
             showOnChart: true,
-            chartTypeName: ChartsStore.chartTypes.line.name
+            chartTypeName: ChartsStore.chartTypes.line.name,
+            pdk: 30,
         },
         pressure: {
             name: "Давление",
@@ -178,36 +181,48 @@ class IndicationsStore {
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 5,
+            units: aqiUnit,
+            smallWidgetUnits: true,
         },
         o3: {
             name: "O3 [Озон]",
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 160,
+            units: aqiUnit,
+            smallWidgetUnits: true,
         },
         co: {
             name: "CO [Угарный газ]",
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 5000,
+            units: aqiUnit,
+            smallWidgetUnits: true,
         },
         co2: {
             name: "CO2 [Углекислый газ]",
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 300,
+            units: aqiUnit,
+            smallWidgetUnits: true,
         },
         pm25: {
             name: "pm2.5 [Частицы менее 2.5 микрон]",
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 500,
+            units: aqiUnit,
+            smallWidgetUnits: true,
         },
         pm10: {
             name: "pm10 [Частицы менее 10 микрон]",
             widget: DefaultWidget,
             showOnChart: true,
             pdk: 300,
+            units: aqiUnit,
+            smallWidgetUnits: true,
         }
     }
 

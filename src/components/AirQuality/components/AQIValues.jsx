@@ -38,7 +38,7 @@ const AQIValues = observer(({airQualityData}) => {
                                         </div>
 
                                         <div>{indication.value} <span
-                                            className={"text-gray-400 font-normal"}>µg/m³</span></div>
+                                            className={"text-gray-400 font-normal"}>мкг/м<sup>3</sup></span></div>
                                     </div>
                                 </AccordionHeader>
                             </ListItem>

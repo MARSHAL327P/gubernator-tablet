@@ -24,9 +24,9 @@ const Indications = observer(forwardRef((
     let hasNewIndications = Object.values(IndicationsStore.indications).filter(indication => !indicationNames.includes(indication.indicationName))
     let defaultBackgroundColor = "bg-gray-300"
 
-    if( hasNewIndications.length === 0 )
+    if (hasNewIndications.length === 0)
         cardIndications.forEach(item => {
-            if( !indicationNames.includes(item) )
+            if (!indicationNames.includes(item))
                 indications.push({
                     id: indications.length,
                     background: defaultBackgroundColor,
@@ -37,17 +37,13 @@ const Indications = observer(forwardRef((
 
     return (
         <div className={cc([classes, {
-            "overflow-hidden h-[50px] transition-[height]": oneLine
+            "overflow-hidden h-[60px] transition-[height]": oneLine
         }])}
              ref={ref}
              onMouseEnter={() => {
                  if (oneLine)
                      ref.current.style.height = bodyEl.current.offsetHeight + "px"
              }}
-            // onMouseLeave={() => {
-            //     if (oneLine)
-            //         headerEl.current.style.height = "50px"
-            // }}
         >
             <div
                 ref={bodyEl}
@@ -74,7 +70,7 @@ const Indications = observer(forwardRef((
                             indicationValue !== undefined &&
                             <TooltipComponent {...defaultComponentProps}>
                                 <div className={cc([
-                                    "rounded-xl relative",
+                                    "rounded-xl relative mt-1",
                                     indication.background || defaultBackgroundColor
                                 ])}>
                                     {showPdk &&
@@ -83,12 +79,18 @@ const Indications = observer(forwardRef((
                                         //     <div className={"absolute top-0 left-0 w-full h-[4px] bg-danger"}></div>
                                         // </Tooltip>
                                         <Tooltip className={"bg-danger"} content={"Превышение ПДК"}>
-                                            <div className={"absolute -top-1 -right-1 w-3 h-3 rounded-full bg-danger"}></div>
+                                            <div
+                                                className={"absolute -top-1 -right-1 w-3 h-3 rounded-full bg-danger"}></div>
                                         </Tooltip>
 
                                     }
-                                    <div className={"flex items-center gap-2 whitespace-nowrap px-5 sm:px-3  h-12 sm:h-11"}>
-                                        {indication.icon && <Icon className={cc([indication.color || "fill-white", "sm:w-6 sm:h-6"])}/>}
+                                    <div
+                                        className={"flex items-center gap-2 whitespace-nowrap px-5 sm:px-3  h-12 sm:h-11"}>
+                                        {
+                                            indication.icon ?
+                                                <Icon className={cc([indication.color || "fill-white", "sm:w-6 sm:h-6"])}/> :
+                                                <span className={"font-bold"}>{indication.name}:</span>
+                                        }
                                         <span className={"sm:text-sm"}>
                                         {
                                             fixedValue && indication.type !== "string" ?

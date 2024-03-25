@@ -6,7 +6,7 @@ const BaseWidgetTemplate = observer(({value, indication, params = []}) => {
         <>
             <div>
                 <div className={cc([indication.text, "text-center font-bold text-6xl mb-3"])}>
-                    {value}{indication.units}
+                    {value}{indication.smallWidgetUnits ? <span className={"text-2xl"}>{indication.units}</span> : indication.units}
                 </div>
                 <div className={"flex justify-center"}>
                     {params.map((item, idx) => {
