@@ -70,6 +70,7 @@ class IndicationsStore {
             units: " м/с",
             widget: WindWidget,
             nclName: "WIND",
+            pdk: 10
         },
         humidity: {
             name: "Влажность",

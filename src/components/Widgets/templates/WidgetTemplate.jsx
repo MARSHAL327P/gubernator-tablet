@@ -9,6 +9,7 @@ import WidgetStore from "../store/widget.store";
 import {Button, Tooltip} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
 import ChartsStore from "../../Charts/store/charts.store";
+import ComfortIndexStore from "../../ComfortIndex/store/comfortIndex.store";
 
 const WidgetTemplate = observer((
     {
@@ -52,13 +53,16 @@ const WidgetTemplate = observer((
                 <div className={styles.widgetWrapper}>
                     {
                         indications.map(indication => {
-                            let indicationData = data[indication.indicationName]
-                            if( !indicationData ) return false
+                            let indicationData = indication.comfortIndex ?
+                                ComfortIndexStore.calculateIndex(data, indication) :
+                                data[indication.indicationName]
+
+                            if (!indicationData) return false
 
                             let indicationValue = indicationData?.value || indicationData
                             let Icon = indication.icon
                             let Widget = indication.widget
-                            let comfort = indicationValue > indication.pdk && WidgetStore.comfort.BAD
+                            let pdk = indicationValue > indication.pdk && WidgetStore.pdk.BAD
 
                             return indicationValue && Widget && (
                                 <div
@@ -66,28 +70,31 @@ const WidgetTemplate = observer((
                                     key={indication.id}
                                 >
                                     {
-                                        comfort &&
-                                        <div className={cc(["py-1 text-white rounded-t-xl text-center", comfort.classes])}>{comfort.value}</div>
+                                        pdk &&
+                                        <div
+                                            className={cc(["py-1 text-white rounded-t-xl text-center", pdk.classes])}>{pdk.value}</div>
                                     }
                                     <div className={cc({
                                         "px-6 py-5 grid content-between": true,
-                                        "h-[348px]": indication.pdk,
-                                        "h-full": !indication.pdk
+                                        "h-[348px]": pdk,
+                                        "h-full": !pdk
                                     })}>
                                         <div className={"flex gap-2 justify-between"}>
                                             <div className={"flex gap-2 items-center"}>
-                                                {indication.icon && <Icon className={cc([indication.color, "w-8 h-8"])}/>}
+                                                {indication.icon &&
+                                                    <Icon className={cc([indication.color, "w-8 h-8"])}/>}
                                                 <span>{indication.name || indication.indicationName}</span>
                                             </div>
                                             <div className={"flex gap-2"}>
                                                 {buttons.map((btn, idx) => {
-                                                    if( !indication.showOnChart ) return
+                                                    if (!indication.showOnChart) return
 
                                                     let Icon = btn.icon
 
                                                     return (
                                                         <Tooltip key={idx} content={btn.name}>
-                                                            <Link to={ChartsStore.getChartIndicationUrl(url, indication.indicationName)}>
+                                                            <Link
+                                                                to={ChartsStore.getChartIndicationUrl(url, indication.indicationName)}>
                                                                 <Button
                                                                     className={"p-3 rounded-full w-[40px] h-[40px]"}
                                                                     size={"sm"}
@@ -100,7 +107,7 @@ const WidgetTemplate = observer((
                                                 })}
                                             </div>
                                         </div>
-                                        <Widget data={data[indication.indicationName]} indication={indication}/>
+                                        <Widget data={indicationData} indication={indication}/>
                                     </div>
 
                                 </div>
