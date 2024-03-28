@@ -57,14 +57,14 @@ const WidgetTemplate = observer((
                                 ComfortIndexStore.calculateIndex(data, indication) :
                                 data[indication.indicationName]
 
-                            if (!indicationData) return false
+                            if (indicationData === null || indicationData === undefined) return false
 
                             let indicationValue = indicationData?.value || indicationData
                             let Icon = indication.icon
                             let Widget = indication.widget
                             let pdk = indicationValue > indication.pdk && WidgetStore.pdk.BAD
 
-                            return indicationValue && Widget && (
+                            return indicationValue !== undefined && indicationValue !== null && Widget && (
                                 <div
                                     className={cc([styles.widgetHeight, "shadow-lg rounded-xl bg-white"])}
                                     key={indication.id}

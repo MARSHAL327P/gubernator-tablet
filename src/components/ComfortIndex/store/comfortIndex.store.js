@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import ComfortWidget from "../../Widgets/templates/ComfortWidget";
 import {ReactComponent as Temperature} from "../../../assets/icons/Temperature.svg";
+import {ReactComponent as VaporCloud} from "../../../assets/icons/VaporCloud.svg";
 import parse from "html-react-parser";
 
 class ComfortIndexStore {
@@ -11,7 +12,7 @@ class ComfortIndexStore {
             haveNegativeValues: true,
             indicationName: "Эквивалентно-эффективная температура",
             widget: ComfortWidget,
-            gradientColor: "from-warning to-warning/10",
+            gradientColor: "from-warning/10 to-warning",
             color: "fill-warning",
             text: "text-warning",
             background: "bg-warning",
@@ -22,49 +23,49 @@ class ComfortIndexStore {
             ],
             values: [
                 {
-                    value: [undefined, -24],
-                    description: "Угроза обморожения"
-                },
-                {
-                    value: [-24, -18],
-                    description: "Очень холодно"
-                },
-                {
-                    value: [-18, -12],
-                    description: "Холодно"
-                },
-                {
-                    value: [-12, -6],
-                    description: "Умеренно холодно"
-                },
-                {
-                    value: [-6, 0],
-                    description: "Очень прохладно"
-                },
-                {
-                    value: [0, 6],
-                    description: "Умеренно прохладно"
-                },
-                {
-                    value: [6, 12],
-                    description: "Прохладно"
-                },
-                {
-                    value: [12, 18],
-                    description: "Комфорт (умеренно тепло)"
-                },
-                {
-                    value: [18, 24],
-                    description: "Комфорт (тепло)"
+                    value: [30, undefined],
+                    description: "Тепловая нагрузка сильная"
                 },
                 {
                     value: [24, 30],
                     description: "Тепловая нагрузка умеренная"
                 },
                 {
-                    value: [30, undefined],
-                    description: "Тепловая нагрузка сильная"
-                }
+                    value: [18, 24],
+                    description: "Комфорт (тепло)"
+                },
+                {
+                    value: [12, 18],
+                    description: "Комфорт (умеренно тепло)"
+                },
+                {
+                    value: [6, 12],
+                    description: "Прохладно"
+                },
+                {
+                    value: [0, 6],
+                    description: "Умеренно прохладно"
+                },
+                {
+                    value: [-6, 0],
+                    description: "Очень прохладно"
+                },
+                {
+                    value: [-12, -6],
+                    description: "Умеренно холодно"
+                },
+                {
+                    value: [-18, -12],
+                    description: "Холодно"
+                },
+                {
+                    value: [-24, -18],
+                    description: "Очень холодно"
+                },
+                {
+                    value: [undefined, -24],
+                    description: "Угроза обморожения"
+                },
             ],
             usedIndications: ["temperature", "windSpeed", "humidity"],
             // temperature - температура воздуха, °С; windSpeed – скорость ветра, м/с; humidity – относительная влажность, %
@@ -119,13 +120,56 @@ class ComfortIndexStore {
             usedIndications: ["temperature", "windSpeed", "pressure", "humidity"],
             // temperature - температура воздуха, °С; windSpeed – скорость ветра, м/с; humidity – относительная влажность, %
             calculate: (indications) => {
-                return 30
                 // epsi - упругость водяного пара, гПа
                 let epsi = indications["humidity"] / 100 * 6.112 * Math.exp(17.62 * indications["temperature"] / (243.12 + indications["temperature"]))
                 let Hc = (0.13 + Math.pow(indications["windSpeed"], 0.5)) * (36.6 - indications["temperature"])
 
-                console.log(Hc + (0.085 + 0.0102 * Math.pow(indications["windSpeed"], 0.3)) * Math.pow((6.11 - epsi), 0.75))
-                return Hc + (0.085 + 0.0102 * Math.pow(indications["windSpeed"], 0.3)) * Math.pow((6.11 - epsi), 0.75)
+                return Hc + (0.085 + 0.0102 * Math.pow(indications["windSpeed"], 0.3))
+            }
+        },
+        stuffiness: {
+            id: 102,
+            comfortIndex: true,
+            indicationName: "Ощущение «Духоты»",
+            widget: ComfortWidget,
+            gradientColor: "from-primary to-primary/10",
+            color: "fill-primary",
+            text: "text-primary",
+            background: "bg-primary",
+            icon: VaporCloud,
+            units: parse(" pO₂, г/м³"),
+            comfortValues: [
+                5, 5
+            ],
+            values: [
+                {
+                    value: [10, undefined],
+                    description: "Неблагоприятная",
+                    fullDescription: "Головная боль, потеря сознания"
+                },
+                {
+                    value: [5, 10],
+                    description: "Умеренно-благоприятная",
+                    fullDescription: "Сонливость, утомляемость"
+                },
+                {
+                    value: [undefined, 5],
+                    description: "Благоприятная",
+                    fullDescription: "Хорошее"
+                },
+            ],
+            usedIndications: ["temperature", "pressure", "humidity"],
+            // temperature - температура воздуха, °С; windSpeed – скорость ветра, м/с; humidity – относительная влажность, %
+            calculate: (indications) => {
+                let P = indications["pressure"]
+                let t = indications["temperature"]
+                let R = 2.87 * Math.pow(10, 3)
+                // epsi - упругость водяного пара, гПа
+                let epsi = indications["humidity"] / 100 * 6.112 * Math.exp(17.62 * indications["temperature"] / (243.12 + indications["temperature"]))
+
+                // console.log(P - epsi / (R * (273 + t)) * 0.2315 * Math.pow(10, 6))
+                // console.log(epsi)
+                return P / (R * (273 + t)) * 0.2315 * Math.pow(10, 6)
             }
         }
     }
@@ -137,7 +181,9 @@ class ComfortIndexStore {
             usedIndicationsValues[item] = data[item].value
         })
 
-        return indication.calculate(usedIndicationsValues)
+        let indexValue = indication.calculate(usedIndicationsValues)
+
+        return !isNaN(indexValue) ? indexValue : null
     }
 
     constructor() {
