@@ -84,7 +84,7 @@ class AirQualityStore {
     ]
 
     get currentRatingLevel() {
-        return this.ratingLevels.find((ratingLevel) => ratingLevel.level > this.totalRating)
+        return this.ratingLevels.find((ratingLevel) => ratingLevel.level >= this.totalRating)
     }
 
     sendRequest() {
@@ -95,6 +95,11 @@ class AirQualityStore {
             axios.get(`${process.env.REACT_APP_AIR_QUALITY}/${this.realObjectId}`),
             axios.get(`https://dss.sevsu.ru:8081/api/beaches/air_quality/${this.realObjectId}`)
         ]).then(({data}) => {
+            let lastRatingLevelValue = this.ratingLevels[this.ratingLevels.length - 1].level
+
+            if( data.totalRating > lastRatingLevelValue )
+                data.totalRating = lastRatingLevelValue
+
             this.parseAndSaveData(data)
             runInAction(() => {this.isLoading = false})
         });
@@ -109,7 +114,10 @@ class AirQualityStore {
     parseAndSaveData(data){
         for (const indicationName in data.indications) {
             let indication = data.indications[indicationName]
-            let ratingLevel = this.ratingLevels.find((ratingLevel) => ratingLevel.level > indication.level)
+            let ratingLevel = this.ratingLevels.find((ratingLevel) => ratingLevel.level >= indication.level)
+
+            if( !ratingLevel )
+                ratingLevel = this.ratingLevels[this.ratingLevels.length - 1]
 
             this.indications[indicationName] = {
                 ...indication,
