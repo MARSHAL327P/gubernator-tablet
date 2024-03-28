@@ -50,7 +50,9 @@ const Indications = observer(forwardRef((
                 className={cc(["flex flex-wrap  gap-2 items-center"])}>
                 {
                     indications.map((indication) => {
-                        if (!indication || !data[indication.indicationName]) return false
+                        if (!indication ||
+                            data[indication.indicationName] === undefined ||
+                            data[indication.indicationName].value === undefined) return false
 
                         let indicationValue = data[indication.indicationName].value ?? data[indication.indicationName]
                         let Icon = indication.icon

@@ -27,7 +27,7 @@ class WidgetStore {
             content: <PressureWidget color={{text: "text-success"}}/>
         },
     }
-    comfort = {
+    pdk = {
         COMFORT: {
             value: "В норме",
             classes: "bg-success"

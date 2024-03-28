@@ -9,7 +9,9 @@ import {lazy, useEffect} from "react";
 import {ReactComponent as Widgets} from "../assets/icons/Widgets.svg";
 import {ReactComponent as Chart} from "../assets/icons/Chart.svg";
 import {ReactComponent as Clouds} from "../assets/icons/Clouds.svg";
+import {ReactComponent as ComfortIndex} from "../assets/icons/ComfortIndex.svg";
 import AirQuality from "../components/AirQuality/components/AirQuality";
+import ComfortIndexStore from "../components/ComfortIndex/store/comfortIndex.store";
 
 const WidgetTemplate = lazy(() => import("../components/Widgets/templates/WidgetTemplate"))
 const Charts = lazy(() => import("../components/Charts/components/Charts"))
@@ -37,6 +39,13 @@ const RealObjectPage = observer(() => {
             link: "aqi",
             getParam: true,
             icon: Clouds
+        },
+        {
+            title: "Индекс комфортности",
+            content: <WidgetTemplate data={card?.props} indications={Object.values(ComfortIndexStore.indexes)} />,
+            link: "cqi",
+            getParam: true,
+            icon: ComfortIndex
         },
     ]
 

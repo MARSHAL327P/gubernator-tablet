@@ -70,6 +70,7 @@ class IndicationsStore {
             units: " м/с",
             widget: WindWidget,
             nclName: "WIND",
+            pdk: 10
         },
         humidity: {
             name: "Влажность",
@@ -93,6 +94,7 @@ class IndicationsStore {
             units: " мм.рт.ст",
             widget: PressureWidget,
             nclName: "PSFC",
+            chartDomain: [680, 780],
             showOnChart: true,
             chartTypeName: ChartsStore.chartTypes.line.name
         },
